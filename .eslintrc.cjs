@@ -6,9 +6,11 @@ module.exports = {
   extends: [
     "plugin:vue/vue3-essential",
     "eslint:recommended",
-    "@vue/eslint-config-typescript/recommended",
     "@vue/eslint-config-prettier",
   ],
+  rules: {
+    semi: [0, "error", "never"],
+  },
   overrides: [
     {
       files: ["cypress/e2e/**.{cy,spec}.{js,ts,jsx,tsx}"],

@@ -1,12 +1,18 @@
 <template>
   <main class="moon-banner">
-    <h1>Zen Banner goes here</h1>
+    <img src="../../assets/imgs/zen-banner.gif" />
   </main>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .moon-banner {
+  height: 280px;
   color: white;
   background: black;
+  text-align: center;
+
+  img {
+    height: 100%;
+  }
 }
 </style>

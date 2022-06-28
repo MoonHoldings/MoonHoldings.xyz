@@ -1,13 +1,14 @@
 <script setup>
-import GetStartedBtn from "@/components/partials/GetStartedBtn.vue";
+import GetStartedBtn from '@/components/partials/GetStartedBtn.vue'
+import { TAGLINE, CALL_TO_ACTION } from '../../constants'
 </script>
 
 <template>
   <main>
     <div class="moon-cta">
       <section class="tagline">
-        <h1>The Bold Portfolio Tracker For Brave Crypto Investors</h1>
-        <h2>Start / continue your crypto investing journey with us.</h2>
+        <h1>{{ TAGLINE }}</h1>
+        <h2>{{ CALL_TO_ACTION }}</h2>
         <GetStartedBtn />
       </section>
     </div>

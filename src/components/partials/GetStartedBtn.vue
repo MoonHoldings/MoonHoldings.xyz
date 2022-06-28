@@ -1,5 +1,5 @@
 <script setup>
-import { GET_STARTED } from "../../constants";
+import { GET_STARTED } from '../../constants'
 </script>
 
 <template>
@@ -15,15 +15,19 @@ button {
   font-size: 1.1em;
   text-align: center;
   border-radius: 0.35em;
-  border: none;
-  background: #13f195;
-  transition: all 0.3s;
+  border: 1px solid #333;
+  background: var(--green);
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
 
   &:hover {
-    position: relative;
     background: #fff;
-    box-shadow: 0px 1px 20px 0px #13f195;
+    box-shadow: 0px 1px 20px 0px var(--green);
+  }
+
+  &:active {
+    background: var(--pink);
+    box-shadow: 0px 1px 40px 0px var(--green);
   }
 }
 </style>

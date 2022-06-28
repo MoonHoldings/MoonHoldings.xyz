@@ -1,7 +1,7 @@
 <script setup>
-import HomeHeader from "./HomeHeader.vue";
-import HomeBanner from "./HomeBanner.vue";
-import HomeCTA from "./HomeCTA.vue";
+import HomeHeader from './HomeHeader.vue'
+import HomeBanner from './HomeBanner.vue'
+import HomeCTA from './HomeCTA.vue'
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup>
-import { GET_STARTED } from "../../constants";
+import { GET_STARTED } from '../../constants'
 </script>
 
 <template>
@@ -17,7 +17,7 @@ button {
   border-radius: 0.35em;
   border: none;
   background: #13f195;
-  transition: all 0.3s;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
 
   &:hover {

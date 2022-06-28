@@ -10,6 +10,7 @@
   color: white;
   background: black;
   text-align: center;
+  overflow: hidden;
 
   img {
     height: 100%;

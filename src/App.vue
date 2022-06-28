@@ -1,5 +1,5 @@
 <script setup>
-import { RouterView } from "vue-router";
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
@@ -7,8 +7,8 @@ import { RouterView } from "vue-router";
 </template>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400;800&display=swap");
-@import "@/assets/base.css";
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400;800&display=swap');
+@import '@/assets/base.css';
 
 /* http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126 License: none (public domain) */
 /* prettier-ignore */
@@ -35,7 +35,7 @@ menu, nav, section, summary, mark, video {
 #app {
   max-width: auto;
   margin: 0 auto;
-  font-family: "Inconsolata", monospace;
+  font-family: 'Inconsolata', monospace;
   font-weight: normal;
 }
 </style>

@@ -1,8 +1,8 @@
 <script setup>
-import { RouterLink } from "vue-router";
-import { LOGIN } from "../../constants";
-import GetStartedBtn from "@/components/partials/GetStartedBtn.vue";
-const props = defineProps(["title"]);
+import { RouterLink } from 'vue-router'
+import { LOGIN } from '../../constants'
+import GetStartedBtn from '@/components/partials/GetStartedBtn.vue'
+const props = defineProps(['title'])
 </script>
 
 <template>

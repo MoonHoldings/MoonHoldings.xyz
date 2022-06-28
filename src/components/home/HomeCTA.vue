@@ -1,5 +1,5 @@
 <script setup>
-import GetStartedBtn from "@/components/partials/GetStartedBtn.vue";
+import GetStartedBtn from '@/components/partials/GetStartedBtn.vue'
 </script>
 
 <template>

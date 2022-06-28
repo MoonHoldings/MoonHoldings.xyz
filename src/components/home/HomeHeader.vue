@@ -1,8 +1,8 @@
 <script setup>
-import { RouterLink } from "vue-router";
-import { LOGIN } from "../../constants";
-import GetStartedBtn from "@/components/partials/GetStartedBtn.vue";
-const props = defineProps(["title"]);
+import { RouterLink } from 'vue-router'
+import { MOON_XYZ, LOGIN } from '../../constants'
+import GetStartedBtn from '@/components/partials/GetStartedBtn.vue'
+// const props = defineProps(['title'])
 </script>
 
 <template>
@@ -10,7 +10,7 @@ const props = defineProps(["title"]);
     <header>
       <h1>
         <RouterLink to="/">
-          {{ props.title }}
+          {{ MOON_XYZ }}
         </RouterLink>
       </h1>
       <nav>
@@ -40,14 +40,13 @@ nav {
   a {
     display: inline-block;
     padding: 0 1rem;
-    border-left: 1px solid var(--color-border);
     font-size: 1.375em;
     text-decoration: none;
     color: #fff;
     transition: 0.4s;
 
     .router-link-exact-active {
-      color: var(--color-text);
+      color: #fff;
     }
 
     .router-link-exact-active:hover {

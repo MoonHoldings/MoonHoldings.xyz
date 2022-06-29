@@ -1,9 +1,15 @@
 <script setup>
 import { GET_STARTED } from '../../constants'
+
+function handleGetStartedClick(msg) {
+  console.log(msg)
+}
 </script>
 
 <template>
-  <button>{{ GET_STARTED }}</button>
+  <button v-on:click="handleGetStartedClick(`${GET_STARTED} clicked.`)">
+    {{ GET_STARTED }}
+  </button>
 </template>
 
 <style lang="scss" scoped>

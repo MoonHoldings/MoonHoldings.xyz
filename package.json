@@ -4,7 +4,10 @@
   "homepage": "https://moonholdings.xyz",
   "description": "Crypto Portfolio Tracker App",
   "author": "Leon <leongaban@gmail.com> (https://twitter.com/leongaban)",
-  "contributors": ["Leon Gaban", "Abeer Mithela"],
+  "contributors": [
+    "Leon Gaban",
+    "Abeer Mithela"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",

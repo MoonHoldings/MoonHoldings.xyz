@@ -38,4 +38,8 @@ menu, nav, section, summary, mark, video {
   font-family: 'Inconsolata', monospace;
   font-weight: normal;
 }
+
+strong {
+  font-weight: 800;
+}
 </style>

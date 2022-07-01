@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import PrivacyPolicy from '../views/PrivacyPolicy.vue'
+import { MOON_HOLDINGS } from '../constants/copy'
+import { titleCreator } from '../utils/formatters'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +42,11 @@ const router = createRouter({
       component: () => import('../views/TermsOfService.vue'),
     },
   ],
+})
+
+router.beforeEach((to) => {
+  const title = to.name ? titleCreator(to.name) : MOON_HOLDINGS
+  document.title = title
 })
 
 export default router

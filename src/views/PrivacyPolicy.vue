@@ -1,7 +1,7 @@
 <template>
-  <div class="wrapper">
+  <div class="public-wrapper">
     <div></div>
-    <div class="privacy-policy">
+    <div class="public-section">
       <h1>Moon Holdings Privacy Policy</h1>
 
       <p>
@@ -518,74 +518,4 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-@media (min-width: 1024px) {
-  .wrapper {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    background-image: linear-gradient(to bottom, var(--pink), var(--purple));
-  }
-  .privacy-policy {
-    display: grid;
-    grid-row-gap: 1em;
-    margin: 2em;
-    width: 800px;
-    min-height: 50vh;
-    line-height: 1em;
-    color: #fff;
-  }
-
-  .strong-float {
-    width: 100%;
-    float: right;
-  }
-
-  h1 {
-    font-weight: 800;
-    font-size: 2.5em;
-    line-height: 1em;
-  }
-
-  h3 {
-    font-size: 1.5em;
-    line-height: 1em;
-    font-weight: 800;
-  }
-
-  P {
-    line-height: 1.5em;
-  }
-
-  ul {
-    margin-left: 1em;
-
-    li {
-      margin-bottom: 1em;
-      line-height: 1.25em;
-    }
-  }
-
-  a {
-    color: var(--green);
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
-
-  table {
-    border-collapse: collapse;
-
-    thead {
-      font-weight: 800;
-    }
-
-    td {
-      margin: 0;
-      padding: 0.5em;
-      width: 33%;
-      border: 1px solid #ccc;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

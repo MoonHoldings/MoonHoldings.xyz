@@ -1,6 +1,6 @@
 <template>
   <div class="public-wrapper">
-    <div></div>
+    <div />
     <div class="public-section">
       <h1>Moon Holdings Terms of Use</h1>
 
@@ -520,7 +520,7 @@
         subject matter herein.
       </p>
     </div>
-    <div></div>
+    <div />
   </div>
 </template>
 

@@ -1,6 +1,8 @@
 export const MOON_XYZ = 'MOONHOLDINGS.XYZ'
 export const MOON_HOLDINGS = 'Moon Holdings'
+export const MOONHOLDINGS = 'MoonHoldings'
 export const LOGIN = 'Login'
+export const FORGOT_PASSWORD = 'Forgot password?'
 export const GET_STARTED = 'Get Started'
 export const TITLE_HOME = 'Moon Holdings | Your Crypto Portfolio Tracker'
 export const TITLE_SIGNUP = 'Moon Holdings Sign Up'

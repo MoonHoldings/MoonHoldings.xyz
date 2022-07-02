@@ -1,6 +1,6 @@
 <template>
   <div class="public-wrapper">
-    <div></div>
+    <div />
     <div class="public-section">
       <h1>Moon Holdings Privacy Policy</h1>
 
@@ -514,7 +514,7 @@
         other requests that do not appear to be legitimate in nature.
       </p>
     </div>
-    <div></div>
+    <div />
   </div>
 </template>
 

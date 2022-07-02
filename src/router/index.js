@@ -45,8 +45,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  const title = to.name ? titleCreator(to.name) : MOON_HOLDINGS
-  document.title = title
+  document.title = to.name ? titleCreator(to.name) : MOON_HOLDINGS
 })
 
 export default router

@@ -1,5 +1,8 @@
 <script setup>
-import GetStartedBtn from '@/components/partials/GetStartedBtn.vue'
+import { GET_STARTED } from '../../constants'
+import GreenBtn from '@/components/partials/GreenBtn.vue'
+
+console.log('GET_STARTED', GET_STARTED)
 </script>
 
 <template>
@@ -8,7 +11,7 @@ import GetStartedBtn from '@/components/partials/GetStartedBtn.vue'
       <section class="tagline">
         <h1>The Bold Portfolio Tracker For Brave Crypto Investors</h1>
         <h2>Start / continue your crypto investing journey with us.</h2>
-        <GetStartedBtn />
+        <GreenBtn copy={GET_STARTED} url='/sign-up' />
       </section>
     </div>
   </main>

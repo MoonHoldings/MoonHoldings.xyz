@@ -1,5 +1,5 @@
 <script setup>
-import { MOONHOLDINGS, LOGIN, FORGOT_PASSWORD } from '../constants/copy'
+import { MOONHOLDINGS, LOGIN, FORGOT_PASSWORD, DONT_HAVE_ACCOUNT } from '../constants/copy'
 </script>
 
 <template>
@@ -11,12 +11,14 @@ import { MOONHOLDINGS, LOGIN, FORGOT_PASSWORD } from '../constants/copy'
         <h2>{{ LOGIN }}</h2>
 
         <form action="">
-          <input type="text" placeholder="Email" />
-          <a href="/forgot-password">{{ FORGOT_PASSWORD }}</a>
-          <button>Continue</button>
+          <div class="email-input">
+            <input type="text" placeholder="Email" />
+            <a href="/forgot-password">{{ FORGOT_PASSWORD }}</a>
+            <button>Continue</button>
+          </div>
 
           <div class="dont-have-account">
-            <a href="/forgot-password">{{ FORGOT_PASSWORD }}</a>
+            <a href="/sign-up">{{ DONT_HAVE_ACCOUNT }}</a>
             <button>Sign Up</button>
           </div>
 
@@ -25,14 +27,13 @@ import { MOONHOLDINGS, LOGIN, FORGOT_PASSWORD } from '../constants/copy'
             <button>Sign in with Discord</button>
           </div>
         </form>
-
       </div>
     </div>
     <div />
   </main>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .login-container {
   display: grid;
   grid-template-columns: 2fr 1fr 2fr;
@@ -53,13 +54,32 @@ import { MOONHOLDINGS, LOGIN, FORGOT_PASSWORD } from '../constants/copy'
   border-radius: 1em;
 }
 
+.email-input {
+  display: grid;
+  grid-auto-rows: 1fr 1fr 1fr;
+  margin-top: 2em;
+
+  input {
+    padding: 1em;
+    height: 3.5em;
+    border: 2px solid var(--purple);
+    background: #eee;
+  }
+}
+
+.dont-have-account {
+  display: grid;
+  grid-auto-columns: 1fr;
+  width: 100%;
+}
+
 h1,
 h2 {
   text-align: center;
 }
 
 h1 {
-  margin: 1em 0 0.5em;
+  margin: 1em 0 0.25em;
   font-size: 2rem;
   font-weight: 800;
   text-transform: uppercase;

@@ -10,8 +10,14 @@ import { RouterView } from 'vue-router'
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400;800&display=swap');
 @import '@/assets/sass/base.scss';
 
+html,
+body {
+  height: 100%;
+}
+
 #app {
   max-width: auto;
+  height: 100%;
   margin: 0 auto;
   font-family: 'Inconsolata', monospace;
   font-weight: normal;

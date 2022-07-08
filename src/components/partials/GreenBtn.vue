@@ -1,14 +1,16 @@
 <script setup>
-import { GET_STARTED } from '../../constants'
+const props = defineProps(['copy', 'url'])
+const { copy, url } = props
 
-function handleGetStartedClick(msg) {
+const handleGetStartedClick = (msg) => {
   console.log(msg)
+  console.log(`Goto url: ${url}`)
 }
 </script>
 
 <template>
-  <button v-on:click="handleGetStartedClick(`${GET_STARTED} clicked.`)">
-    {{ GET_STARTED }}
+  <button v-on:click="handleGetStartedClick(`${copy} clicked.`)">
+    {{ copy }}
   </button>
 </template>
 

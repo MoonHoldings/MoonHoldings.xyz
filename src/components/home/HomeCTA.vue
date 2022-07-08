@@ -1,6 +1,6 @@
 <script setup>
 import { GET_STARTED } from '../../constants'
-import GreenBtn from '@/components/partials/GreenBtn.vue'
+import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 </script>
 
 <template>
@@ -9,7 +9,7 @@ import GreenBtn from '@/components/partials/GreenBtn.vue'
       <section class="tagline">
         <h1>The Bold Portfolio {{GET_STARTED}} Tracker For Brave Crypto Investors</h1>
         <h2>Start / continue your crypto investing journey with us.</h2>
-        <GreenBtn :copy="GET_STARTED" url='/sign-up' />
+        <PrimaryBtn :copy="GET_STARTED" url='/sign-up' />
       </section>
     </div>
   </main>

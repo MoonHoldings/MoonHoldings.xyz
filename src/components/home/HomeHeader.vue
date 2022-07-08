@@ -1,8 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { MOON_XYZ, LOGIN } from '../../constants'
+import { MOON_XYZ, LOGIN, GET_STARTED } from '../../constants'
 import GreenBtn from '@/components/partials/GreenBtn.vue'
-// const props = defineProps(['title'])
 </script>
 
 <template>
@@ -15,7 +14,7 @@ import GreenBtn from '@/components/partials/GreenBtn.vue'
       </h1>
       <nav>
         <RouterLink to="/login">{{ LOGIN }}</RouterLink>
-        <GreenBtn />
+        <GreenBtn :copy="GET_STARTED" url='/sign-up' />
       </nav>
     </header>
   </main>

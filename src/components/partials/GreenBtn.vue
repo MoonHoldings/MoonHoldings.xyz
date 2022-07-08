@@ -1,12 +1,10 @@
 <script setup>
-// import { GET_STARTED } from '../../constants'
 const props = defineProps(['copy', 'url'])
 const { copy, url } = props
-console.log('props', props)
 
 const handleGetStartedClick = (msg) => {
   console.log(msg)
-  console.log(`Goto: ${url}`)
+  console.log(`Goto url: ${url}`)
 }
 </script>
 

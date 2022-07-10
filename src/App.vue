@@ -8,7 +8,7 @@ import { RouterView } from 'vue-router'
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400;800&display=swap');
-@import '@/assets/sass/base.scss';
+@import '@/sass';
 
 html,
 body {

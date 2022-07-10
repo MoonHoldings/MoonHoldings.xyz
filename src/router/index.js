@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import SignUpView from '../views/SignUpView.vue'
 import PrivacyPolicy from '../views/PrivacyPolicy.vue'
 import { MOON_HOLDINGS } from '../constants/copy'
 import { titleCreator } from '../utils/formatters'
@@ -20,6 +21,11 @@ const router = createRouter({
       // this generates a separate chunk (Login.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: LoginView,
+    },
+    {
+      path: '/sign-up',
+      name: 'signup',
+      component: SignUpView,
     },
     {
       path: '/privacy-policy',

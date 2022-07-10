@@ -8,18 +8,17 @@ const handleClick = () => {
 </script>
 
 <template>
-  <button v-on:click="handleClick()">
+  <button v-on:click="handleClick()" type="button">
     {{ copy }}
   </button>
 </template>
 
 <style lang="scss" scoped>
 button {
-  margin-left: 1em;
-  padding: 0.5em 1.5em;
-  height: 40px;
-  width: 160px;
-  font-size: 1.1em;
+  padding: 0.5em 1.2em;
+  height: auto;
+  width: auto;
+  font-size: 2em;
   text-align: center;
   border-radius: 0.35em;
   border: 1px solid #333;

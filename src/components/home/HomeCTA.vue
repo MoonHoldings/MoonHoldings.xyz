@@ -1,5 +1,5 @@
 <script setup>
-import { GET_STARTED } from '../../constants'
+import { GET_STARTED, SIGN_UP_PATH } from '../../constants'
 import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 </script>
 
@@ -7,9 +7,9 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
   <main>
     <div class="moon-cta">
       <section class="tagline">
-        <h1>The Bold Portfolio {{GET_STARTED}} Tracker For Brave Crypto Investors</h1>
+        <h1>The Bold Portfolio Tracker For Brave Crypto Investors</h1>
         <h2>Start / continue your crypto investing journey with us.</h2>
-        <PrimaryBtn :copy="GET_STARTED" url='/sign-up' />
+        <PrimaryBtn :copy='GET_STARTED' :url='SIGN_UP_PATH' />
       </section>
     </div>
   </main>
@@ -20,13 +20,14 @@ main {
   height: 400px;
 }
 h1 {
-  width: 500px;
-  font-size: 2.25em;
+  width: 640px;
+  font-size: 3.6em;
   font-weight: 800;
-  line-height: 1.2em;
+  line-height: 1.3em;
 }
 h2 {
   margin: 2em 0;
+  font-size: 2em;
 }
 .moon-cta {
   display: grid;

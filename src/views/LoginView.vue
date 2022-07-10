@@ -40,6 +40,7 @@ import { MOONHOLDINGS, LOGIN, FORGOT_PASSWORD, DONT_HAVE_ACCOUNT } from '../cons
   height: 100%;
   background-image: linear-gradient(to bottom, var(--pink), var(--purple));
 }
+
 .login-section {
   height: 100%;
   min-width: 500px;

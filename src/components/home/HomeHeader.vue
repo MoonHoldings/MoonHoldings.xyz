@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { MOON_XYZ, LOGIN, GET_STARTED } from '../../constants'
+import { MOON_XYZ, LOGIN, LOGIN_PATH, GET_STARTED } from '../../constants'
 import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 </script>
 
@@ -13,8 +13,8 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
         </RouterLink>
       </h1>
       <nav>
-        <RouterLink to="/login">{{ LOGIN }}</RouterLink>
-        <PrimaryBtn :copy="GET_STARTED" url='/sign-up' />
+        <RouterLink :to='LOGIN_PATH'>{{ LOGIN }}</RouterLink>
+        <PrimaryBtn :copy='GET_STARTED' url='/sign-up' />
       </nav>
     </header>
   </main>
@@ -39,7 +39,7 @@ nav {
   a {
     display: inline-block;
     padding: 0 1rem;
-    font-size: 1.375em;
+    font-size: 2em;
     text-decoration: none;
     color: #fff;
     transition: 0.4s;

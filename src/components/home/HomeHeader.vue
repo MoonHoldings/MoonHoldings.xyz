@@ -13,8 +13,8 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
         </RouterLink>
       </h1>
       <nav>
-        <RouterLink :to='LOGIN_PATH'>{{ LOGIN }}</RouterLink>
-        <PrimaryBtn :copy='GET_STARTED' url='/sign-up' />
+        <RouterLink :to="LOGIN_PATH">{{ LOGIN }}</RouterLink>
+        <PrimaryBtn :copy="GET_STARTED" url="/sign-up" />
       </nav>
     </header>
   </main>

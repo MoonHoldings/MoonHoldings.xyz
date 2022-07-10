@@ -1,5 +1,10 @@
 <script setup>
-import { MOONHOLDINGS, LOGIN, FORGOT_PASSWORD, DONT_HAVE_ACCOUNT } from '../constants/copy'
+import {
+  MOONHOLDINGS,
+  LOGIN,
+  FORGOT_PASSWORD,
+  DONT_HAVE_ACCOUNT,
+} from '../constants/copy'
 </script>
 
 <template>

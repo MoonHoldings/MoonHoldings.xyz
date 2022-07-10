@@ -13,7 +13,7 @@
   .public-section {
     display: grid;
     grid-row-gap: 1em;
-    margin: 2em;
+    margin: 5em;
     width: 800px;
     min-height: 50vh;
     line-height: 1em;
@@ -31,24 +31,34 @@
       font-size: 2.5em;
       line-height: 1em;
     }
-
-    h3 {
-      font-size: 1.5em;
-      line-height: 1em;
+    
+    h3, h4 {
+      margin: 1em 0 0 0;
       font-weight: 800;
     }
 
-    P {
-      line-height: 1.5em;
+    h3 {
+      font-size: 2em;
+    }
+
+    h4 {
+      font-size: 1.6em;
+    }
+
+    p, li, strong, td {
+      font-size: 1.6em;
+      line-height: 1.6em;
+    }
+
+    p, table {
+      margin: 0.5em 0 0;
+      strong, li {
+        font-size: 1em;
+      }
     }
 
     ul {
       margin-left: 1em;
-
-      li {
-        margin-bottom: 1em;
-        line-height: 1.25em;
-      }
     }
 
     a {

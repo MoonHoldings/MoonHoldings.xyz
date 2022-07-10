@@ -1,6 +1,6 @@
 <template>
   <main class="moon-banner">
-    <img src="../../assets/imgs/zen-banner.gif" />
+    <img src="/mh-zen-banner.gif" title="Art commissioned from Zen0" />
   </main>
 </template>
 

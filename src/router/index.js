@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import SignUpView from '../views/SignUpView.vue'
 import PrivacyPolicy from '../views/PrivacyPolicy.vue'
 import { MOON_HOLDINGS } from '../constants/copy'
 import { titleCreator } from '../utils/formatters'
@@ -22,19 +23,14 @@ const router = createRouter({
       component: LoginView,
     },
     {
+      path: '/sign-up',
+      name: 'signup',
+      component: SignUpView,
+    },
+    {
       path: '/privacy-policy',
       name: 'privacy-policy',
       component: PrivacyPolicy,
-    },
-    {
-      path: '/terms-of-service',
-      name: 'terms-of-service',
-      component: () => import('../views/TermsOfService.vue'),
-    },
-    {
-      path: '/privacy-policy',
-      name: 'privacy-policy',
-      component: () => import('../views/PrivacyPolicy.vue'),
     },
     {
       path: '/terms-of-service',

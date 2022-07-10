@@ -9,7 +9,7 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
       <section class="tagline">
         <h1>The Bold Portfolio Tracker For Brave Crypto Investors</h1>
         <h2>Start or continue your crypto investing journey with us.</h2>
-        <PrimaryBtn :copy='GET_STARTED' :url='SIGN_UP_PATH' />
+        <PrimaryBtn :copy="GET_STARTED" :url="SIGN_UP_PATH" />
       </section>
     </div>
   </main>

@@ -1,27 +1,26 @@
 <script setup>
 const props = defineProps(['copy', 'url'])
-const { copy, url } = props
 
 const handleClick = () => {
-  console.log(`Goto url: ${url}`)
+  console.log(`Goto url: ${props.url}`)
 }
 </script>
 
 <template>
   <button v-on:click="handleClick()" type="button">
-    {{ copy }}
+    {{ props.copy }}
   </button>
 </template>
 
 <style lang="scss" scoped>
 button {
   padding: 0.5em 1.2em;
-  height: auto;
   width: auto;
+  height: auto;
   font-size: 2em;
   text-align: center;
   border-radius: 0.35em;
-  border: 1px solid #333;
+  border: 2px solid #333;
   background: var(--green);
   transition: all 0.2s ease-in-out;
   cursor: pointer;

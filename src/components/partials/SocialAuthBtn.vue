@@ -17,5 +17,6 @@ button {
   border-radius: 8px;
   color: #fff;
   font-size: 18px;
+  letter-spacing: 0.8px;
 }
 </style>

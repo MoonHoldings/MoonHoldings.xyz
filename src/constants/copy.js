@@ -1,7 +1,8 @@
 export const MOON_XYZ = 'MOONHOLDINGS.XYZ'
 export const MOON_HOLDINGS = 'Moon Holdings'
 export const MOONHOLDINGS = 'MoonHoldings'
-export const LOGIN = 'Login'
+export const LOGIN = 'Log in'
+export const RESET_PASSWORD = 'Reset Password'
 export const FORGOT_PASSWORD = 'Forgot password?'
 export const DONT_HAVE_ACCOUNT = `Don't have account yet?`
 export const GET_STARTED = 'Get Started'

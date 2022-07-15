@@ -11,6 +11,7 @@ module.exports = {
   rules: {
     semi: [0, 'error', 'never'],
     arrowParens: [0, 'error', 'never'],
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
   },
   overrides: [],
 }

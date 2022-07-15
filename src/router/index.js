@@ -28,6 +28,11 @@ const router = createRouter({
       component: SignUpView,
     },
     {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: () => import('../views/ResetPassword.vue'),
+    },
+    {
       path: '/privacy-policy',
       name: 'privacy-policy',
       component: PrivacyPolicy,

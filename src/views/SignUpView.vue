@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { MOON_XYZ } from '../constants/copy'
+import { MOON_XYZ, SUBMIT } from '../constants/copy'
 import { CONTINUE } from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 
@@ -73,7 +73,7 @@ const showPassNote = computed(() => {
             </div>
           </div>
           <button class="continue-btn" @click.prevent="continueBtn">
-            {{ CONTINUE }}
+            {{ clicks > 1 ? SUBMIT : CONTINUE }}
           </button>
         </form>
         <div class="social-signin">

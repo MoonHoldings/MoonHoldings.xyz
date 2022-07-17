@@ -44,19 +44,51 @@ import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 
 <style scoped lang="scss">
 @import '@/sass/mixins/primary-btn.scss';
+
 .error-input {
   background-color: #ff6f6f;
   border: 2px solid #ff6f6f;
 }
+
+.login-window {
+  height: 580px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+h2 {
+  margin-bottom: 26px;
+}
+.email-input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 20.41px;
+
+  input {
+    margin-bottom: 20.41px;
+  }
+  a {
+    color: #000;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-bottom: 20.41px;
+  }
+}
+
 .dont-have-account {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20.41px;
 
   a {
     color: #000;
     text-decoration: none;
     font-size: 1rem;
+  }
+  button {
+    height: 48px;
   }
 }
 .social-signin {

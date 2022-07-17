@@ -1,26 +1,24 @@
 <script setup>
-import { ref } from 'vue'
-import { MOONHOLDINGS } from '../constants/copy'
+import { computed, ref } from 'vue'
+import { MOON_XYZ } from '../constants/copy'
 import { CONTINUE } from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 
-let clicks = 0
+const clicks = ref(0)
 const emTranslate = ref(0)
 const pTranslate = ref(130)
 const cpTranslate = ref(130)
+const incSignup = ref(false)
 
 const continueBtn = () => {
-  switch (clicks) {
+  switch (clicks.value) {
     case 0:
       emTranslate.value = -130
+      pTranslate.value = 0
+      incSignup.value = true
       break
     case 1:
-      pTranslate.value = 0
-      break
-    case 2:
       pTranslate.value = -130
-      break
-    case 3:
       cpTranslate.value = 0
       break
 
@@ -28,16 +26,23 @@ const continueBtn = () => {
       break
   }
   // ---------
-  clicks++
+  clicks.value++
 }
+
+const showPassNote = computed(() => {
+  if (clicks.value !== 0) {
+    return true
+  }
+  return false
+})
 </script>
 
 <template>
   <main class="signup-container">
     <div />
     <div class="signup-section">
-      <div class="signup-window">
-        <h1>{{ MOONHOLDINGS }}</h1>
+      <div class="signup-window" :class="{ 'inc-signup': incSignup }">
+        <h1>{{ MOON_XYZ }}</h1>
         <h2>Sign Up</h2>
 
         <form action="">
@@ -61,6 +66,12 @@ const continueBtn = () => {
               placeholder="Confirm Password"
             />
           </div>
+          <div class="pass-note" :class="{ 'note-open': showPassNote }">
+            <div>
+              Minimum 8 characters long, at least 1 special, 1 number and 1
+              letter
+            </div>
+          </div>
           <button class="continue-btn" @click.prevent="continueBtn">
             {{ CONTINUE }}
           </button>
@@ -80,9 +91,24 @@ const continueBtn = () => {
 
 .signup-window {
   overflow: hidden;
+  height: 446px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: height 0.5s ease;
+}
+.inc-signup {
+  height: 506px;
+}
+h2 {
+  margin-bottom: 15px;
 }
 
 .email-input {
+  margin-bottom: 20px;
+  input {
+    left: 0;
+  }
   .e-box {
     position: relative;
     z-index: 20;
@@ -100,12 +126,19 @@ const continueBtn = () => {
   }
 }
 
-.continue {
-  @include primary-btn;
-}
-
 form {
   margin-bottom: 20px;
+}
+.pass-note {
+  height: 0px;
+  display: flex;
+  align-items: flex-start;
+  text-align: center;
+  font-size: 12px;
+  transition: all 1s ease;
+}
+.note-open {
+  height: 60px;
 }
 .social-signin {
   display: flex;

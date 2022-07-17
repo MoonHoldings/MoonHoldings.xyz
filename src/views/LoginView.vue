@@ -4,6 +4,7 @@ import {
   LOGIN,
   FORGOT_PASSWORD,
   DONT_HAVE_ACCOUNT,
+  CONTINUE,
 } from '../constants/copy'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import ErrorAlert from '@/components/partials/ErrorAlert.vue'
@@ -22,12 +23,12 @@ import ErrorAlert from '@/components/partials/ErrorAlert.vue'
           <div class="email-input">
             <input type="text" placeholder="Email" class="error-input" />
             <a href="/forgot-password">{{ FORGOT_PASSWORD }}</a>
-            <button>Continue</button>
+            <button class="continue-btn">{{ CONTINUE }}</button>
           </div>
 
           <div class="dont-have-account">
             <a href="/sign-up">{{ DONT_HAVE_ACCOUNT }}</a>
-            <button>Sign Up</button>
+            <button class="signup-btn">Sign Up</button>
           </div>
 
           <div class="social-signin">
@@ -42,6 +43,7 @@ import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 </template>
 
 <style scoped lang="scss">
+@import '@/sass/mixins/primary-btn.scss';
 .error-input {
   background-color: #ff6f6f;
   border: 2px solid #ff6f6f;
@@ -55,16 +57,6 @@ import ErrorAlert from '@/components/partials/ErrorAlert.vue'
     color: #000;
     text-decoration: none;
     font-size: 1rem;
-  }
-
-  button {
-    min-width: 118px;
-    min-height: 48px;
-    background: #13f195;
-    border: 1px solid #a1a1a1;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 400;
   }
 }
 .social-signin {

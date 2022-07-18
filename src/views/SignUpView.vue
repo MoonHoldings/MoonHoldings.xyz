@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { MOON_XYZ, SUBMIT } from '../constants/copy'
 import { CONTINUE } from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
+import SuccessAlert from '@/components/partials/SuccessAlert.vue'
 
 const clicks = ref(0)
 const emTranslate = ref(0)
@@ -35,10 +36,22 @@ const showPassNote = computed(() => {
   }
   return false
 })
+const showSuccessAlert = computed(() => {
+  if (clicks.value > 2) {
+    return true
+  }
+  return false
+})
 </script>
 
 <template>
   <main class="signup-container">
+    <transition
+      mode="out-in"
+      enter-active-class="animate__animated animate__fadeInLeftBig"
+    >
+      <SuccessAlert v-if="showSuccessAlert" />
+    </transition>
     <div />
     <div class="signup-section">
       <div class="signup-window" :class="{ 'inc-signup': incSignup }">
@@ -77,8 +90,8 @@ const showPassNote = computed(() => {
           </button>
         </form>
         <div class="social-signin">
-          <SocialAuthBtn bg-color="#55ACEE" text="Log In With Twitter" />
-          <SocialAuthBtn bg-color="#7289DA" text="Log In With Discord" />
+          <SocialAuthBtn bg-color="#55ACEE" text="Sign Up With Twitter" />
+          <SocialAuthBtn bg-color="#7289DA" text="Sign Up With Discord" />
         </div>
       </div>
     </div>
@@ -95,7 +108,7 @@ const showPassNote = computed(() => {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: height 0.5s ease;
+  transition: height 0.4s ease;
 }
 .inc-signup {
   height: 506px;
@@ -112,17 +125,17 @@ h2 {
   .e-box {
     position: relative;
     z-index: 20;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.4s ease-in-out;
   }
   .p-box {
     position: absolute;
     z-index: 19;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.4s ease-in-out;
   }
   .c-p-box {
     position: absolute;
     z-index: 18;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.4s ease-in-out;
   }
 }
 
@@ -135,7 +148,7 @@ form {
   align-items: flex-start;
   text-align: center;
   font-size: 12px;
-  transition: all 1s ease;
+  transition: all 0.4s ease;
 }
 .note-open {
   height: 60px;

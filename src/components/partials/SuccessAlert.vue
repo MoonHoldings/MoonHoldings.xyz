@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
 const sec = ref(6)
 
 onMounted(() => {
@@ -13,6 +14,12 @@ onMounted(() => {
       router.push('/login')
     }
   }, 1000)
+})
+
+watch(route, (newValue) => {
+  if (newValue.path !== '/sign-up') {
+    sec.value = 0
+  }
 })
 </script>
 

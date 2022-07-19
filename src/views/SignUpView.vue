@@ -4,6 +4,12 @@ import { MOON_XYZ, SUBMIT } from '../constants/copy'
 import { CONTINUE } from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import SuccessAlert from '@/components/partials/SuccessAlert.vue'
+import { useUserStore } from '@/stores/user'
+
+const email = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+const error = ref('')
 
 const clicks = ref(0)
 const emTranslate = ref(0)
@@ -11,7 +17,9 @@ const pTranslate = ref(130)
 const cpTranslate = ref(130)
 const incSignup = ref(false)
 
-const continueBtn = () => {
+const userStore = useUserStore()
+
+const continueBtn = async () => {
   switch (clicks.value) {
     case 0:
       emTranslate.value = -130
@@ -22,12 +30,26 @@ const continueBtn = () => {
       pTranslate.value = -130
       cpTranslate.value = 0
       break
+    case 2:
+      await signup()
+      break
 
     default:
       break
   }
   // ---------
   clicks.value++
+}
+
+const signup = async () => {
+  if (password.value !== confirmPassword.value) {
+    error.value = 'password does not match'
+    return
+  }
+  await userStore.signup({
+    email: email.value,
+    password: password.value,
+  })
 }
 
 const showPassNote = computed(() => {
@@ -65,18 +87,21 @@ const showSuccessAlert = computed(() => {
               :style="{ transform: `translateX(${emTranslate}%)` }"
               type="email"
               placeholder="Email"
+              v-model="email"
             />
             <input
               class="p-box"
               :style="{ transform: `translateX(${pTranslate}%)` }"
               type="password"
               placeholder="Password"
+              v-model="password"
             />
             <input
               class="c-p-box"
               :style="{ transform: `translateX(${cpTranslate}%)` }"
               type="password"
               placeholder="Confirm Password"
+              v-model="confirmPassword"
             />
           </div>
           <div class="pass-note" :class="{ 'note-open': showPassNote }">

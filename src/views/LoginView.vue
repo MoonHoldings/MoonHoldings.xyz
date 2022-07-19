@@ -28,7 +28,10 @@ import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 
           <div class="dont-have-account">
             <router-link to="/sign-up">{{ DONT_HAVE_ACCOUNT }}</router-link>
-            <button class="signup-btn" @click="$router.push('/sign-up')">
+            <button
+              class="signup-btn"
+              @click.prevent="$router.push('/sign-up')"
+            >
               Sign Up
             </button>
           </div>

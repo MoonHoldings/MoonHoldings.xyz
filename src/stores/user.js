@@ -12,9 +12,20 @@ export const useUserStore = defineStore({
       console.log(`${this.server_url}/register`)
       try {
         const config = { headers: { 'Content-Type': 'application/json' } }
-        await axios.post(`${this.server_url}/register`, payload, config)
+        const response = await axios.post(
+          `${this.server_url}/register`,
+          payload,
+          config
+        )
+
+        const result = await response.data
+        return result
       } catch (error) {
-        console.log(error.message)
+        const { response } = error
+        return {
+          success: response.data.success,
+          message: response.data.message,
+        }
       }
     },
   },

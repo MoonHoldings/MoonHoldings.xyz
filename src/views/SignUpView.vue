@@ -1,15 +1,24 @@
 <script setup>
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { MOON_XYZ, SUBMIT } from '../constants/copy'
 import { CONTINUE } from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import SuccessAlert from '@/components/partials/SuccessAlert.vue'
+import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 import { useUserStore } from '@/stores/user'
+import passwordValidate from '@/utils/passwordValidate'
+
+const router = useRouter()
 
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-const error = ref('')
+const errorMessage = ref('')
+
+const errorEmail = ref(false)
+const errorPassword = ref(false)
+const errorCPassword = ref(false)
 
 const clicks = ref(0)
 const emTranslate = ref(0)
@@ -22,13 +31,10 @@ const userStore = useUserStore()
 const continueBtn = async () => {
   switch (clicks.value) {
     case 0:
-      emTranslate.value = -130
-      pTranslate.value = 0
-      incSignup.value = true
+      validateEmail()
       break
     case 1:
-      pTranslate.value = -130
-      cpTranslate.value = 0
+      validatePassword()
       break
     case 2:
       await signup()
@@ -37,23 +43,66 @@ const continueBtn = async () => {
     default:
       break
   }
-  // ---------
-  clicks.value++
+}
+
+const validateEmail = () => {
+  const result = email.value.includes('@')
+  if (!result || !email.value) {
+    errorEmail.value = true
+  } else {
+    errorEmail.value = false
+    emTranslate.value = -130
+    pTranslate.value = 0
+    incSignup.value = true
+
+    clicks.value++
+  }
+}
+
+const validatePassword = () => {
+  const isValid = passwordValidate(password.value)
+  if (!isValid || !password.value) {
+    errorPassword.value = true
+  } else {
+    errorPassword.value = false
+    pTranslate.value = -130
+    cpTranslate.value = 0
+
+    clicks.value++
+  }
 }
 
 const signup = async () => {
   if (password.value !== confirmPassword.value) {
-    error.value = 'password does not match'
-    return
+    errorCPassword.value = true
+    errorMessage.value = 'Password does not match'
+  } else {
+    errorCPassword.value = false
+    try {
+      const response = await userStore.signup({
+        email: email.value,
+        password: password.value,
+      })
+
+      if (!response.success) {
+        errorCPassword.value = true
+        errorMessage.value = response.message
+        setTimeout(() => {
+          router.go()
+        }, 5600)
+        return
+      }
+
+      clicks.value++
+    } catch (error) {
+      errorCPassword.value = true
+      errorMessage.value = error.message
+    }
   }
-  await userStore.signup({
-    email: email.value,
-    password: password.value,
-  })
 }
 
 const showPassNote = computed(() => {
-  if (clicks.value !== 0) {
+  if (emTranslate.value === -130) {
     return true
   }
   return false
@@ -74,6 +123,13 @@ const showSuccessAlert = computed(() => {
     >
       <SuccessAlert v-if="showSuccessAlert" />
     </transition>
+    <transition
+      mode="out-in"
+      enter-active-class="animate__animated animate__fadeInLeftBig"
+      leave-active-class="animate__animated animate__fadeOutRightBig"
+    >
+      <ErrorAlert :message="errorMessage" v-if="errorCPassword" />
+    </transition>
     <div />
     <div class="signup-section">
       <div class="signup-window" :class="{ 'inc-signup': incSignup }">
@@ -84,6 +140,7 @@ const showSuccessAlert = computed(() => {
           <div class="email-input">
             <input
               class="e-box"
+              :class="{ error: errorEmail, 'input-default': !errorEmail }"
               :style="{ transform: `translateX(${emTranslate}%)` }"
               type="email"
               placeholder="Email"
@@ -91,13 +148,19 @@ const showSuccessAlert = computed(() => {
             />
             <input
               class="p-box"
+              :class="{ error: errorPassword, 'input-default': !errorPassword }"
               :style="{ transform: `translateX(${pTranslate}%)` }"
               type="password"
               placeholder="Password"
               v-model="password"
+              @change="insertPassword"
             />
             <input
               class="c-p-box"
+              :class="{
+                error: errorCPassword,
+                'input-default': !errorCPassword,
+              }"
               :style="{ transform: `translateX(${cpTranslate}%)` }"
               type="password"
               placeholder="Confirm Password"
@@ -140,6 +203,15 @@ const showSuccessAlert = computed(() => {
 }
 h2 {
   margin-bottom: 15px;
+}
+
+.input-default {
+  border: 2px solid var(--pink);
+  background: #eee;
+}
+.error {
+  background: rgba(255, 111, 111, 0.5);
+  border: 2px solid red;
 }
 
 .email-input {

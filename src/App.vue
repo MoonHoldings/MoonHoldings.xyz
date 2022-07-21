@@ -1,8 +1,19 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import ErrorAlert from '@/components/partials/ErrorAlert.vue'
+import { useUtilStore } from '@/stores/util'
+
+const utils = useUtilStore()
 </script>
 
 <template>
+  <transition
+    mode="out-in"
+    enter-active-class="animate__animated animate__fadeInLeftBig"
+    leave-active-class="animate__animated animate__fadeOutRightBig"
+  >
+    <ErrorAlert v-if="utils.errorSignup" />
+  </transition>
   <RouterView />
 </template>
 

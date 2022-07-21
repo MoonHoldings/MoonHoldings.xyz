@@ -1,24 +1,24 @@
 <script setup>
-import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { MOON_XYZ, SUBMIT } from '../constants/copy'
 import { CONTINUE } from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import SuccessAlert from '@/components/partials/SuccessAlert.vue'
-import ErrorAlert from '@/components/partials/ErrorAlert.vue'
+// import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 import { useUserStore } from '@/stores/user'
+import { useUtilStore } from '@/stores/util'
 import passwordValidate from '@/utils/passwordValidate'
 
-const router = useRouter()
+// const router = useRouter()
+const route = useRoute()
 
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-const errorMessage = ref('')
 
 const errorEmail = ref(false)
 const errorPassword = ref(false)
-const errorCPassword = ref(false)
 
 const clicks = ref(0)
 const emTranslate = ref(0)
@@ -27,6 +27,7 @@ const cpTranslate = ref(130)
 const incSignup = ref(false)
 
 const userStore = useUserStore()
+const utilStore = useUtilStore()
 
 const continueBtn = async () => {
   switch (clicks.value) {
@@ -74,10 +75,10 @@ const validatePassword = () => {
 
 const signup = async () => {
   if (password.value !== confirmPassword.value) {
-    errorCPassword.value = true
-    errorMessage.value = 'Password does not match'
+    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorMessage('Password does not match')
   } else {
-    errorCPassword.value = false
+    utilStore.mutate_errorSignup(false)
     try {
       const response = await userStore.signup({
         email: email.value,
@@ -85,18 +86,16 @@ const signup = async () => {
       })
 
       if (!response.success) {
-        errorCPassword.value = true
-        errorMessage.value = response.message
-        setTimeout(() => {
-          router.go()
-        }, 5600)
+        utilStore.mutate_errorSignup(true)
+        utilStore.mutate_errorMessage('')
+        utilStore.mutate_headingEndPoint('login')
         return
       }
 
       clicks.value++
     } catch (error) {
-      errorCPassword.value = true
-      errorMessage.value = error.message
+      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorMessage(error.message)
     }
   }
 }
@@ -113,6 +112,12 @@ const showSuccessAlert = computed(() => {
   }
   return false
 })
+
+watch(route, (newValue) => {
+  if (newValue.path !== '/sign-up') {
+    utilStore.mutate_errorSignup(false)
+  }
+})
 </script>
 
 <template>
@@ -122,13 +127,6 @@ const showSuccessAlert = computed(() => {
       enter-active-class="animate__animated animate__fadeInLeftBig"
     >
       <SuccessAlert v-if="showSuccessAlert" />
-    </transition>
-    <transition
-      mode="out-in"
-      enter-active-class="animate__animated animate__fadeInLeftBig"
-      leave-active-class="animate__animated animate__fadeOutRightBig"
-    >
-      <ErrorAlert :message="errorMessage" v-if="errorCPassword" />
     </transition>
     <div />
     <div class="signup-section">
@@ -146,6 +144,7 @@ const showSuccessAlert = computed(() => {
               placeholder="Email"
               v-model="email"
             />
+
             <input
               class="p-box"
               :class="{ error: errorPassword, 'input-default': !errorPassword }"
@@ -153,13 +152,13 @@ const showSuccessAlert = computed(() => {
               type="password"
               placeholder="Password"
               v-model="password"
-              @change="insertPassword"
             />
+
             <input
               class="c-p-box"
               :class="{
-                error: errorCPassword,
-                'input-default': !errorCPassword,
+                error: utilStore.errorSignup,
+                'input-default': !utilStore.errorSignup,
               }"
               :style="{ transform: `translateX(${cpTranslate}%)` }"
               type="password"
@@ -206,12 +205,12 @@ h2 {
 }
 
 .input-default {
-  border: 2px solid var(--pink);
   background: #eee;
+  border: 2px solid var(--pink);
 }
 .error {
   background: rgba(255, 111, 111, 0.5);
-  border: 2px solid red;
+  border: 2px solid #ff6f6f;
 }
 
 .email-input {

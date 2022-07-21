@@ -7,12 +7,12 @@ import {
   CONTINUE,
 } from '../constants/copy'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
-import ErrorAlert from '@/components/partials/ErrorAlert.vue'
+// import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 </script>
 
 <template>
   <main class="login-container">
-    <ErrorAlert message="Error Message" />
+    <!-- <ErrorAlert message="Error Message" /> -->
     <div />
     <div class="login-section">
       <div class="login-window">

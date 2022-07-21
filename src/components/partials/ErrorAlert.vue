@@ -1,15 +1,24 @@
 <script setup>
-const props = defineProps(['message'])
+import { useUtilStore } from '@/stores/util'
+
+const utilStore = useUtilStore()
 </script>
 
 <template>
-  <div class="alert">
-    <div class="message">{{ props.message }}</div>
+  <div class="error-alert">
+    <div v-if="utilStore.errorMessage">
+      {{ utilStore.errorMessage }}
+    </div>
+    <div v-else>
+      An account already exists with this email. Want to
+      <router-link :to="{ name: utilStore.headingEndPoint }">login</router-link>
+      instead?
+    </div>
   </div>
 </template>
 
 <style lang="scss">
-.alert {
+.error-alert {
   width: 100%;
   position: fixed;
   top: 0;
@@ -20,9 +29,13 @@ const props = defineProps(['message'])
   align-items: center;
   z-index: 100;
 
-  .message {
+  > div {
     color: #ffffff;
     font-size: 24px;
+
+    a {
+      color: #fff;
+    }
   }
 }
 </style>

@@ -4,6 +4,7 @@ export const useUtilStore = defineStore({
   id: 'util',
   state: () => ({
     headingEndPoint: '',
+    showSuccessAlert: false,
     errorSignup: false,
     errorMessage: '',
   }),
@@ -11,6 +12,9 @@ export const useUtilStore = defineStore({
   actions: {
     mutate_headingEndPoint(payload) {
       this.headingEndPoint = payload
+    },
+    mutate_showSuccessAlert(payload) {
+      this.showSuccessAlert = payload
     },
     mutate_errorEmail(payload) {
       this.errorEmail = payload

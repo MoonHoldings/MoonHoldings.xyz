@@ -5,17 +5,33 @@ export const useUserStore = defineStore({
   id: 'user',
   state: () => ({
     server_url: 'http://localhost:9000/api',
+    axios_config: { headers: { 'Content-Type': 'application/json' } },
   }),
   getters: {},
   actions: {
-    async signup(payload) {
-      console.log(`${this.server_url}/register`)
+    async login(payload) {
       try {
-        const config = { headers: { 'Content-Type': 'application/json' } }
+        const response = await axios.post(
+          `${this.server_url}/login`,
+          payload,
+          this.axios_config
+        )
+        const result = await response.data
+        return result
+      } catch (error) {
+        const { response } = error
+        return {
+          success: response.data.success,
+          message: response.data.message,
+        }
+      }
+    },
+    async signup(payload) {
+      try {
         const response = await axios.post(
           `${this.server_url}/register`,
           payload,
-          config
+          this.axios_config
         )
 
         const result = await response.data

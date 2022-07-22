@@ -1,5 +1,6 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import SuccessAlert from '@/components/partials/SuccessAlert.vue'
 import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 import { useUtilStore } from '@/stores/util'
 
@@ -12,8 +13,16 @@ const utils = useUtilStore()
     enter-active-class="animate__animated animate__fadeInLeftBig"
     leave-active-class="animate__animated animate__fadeOutRightBig"
   >
+    <SuccessAlert v-if="utils.showSuccessAlert" />
+  </transition>
+  <transition
+    mode="out-in"
+    enter-active-class="animate__animated animate__fadeInLeftBig"
+    leave-active-class="animate__animated animate__fadeOutRightBig"
+  >
     <ErrorAlert v-if="utils.errorSignup" />
   </transition>
+
   <RouterView />
 </template>
 

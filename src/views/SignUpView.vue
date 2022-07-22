@@ -4,8 +4,6 @@ import { useRoute } from 'vue-router'
 import { MOON_XYZ, SUBMIT } from '../constants/copy'
 import { CONTINUE } from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
-import SuccessAlert from '@/components/partials/SuccessAlert.vue'
-// import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
 import passwordValidate from '@/utils/passwordValidate'
@@ -92,6 +90,7 @@ const signup = async () => {
         return
       }
 
+      utilStore.mutate_showSuccessAlert(true)
       clicks.value++
     } catch (error) {
       utilStore.mutate_errorSignup(true)
@@ -106,28 +105,17 @@ const showPassNote = computed(() => {
   }
   return false
 })
-const showSuccessAlert = computed(() => {
-  if (clicks.value > 2) {
-    return true
-  }
-  return false
-})
 
 watch(route, (newValue) => {
   if (newValue.path !== '/sign-up') {
     utilStore.mutate_errorSignup(false)
+    utilStore.mutate_showSuccessAlert(false)
   }
 })
 </script>
 
 <template>
   <main class="signup-container">
-    <transition
-      mode="out-in"
-      enter-active-class="animate__animated animate__fadeInLeftBig"
-    >
-      <SuccessAlert v-if="showSuccessAlert" />
-    </transition>
     <div />
     <div class="signup-section">
       <div class="signup-window" :class="{ 'inc-signup': incSignup }">
@@ -217,16 +205,6 @@ h2 {
   margin-bottom: 20px;
   input {
     left: 0;
-  }
-  .e-box {
-    position: relative;
-    z-index: 20;
-    transition: transform 0.4s ease-in-out;
-  }
-  .p-box {
-    position: absolute;
-    z-index: 19;
-    transition: transform 0.4s ease-in-out;
   }
   .c-p-box {
     position: absolute;

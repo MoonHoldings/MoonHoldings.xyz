@@ -50,6 +50,16 @@
         padding-left: 19px;
         font-size: 20px;
       }
+      .e-box {
+        position: relative;
+        z-index: 20;
+        transition: transform 0.4s ease-in-out;
+      }
+      .p-box {
+        position: absolute;
+        z-index: 19;
+        transition: transform 0.4s ease-in-out;
+      }
     }
     .continue-btn {
       @include primary-btn;

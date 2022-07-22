@@ -8,6 +8,8 @@ import {
   CONTINUE,
 } from '../constants/copy'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
+import { useUserStore } from '@/stores/user'
+import { useUtilStore } from '@/stores/util'
 
 const clicks = ref(0)
 const email = ref('')
@@ -19,17 +21,21 @@ const errorPassword = ref(false)
 const emTranslate = ref(0)
 const pTranslate = ref(130)
 
-const continueBtn = () => {
+const userStore = useUserStore()
+const utilStore = useUtilStore()
+
+const continueBtn = async () => {
   switch (clicks.value) {
     case 0:
       validateEmail()
+      break
+    case 1:
+      await login()
       break
 
     default:
       break
   }
-
-  clicks.value++
 }
 
 const validateEmail = () => {
@@ -44,9 +50,27 @@ const validateEmail = () => {
     clicks.value++
   }
 }
-// const login = ()=>{
+const login = async () => {
+  utilStore.mutate_errorLogin(false)
+  try {
+    const response = await userStore.login({
+      email: email.value,
+      password: password.value,
+    })
 
-// }
+    if (!response.success) {
+      utilStore.mutate_errorLogin(true)
+      utilStore.mutate_errorMessage(response.message)
+      return
+    }
+
+    utilStore.mutate_showSuccessAlert(true)
+    clicks.value++
+  } catch (error) {
+    utilStore.mutate_errorLogin(true)
+    utilStore.mutate_errorMessage(error.message)
+  }
+}
 </script>
 
 <template>
@@ -77,7 +101,7 @@ const validateEmail = () => {
               v-model="password"
             />
             <a href="/forgot-password">{{ FORGOT_PASSWORD }}</a>
-            <button class="continue-btn" @click="continueBtn">
+            <button class="continue-btn" @click.prevent="continueBtn">
               {{ CONTINUE }}
             </button>
           </div>
@@ -120,6 +144,7 @@ const validateEmail = () => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
 }
 h2 {
   margin-bottom: 26px;

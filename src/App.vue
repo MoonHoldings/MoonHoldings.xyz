@@ -20,7 +20,7 @@ const utils = useUtilStore()
     enter-active-class="animate__animated animate__fadeInLeftBig"
     leave-active-class="animate__animated animate__fadeOutRightBig"
   >
-    <ErrorAlert v-if="utils.errorSignup" />
+    <ErrorAlert v-if="utils.errorSignup || utils.errorLogin" />
   </transition>
 
   <RouterView />

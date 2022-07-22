@@ -6,6 +6,7 @@ export const useUtilStore = defineStore({
     headingEndPoint: '',
     showSuccessAlert: false,
     errorSignup: false,
+    errorLogin: false,
     errorMessage: '',
   }),
   getters: {},
@@ -16,11 +17,11 @@ export const useUtilStore = defineStore({
     mutate_showSuccessAlert(payload) {
       this.showSuccessAlert = payload
     },
-    mutate_errorEmail(payload) {
-      this.errorEmail = payload
-    },
     mutate_errorSignup(payload) {
       this.errorSignup = payload
+    },
+    mutate_errorLogin(payload) {
+      this.errorLogin = payload
     },
     mutate_errorMessage(payload) {
       this.errorMessage = payload

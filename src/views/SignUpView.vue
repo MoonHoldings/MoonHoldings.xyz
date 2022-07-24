@@ -48,7 +48,11 @@ const validateEmail = () => {
   const result = email.value.includes('@')
   if (!result || !email.value) {
     errorEmail.value = true
+    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorMessage('Email is not valid')
   } else {
+    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorMessage('')
     errorEmail.value = false
     emTranslate.value = -130
     pTranslate.value = 0

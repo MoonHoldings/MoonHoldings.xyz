@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import {
   MOON_XYZ,
   LOGIN,
+  SIGN_UP,
   FORGOT_PASSWORD,
   DONT_HAVE_ACCOUNT,
   CONTINUE,
@@ -112,7 +113,7 @@ const login = async () => {
               class="signup-btn"
               @click.prevent="$router.push('/sign-up')"
             >
-              Sign Up
+              {{ SIGN_UP }}
             </button>
           </div>
 
@@ -157,7 +158,9 @@ h2 {
 
   input {
     margin-bottom: 20.41px;
+    border-radius: 4px;
   }
+
   a {
     color: #000;
     text-decoration: none;

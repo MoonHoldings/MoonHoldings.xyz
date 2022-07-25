@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { MOON_XYZ, SUBMIT } from '../constants/copy'
-import { CONTINUE } from '../constants'
+import { CONTINUE, SIGN_UP } from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
@@ -124,7 +124,7 @@ watch(route, (newValue) => {
     <div class="signup-section">
       <div class="signup-window" :class="{ 'inc-signup': incSignup }">
         <h1>{{ MOON_XYZ }}</h1>
-        <h2>Sign Up</h2>
+        <h2>{{ SIGN_UP }}</h2>
 
         <form action="">
           <div class="email-input">

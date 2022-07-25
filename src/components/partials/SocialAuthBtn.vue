@@ -1,24 +1,15 @@
 <script setup>
+import { reactive } from 'vue'
 const props = defineProps(['bg-color', 'text'])
 
-const social_auth_styles = () => {
-  return [
-    {
-      backgroundColor: `${this.bgColor}`,
-      borderColor: `${this.bgColor}`,
-    },
-  ]
-}
+const btn_styles = reactive({
+  backgroundColor: `${props.bgColor}`,
+  borderColor: `${props.bgColor}`,
+})
 </script>
 
 <template>
-  <button
-    :style="{
-      'background-color': props.bgColor,
-      'border-color': props.bgColor,
-    }"
-  >
-    <!-- <button :style="social_auth_styles"> -->
+    <button :style="btn_styles">
     {{ props.text }}
   </button>
 </template>

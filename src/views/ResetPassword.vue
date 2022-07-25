@@ -1,5 +1,5 @@
 <script setup>
-import { MOON_XYZ, RESET_PASSWORD } from '../constants/copy'
+import { MOON_XYZ, RESET_PASSWORD, SUBMIT } from '../constants/copy'
 </script>
 
 <template>
@@ -12,7 +12,7 @@ import { MOON_XYZ, RESET_PASSWORD } from '../constants/copy'
 
         <form>
           <input type="email" placeholder="Email" />
-          <button>Submit</button>
+          <button>{{ SUBMIT }}</button>
         </form>
 
         <div class="guide-text">
@@ -46,7 +46,7 @@ import { MOON_XYZ, RESET_PASSWORD } from '../constants/copy'
     width: 400px;
     background: #ffffff;
     border: 1px solid #979797;
-    border-radius: 12px;
+    border-radius: 4px;
     padding: 4em;
 
     h1,
@@ -86,7 +86,7 @@ import { MOON_XYZ, RESET_PASSWORD } from '../constants/copy'
       min-height: 48px;
       background: #13f195;
       border: 1px solid #a1a1a1;
-      border-radius: 8px;
+      border-radius: 4px;
       font-size: 20px;
       font-weight: 400;
       letter-spacing: 0.4px;

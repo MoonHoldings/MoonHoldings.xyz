@@ -3,6 +3,7 @@ export const MOON_HOLDINGS = 'Moon Holdings'
 export const MOONHOLDINGS = 'MoonHoldings'
 export const LOGIN = 'Log in'
 export const SUBMIT = 'Submit'
+export const SIGN_UP = 'Sign Up'
 export const RESET_PASSWORD = 'Reset Password'
 export const FORGOT_PASSWORD = 'Forgot password?'
 export const DONT_HAVE_ACCOUNT = `Don't have account yet?`

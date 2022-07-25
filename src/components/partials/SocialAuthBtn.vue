@@ -1,9 +1,24 @@
 <script setup>
 const props = defineProps(['bg-color', 'text'])
+
+const social_auth_styles = () => {
+  return [
+    {
+      backgroundColor: `${this.bgColor}`,
+      borderColor: `${this.bgColor}`,
+    },
+  ]
+}
 </script>
 
 <template>
-  <button :style="{ 'background-color': props.bgColor }">
+  <button
+    :style="{
+      'background-color': props.bgColor,
+      'border-color': props.bgColor,
+    }"
+  >
+    <!-- <button :style="social_auth_styles"> -->
     {{ props.text }}
   </button>
 </template>
@@ -13,8 +28,7 @@ button {
   width: 100%;
   height: 48px;
   outline: none;
-  border: 1px solid #a1a1a1;
-  border-radius: 8px;
+  border-radius: 4px;
   color: #fff;
   font-size: 18px;
   letter-spacing: 0.8px;

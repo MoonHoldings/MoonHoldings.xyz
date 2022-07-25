@@ -1,8 +1,9 @@
 <script setup>
+import { RouterLink } from 'vue-router'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { MOON_XYZ, SUBMIT } from '../constants/copy'
-import { CONTINUE } from '../constants'
+import { CONTINUE, SIGN_UP } from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
@@ -48,7 +49,11 @@ const validateEmail = () => {
   const result = email.value.includes('@')
   if (!result || !email.value) {
     errorEmail.value = true
+    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorMessage('Email is not valid')
   } else {
+    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorMessage('')
     errorEmail.value = false
     emTranslate.value = -130
     pTranslate.value = 0
@@ -119,8 +124,10 @@ watch(route, (newValue) => {
     <div />
     <div class="signup-section">
       <div class="signup-window" :class="{ 'inc-signup': incSignup }">
-        <h1>{{ MOON_XYZ }}</h1>
-        <h2>Sign Up</h2>
+        <RouterLink to="/">
+          <h1>{{ MOON_XYZ }}</h1>
+        </RouterLink>
+        <h2>{{ SIGN_UP }}</h2>
 
         <form action="">
           <div class="email-input">
@@ -132,6 +139,20 @@ watch(route, (newValue) => {
               placeholder="Email"
               v-model="email"
             />
+
+            <div class="accept-terms-section">
+              <input type="checkbox" id="accept-terms" />
+              <label for="accept-terms">
+                I have read and accept the
+                <RouterLink to="/terms-of-service" target="_blank"
+                  >terms</RouterLink
+                >
+                &
+                <RouterLink to="/privacy-policy" target="_blank"
+                  >privacy policy</RouterLink
+                >.
+              </label>
+            </div>
 
             <input
               class="p-box"
@@ -176,20 +197,17 @@ watch(route, (newValue) => {
 
 <style scoped lang="scss">
 @import '@/sass/mixins/primary-btn.scss';
-
 .signup-window {
   overflow: hidden;
-  height: 446px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   transition: height 0.4s ease;
+  padding: 2rem;
 }
+
 .inc-signup {
   height: 506px;
-}
-h2 {
-  margin-bottom: 15px;
 }
 
 .input-default {
@@ -216,6 +234,7 @@ h2 {
 form {
   margin-bottom: 20px;
 }
+
 .pass-note {
   height: 0px;
   display: flex;
@@ -224,12 +243,28 @@ form {
   font-size: 12px;
   transition: all 0.4s ease;
 }
+
 .note-open {
   height: 60px;
 }
+
 .social-signin {
   display: flex;
   flex-direction: column;
   row-gap: 20px;
+}
+
+.accept-terms-section {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  margin-top: 15px;
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+#accept-terms {
+  height: 20px;
 }
 </style>

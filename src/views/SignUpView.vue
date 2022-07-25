@@ -1,4 +1,5 @@
 <script setup>
+import { RouterLink } from 'vue-router'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { MOON_XYZ, SUBMIT } from '../constants/copy'
@@ -123,7 +124,9 @@ watch(route, (newValue) => {
     <div />
     <div class="signup-section">
       <div class="signup-window" :class="{ 'inc-signup': incSignup }">
-        <h1>{{ MOON_XYZ }}</h1>
+        <RouterLink to="/">
+          <h1>{{ MOON_XYZ }}</h1>
+        </RouterLink>
         <h2>{{ SIGN_UP }}</h2>
 
         <form action="">
@@ -180,7 +183,6 @@ watch(route, (newValue) => {
 
 <style scoped lang="scss">
 @import '@/sass/mixins/primary-btn.scss';
-
 .signup-window {
   overflow: hidden;
   height: 446px;
@@ -189,11 +191,9 @@ watch(route, (newValue) => {
   justify-content: center;
   transition: height 0.4s ease;
 }
+
 .inc-signup {
   height: 506px;
-}
-h2 {
-  margin-bottom: 15px;
 }
 
 .input-default {

@@ -1,4 +1,5 @@
 <script setup>
+import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 import {
   MOON_XYZ,
@@ -79,7 +80,9 @@ const login = async () => {
     <div />
     <div class="login-section">
       <div class="login-window">
-        <h1>{{ MOON_XYZ }}</h1>
+        <RouterLink to="/">
+          <h1>{{ MOON_XYZ }}</h1>
+        </RouterLink>
         <h2>{{ LOGIN }}</h2>
 
         <form action="">
@@ -130,7 +133,6 @@ const login = async () => {
 
 <style scoped lang="scss">
 @import '@/sass/mixins/primary-btn.scss';
-
 .input-default {
   background: #eee;
   border: 2px solid var(--pink);
@@ -147,9 +149,7 @@ const login = async () => {
   justify-content: center;
   overflow: hidden;
 }
-h2 {
-  margin-bottom: 26px;
-}
+
 .email-input {
   display: flex;
   flex-direction: column;

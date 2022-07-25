@@ -140,6 +140,20 @@ watch(route, (newValue) => {
               v-model="email"
             />
 
+            <div class="accept-terms-section">
+              <input type="checkbox" id="accept-terms" />
+              <label for="accept-terms">
+                I have read and accept the
+                <RouterLink to="/terms-of-service" target="_blank"
+                  >terms</RouterLink
+                >
+                &
+                <RouterLink to="/privacy-policy" target="_blank"
+                  >privacy policy</RouterLink
+                >.
+              </label>
+            </div>
+
             <input
               class="p-box"
               :class="{ error: errorPassword, 'input-default': !errorPassword }"
@@ -185,11 +199,11 @@ watch(route, (newValue) => {
 @import '@/sass/mixins/primary-btn.scss';
 .signup-window {
   overflow: hidden;
-  height: 446px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   transition: height 0.4s ease;
+  padding: 2rem;
 }
 
 .inc-signup {
@@ -220,6 +234,7 @@ watch(route, (newValue) => {
 form {
   margin-bottom: 20px;
 }
+
 .pass-note {
   height: 0px;
   display: flex;
@@ -228,12 +243,28 @@ form {
   font-size: 12px;
   transition: all 0.4s ease;
 }
+
 .note-open {
   height: 60px;
 }
+
 .social-signin {
   display: flex;
   flex-direction: column;
   row-gap: 20px;
+}
+
+.accept-terms-section {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  margin-top: 15px;
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+#accept-terms {
+  height: 20px;
 }
 </style>

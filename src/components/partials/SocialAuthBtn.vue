@@ -4,16 +4,21 @@ const props = defineProps(['bg-color', 'text'])
 const social_auth_styles = () => {
   return [
     {
-        backgroundColor: `${this.bgColor}`,
-        borderColor: `${this.bgColor}`,
-    }
+      backgroundColor: `${this.bgColor}`,
+      borderColor: `${this.bgColor}`,
+    },
   ]
 }
 </script>
 
 <template>
-  <button :style="{ 'background-color': props.bgColor, 'border-color': props.bgColor }">
-  <!-- <button :style="social_auth_styles"> -->
+  <button
+    :style="{
+      'background-color': props.bgColor,
+      'border-color': props.bgColor,
+    }"
+  >
+    <!-- <button :style="social_auth_styles"> -->
     {{ props.text }}
   </button>
 </template>

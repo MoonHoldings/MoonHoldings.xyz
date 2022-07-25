@@ -143,12 +143,9 @@ watch(route, (newValue) => {
             <div class="accept-terms-section">
               <input type="checkbox" id="accept-terms" />
               <label for="accept-terms">
-                I have read and accept the
-                <RouterLink to="/terms-of-service" target="_blank"
+                I certify that I am 18 years of age or older, agree to the <RouterLink to="/terms-of-service" target="_blank"
                   >terms</RouterLink
-                >
-                &
-                <RouterLink to="/privacy-policy" target="_blank"
+                >, and acknowledge the <RouterLink to="/privacy-policy" target="_blank"
                   >privacy policy</RouterLink
                 >.
               </label>
@@ -196,6 +193,7 @@ watch(route, (newValue) => {
 </template>
 
 <style scoped lang="scss">
+@import '@/sass/mixins/functions.scss';
 @import '@/sass/mixins/primary-btn.scss';
 .signup-window {
   overflow: hidden;
@@ -258,6 +256,7 @@ form {
   display: grid;
   grid-template-columns: 1fr 4fr;
   margin-top: 15px;
+  font-size: rem(12);
 
   a {
     text-decoration: underline;

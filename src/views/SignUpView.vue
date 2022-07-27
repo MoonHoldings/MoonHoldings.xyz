@@ -131,47 +131,29 @@ watch(route, (newValue) => {
 
         <form action="">
           <div class="email-input">
-            <input
-              class="e-box"
-              :class="{ error: errorEmail, 'input-default': !errorEmail }"
-              :style="{ transform: `translateX(${emTranslate}%)` }"
-              type="email"
-              placeholder="Email"
-              v-model="email"
-            />
+            <input class="e-box" :class="{ error: errorEmail, 'input-default': !errorEmail }"
+              :style="{ transform: `translateX(${emTranslate}%)` }" type="email" placeholder="Email" v-model="email" />
 
-            <div class="accept-terms-section">
-              <input type="checkbox" id="accept-terms" />
-              <label for="accept-terms">
-                I certify that I am 18 years of age or older, agree to the <RouterLink to="/terms-of-service" target="_blank"
-                  >terms</RouterLink
-                >, and acknowledge the <RouterLink to="/privacy-policy" target="_blank"
-                  >privacy policy</RouterLink
-                >.
-              </label>
-            </div>
+            <input class="p-box" :class="{ error: errorPassword, 'input-default': !errorPassword }"
+              :style="{ transform: `translateX(${pTranslate}%)` }" type="password" placeholder="Password"
+              v-model="password" />
 
-            <input
-              class="p-box"
-              :class="{ error: errorPassword, 'input-default': !errorPassword }"
-              :style="{ transform: `translateX(${pTranslate}%)` }"
-              type="password"
-              placeholder="Password"
-              v-model="password"
-            />
-
-            <input
-              class="c-p-box"
-              :class="{
-                error: utilStore.errorSignup,
-                'input-default': !utilStore.errorSignup,
-              }"
-              :style="{ transform: `translateX(${cpTranslate}%)` }"
-              type="password"
-              placeholder="Confirm Password"
-              v-model="confirmPassword"
-            />
+            <input class="c-p-box" :class="{
+              error: utilStore.errorSignup,
+              'input-default': !utilStore.errorSignup,
+            }" :style="{ transform: `translateX(${cpTranslate}%)` }" type="password" placeholder="Confirm Password"
+              v-model="confirmPassword" />
           </div>
+
+          <div class="accept-terms-section">
+            <input type="checkbox" id="accept-terms" />
+            <label for="accept-terms">
+              I certify that I am 18 years of age or older, agree to the <RouterLink to="/terms-of-service"
+                target="_blank">terms</RouterLink>, and acknowledge the <RouterLink to="/privacy-policy"
+                target="_blank">privacy policy</RouterLink>.
+            </label>
+          </div>
+
           <div class="pass-note" :class="{ 'note-open': showPassNote }">
             <div>
               Minimum 8 characters long, at least 1 special, 1 number and 1
@@ -195,6 +177,7 @@ watch(route, (newValue) => {
 <style scoped lang="scss">
 @import '@/sass/mixins/functions.scss';
 @import '@/sass/mixins/primary-btn.scss';
+
 .signup-window {
   overflow: hidden;
   display: flex;
@@ -205,13 +188,14 @@ watch(route, (newValue) => {
 }
 
 .inc-signup {
-  height: 506px;
+  height: 506+57.6px;
 }
 
 .input-default {
   background: #eee;
   border: 2px solid var(--pink);
 }
+
 .error {
   background: rgba(255, 111, 111, 0.5);
   border: 2px solid #ff6f6f;
@@ -219,9 +203,11 @@ watch(route, (newValue) => {
 
 .email-input {
   margin-bottom: 20px;
+
   input {
     left: 0;
   }
+
   .c-p-box {
     position: absolute;
     z-index: 18;
@@ -255,7 +241,7 @@ form {
 .accept-terms-section {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  margin-top: 15px;
+  margin: 15px 0;
   font-size: rem(12);
 
   a {

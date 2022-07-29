@@ -7,7 +7,7 @@
           <p>MoonHoldings.xyz</p>
           <p class="small">is being built</p>
           <a href="https://twitter.com/moonholdingsxyz" target="_blank">
-            <img src="twitter-logo.png" alt="MoonHoldings Twitter"/>
+            <img src="/twitter-logo.png" alt="MoonHoldings Twitter"/>
           </a>
         </div>
       </div>

@@ -207,6 +207,7 @@ watch(route, (newValue) => {
 <style scoped lang="scss">
 @import '@/sass/mixins/functions.scss';
 @import '@/sass/mixins/primary-btn.scss';
+
 .signup-window {
   overflow: hidden;
   min-height: 513.6px;
@@ -225,6 +226,7 @@ watch(route, (newValue) => {
   background: #eee;
   border: 2px solid var(--pink);
 }
+
 .error {
   background: rgba(255, 111, 111, 0.5);
   border: 2px solid #ff6f6f;
@@ -232,9 +234,11 @@ watch(route, (newValue) => {
 
 .email-input {
   margin-bottom: 20px;
+
   input {
     left: 0;
   }
+
   .c-p-box {
     position: absolute;
     z-index: 18;

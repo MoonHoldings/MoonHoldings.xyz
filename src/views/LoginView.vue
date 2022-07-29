@@ -21,7 +21,7 @@ import ErrorAlert from '@/components/partials/ErrorAlert.vue'
         <form action="">
           <div class="email-input">
             <input type="text" placeholder="Email" class="error-input" />
-            <a href="/forgot-password">{{ FORGOT_PASSWORD }}</a>
+            <a href="/reset-password">{{ FORGOT_PASSWORD }}</a>
             <button>Continue</button>
           </div>
 

@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useUtilStore = defineStore({
-  id: 'util',
+export const useUtilStore = defineStore('util', {
   state: () => ({
     headingEndPoint: '',
     showSuccessAlert: false,

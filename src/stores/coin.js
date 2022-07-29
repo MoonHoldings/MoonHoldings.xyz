@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-export const useCoinStore = defineStore({
-  id: 'user',
+export const useCoinStore = defineStore('coin', {
   state: () => ({
     server_url: 'http://localhost:9000/api',
     axios_config: { headers: { 'Content-Type': 'application/json' } },

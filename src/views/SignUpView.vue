@@ -140,17 +140,6 @@ watch(route, (newValue) => {
               v-model="email"
             />
 
-            <div class="accept-terms-section">
-              <input type="checkbox" id="accept-terms" />
-              <label for="accept-terms">
-                I certify that I am 18 years of age or older, agree to the <RouterLink to="/terms-of-service" target="_blank"
-                  >terms</RouterLink
-                >, and acknowledge the <RouterLink to="/privacy-policy" target="_blank"
-                  >privacy policy</RouterLink
-                >.
-              </label>
-            </div>
-
             <input
               class="p-box"
               :class="{ error: errorPassword, 'input-default': !errorPassword }"
@@ -172,19 +161,42 @@ watch(route, (newValue) => {
               v-model="confirmPassword"
             />
           </div>
+
           <div class="pass-note" :class="{ 'note-open': showPassNote }">
             <div>
               Minimum 8 characters long, at least 1 special, 1 number and 1
               letter
             </div>
           </div>
+
+          <div class="accept-terms-section">
+            <input type="checkbox" id="accept-terms" />
+            <label for="accept-terms">
+              I certify that I am 18 years of age or older, agree to the
+              <RouterLink to="/terms-of-service" target="_blank"
+                >terms</RouterLink
+              >, and acknowledge the
+              <RouterLink to="/privacy-policy" target="_blank"
+                >privacy policy</RouterLink
+              >.
+            </label>
+          </div>
+
           <button class="continue-btn" @click.prevent="continueBtn">
             {{ clicks > 1 ? SUBMIT : CONTINUE }}
           </button>
         </form>
         <div class="social-signin">
-          <SocialAuthBtn bg-color="#55ACEE" text="Sign Up With Twitter" />
-          <SocialAuthBtn bg-color="#7289DA" text="Sign Up With Discord" />
+          <SocialAuthBtn
+            social-name="twitter"
+            bg-color="#55ACEE"
+            text="Sign Up With Twitter"
+          />
+          <SocialAuthBtn
+            social-name="discord"
+            bg-color="#7289DA"
+            text="Sign Up With Discord"
+          />
         </div>
       </div>
     </div>
@@ -197,15 +209,16 @@ watch(route, (newValue) => {
 @import '@/sass/mixins/primary-btn.scss';
 .signup-window {
   overflow: hidden;
+  min-height: 513.6px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: height 0.4s ease;
+  transition: min-height 0.4s ease;
   padding: 2rem;
 }
 
 .inc-signup {
-  height: 506px;
+  min-height: 571.2px;
 }
 
 .input-default {
@@ -255,8 +268,9 @@ form {
 .accept-terms-section {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  margin-top: 15px;
+  margin-bottom: 15px;
   font-size: rem(12);
+  background-color: #fff;
 
   a {
     text-decoration: underline;

@@ -121,8 +121,16 @@ const login = async () => {
           </div>
 
           <div class="social-signin">
-            <SocialAuthBtn bg-color="#55ACEE" text="Log In With Twitter" />
-            <SocialAuthBtn bg-color="#7289DA" text="Log In With Discord" />
+            <SocialAuthBtn
+              social-name="twitter"
+              bg-color="#55ACEE"
+              text="Log In With Twitter"
+            />
+            <SocialAuthBtn
+              social-name="discord"
+              bg-color="#7289DA"
+              text="Log In With Discord"
+            />
           </div>
         </form>
       </div>

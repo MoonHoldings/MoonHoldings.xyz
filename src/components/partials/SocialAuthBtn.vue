@@ -1,6 +1,9 @@
 <script setup>
 import { reactive } from 'vue'
+import { useUserStore } from '@/stores/user'
+
 const props = defineProps(['bg-color', 'text', 'social-name'])
+const userStore = useUserStore()
 
 const btn_styles = reactive({
   backgroundColor: `${props.bgColor}`,
@@ -9,10 +12,10 @@ const btn_styles = reactive({
 
 const btnClick = () => {
   if (props.socialName === 'twitter') {
-    window.open('http://localhost:9000/api/auth/twitter', '_self')
+    window.open(`${userStore.server_url}/auth/twitter`, '_self')
   }
   if (props.socialName === 'discord') {
-    window.open('http://localhost:9000/api/auth/discord', '_self')
+    window.open(`${userStore.server_url}/auth/discord`, '_self')
   }
 }
 </script>

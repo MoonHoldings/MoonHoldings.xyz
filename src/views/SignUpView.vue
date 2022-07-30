@@ -8,6 +8,7 @@ import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
 import passwordValidate from '@/utils/passwordValidate'
+import delay from '@/utils/delay'
 
 // const router = useRouter()
 const route = useRoute()
@@ -24,11 +25,13 @@ const emTranslate = ref(0)
 const pTranslate = ref(130)
 const cpTranslate = ref(130)
 const incSignup = ref(false)
+const checkboxValue = ref(null)
+const clickedOnce = ref(false)
 
 const userStore = useUserStore()
 const utilStore = useUtilStore()
 
-const continueBtn = async () => {
+const checkboxSwitchCases = () => {
   switch (clicks.value) {
     case 0:
       validateEmail()
@@ -37,7 +40,7 @@ const continueBtn = async () => {
       validatePassword()
       break
     case 2:
-      await signup()
+      signup()
       break
 
     default:
@@ -45,9 +48,28 @@ const continueBtn = async () => {
   }
 }
 
+const continueBtn = async () => {
+  if (checkboxValue.value === true) {
+    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorMessage('')
+
+    if (clickedOnce.value === true) {
+      delay(1).then(() => {
+        checkboxSwitchCases()
+      })
+    } else {
+      checkboxSwitchCases()
+    }
+  } else {
+    clickedOnce.value = true
+    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorMessage('Check the terms and policies')
+  }
+}
+
 const validateEmail = () => {
-  const result = email.value.includes('@')
-  if (!result || !email.value) {
+  const isValidEmail = email.value.includes('@')
+  if (!isValidEmail || !email.value) {
     errorEmail.value = true
     utilStore.mutate_errorSignup(true)
     utilStore.mutate_errorMessage('Email is not valid')
@@ -170,7 +192,7 @@ watch(route, (newValue) => {
           </div>
 
           <div class="accept-terms-section">
-            <input type="checkbox" id="accept-terms" />
+            <input type="checkbox" id="accept-terms" v-model="checkboxValue" />
             <label for="accept-terms">
               I certify that I am 18 years of age or older, agree to the
               <RouterLink to="/terms-of-service" target="_blank"

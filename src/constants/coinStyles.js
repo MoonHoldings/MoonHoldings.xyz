@@ -279,4 +279,92 @@
       background: "#fff"
     }
   },
+  {
+    id: "FIL",
+    name: "Filecoin",
+    colors: {
+      text: "#fff",
+      background: "#42C1CA"
+    }
+  },
+  {
+    id: "THETA",
+    name: "Theta Token",
+    colors: {
+      text: "#6EE3C0",
+      background: "#0F0F0F"
+    }
+  },
+  {
+    id: "AAVE",
+    name: "Aave",
+    colors: {
+      text: "#fff",
+      background: ["905696", "7FB4C1"]
+    }
+  },
+  {
+    id: "AXE",
+    name: "Axie Infinity",
+    colors: {
+      text: "#fff",
+      background: ["744B28", "F1A341"]
+    }
+  },
+  {
+    id: "1INCH",
+    name: "1inch",
+    colors: {
+      text: "#fff",
+      background: ["273E83", "3455AB"]
+    }
+  },
+  {
+    id: "MKR",
+    name: "Maker",
+    colors: {
+      text: "#fff",
+      background: "#54AC9F"
+    }
+  },
+  {
+    id: "FTM",
+    name: "Fantom",
+    colors: {
+      text: "#000",
+      background: "#fff"
+    }
+  },
+  {
+    id: "IOT",
+    name: "IOTA",
+    colors: {
+      text: "#fff",
+      background: "#000"
+    }
+  },
+  {
+    id: "GRT",
+    name: "The Graph",
+    colors: {
+      text: "#fff",
+      background: ["39208D", "5378C6"]
+    }
+  },
+  {
+    id: "RUNE",
+    name: "THORChain",
+    colors: {
+      text: "#72EDBB",
+      background: "#0F0F0F"
+    }
+  },
+  {
+    id: "ZEC",
+    name: "Zcash",
+    colors: {
+      text: "#000",
+      background: ["CB9342", "E8BE60"]
+    }
+  },
 ]

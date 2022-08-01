@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useCoinStore } from '@/stores/coin'
+import Header from "@/components/partials/Header.vue"
 
 const coinStore = useCoinStore()
 const inputCoinName = ref('')
@@ -17,6 +18,7 @@ const searchCoins = () => {
 </script>
 
 <template>
+<Header />
   <div class="p-coins">
     <form class="dropdown-form">
       <input

@@ -33,9 +33,9 @@ const router = createRouter({
       component: () => import('../views/ResetPassword.vue'),
     },
     {
-      path: '/portfolio-coins',
-      name: 'portfolio-coins',
-      component: () => import('../views/PortfolioCoins.vue'),
+      path: '/portfolio',
+      name: 'portfolio',
+      component: () => import('../views/Portfolio.vue'),
     },
     {
       path: '/privacy-policy',

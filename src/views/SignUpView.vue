@@ -227,7 +227,6 @@ watch(route, (newValue) => {
 </template>
 
 <style scoped lang="scss">
-@import '@/sass/mixins/functions.scss';
 @import '@/sass/mixins/primary-btn.scss';
 
 .signup-window {
@@ -295,7 +294,7 @@ form {
   display: grid;
   grid-template-columns: 1fr 4fr;
   margin-bottom: 15px;
-  font-size: rem(12);
+  font-size: 12px;
   background-color: #fff;
 
   a {

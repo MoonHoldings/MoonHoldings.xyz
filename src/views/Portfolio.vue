@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch  } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import Header from '@/components/partials/Header.vue'
 import {
   PORTFOLIO_WELCOME_HEADER,
@@ -12,21 +12,25 @@ const coinStore = useCoinStore()
 const coinNameInput = ref('')
 const searchedCoins = ref([])
 
-watch(coinNameInput, async ()=>{
-  if(coinNameInput.value.length >= 2){
-    await coinStore.getCoins(coinNameInput.value)
-    if(coinStore.coins.length !== 0){
-      coinStore.coins.forEach((coin) => {
+onMounted(async () => {
+  await coinStore.fetchCoins()
+  coinStore.getCoins()
+})
+
+watch(coinNameInput, async () => {
+  if (coinNameInput.value.length >= 2) {
+    coinStore.coins.forEach((coin) => {
+      const coinChar = coin.id.slice(0, coinNameInput.value.length)
+      const coinNameCap = coinNameInput.value.toUpperCase()
+      if (coinChar === coinNameCap) {
         searchedCoins.value.push(coin)
-      })
-    }
+      }
+    })
   }
-  if(coinNameInput.value.length === 0){
-    coinStore.mutate_emptyCoins()
+  if (coinNameInput.value.length === 0) {
     searchedCoins.value = []
   }
 })
-
 </script>
 
 <template>

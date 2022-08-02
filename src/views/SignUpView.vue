@@ -2,15 +2,22 @@
 import { RouterLink } from 'vue-router'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { MOON_XYZ, SUBMIT } from '../constants/copy'
-import { CONTINUE, SIGN_UP } from '../constants'
+import {
+  CONTINUE,
+  SIGN_UP,
+  MOON_XYZ,
+  SUBMIT,
+  CHECK_TERMS_POLICIES,
+  EMAIL_NOT_VALID,
+  PASSWORD_NOT_MATCH,
+  PASSWORD_REQUIREMENTS,
+} from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
 import passwordValidate from '@/utils/passwordValidate'
 import delay from '@/utils/delay'
 
-// const router = useRouter()
 const route = useRoute()
 
 const email = ref('')
@@ -63,7 +70,7 @@ const continueBtn = async () => {
   } else {
     clickedOnce.value = true
     utilStore.mutate_errorSignup(true)
-    utilStore.mutate_errorMessage('Check the terms and policies')
+    utilStore.mutate_errorMessage(CHECK_TERMS_POLICIES)
   }
 }
 
@@ -72,7 +79,7 @@ const validateEmail = () => {
   if (!isValidEmail || !email.value) {
     errorEmail.value = true
     utilStore.mutate_errorSignup(true)
-    utilStore.mutate_errorMessage('Email is not valid')
+    utilStore.mutate_errorMessage(EMAIL_NOT_VALID)
   } else {
     utilStore.mutate_errorSignup(false)
     utilStore.mutate_errorMessage('')
@@ -101,7 +108,7 @@ const validatePassword = () => {
 const signup = async () => {
   if (password.value !== confirmPassword.value) {
     utilStore.mutate_errorSignup(true)
-    utilStore.mutate_errorMessage('Password does not match')
+    utilStore.mutate_errorMessage(PASSWORD_NOT_MATCH)
   } else {
     utilStore.mutate_errorSignup(false)
     try {
@@ -185,10 +192,7 @@ watch(route, (newValue) => {
           </div>
 
           <div class="pass-note" :class="{ 'note-open': showPassNote }">
-            <div>
-              Minimum 8 characters long, at least 1 special, 1 number and 1
-              letter
-            </div>
+            <div>{{ PASSWORD_REQUIREMENTS }}</div>
           </div>
 
           <div class="accept-terms-section">

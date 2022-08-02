@@ -1,17 +1,29 @@
 <script setup>
+import {ref} from "vue"
 import Header from '@/components/partials/Header.vue'
 import {
   PORTFOLIO_WELCOME_HEADER,
   PORTFOLIO_WELCOME_MSG1,
   PORTFOLIO_WELCOME_MSG2,
 } from '@/constants/copy'
+import {useCoinStore} from "@/stores/coin"
+
+const coinStore = useCoinStore()
+const coinNameInput = ref("")
+
+const coinNameInputting = async ()=>{
+  if(coinNameInput.value.length >= 2){
+    await coinStore.getCoins(coinNameInput.value)
+    console.log(coinStore.coins)
+  }
+}
 </script>
 
 <template>
   <Header />
   <div class="portfolio">
     <div class="portfolio__coin-search">
-      <input type="text" placeholder="Search Coins" />
+      <input @input="coinNameInputting" v-model="coinNameInput" type="text" placeholder="Search Coins" />
       <span>&lt; Get Started</span>
     </div>
     <div class="portfolio__welcome-msg">

@@ -1,18 +1,11 @@
 <script setup>
-import { onMounted } from 'vue'
+// import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import SuccessAlert from '@/components/partials/SuccessAlert.vue'
 import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 import { useUtilStore } from '@/stores/util'
-import { useCoinStore } from '@/stores/coin'
 
 const utilStore = useUtilStore()
-const coinStore = useCoinStore()
-
-onMounted(async () => {
-  await coinStore.getCoins()
-  console.log(coinStore.coins)
-})
 </script>
 
 <template>

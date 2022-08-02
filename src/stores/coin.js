@@ -9,14 +9,23 @@ export const useCoinStore = defineStore('coin', {
   }),
   getters: {},
   actions: {
-    async getCoins() {
+    mutate_emptyCoins(){
+      this.coins = []
+    },
+    async getCoins(payload) {
       try {
         const response = await axios.get(
           `${this.server_url}/coins`,
           this.axios_config
         )
         const result = await response.data
-        this.coins = result.coins
+        const coinsArr = [...result.coins]
+        coinsArr.forEach(coin=>{
+          const coinChar = coin.id.slice(0,payload.length)
+          if(coinChar === payload){
+            this.coins.push(coin)
+          }
+        })
       } catch (error) {
         console.log(error.message)
       }

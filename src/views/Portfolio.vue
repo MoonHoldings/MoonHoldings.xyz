@@ -1,30 +1,57 @@
 <script setup>
-import {ref} from "vue"
+import { ref, watch  } from 'vue'
 import Header from '@/components/partials/Header.vue'
 import {
   PORTFOLIO_WELCOME_HEADER,
   PORTFOLIO_WELCOME_MSG1,
   PORTFOLIO_WELCOME_MSG2,
 } from '@/constants/copy'
-import {useCoinStore} from "@/stores/coin"
+import { useCoinStore } from '@/stores/coin'
 
 const coinStore = useCoinStore()
-const coinNameInput = ref("")
+const coinNameInput = ref('')
+const searchedCoins = ref([])
 
-const coinNameInputting = async ()=>{
+watch(coinNameInput, async ()=>{
   if(coinNameInput.value.length >= 2){
     await coinStore.getCoins(coinNameInput.value)
-    console.log(coinStore.coins)
+    if(coinStore.coins.length !== 0){
+      coinStore.coins.forEach((coin) => {
+        searchedCoins.value.push(coin)
+      })
+    }
   }
-}
+  if(coinNameInput.value.length === 0){
+    coinStore.mutate_emptyCoins()
+    searchedCoins.value = []
+  }
+})
+
 </script>
 
 <template>
   <Header />
   <div class="portfolio">
     <div class="portfolio__coin-search">
-      <input @input="coinNameInputting" v-model="coinNameInput" type="text" placeholder="Search Coins" />
+      <input
+        v-model="coinNameInput"
+        type="text"
+        placeholder="Search Coins"
+      />
       <span>&lt; Get Started</span>
+      <transition
+        mode="out-in"
+        enter-active-class="animate__animated animate__fadeInLeft"
+        leave-active-class="animate__animated animate__fadeOutLeft"
+      >
+        <div class="dropdown-list" v-if="searchedCoins.length !== 0">
+          <ul>
+            <li v-for="coin in searchedCoins">
+              <button>{{ coin.id }} - {{ coin.name }}</button>
+            </li>
+          </ul>
+        </div>
+      </transition>
     </div>
     <div class="portfolio__welcome-msg">
       <h1>{{ PORTFOLIO_WELCOME_HEADER }}</h1>
@@ -68,6 +95,26 @@ const coinNameInputting = async ()=>{
     }
     span {
       font-size: 17px;
+    }
+    .dropdown-list {
+      width: 380px;
+      min-height: 150px;
+      background-color: #fff;
+      ul {
+        padding: 7px 0;
+        list-style: none;
+        li {
+          button {
+            width: 100%;
+            text-align: left;
+            padding: 5px 10px;
+            font-size: 16px;
+            background: none;
+            border: none;
+            outline: none;
+          }
+        }
+      }
     }
   }
   &__welcome-msg {

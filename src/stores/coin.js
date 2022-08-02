@@ -12,13 +12,17 @@ export const useCoinStore = defineStore('coin', {
     mutate_emptyCoins(){
       this.coins = []
     },
-    async getCoins(payload) {
+    async getCoins(payload) {      
       try {
-        const response = await axios.get(
-          `${this.server_url}/coins`,
-          this.axios_config
-        )
-        const result = await response.data
+        let result
+        if(!result){        
+          console.log(result)
+          const response = await axios.get(
+            `${this.server_url}/coins`,
+            this.axios_config
+          )
+          result = await response.data
+        }
         const coinsArr = [...result.coins]
         coinsArr.forEach(coin=>{
           const coinChar = coin.id.slice(0,payload.length)

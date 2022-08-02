@@ -367,4 +367,436 @@
       background: ["CB9342", "E8BE60"]
     }
   },
+  {
+    id: "AR",
+    name: "Arweave",
+    colors: {
+      text: "#000",
+      background: "#fff"
+    }
+  },
+  {
+    id: "NEO",
+    name: "Neo",
+    colors: {
+      text: "#fff",
+      background: ["6FB836", "B7DF50"]
+    }
+  },
+  {
+    id: "GAS",
+    name: "Gas",
+    colors: {
+      text: "#fff",
+      background: ["6FB836", "B7DF50"]
+    }
+  },
+  {
+    id: "SNX",
+    name: "Synthetix Network Token",
+    colors: {
+      text: "#fff",
+      background: "#1D1A2F"
+    }
+  },
+  {
+    id: "ZIL",
+    name: "Ziliqa",
+    colors: {
+      text: "#6CBFBE",
+      background: "#fff"
+    }
+  },
+  {
+    id: "BAT",
+    name: "Basic Attention Token",
+    colors: {
+      text: "#EC5E2A",
+      background: "#fff"
+    }
+  },
+  {
+    id: "CRV",
+    name: "Curve DAO Token",
+    colors: {
+      text: "#000",
+      background: ["791710", "EBD94B", "2B65ED"]
+    }
+  },
+  {
+    id: "STX",
+    name: "Stacks",
+    colors: {
+      text: "#fff",
+      background: "#211F69"
+    }
+  },
+  {
+    id: "ENJ",
+    name: "B489E7",
+    colors: {
+      text: "#fff",
+      background: "#211F69"
+    }
+  },
+  {
+    id: "PAX",
+    name: "PAX Gold",
+    colors: {
+      text: "#000",
+      background: ["C6A843", "EEE84F"]
+    }
+  },
+  {
+    id: "KSM",
+    name: "Kusama",
+    colors: {
+      text: "#fff",
+      background: "#000"
+    }
+  },
+  {
+    id: "KSM",
+    name: "Kusama",
+    colors: {
+      text: "#fff",
+      background: "#3C71BC"
+    }
+  },
+  {
+    id: "CAKE",
+    name: "PancakeSwap",
+    colors: {
+      text: "#000",
+      background: ["C78B59", "F4D795"]
+    }
+  },
+  {
+    id: "GMT",
+    name: "STEPN Governance Token",
+    colors: {
+      text: "#000",
+      background: "#DFBE84"
+    }
+  },
+  {
+    id: "COMP",
+    name: "Compound",
+    colors: {
+      text: "#60D09A",
+      background: "#fff"
+    }
+  },
+  {
+    id: "COMP",
+    name: "Compound",
+    colors: {
+      text: "#fff",
+      background: "#4AA3C0"
+    }
+  },
+  {
+    id: "SRM",
+    name: "Serum",
+    colors: {
+      text: "#78BBD2",
+      background: "#fff"
+    }
+  },
+  {
+    id: "DCR",
+    name: "Decred",
+    colors: {
+      text: "#000",
+      background: ["436DF2", "8CD8BB"]
+    }
+  },
+  {
+    id: "QTUM",
+    name: "Qtum",
+    colors: {
+      text: "#78BBD2",
+      background: "#fff"
+    }
+  },
+  {
+    id: "SUSHI",
+    name: "Sushi",
+    colors: {
+      text: "#fff",
+      background: ["5680E7", "C131D2"]
+    }
+  },
+  {
+    id: "ENS",
+    name: "Ethereum Name Service",
+    colors: {
+      text: "#fff",
+      background: ["8198F3", "6BAEED"]
+    }
+  },
+  {
+    id: "RPL",
+    name: "Rocket Pool",
+    colors: {
+      text: "#fff",
+      background: ["EC5C42", "F3B284"]
+    }
+  },
+  {
+    id: "AUDIO",
+    name: "Audius",
+    colors: {
+      text: "#fff",
+      background: ["261084", "C028CA"]
+    }
+  },
+  {
+    id: "ZRX",
+    name: "0x",
+    colors: {
+      text: "#fff",
+      background: "#000"
+    }
+  },
+  {
+    id: "DYDX",
+    name: "dydx",
+    colors: {
+      text: "#fff",
+      background: "#000"
+    }
+  },
+  {
+    id: "OP",
+    name: "Optimism",
+    colors: {
+      text: "#fff",
+      background: "#E83330"
+    }
+  },
+  {
+    id: "ANKR",
+    name: "Ankr",
+    colors: {
+      text: "#78BBD2",
+      background: "#fff"
+    }
+  },
+  {
+    id: "ZEN",
+    name: "Horizen",
+    colors: {
+      text: "#fff",
+      background: ["08173F", "479BDF"]
+    }
+  },
+  {
+    id: "YFI",
+    name: "yearn.finance",
+    colors: {
+      text: "#fff",
+      background: ["3171EF", "295FB7"]
+    }
+  },
+  {
+    id: "BAL",
+    name: "Balancer",
+    colors: {
+      text: "#fff",
+      background: "#000"
+    }
+  },
+  {
+    id: "XNO",
+    name: "Nano",
+    colors: {
+      text: "#78BBD2",
+      background: "#fff"
+    }
+  },
+  {
+    id: "XNO",
+    name: "Nano",
+    colors: {
+      text: "#78BBD2",
+      background: "#fff"
+    }
+  },
+  {
+    id: "LSK",
+    name: "Lisk",
+    colors: {
+      text: "#fff",
+      background: "#111A38"
+    }
+  },
+  {
+    id: "CVC",
+    name: "Civic",
+    colors: {
+      text: "#fff",
+      background: "#5EAE4E"
+    }
+  },
+  {
+    id: "NMR",
+    name: "Numeraire",
+    colors: {
+      text: "#000",
+      background: "#fff"
+    }
+  },
+  {
+    id: "RAY",
+    name: "Raydium",
+    colors: {
+      text: "#00E4FF",
+      background: ["141A32", "A326ED"]
+    }
+  },
+  {
+    id: "VTHO",
+    name: "VeThor Token",
+    colors: {
+      text: "#78BBD2",
+      background: "#fff"
+    }
+  },
+  {
+    id: "OCEAN",
+    name: "Ocean Protocol",
+    colors: {
+      text: "#000",
+      background: "#fff"
+    }
+  },
+  {
+    id: "MOVR",
+    name: "Moonriver",
+    colors: {
+      text: "#75C8C7",
+      background: "#0E1125"
+    }
+  },
+  {
+    id: "DNT",
+    name: "district0x",
+    colors: {
+      text: "#9DF5F9",
+      background: "#2F398A"
+    }
+  },
+  {
+    id: "RARI",
+    name: "Rarible",
+    colors: {
+      text: "#000",
+      background: "#F9DB4A"
+    }
+  },
+  {
+    id: "ATLAS",
+    name: "Star Atlas",
+    colors: {
+      text: "#fff",
+      background: "#16171C"
+    }
+  },
+  {
+    id: "ORCA",
+    name: "Orca",
+    colors: {
+      text: "#fff",
+      background: "#181B46"
+    }
+  },
+  {
+    id: "SHDW",
+    name: "GenesysGo Shadow",
+    colors: {
+      text: "#97F6C2",
+      background: "#000"
+    }
+  },
+  {
+    id: "SAMO",
+    name: "Samoyedcoin",
+    colors: {
+      text: "#fff",
+      background: "#271F3C"
+    }
+  },
+  {
+    id: "DUST",
+    name: "Dust Protocol",
+    colors: {
+      text: "#000",
+      background: "#fff"
+    }
+  },
+  {
+    id: "MNGO",
+    name: "Mango Markets",
+    colors: {
+      text: "#F5CC4B",
+      background: "#131025"
+    }
+  },
+  {
+    id: "FIDA",
+    name: "FIDA",
+    colors: {
+      text: "#fff",
+      background: "#020018"
+    }
+  },
+  {
+    id: "AURY",
+    name: "Aurory",
+    colors: {
+      text: "#D861C7",
+      background: "#020018"
+    }
+  },
+  {
+    id: "SLND",
+    name: "Solend",
+    colors: {
+      text: "#ED975E",
+      background: "#0F1118"
+    }
+  },
+  {
+    id: "POLIS",
+    name: "Star Atlas DAO",
+    colors: {
+      text: "#fff",
+      background: "#16171C"
+    }
+  },
+  {
+    id: "STEP",
+    name: "Step Finance",
+    colors: {
+      text: "#00E4FF",
+      background: ["72F4BB", "FAE4AB", "C95623"]
+    }
+  },
+  {
+    id: "SBR",
+    name: "Saber",
+    colors: {
+      text: "#6866F5",
+      background: "#0F0F0F"
+    }
+  },
+  {
+    id: "GST",
+    name: "STEPN Game Token",
+    colors: {
+      text: "#000",
+      background: "#AAA3B0"
+    }
+  },
 ]

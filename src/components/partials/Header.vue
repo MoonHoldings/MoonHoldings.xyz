@@ -28,12 +28,17 @@
 
 <style lang="scss" scoped>
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   min-height: 70px;
   background: var(--light-gray);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 25px;
+  z-index: 99;
 
   &__left {
     display: flex;

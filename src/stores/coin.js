@@ -19,14 +19,15 @@ export const useCoinStore = defineStore('coin', {
           this.axios_config
         )
         const result = await response.data
-        const coinsArr = result.coins.map(coin=>coin)
-        localStorage.setItem("coins", JSON.stringify(coinsArr))
+        const coinsArr = result.coins.map((coin) => coin)
+        localStorage.setItem('coins', JSON.stringify(coinsArr))
       } catch (error) {
         console.log(error.message)
       }
     },
-    getCoins(){
-      this.coins = JSON.parse(localStorage.getItem("coins"))
-    }
+    getCoins() {
+      this.coins = JSON.parse(localStorage.getItem('coins'))
+      console.log(this.coins)
+    },
   },
 })

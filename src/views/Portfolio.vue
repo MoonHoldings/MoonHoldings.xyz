@@ -9,15 +9,25 @@ import {
 import { useCoinStore } from '@/stores/coin'
 
 const coinStore = useCoinStore()
+const fetchedCoins = ref([])
 const coinNameInput = ref('')
 const searchedCoins = ref([])
 
 onMounted(async () => {
-  await coinStore.fetchCoins()
-  coinStore.getCoins()
+  const localStorageCoins = localStorage.getItem('coins')
+  if (localStorageCoins === null) {
+    await coinStore.fetchCoins()
+    coinStore.getCoins()
+  } else {
+    coinStore.getCoins()
+  }
+  fetchedCoins.value = [...coinStore.coins]
 })
 
-watch(coinNameInput, async () => {
+watch([coinNameInput, fetchedCoins], () => {
+  fn()
+})
+const fn = () => {
   if (coinNameInput.value.length >= 2) {
     coinStore.coins.forEach((coin) => {
       const coinChar = coin.id.slice(0, coinNameInput.value.length)
@@ -30,18 +40,14 @@ watch(coinNameInput, async () => {
   if (coinNameInput.value.length === 0) {
     searchedCoins.value = []
   }
-})
+}
 </script>
 
 <template>
   <Header />
   <div class="portfolio">
     <div class="portfolio__coin-search">
-      <input
-        v-model="coinNameInput"
-        type="text"
-        placeholder="Search Coins"
-      />
+      <input v-model="coinNameInput" type="text" placeholder="Search Coins" />
       <span>&lt; Get Started</span>
       <transition
         mode="out-in"
@@ -50,7 +56,7 @@ watch(coinNameInput, async () => {
       >
         <div class="dropdown-list" v-if="searchedCoins.length !== 0">
           <ul>
-            <li v-for="coin in searchedCoins">
+            <li v-for="coin in searchedCoins" :key="coin.id">
               <button>{{ coin.id }} - {{ coin.name }}</button>
             </li>
           </ul>

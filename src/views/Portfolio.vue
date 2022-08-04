@@ -70,7 +70,7 @@ const fn = () => {
         {{ PORTFOLIO_WELCOME_MSG2 }}
       </p>
       <div class="monster-div">
-        <img src="/svg/icon-monster-friend.svg" alt="monster friend" />
+        <img src="/gif/monster-friend.gif" alt="monster friend" />
       </div>
     </div>
   </div>

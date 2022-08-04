@@ -25,22 +25,24 @@ onMounted(async () => {
 })
 
 watch([coinNameInput, fetchedCoins], () => {
-  fn()
+  //   fn()
+  console.log('worked')
 })
-const fn = () => {
-  if (coinNameInput.value.length >= 2) {
-    coinStore.coins.forEach((coin) => {
-      const coinChar = coin.id.slice(0, coinNameInput.value.length)
-      const coinNameCap = coinNameInput.value.toUpperCase()
-      if (coinChar === coinNameCap) {
-        searchedCoins.value.push(coin)
-      }
-    })
-  }
-  if (coinNameInput.value.length === 0) {
-    searchedCoins.value = []
-  }
-}
+// const fn = () => {
+//   if (coinNameInput.value.length >= 2 && fetchedCoins.value.length !== 0) {
+//     const coinNameInputCap = coinNameInput.value.toUpperCase()
+
+//     const coinsMapped = fetchedCoins.value.map((coin) => {
+//       const coinIdChar = coin.id.slice(0, coinNameInput.value.length)
+
+//       if (coinIdChar === coinNameInputCap) return coin
+//     })
+//     searchedCoins.value = coinsMapped
+//   }
+//   if (coinNameInput.value.length === 0) {
+//     searchedCoins.value = []
+//   }
+// }
 </script>
 
 <template>

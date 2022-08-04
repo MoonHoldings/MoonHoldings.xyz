@@ -2,6 +2,7 @@
 import { ref, watch, onMounted } from 'vue'
 import Header from '@/components/partials/Header.vue'
 import {
+  PORTFOLIO_GET_STARTED,
   PORTFOLIO_WELCOME_HEADER,
   PORTFOLIO_WELCOME_MSG1,
   PORTFOLIO_WELCOME_MSG2,
@@ -48,7 +49,7 @@ const fn = () => {
   <div class="portfolio">
     <div class="portfolio__coin-search">
       <input v-model="coinNameInput" type="text" placeholder="Search Coins" />
-      <span>&lt; Get Started</span>
+      <span>&lt; {{ PORTFOLIO_GET_STARTED }}</span>
       <transition
         mode="out-in"
         enter-active-class="animate__animated animate__fadeInLeft"

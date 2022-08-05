@@ -14,7 +14,7 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
   <main>
     <header>
       <h1>
-        <RouterLink to="/">
+        <RouterLink to="/" title="MoonHoldings.xyz">
           {{ MOON_XYZ }}
         </RouterLink>
       </h1>

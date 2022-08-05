@@ -5,10 +5,11 @@ import {
   MOON_XYZ,
   LOGIN,
   SIGN_UP,
+  EMAIL_NOT_VALID,
   FORGOT_PASSWORD,
   DONT_HAVE_ACCOUNT,
   CONTINUE,
-} from '../constants/copy'
+} from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
@@ -27,6 +28,7 @@ const userStore = useUserStore()
 const utilStore = useUtilStore()
 
 const continueBtn = async () => {
+  console.log('continueBtn clicked')
   switch (clicks.value) {
     case 0:
       validateEmail()
@@ -44,7 +46,11 @@ const validateEmail = () => {
   const result = email.value.includes('@')
   if (!result || !email.value) {
     errorEmail.value = true
+    utilStore.mutate_errorLogin(true)
+    utilStore.mutate_errorMessage(EMAIL_NOT_VALID)
   } else {
+    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorMessage('')
     errorEmail.value = false
     emTranslate.value = -130
     pTranslate.value = 0
@@ -70,6 +76,7 @@ const login = async () => {
     clicks.value++
   } catch (error) {
     utilStore.mutate_errorLogin(true)
+    console.log('error', error)
     utilStore.mutate_errorMessage(error.message)
   }
 }

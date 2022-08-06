@@ -11,7 +11,7 @@
 // please read our getting started guide:
 // https://on.cypress.io/introduction-to-cypress
 
-describe('MoonHoldings Homepage', () => {
+describe('Homepage flow', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/')
   })
@@ -35,9 +35,5 @@ describe('MoonHoldings Homepage', () => {
   it('HomeCTA section & Get Started Click', () => {
     cy.get('button').last().click();
     cy.location('pathname').should('eq', '/sign-up')
-    cy.contains('Sign Up')
-    cy.contains('I certify that I am 18 years of age or older, agree to the terms, and acknowledge the privacy policy.')
-    cy.contains('Sign Up With Twitter')
-    cy.contains('Sign Up With Discord')
   })
 });

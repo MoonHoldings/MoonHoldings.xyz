@@ -29,7 +29,7 @@ const checkboxValue = ref(null)
 const userStore = useUserStore()
 const utilStore = useUtilStore()
 
-const checkboxSwitchCases = () => {
+const continueBtn = () => {
   switch (clicks.value) {
     case 0:
       validateEmail()
@@ -44,11 +44,6 @@ const checkboxSwitchCases = () => {
     default:
       break
   }
-}
-
-const continueBtn = () => {
-  console.log('works')
-  checkboxSwitchCases()
 }
 
 const validateEmail = () => {

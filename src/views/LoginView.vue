@@ -8,6 +8,7 @@ import {
   FORGOT_PASSWORD,
   DONT_HAVE_ACCOUNT,
   CONTINUE,
+  SUBMIT,
 } from '../constants/copy'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
@@ -41,10 +42,18 @@ const continueBtn = async () => {
 }
 
 const validateEmail = () => {
-  const result = email.value.includes('@')
-  if (!result || !email.value) {
+  const isValidEmail = email.value.includes('@')
+  if (!email.value) {
     errorEmail.value = true
+    utilStore.mutate_errorLogin(true)
+    utilStore.mutate_errorMessage("Email field can't be empty")
+  } else if (!isValidEmail) {
+    errorEmail.value = true
+    utilStore.mutate_errorLogin(true)
+    utilStore.mutate_errorMessage('Email is not valid')
   } else {
+    utilStore.mutate_errorLogin(false)
+    utilStore.mutate_errorMessage('')
     errorEmail.value = false
     emTranslate.value = -130
     pTranslate.value = 0
@@ -106,7 +115,7 @@ const login = async () => {
             />
             <a href="/forgot-password">{{ FORGOT_PASSWORD }}</a>
             <button class="continue-btn" @click.prevent="continueBtn">
-              {{ CONTINUE }}
+              {{ clicks === 1 ? SUBMIT : CONTINUE }}
             </button>
           </div>
 

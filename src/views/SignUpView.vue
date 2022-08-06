@@ -8,9 +8,8 @@ import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
 import passwordValidate from '@/utils/passwordValidate'
-import delay from '@/utils/delay'
+// import delay from '@/utils/delay'
 
-// const router = useRouter()
 const route = useRoute()
 
 const email = ref('')
@@ -26,7 +25,6 @@ const pTranslate = ref(130)
 const cpTranslate = ref(130)
 const incSignup = ref(false)
 const checkboxValue = ref(null)
-const clickedOnce = ref(false)
 
 const userStore = useUserStore()
 const utilStore = useUtilStore()
@@ -48,40 +46,37 @@ const checkboxSwitchCases = () => {
   }
 }
 
-const continueBtn = async () => {
-  if (checkboxValue.value === true) {
-    utilStore.mutate_errorSignup(false)
-    utilStore.mutate_errorMessage('')
-
-    if (clickedOnce.value === true) {
-      delay(1).then(() => {
-        checkboxSwitchCases()
-      })
-    } else {
-      checkboxSwitchCases()
-    }
-  } else {
-    clickedOnce.value = true
-    utilStore.mutate_errorSignup(true)
-    utilStore.mutate_errorMessage('Check the terms and policies')
-  }
+const continueBtn = () => {
+  console.log('works')
+  checkboxSwitchCases()
 }
 
 const validateEmail = () => {
   const isValidEmail = email.value.includes('@')
-  if (!isValidEmail || !email.value) {
+  if (!email.value) {
+    errorEmail.value = true
+    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorMessage("Email field can't be empty")
+  } else if (!isValidEmail) {
     errorEmail.value = true
     utilStore.mutate_errorSignup(true)
     utilStore.mutate_errorMessage('Email is not valid')
   } else {
-    utilStore.mutate_errorSignup(false)
-    utilStore.mutate_errorMessage('')
-    errorEmail.value = false
-    emTranslate.value = -130
-    pTranslate.value = 0
-    incSignup.value = true
+    if (checkboxValue.value === true) {
+      utilStore.mutate_errorSignup(false)
+      utilStore.mutate_errorMessage('')
+      errorEmail.value = false
+      emTranslate.value = -130
+      pTranslate.value = 0
+      incSignup.value = true
 
-    clicks.value++
+      clicks.value++
+    } else {
+      // clickedOnce.value = true
+      errorEmail.value = false
+      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorMessage('Check the terms and policies')
+    }
   }
 }
 

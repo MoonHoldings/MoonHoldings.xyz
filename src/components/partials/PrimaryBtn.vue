@@ -1,39 +1,25 @@
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 const props = defineProps(['copy', 'url'])
 
 const handleClick = () => {
+  router.push(props.url)
   console.log(`Goto url: ${props.url}`)
 }
 </script>
 
 <template>
-  <button v-on:click="handleClick()" type="button">
+  <button @click="handleClick()" type="button">
     {{ props.copy }}
   </button>
 </template>
 
 <style lang="scss" scoped>
+@import '@/sass/mixins/primary-btn.scss';
+
 button {
-  padding: 0.5em 1.2em;
-  width: auto;
-  height: auto;
-  font-size: 2em;
-  text-align: center;
-  border-radius: 0.35em;
-  border: 2px solid #333;
-  background: var(--green);
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-
-  &:hover {
-    background: #fff;
-    box-shadow: 0px 1px 20px 0px var(--green);
-  }
-
-  &:active {
-    color: #fff;
-    background: var(--pink);
-    box-shadow: 0px 1px 40px 0px var(--green);
-  }
+  @include primary-btn;
 }
 </style>

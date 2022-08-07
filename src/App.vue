@@ -1,8 +1,36 @@
 <script setup>
+import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
+import SuccessAlert from '@/components/partials/SuccessAlert.vue'
+import ErrorAlert from '@/components/partials/ErrorAlert.vue'
+import { useUtilStore } from '@/stores/util'
+import { useCoinStore } from '@/stores/coin'
+
+const utilStore = useUtilStore()
+const coinStore = useCoinStore()
+
+onMounted(async () => {
+  await coinStore.getCoins()
+  console.log(coinStore.coins)
+})
 </script>
 
 <template>
+  <transition
+    mode="out-in"
+    enter-active-class="animate__animated animate__fadeInLeftBig"
+    leave-active-class="animate__animated animate__fadeOutRightBig"
+  >
+    <SuccessAlert v-if="utilStore.showSuccessAlert" />
+  </transition>
+  <transition
+    mode="out-in"
+    enter-active-class="animate__animated animate__fadeInLeftBig"
+    leave-active-class="animate__animated animate__fadeOutRightBig"
+  >
+    <ErrorAlert v-if="utilStore.errorSignup || utilStore.errorLogin" />
+  </transition>
+
   <RouterView />
 </template>
 

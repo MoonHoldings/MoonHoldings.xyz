@@ -1,6 +1,12 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { MOON_XYZ, LOGIN, LOGIN_PATH, GET_STARTED, SIGN_UP_PATH } from '../../constants'
+import {
+  MOON_XYZ,
+  LOGIN,
+  LOGIN_PATH,
+  GET_STARTED,
+  SIGN_UP_PATH,
+} from '../../constants'
 import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 </script>
 
@@ -8,7 +14,7 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
   <main>
     <header>
       <h1>
-        <RouterLink to="/">
+        <RouterLink to="/" title="MoonHoldings.xyz">
           {{ MOON_XYZ }}
         </RouterLink>
       </h1>

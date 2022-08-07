@@ -31,8 +31,9 @@
       font-size: 2.5em;
       line-height: 1em;
     }
-    
-    h3, h4 {
+
+    h3,
+    h4 {
       margin: 1em 0 0 0;
       font-weight: 800;
     }
@@ -45,14 +46,19 @@
       font-size: 1.6em;
     }
 
-    p, li, strong, td {
+    p,
+    li,
+    strong,
+    td {
       font-size: 1.6em;
       line-height: 1.6em;
     }
 
-    p, table {
+    p,
+    table {
       margin: 0.5em 0 0;
-      strong, li {
+      strong,
+      li {
         font-size: 1em;
       }
     }

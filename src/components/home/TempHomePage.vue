@@ -2,12 +2,17 @@
   <div class="homepage">
     <div class="parent">
       <div class="child">
-        <img src="/svg/moon-holdings-logo.svg" width="420" alt="MoonHoldings.xyz" title="Logo art by Zen0"/>
+        <img
+          src="/svg/moon-holdings-logo.svg"
+          width="420"
+          alt="MoonHoldings.xyz"
+          title="Logo art by Zen0"
+        />
         <div class="copy">
           <p>MoonHoldings.xyz</p>
           <p class="small">is being built</p>
           <a href="https://twitter.com/moonholdingsxyz" target="_blank">
-            <img src="/twitter-logo.png" alt="MoonHoldings Twitter"/>
+            <img src="/twitter-logo.png" alt="MoonHoldings Twitter" />
           </a>
         </div>
       </div>

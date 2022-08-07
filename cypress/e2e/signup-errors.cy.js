@@ -13,11 +13,8 @@ describe('Sign Up flow', () => {
   })
 
   it('Page contains correct elements', () => {
-    cy.contains('Sign Up')
+    cy.get('.signup-window h2').contains('Sign Up')
     cy.get('.e-box').should('have.attr', 'placeholder', 'Email')
-    cy.contains('I certify that I am 18 years of age or older, agree to the terms, and acknowledge the privacy policy.')
-    cy.contains('Sign Up With Twitter')
-    cy.contains('Sign Up With Discord')
   })
 
   // ! We should first display Email is not valid error

@@ -11,7 +11,7 @@ describe('Sign Up flow', () => {
   it('Happy Path', () => {
     cy.visit('http://localhost:3000/sign-up')
 
-    cy.contains('Sign Up')
+    cy.get('.signup-window h2').contains('Sign Up')
     cy.contains('I certify that I am 18 years of age or older, agree to the terms, and acknowledge the privacy policy.')
     cy.contains('Sign Up With Twitter')
     cy.contains('Sign Up With Discord')

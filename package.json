@@ -1,24 +1,21 @@
 {
   "name": "moonholdings.xyz",
   "version": "2.0.0",
-  "homepage": "https://moonholdings.xyz",
   "description": "Crypto Portfolio Tracker App",
   "author": "Leon <leongaban@gmail.com> (https://twitter.com/leongaban)",
-  "contributors": [
-    "Leon Gaban",
-    "Abeer Mithela"
-  ],
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --port 4173",
-    "test": "",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "eslint . --ext .vue,.js,.jsx, --fix --ignore-path .gitignore",
+    "build-only": "vite build",
+    "coverage": "jest --coverage",
     "cypress": "cypress run --headed --no-exit",
     "cypress-headless": "cypress run",
-    "coverage": "",
-    "build-only": "vite build",
+    "dev": "vite",
     "prettier": "prettier --write .",
-    "lint": "eslint . --ext .vue,.js,.jsx, --fix --ignore-path .gitignore"
+    "preview": "vite preview --port 4173",
+    "test": "NODE_ENV=test jest --no-cache",
+    "test-watch": "NODE_ENV=test jest --watch --no-cache"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
@@ -31,17 +28,44 @@
     "@rushstack/eslint-patch": "^1.1.0",
     "@vitejs/plugin-vue": "^2.3.3",
     "@vitejs/plugin-vue-jsx": "^1.3.10",
-    "@vue/cli-plugin-unit-jest": "^5.0.8",
+    "@vue/cli-plugin-unit-jest": "~5.0.0",
     "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/test-utils": "^2.0.0-0",
+    "@vue/vue3-jest": "^27.0.0-alpha.1",
+    "babel-jest": "^27.0.6",
     "c8": "^7.11.3",
     "cypress": "^10.4.0",
     "eslint": "^8.5.0",
     "eslint-plugin-vue": "^9.0.0",
+    "jest": "^27.0.5",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
     "ramda": "^0.28.0",
     "sass": "^1.53.0",
     "start-server-and-test": "^1.14.0",
     "vite": "^2.9.9"
-  }
+  },
+  "contributors": [
+    "Leon Gaban",
+    "Abeer Mithela"
+  ],
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/.next/",
+      "<rootDir>/node_modules/"
+    ],
+    "transform": {
+      ".*": "babel-jest",
+      "^.+\\.js?$": "babel-jest",
+      "^.+\\.vue?$": "babel-jest"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "modulePaths": [
+      "<rootDir>/utils/"
+    ]
+  },
+  "homepage": "https://moonholdings.xyz"
 }

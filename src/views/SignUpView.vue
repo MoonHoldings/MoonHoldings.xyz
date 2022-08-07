@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { computed, ref, watch, onMounted } from 'vue'
+import { computed, ref, reactive, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { MOON_XYZ, SUBMIT } from '../constants/copy'
 import { CONTINUE, SIGN_UP } from '../constants'
@@ -139,16 +139,19 @@ const fieldBack = () => {
 const incSignup = computed(() => {
   return pTranslate.value === 0
 })
-
+const disabled_continue_btn = reactive({
+  background: 'rgb(110,110,110)',
+  borderColor: 'rgb(110,110,110)',
+})
 onMounted(() => {
   submitClick.value = false
-}),
-  watch(route, (newValue) => {
-    if (newValue.path !== '/sign-up') {
-      utilStore.mutate_errorSignup(false)
-      utilStore.mutate_showSuccessAlert(false)
-    }
-  })
+})
+watch(route, (newValue) => {
+  if (newValue.path !== '/sign-up') {
+    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_showSuccessAlert(false)
+  }
+})
 </script>
 
 <template>
@@ -213,10 +216,10 @@ onMounted(() => {
               >.
             </label>
           </div>
-
+          <!-- :class="{ 'disable-bg': submitClick }" -->
           <button
             class="continue-btn"
-            :class="{ 'continue-bg': !submitClick, 'disable-bg': submitClick }"
+            :style="submitClick === true ? disabled_continue_btn : ''"
             :disabled="submitClick"
             @click.prevent="continueBtn"
           >
@@ -250,16 +253,6 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import '@/sass/mixins/primary-btn.scss';
-
-.continue-bg {
-  border-color: var(--green);
-  background: var(--green);
-}
-.disable-bg {
-  background: var(--disable-gray-2);
-  border-color: var(--disable-gray-2);
-}
-
 .signup-window {
   position: relative;
   overflow: hidden;

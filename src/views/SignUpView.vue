@@ -76,10 +76,18 @@ const validateEmail = () => {
 
 const validatePassword = () => {
   const isValid = passwordValidate(password.value)
-  if (!isValid || !password.value) {
+  if (!password.value) {
     errorPassword.value = true
+    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorMessage("Password field can't be empty")
+  } else if (!isValid) {
+    errorPassword.value = true
+    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorMessage("Password doesn't meet the criteria")
   } else {
     errorPassword.value = false
+    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorMessage('')
     pTranslate.value = -130
     cpTranslate.value = 0
 

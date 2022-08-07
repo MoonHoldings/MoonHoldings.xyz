@@ -9,6 +9,7 @@ import {
   SUBMIT,
   CHECK_TERMS_POLICIES,
   EMAIL_NOT_VALID,
+  PASSWORD_NOT_VALID,
   PASSWORD_NOT_MATCH,
   PASSWORD_REQUIREMENTS,
 } from '../constants'
@@ -76,6 +77,7 @@ const continueBtn = async () => {
 
 const validateEmail = () => {
   const isValidEmail = email.value.includes('@')
+
   if (!isValidEmail || !email.value) {
     errorEmail.value = true
     utilStore.mutate_errorSignup(true)
@@ -94,9 +96,14 @@ const validateEmail = () => {
 
 const validatePassword = () => {
   const isValid = passwordValidate(password.value)
+
   if (!isValid || !password.value) {
     errorPassword.value = true
+    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorMessage(PASSWORD_NOT_VALID)
   } else {
+    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorMessage('')
     errorPassword.value = false
     pTranslate.value = -130
     cpTranslate.value = 0

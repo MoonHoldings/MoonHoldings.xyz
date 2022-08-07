@@ -18,6 +18,7 @@ const confirmPassword = ref('')
 
 const errorEmail = ref(false)
 const errorPassword = ref(false)
+const errorCPassword = ref(false)
 
 const clicks = ref(0)
 const submitClick = ref(false)
@@ -98,11 +99,14 @@ const validatePassword = () => {
 const signup = async () => {
   submitClick.value = true
   if (password.value !== confirmPassword.value) {
+    errorCPassword.value = true
     utilStore.mutate_errorSignup(true)
     utilStore.mutate_errorMessage('Password does not match')
     submitClick.value = false
   } else {
+    errorCPassword.value = false
     utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorMessage('')
     try {
       const response = await userStore.signup({
         email: email.value,
@@ -120,6 +124,7 @@ const signup = async () => {
       utilStore.mutate_showSuccessAlert(true)
       clicks.value++
     } catch (error) {
+      errorCPassword.value = true
       utilStore.mutate_errorSignup(true)
       utilStore.mutate_errorMessage(error.message)
       submitClick.value = false
@@ -195,8 +200,8 @@ watch(route, (newValue) => {
             <input
               class="c-p-box"
               :class="{
-                error: utilStore.errorSignup,
-                'input-default': !utilStore.errorSignup,
+                error: errorCPassword,
+                'input-default': !errorCPassword,
               }"
               :style="{ transform: `translateX(${cpTranslate}%)` }"
               type="password"

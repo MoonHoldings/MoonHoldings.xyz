@@ -7,7 +7,7 @@ import {
 
 /// <reference types="cypress" />
 
-describe('Sign Up flow', () => {
+describe('Sign Up flow - Happy Path', () => {
   it('Happy Path', () => {
     cy.visit('http://localhost:3000/sign-up')
 
@@ -27,8 +27,7 @@ describe('Sign Up flow', () => {
     cy.get('.p-box').type('Foobar1!')
     cy.get('.continue-btn').click();
 
-    // Confirm password fail
-    cy.get('.continue-btn').click();
-    cy.get('.error-alert').contains(PASSWORD_NOT_MATCH)
+    // Confirm password success
+    // TODO need to mock Register success
   })
 });

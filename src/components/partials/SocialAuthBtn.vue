@@ -2,12 +2,16 @@
 import { reactive } from 'vue'
 import { useUserStore } from '@/stores/user'
 
-const props = defineProps(['bg-color', 'text', 'social-name'])
+const props = defineProps(['bg-color', 'text', 'social-name', 'submitClick'])
 const userStore = useUserStore()
 
 const btn_styles = reactive({
   backgroundColor: `${props.bgColor}`,
   borderColor: `${props.bgColor}`,
+})
+const disabled_btn_styles = reactive({
+  backgroundColor: 'rgb(110, 110, 110)',
+  borderColor: 'rgb(110, 110, 110)',
 })
 
 const btnClick = () => {
@@ -21,7 +25,11 @@ const btnClick = () => {
 </script>
 
 <template>
-  <button @click.prevent="btnClick" :style="btn_styles">
+  <button
+    @click.prevent="btnClick"
+    :disabled="props.submitClick"
+    :style="props.submitClick === true ? disabled_btn_styles : btn_styles"
+  >
     {{ props.text }}
   </button>
 </template>

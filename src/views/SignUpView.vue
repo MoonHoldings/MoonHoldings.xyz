@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { MOON_XYZ, SUBMIT } from '../constants/copy'
 import { CONTINUE, SIGN_UP } from '../constants'
@@ -20,10 +20,10 @@ const errorEmail = ref(false)
 const errorPassword = ref(false)
 
 const clicks = ref(0)
+const submitClick = ref(false)
 const emTranslate = ref(0)
 const pTranslate = ref(130)
 const cpTranslate = ref(130)
-const incSignup = ref(false)
 const checkboxValue = ref(null)
 
 const userStore = useUserStore()
@@ -63,7 +63,6 @@ const validateEmail = () => {
       errorEmail.value = false
       emTranslate.value = -130
       pTranslate.value = 0
-      incSignup.value = true
 
       clicks.value++
     } else {
@@ -89,9 +88,11 @@ const validatePassword = () => {
 }
 
 const signup = async () => {
+  submitClick.value = true
   if (password.value !== confirmPassword.value) {
     utilStore.mutate_errorSignup(true)
     utilStore.mutate_errorMessage('Password does not match')
+    submitClick.value = false
   } else {
     utilStore.mutate_errorSignup(false)
     try {
@@ -104,6 +105,7 @@ const signup = async () => {
         utilStore.mutate_errorSignup(true)
         utilStore.mutate_errorMessage('')
         utilStore.mutate_headingEndPoint('login')
+        submitClick.value = false
         return
       }
 
@@ -112,23 +114,41 @@ const signup = async () => {
     } catch (error) {
       utilStore.mutate_errorSignup(true)
       utilStore.mutate_errorMessage(error.message)
+      submitClick.value = false
     }
   }
 }
 
-const showPassNote = computed(() => {
-  if (emTranslate.value === -130) {
-    return true
+const fieldBack = () => {
+  if (clicks.value > 0) {
+    if (clicks.value === 1) {
+      emTranslate.value = 0
+      pTranslate.value = 130
+    }
+    if (clicks.value === 2) {
+      pTranslate.value = 0
+      cpTranslate.value = 130
+    }
+    clicks.value--
+    errorEmail.value = false
+    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorMessage('')
   }
-  return false
+}
+
+const incSignup = computed(() => {
+  return pTranslate.value === 0
 })
 
-watch(route, (newValue) => {
-  if (newValue.path !== '/sign-up') {
-    utilStore.mutate_errorSignup(false)
-    utilStore.mutate_showSuccessAlert(false)
-  }
-})
+onMounted(() => {
+  submitClick.value = false
+}),
+  watch(route, (newValue) => {
+    if (newValue.path !== '/sign-up') {
+      utilStore.mutate_errorSignup(false)
+      utilStore.mutate_showSuccessAlert(false)
+    }
+  })
 </script>
 
 <template>
@@ -174,7 +194,7 @@ watch(route, (newValue) => {
             />
           </div>
 
-          <div class="pass-note" :class="{ 'note-open': showPassNote }">
+          <div class="pass-note" :class="{ 'note-open': incSignup }">
             <div>
               Minimum 8 characters long, at least 1 special, 1 number and 1
               letter
@@ -194,23 +214,35 @@ watch(route, (newValue) => {
             </label>
           </div>
 
-          <button class="continue-btn" @click.prevent="continueBtn">
+          <button
+            class="continue-btn"
+            :class="{ 'continue-bg': !submitClick, 'disable-bg': submitClick }"
+            :disabled="submitClick"
+            @click.prevent="continueBtn"
+          >
             {{ clicks > 1 ? SUBMIT : CONTINUE }}
           </button>
         </form>
         <div class="social-signin">
           <SocialAuthBtn
             social-name="twitter"
+            :submitClick="submitClick"
             bg-color="#55ACEE"
             text="Sign Up With Twitter"
           />
           <SocialAuthBtn
             social-name="discord"
+            :submitClick="submitClick"
             bg-color="#7289DA"
             text="Sign Up With Discord"
           />
         </div>
       </div>
+      <button
+        @click.prevent="fieldBack"
+        v-if="clicks > 0 && clicks < 3 && submitClick === false"
+        class="arrow"
+      ></button>
     </div>
     <div />
   </main>
@@ -219,7 +251,17 @@ watch(route, (newValue) => {
 <style scoped lang="scss">
 @import '@/sass/mixins/primary-btn.scss';
 
+.continue-bg {
+  border-color: var(--green);
+  background: var(--green);
+}
+.disable-bg {
+  background: var(--disable-gray-2);
+  border-color: var(--disable-gray-2);
+}
+
 .signup-window {
+  position: relative;
   overflow: hidden;
   min-height: 513.6px;
   display: flex;
@@ -227,6 +269,18 @@ watch(route, (newValue) => {
   justify-content: center;
   transition: min-height 0.4s ease;
   padding: 2rem;
+}
+.arrow {
+  position: absolute;
+  left: -50px;
+  width: 0;
+  height: 0;
+  background: none;
+  outline: none;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 15px solid transparent;
+  border-right: 15px solid #fff;
 }
 
 .inc-signup {

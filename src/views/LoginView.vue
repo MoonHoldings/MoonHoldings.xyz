@@ -76,6 +76,7 @@ const login = async () => {
     }
 
     utilStore.mutate_showSuccessAlert(true)
+    utilStore.mutate_successMessage('You have been logged in successfully!')
     clicks.value++
   } catch (error) {
     utilStore.mutate_errorLogin(true)

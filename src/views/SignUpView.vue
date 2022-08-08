@@ -122,6 +122,9 @@ const signup = async () => {
       }
 
       utilStore.mutate_showSuccessAlert(true)
+      utilStore.mutate_successMessage(
+        'We have sent a confirmation email, please verify then login! :D'
+      )
       clicks.value++
     } catch (error) {
       errorCPassword.value = true

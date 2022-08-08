@@ -1,10 +1,3 @@
-import {
-  CHECK_TERMS_POLICIES,
-  EMAIL_NOT_VALID,
-  PASSWORD_REQUIREMENTS,
-  PASSWORD_NOT_MATCH
-} from '../../src/constants'
-
 /// <reference types="cypress" />
 
 describe('Sign Up flow - Happy Path', () => {

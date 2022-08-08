@@ -4,6 +4,7 @@ export const useUtilStore = defineStore('util', {
   state: () => ({
     headingEndPoint: '',
     showSuccessAlert: false,
+    successMessage: '',
     errorSignup: false,
     errorLogin: false,
     errorMessage: '',
@@ -15,6 +16,9 @@ export const useUtilStore = defineStore('util', {
     },
     mutate_showSuccessAlert(payload) {
       this.showSuccessAlert = payload
+    },
+    mutate_successMessage(payload) {
+      this.successMessage = payload
     },
     mutate_errorSignup(payload) {
       this.errorSignup = payload

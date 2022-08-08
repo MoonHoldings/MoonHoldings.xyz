@@ -217,7 +217,10 @@ watch(route, (newValue) => {
             </div>
           </div>
 
-          <div class="accept-terms-section">
+          <div
+            class="accept-terms-section"
+            :class="{ 'check-open': clicks === 0 }"
+          >
             <input type="checkbox" id="accept-terms" v-model="checkboxValue" />
             <label for="accept-terms">
               I certify that I am 18 years of age or older, agree to the
@@ -269,7 +272,7 @@ watch(route, (newValue) => {
 .signup-window {
   position: relative;
   overflow: hidden;
-  min-height: 513.6px;
+  min-height: 441px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -290,7 +293,7 @@ watch(route, (newValue) => {
 }
 
 .inc-signup {
-  min-height: 571.2px;
+  min-height: 501px;
 }
 
 .input-default {
@@ -343,13 +346,19 @@ form {
 .accept-terms-section {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  margin-bottom: 15px;
+  height: 0;
+  margin-bottom: 0;
   font-size: 12px;
   background-color: #fff;
-
+  transition: all 0.4s ease;
+  overflow: hidden;
   a {
     text-decoration: underline;
   }
+}
+.check-open {
+  height: 72.6px;
+  margin-bottom: 15px;
 }
 
 #accept-terms {

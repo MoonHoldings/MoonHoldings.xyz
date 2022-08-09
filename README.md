@@ -2,9 +2,9 @@
 
 #### Moon Holdings 2.0
 
-The Bold Portfolio Tracker For Brave Crypto Investors
+## Track. Compare. Compete.
 
-How can MoonHoldings help you? I created an earlier version of this product a couple of years ago to further support my investing habits, startegies and performance. And I believe this is a tool that will help support yours as well.
+### The bold portfolio tracker for brave investors.
 
 ## Recommended IDE Setup
 

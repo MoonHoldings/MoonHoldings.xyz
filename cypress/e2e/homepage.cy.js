@@ -33,7 +33,7 @@ describe('Homepage flow', () => {
   })
 
   it('HomeCTA section & Get Started Click', () => {
-    cy.get('button').last().click();
+    cy.get('button').last().click()
     cy.location('pathname').should('eq', '/sign-up')
   })
-});
+})

@@ -27,7 +27,6 @@ onMounted(async () => {
 
 watch([coinNameInput, fetchedCoins], () => {
   //   fn()
-  console.log('worked')
 })
 // const fn = () => {
 //   if (coinNameInput.value.length >= 2 && fetchedCoins.value.length !== 0) {

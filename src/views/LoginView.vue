@@ -253,7 +253,7 @@ const blink = () => {
 
   .animate__animated.animate__fadeIn,
   .animate__animated.animate__fadeOut {
-    --animate-duration: 1.5s;
+    --animate-duration: 1s;
   }
 }
 

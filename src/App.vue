@@ -1,17 +1,19 @@
 <script setup>
-import { onMounted } from 'vue'
-import { RouterView } from 'vue-router'
+import { watch } from 'vue'
+import { useRoute, RouterView } from 'vue-router'
 import SuccessAlert from '@/components/partials/SuccessAlert.vue'
 import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 import { useUtilStore } from '@/stores/util'
-import { useCoinStore } from '@/stores/coin'
 
+const route = useRoute()
 const utilStore = useUtilStore()
-const coinStore = useCoinStore()
 
-onMounted(async () => {
-  await coinStore.getCoins()
-  console.log(coinStore.coins)
+watch(route, () => {
+  utilStore.mutate_errorSignup(false)
+  utilStore.mutate_errorLogin(false)
+  utilStore.mutate_errorMessage('')
+  utilStore.mutate_showSuccessAlert(false)
+  utilStore.mutate_successMessage('')
 })
 </script>
 

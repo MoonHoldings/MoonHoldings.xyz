@@ -2,10 +2,17 @@
 import { useUtilStore } from '@/stores/util'
 
 const utilStore = useUtilStore()
+
+const removeAlert = () => {
+  console.log('works')
+  utilStore.mutate_errorSignup(false)
+  utilStore.mutate_errorLogin(false)
+  utilStore.mutate_errorMessage('')
+}
 </script>
 
 <template>
-  <div class="error-alert">
+  <div class="error-alert" @click="removeAlert">
     <div v-if="utilStore.errorMessage">
       {{ utilStore.errorMessage }}
     </div>

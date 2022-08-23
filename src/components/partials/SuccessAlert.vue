@@ -1,34 +1,17 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useUtilStore } from '@/stores/util'
 
-const router = useRouter()
-const route = useRoute()
-const sec = ref(6)
+const utilStore = useUtilStore()
 
-onMounted(() => {
-  const interval = setInterval(() => {
-    sec.value--
-    if (sec.value === 0) {
-      clearInterval(interval)
-      router.push('/login')
-    }
-  }, 1000)
-})
-
-watch(route, (newValue) => {
-  if (newValue.path !== '/sign-up') {
-    sec.value = 0
-  }
-})
+const removeIt = () => {
+  utilStore.mutate_showSuccessAlert(false)
+  utilStore.mutate_successMessage('')
+}
 </script>
 
 <template>
-  <div class="success-alert">
-    <div>
-      Account Created! Please <router-link to="/login">login</router-link>.
-      <span class="redirect-time"> Redirecting to login in {{ sec }}...</span>
-    </div>
+  <div class="success-alert" @click="removeIt">
+    <div>{{ utilStore.successMessage }}</div>
   </div>
 </template>
 
@@ -43,13 +26,5 @@ watch(route, (newValue) => {
   height: 80px;
   background-color: #78ffa6db;
   z-index: 100;
-
-  a {
-    color: #000;
-  }
-
-  .redirect-time {
-    font-size: 1rem;
-  }
 }
 </style>

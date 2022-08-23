@@ -1,45 +1,37 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { computed, ref, watch } from 'vue'
+import { computed, ref, reactive, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import {
-  CONTINUE,
-  SIGN_UP,
-  MOON_XYZ,
-  SUBMIT,
-  CHECK_TERMS_POLICIES,
-  EMAIL_NOT_VALID,
-  PASSWORD_NOT_VALID,
-  PASSWORD_NOT_MATCH,
-  PASSWORD_REQUIREMENTS,
-} from '../constants'
+import { MOON_XYZ, SUBMIT } from '../constants/copy'
+import { CONTINUE, SIGN_UP } from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
 import passwordValidate from '@/utils/passwordValidate'
-import delay from '@/utils/delay'
+// import delay from '@/utils/delay'
 
 const route = useRoute()
 
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
+const isPasswordOpen = ref('password')
 
 const errorEmail = ref(false)
 const errorPassword = ref(false)
+const errorCPassword = ref(false)
 
 const clicks = ref(0)
+const submitClick = ref(false)
 const emTranslate = ref(0)
 const pTranslate = ref(130)
 const cpTranslate = ref(130)
-const incSignup = ref(false)
 const checkboxValue = ref(null)
-const clickedOnce = ref(false)
 
 const userStore = useUserStore()
 const utilStore = useUtilStore()
 
-const checkboxSwitchCases = () => {
+const continueBtn = () => {
   switch (clicks.value) {
     case 0:
       validateEmail()
@@ -56,55 +48,48 @@ const checkboxSwitchCases = () => {
   }
 }
 
-const continueBtn = async () => {
-  if (checkboxValue.value === true) {
-    utilStore.mutate_errorSignup(false)
-    utilStore.mutate_errorMessage('')
-
-    if (clickedOnce.value === true) {
-      delay(1).then(() => {
-        checkboxSwitchCases()
-      })
-    } else {
-      checkboxSwitchCases()
-    }
-  } else {
-    clickedOnce.value = true
-    utilStore.mutate_errorSignup(true)
-    utilStore.mutate_errorMessage(CHECK_TERMS_POLICIES)
-  }
-}
-
 const validateEmail = () => {
   const isValidEmail = email.value.includes('@')
-
-  if (!isValidEmail || !email.value) {
+  if (!email.value) {
     errorEmail.value = true
     utilStore.mutate_errorSignup(true)
-    utilStore.mutate_errorMessage(EMAIL_NOT_VALID)
+    utilStore.mutate_errorMessage("Email field can't be empty")
+  } else if (!isValidEmail) {
+    errorEmail.value = true
+    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorMessage('Email is not valid')
   } else {
-    utilStore.mutate_errorSignup(false)
-    utilStore.mutate_errorMessage('')
-    errorEmail.value = false
-    emTranslate.value = -130
-    pTranslate.value = 0
-    incSignup.value = true
+    if (checkboxValue.value === true) {
+      utilStore.mutate_errorSignup(false)
+      utilStore.mutate_errorMessage('')
+      errorEmail.value = false
+      emTranslate.value = -130
+      pTranslate.value = 0
 
-    clicks.value++
+      clicks.value++
+    } else {
+      // clickedOnce.value = true
+      errorEmail.value = false
+      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorMessage('Check the terms and policies')
+    }
   }
 }
 
 const validatePassword = () => {
   const isValid = passwordValidate(password.value)
-
-  if (!isValid || !password.value) {
+  if (!password.value) {
     errorPassword.value = true
     utilStore.mutate_errorSignup(true)
-    utilStore.mutate_errorMessage(PASSWORD_NOT_VALID)
+    utilStore.mutate_errorMessage("Password field can't be empty")
+  } else if (!isValid) {
+    errorPassword.value = true
+    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorMessage("Password doesn't meet the criteria")
   } else {
+    errorPassword.value = false
     utilStore.mutate_errorSignup(false)
     utilStore.mutate_errorMessage('')
-    errorPassword.value = false
     pTranslate.value = -130
     cpTranslate.value = 0
 
@@ -113,11 +98,16 @@ const validatePassword = () => {
 }
 
 const signup = async () => {
+  submitClick.value = true
   if (password.value !== confirmPassword.value) {
+    errorCPassword.value = true
     utilStore.mutate_errorSignup(true)
-    utilStore.mutate_errorMessage(PASSWORD_NOT_MATCH)
+    utilStore.mutate_errorMessage('Password does not match')
+    submitClick.value = false
   } else {
+    errorCPassword.value = false
     utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorMessage('')
     try {
       const response = await userStore.signup({
         email: email.value,
@@ -128,30 +118,68 @@ const signup = async () => {
         utilStore.mutate_errorSignup(true)
         utilStore.mutate_errorMessage('')
         utilStore.mutate_headingEndPoint('login')
+        submitClick.value = false
         return
       }
 
       utilStore.mutate_showSuccessAlert(true)
+      utilStore.mutate_successMessage(
+        'We have sent a confirmation email, please verify then login! :D'
+      )
       clicks.value++
     } catch (error) {
+      errorCPassword.value = true
       utilStore.mutate_errorSignup(true)
       utilStore.mutate_errorMessage(error.message)
+      submitClick.value = false
     }
   }
 }
 
-const showPassNote = computed(() => {
-  if (emTranslate.value === -130) {
-    return true
+const fieldBack = () => {
+  if (clicks.value > 0) {
+    if (clicks.value === 1) {
+      emTranslate.value = 0
+      pTranslate.value = 130
+    }
+    if (clicks.value === 2) {
+      pTranslate.value = 0
+      cpTranslate.value = 130
+    }
+    clicks.value--
+    errorEmail.value = false
+    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorMessage('')
   }
-  return false
+}
+
+const disabled_continue_btn = reactive({
+  background: 'rgb(110,110,110)',
+  borderColor: 'rgb(110,110,110)',
+})
+const incSignup = computed(() => {
+  return pTranslate.value === 0
 })
 
+const toggleEye = () => {
+  if (isPasswordOpen.value === 'password') {
+    isPasswordOpen.value = 'text'
+  } else {
+    isPasswordOpen.value = 'password'
+  }
+}
+
+onMounted(() => {
+  submitClick.value = false
+})
 watch(route, (newValue) => {
   if (newValue.path !== '/sign-up') {
     utilStore.mutate_errorSignup(false)
     utilStore.mutate_showSuccessAlert(false)
   }
+})
+watch(clicks, () => {
+  isPasswordOpen.value = 'password'
 })
 </script>
 
@@ -180,7 +208,7 @@ watch(route, (newValue) => {
               class="p-box"
               :class="{ error: errorPassword, 'input-default': !errorPassword }"
               :style="{ transform: `translateX(${pTranslate}%)` }"
-              type="password"
+              :type="isPasswordOpen"
               placeholder="Password"
               v-model="password"
             />
@@ -188,21 +216,69 @@ watch(route, (newValue) => {
             <input
               class="c-p-box"
               :class="{
-                error: utilStore.errorSignup,
-                'input-default': !utilStore.errorSignup,
+                error: errorCPassword,
+                'input-default': !errorCPassword,
               }"
               :style="{ transform: `translateX(${cpTranslate}%)` }"
-              type="password"
+              :type="isPasswordOpen"
               placeholder="Confirm Password"
               v-model="confirmPassword"
             />
+            <transition
+              mode="out-in"
+              enter-active-class="animate__animated animate__fadeIn"
+              leave-active-class="animate__animated animate__fadeOut"
+            >
+              <button
+                @click.prevent="toggleEye"
+                class="eye"
+                v-if="clicks > 0 && clicks <= 2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 open"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  v-if="isPasswordOpen === 'text'"
+                >
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                  <path
+                    fill-rule="evenodd"
+                    d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 closed"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  v-if="isPasswordOpen === 'password'"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z"
+                    clip-rule="evenodd"
+                  />
+                  <path
+                    d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z"
+                  />
+                </svg>
+              </button>
+            </transition>
           </div>
 
-          <div class="pass-note" :class="{ 'note-open': showPassNote }">
-            <div>{{ PASSWORD_REQUIREMENTS }}</div>
+          <div class="pass-note" :class="{ 'note-open': incSignup }">
+            <div>
+              Minimum 8 characters long, at least 1 special, 1 number and 1
+              letter
+            </div>
           </div>
 
-          <div class="accept-terms-section">
+          <div
+            class="accept-terms-section"
+            :class="{ 'check-open': clicks === 0 }"
+          >
             <input type="checkbox" id="accept-terms" v-model="checkboxValue" />
             <label for="accept-terms">
               I certify that I am 18 years of age or older, agree to the
@@ -214,45 +290,68 @@ watch(route, (newValue) => {
               >.
             </label>
           </div>
-
-          <button class="continue-btn" @click.prevent="continueBtn">
+          <!-- :class="{ 'disable-bg': submitClick }" -->
+          <button
+            class="continue-btn"
+            :style="submitClick === true ? disabled_continue_btn : ''"
+            :disabled="submitClick"
+            @click.prevent="continueBtn"
+          >
             {{ clicks > 1 ? SUBMIT : CONTINUE }}
           </button>
         </form>
         <div class="social-signin">
           <SocialAuthBtn
             social-name="twitter"
+            :submitClick="submitClick"
             bg-color="#55ACEE"
             text="Sign Up With Twitter"
           />
           <SocialAuthBtn
             social-name="discord"
+            :submitClick="submitClick"
             bg-color="#7289DA"
             text="Sign Up With Discord"
           />
         </div>
       </div>
+      <button
+        @click.prevent="fieldBack"
+        v-if="clicks > 0 && clicks < 3 && submitClick === false"
+        class="arrow"
+      ></button>
     </div>
     <div />
   </main>
 </template>
 
 <style scoped lang="scss">
-@import '@/sass/mixins/functions.scss';
 @import '@/sass/mixins/primary-btn.scss';
-
 .signup-window {
+  position: relative;
   overflow: hidden;
-  min-height: 513.6px;
+  min-height: 441px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   transition: min-height 0.4s ease;
   padding: 2rem;
 }
+.arrow {
+  position: absolute;
+  left: -50px;
+  width: 0;
+  height: 0;
+  background: none;
+  outline: none;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 15px solid transparent;
+  border-right: 15px solid #fff;
+}
 
 .inc-signup {
-  min-height: 571.2px;
+  min-height: 501px;
 }
 
 .input-default {
@@ -276,6 +375,24 @@ watch(route, (newValue) => {
     position: absolute;
     z-index: 18;
     transition: transform 0.4s ease-in-out;
+  }
+
+  .eye {
+    position: absolute;
+    right: 2px;
+    top: 10px;
+    background: none;
+    border: none;
+    outline: none;
+    z-index: 25;
+
+    svg {
+      height: 30px;
+    }
+  }
+  .animate__animated.animate__fadeIn,
+  .animate__animated.animate__fadeOut {
+    --animate-duration: 0.7s;
   }
 }
 
@@ -305,13 +422,19 @@ form {
 .accept-terms-section {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  margin-bottom: 15px;
-  font-size: rem(12);
+  height: 0;
+  margin-bottom: 0;
+  font-size: 12px;
   background-color: #fff;
-
+  transition: all 0.4s ease;
+  overflow: hidden;
   a {
     text-decoration: underline;
   }
+}
+.check-open {
+  height: 72.6px;
+  margin-bottom: 15px;
 }
 
 #accept-terms {

@@ -18,11 +18,12 @@ export const useUserStore = defineStore('user', {
 
         if (result.success === true) {
           this.gotten_user = result.user
+          return this.gotten_user
         } else {
           //
         }
       } catch (error) {
-        console.log(error.message)
+        return error.message
       }
     },
     async login(payload) {
@@ -35,10 +36,9 @@ export const useUserStore = defineStore('user', {
         const result = await response.data
         return result
       } catch (error) {
-        const { response } = error
         return {
-          success: response.data.success,
-          message: response.data.message,
+          success: false,
+          message: error,
         }
       }
     },
@@ -53,11 +53,15 @@ export const useUserStore = defineStore('user', {
         const result = await response.data
         return result
       } catch (error) {
-        const { response } = error
+        // const { response } = error
         return {
-          success: response.data.success,
-          message: response.data.message,
+          success: false,
+          message: error,
         }
+        // return {
+        //   success: response.data.success,
+        //   message: response.data.message,
+        // }
       }
     },
   },

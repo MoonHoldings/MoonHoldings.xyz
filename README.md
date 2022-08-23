@@ -2,7 +2,9 @@
 
 #### Moon Holdings 2.0
 
-The Bold Portfolio Tracker For Brave Crypto Investors
+## Track. Compare. Compete.
+
+### The bold portfolio tracker for brave investors.
 
 ## Recommended IDE Setup
 
@@ -30,10 +32,16 @@ npm run dev
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Clean up code with [Prettier](https://prettier.io/)
 
 ```sh
-npm run test | npm run test:unit
+npm run prettier
+```
+
+### Run Unit Tests with [Jest](https://jestjs.io/)
+
+```sh
+npm run test
 ```
 
 ### Run End-to-End Tests with [Cypress](https://www.cypress.io/)

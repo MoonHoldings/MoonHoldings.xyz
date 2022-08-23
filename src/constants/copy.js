@@ -9,6 +9,8 @@ export const FORGOT_PASSWORD = 'Forgot password?'
 export const DONT_HAVE_ACCOUNT = `Don't have account yet?`
 export const GET_STARTED = 'Get Started'
 export const CONTINUE = 'Continue'
+export const PASSWORD_REQUIREMENTS =
+  'Minimum 8 characters long, at least 1 special, 1 number and 1 letter'
 export const TITLE_HOME = 'Moon Holdings | Your Crypto Portfolio Tracker'
 export const TITLE_SIGNUP = 'Moon Holdings Sign Up'
 export const TITLE_PRIVACY_POLICY = 'Moon Holdings | Privacy Policy'

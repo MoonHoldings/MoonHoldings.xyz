@@ -5,6 +5,7 @@ import {
   MOON_XYZ,
   LOGIN,
   SIGN_UP,
+  EMAIL_NOT_VALID,
   FORGOT_PASSWORD,
   DONT_HAVE_ACCOUNT,
   CONTINUE,
@@ -29,6 +30,7 @@ const userStore = useUserStore()
 const utilStore = useUtilStore()
 
 const continueBtn = async () => {
+  console.log('continueBtn clicked')
   switch (clicks.value) {
     case 0:
       validateEmail()
@@ -81,6 +83,7 @@ const login = async () => {
     clicks.value++
   } catch (error) {
     utilStore.mutate_errorLogin(true)
+    console.log('error', error)
     utilStore.mutate_errorMessage(error.message)
   }
 }

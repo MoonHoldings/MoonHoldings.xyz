@@ -7,6 +7,7 @@ export const SIGN_UP = 'Sign Up'
 export const RESET_PASSWORD = 'Reset Password'
 export const FORGOT_PASSWORD = 'Forgot password?'
 export const DONT_HAVE_ACCOUNT = `Don't have account yet?`
+export const EMAIL_NOT_VALID = 'Email is not valid'
 export const GET_STARTED = 'Get Started'
 export const CONTINUE = 'Continue'
 export const PASSWORD_REQUIREMENTS =

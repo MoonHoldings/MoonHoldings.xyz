@@ -1,55 +1,281 @@
+<script setup>
+import monster from '/monster-logo.png'
+import { ref } from 'vue'
+import { useUserStore } from '@/stores/user'
+import { useUtilStore } from '@/stores/util'
+
+const name = ref('')
+const email = ref('')
+const description = ref('')
+const isSubscribed = ref(false)
+const nameFieldClasses = ref(['default-field'])
+const emailFieldClasses = ref(['default-field'])
+
+const userStore = useUserStore()
+const utilStore = useUtilStore()
+
+const submitInvite = async () => {
+  nameFieldClasses.value = ['default-field']
+  emailFieldClasses.value = ['default-field']
+  utilStore.mutate_errorSignup(false)
+  utilStore.mutate_errorMessage('')
+  utilStore.mutate_showSuccessAlert(false)
+  utilStore.mutate_successMessage('')
+
+  if (name.value !== '' && email.value !== '') {
+    if (!email.value.includes('@')) {
+      emailFieldClasses.value = ['error-field']
+      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorMessage('This is not a valid email address')
+      return
+    }
+
+    const response = await userStore.inviteBetaTester({
+      name: name.value,
+      email: email.value,
+      description: description.value,
+      subscription: isSubscribed.value,
+    })
+    if (response.success === true) {
+      utilStore.mutate_showSuccessAlert(true)
+      utilStore.mutate_successMessage(
+        'Woot!! You are invited! An invite email is sent'
+      )
+    } else {
+      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorMessage(response.message)
+    }
+  } else {
+    if (name.value === '') {
+      nameFieldClasses.value = ['error-field']
+      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorMessage('Every field needs to be fulfilled')
+    }
+    if (email.value === '') {
+      emailFieldClasses.value = ['error-field']
+      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorMessage('Every field needs to be fulfilled')
+    }
+  }
+}
+</script>
+
 <template>
-  <div class="homepage">
-    <div class="parent">
-      <div class="child">
-        <img
-          src="/svg/moon-holdings-logo.svg"
-          width="420"
-          alt="MoonHoldings.xyz"
-          title="Logo art by Zen0"
-        />
-        <div class="copy">
-          <p>MoonHoldings.xyz</p>
-          <p class="small">is being built</p>
-          <a href="https://twitter.com/moonholdingsxyz" target="_blank">
-            <img src="/twitter-logo.png" alt="MoonHoldings Twitter" />
-          </a>
+  <div class="temp-home">
+    <div class="tester-form">
+      <h3>Be a beta tester</h3>
+      <h1>Grab an Invite</h1>
+      <p>
+        We're creating a dashboard to combine analytics from Moon Holdings'
+        public portfolios. What are people buying? What's moving? What's going
+        up? And how do these metrics align with Bitcoin and crypto cycles. Soon
+        we'll expand to more nitty-gritty information on NFT collection
+        statistics across multiple chains. Stay tuned. But, in the mean time,
+        make our portfolio tracker part of your daily routine.
+      </p>
+
+      <form>
+        <div class="name">
+          <input
+            id="name"
+            type="text"
+            placeholder="Your name"
+            v-model="name"
+            ref="nameField"
+            :class="[...nameFieldClasses]"
+          />
+          <label for="name">Name<sup>*</sup></label>
         </div>
+        <div class="email">
+          <input
+            id="email"
+            type="email"
+            placeholder="email@domain.com"
+            v-model="email"
+            ref="emailField"
+            :class="[...emailFieldClasses]"
+          />
+          <label for="email">Email<sup>*</sup></label>
+        </div>
+        <div class="description">
+          <input
+            id="description"
+            type="text"
+            placeholder="Description"
+            v-model="description"
+            class="default-field"
+          />
+          <label for="description">How did you hear about us?</label>
+        </div>
+      </form>
+
+      <div class="agree-checkbox">
+        <input type="checkbox" id="agree-subscribe" v-model="isSubscribed" />
+        <label for="agree-subscribe"
+          >I agree to receive communications from MoonHoldings. I can
+          unsubscribe at any time.</label
+        >
       </div>
+
+      <button class="submit" @click="submitInvite">Get on the list</button>
+    </div>
+    <div class="monster-img">
+      <img :src="monster" alt="" />
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.parent {
-  height: 100%;
-  width: 100%;
+@import url('https://rsms.me/inter/inter.css');
+@import '@/sass/mixins/breakpoints.scss';
+
+.error-field {
+  border-top: 1px solid red;
+  border-right: 1px solid red;
+  border-left: 1px solid red;
+  border-bottom: 1px solid red;
+}
+.default-field {
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  border-bottom: 1.5px solid var(--gray);
+}
+.temp-home {
   display: grid;
-  justify-content: center;
-  align-content: center;
-}
-
-.child {
-  margin-top: 50%;
-  height: 420px;
-  width: 420px;
-}
-
-.copy {
-  margin-top: 2rem;
-  text-align: center;
-
-  img {
-    margin-top: 2rem;
+  grid-template-columns: 50% 50%;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  @include bp-down(small) {
+    display: flex;
+    flex-direction: column;
   }
-}
 
-.small {
-  font-size: 1rem;
-}
+  .tester-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 100px;
+    padding: 0 143px;
+    @include bp-down(small) {
+      order: 2;
+      margin-top: 30px;
+      padding: 0 20px;
+    }
 
-p {
-  text-align: center;
-  font-size: 2rem;
+    h3 {
+      text-transform: uppercase;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gray);
+      @include bp-down(small) {
+        font-size: 15px;
+      }
+    }
+    h1 {
+      font-size: 64px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      @include bp-down(small) {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 68px;
+      @include bp-down(small) {
+        font-size: 14px;
+        margin-bottom: 40px;
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 33px;
+      width: 100%;
+      @include bp-down(small) {
+        margin-bottom: 20px;
+      }
+
+      ::placeholder {
+        color: var(--gray);
+      }
+
+      .name,
+      .email,
+      .description {
+        input {
+          width: 100%;
+          font-size: 18px;
+          padding: 5px 2px;
+          outline: none;
+          @include bp-down(small) {
+            font-size: 15px;
+          }
+        }
+        label {
+          display: block;
+          font-size: 13px;
+          margin-top: 5px;
+        }
+      }
+    }
+
+    .agree-checkbox {
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 33px;
+      @include bp-down(small) {
+        align-items: flex-start;
+        margin-bottom: 20px;
+
+        label {
+          transform: translateY(-4px);
+        }
+      }
+
+      input {
+        margin-right: 7px;
+      }
+    }
+    .submit {
+      padding: 20px 37px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      background: none;
+      border: 2px solid #000;
+      border-radius: 50px;
+      @include bp-down(small) {
+        padding: 15px 26px;
+        font-size: 13px;
+        margin-bottom: 30px;
+      }
+
+      &:hover {
+        background: #eee;
+      }
+    }
+  }
+  .monster-img {
+    @include bp-down(small) {
+      order: 1;
+      width: 100%;
+      padding: 20px 20px 0 20px;
+    }
+    img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      object-position: 50% 40%;
+      border: 3px solid rgb(255, 87, 61);
+    }
+  }
 }
 </style>

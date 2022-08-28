@@ -11,6 +11,24 @@ export const useUserStore = defineStore('user', {
     twitter_url: (state) => `${state.server_url}/auth/twitter`,
   },
   actions: {
+    async inviteBetaTester(payload) {
+      try {
+        const response = await axios.post(
+          `${this.server_url}/invite`,
+          payload,
+          this.axios_config
+        )
+  
+        const result = await response.data
+        return result
+      } catch (error) {
+        const { response } = error
+        return {
+          success: response.data.success,
+          message: response.data.message,
+        }
+      }
+    },
     async getUser() {
       try {
         const response = await axios.get(`${this.server_url}/getuser`)

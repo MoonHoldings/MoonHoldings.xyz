@@ -270,11 +270,14 @@ const submitInvite = async () => {
       padding: 20px 20px 0 20px;
     }
     img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      object-position: 50% 40%;
-      border: 3px solid rgb(255, 87, 61);
+      height: 100%;
+      @include bp-down(small) {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        object-position: 50% 40%;
+        border: 3px solid rgb(255, 87, 61);
+      }
     }
   }
 }

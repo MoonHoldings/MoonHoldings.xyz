@@ -41,7 +41,7 @@ const submitInvite = async () => {
     if (response.success === true) {
       utilStore.mutate_showSuccessAlert(true)
       utilStore.mutate_successMessage(
-        'Woot!! You are invited! An invite email is sent'
+        'Woot!! You are invited! An invite email has been sent!'
       )
     } else {
       utilStore.mutate_errorSignup(true)
@@ -104,11 +104,14 @@ const submitInvite = async () => {
           <input
             id="description"
             type="text"
-            placeholder="Description"
+            placeholder="Feature"
             v-model="description"
             class="default-field"
           />
-          <label for="description">How did you hear about us?</label>
+          <label for="description"
+            >What is the most important feature in a portfolio app to
+            you?</label
+          >
         </div>
       </form>
 
@@ -282,7 +285,6 @@ const submitInvite = async () => {
       @include bp-down(small) {
         height: 180px;
         object-position: 50% 40%;
-        border: 3px solid rgb(255, 87, 61);
       }
     }
   }

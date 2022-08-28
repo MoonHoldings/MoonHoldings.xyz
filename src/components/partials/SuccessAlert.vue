@@ -16,6 +16,7 @@ const removeIt = () => {
 </template>
 
 <style lang="scss" scoped>
+@import '@/sass/mixins/breakpoints.scss';
 .success-alert {
   position: fixed;
   display: flex;
@@ -23,8 +24,15 @@ const removeIt = () => {
   align-items: center;
   font-size: 1.5rem;
   width: 100%;
-  height: 80px;
+  min-height: 80px;
+  padding: 1rem;
   background-color: #78ffa6db;
   z-index: 100;
+  @include bp-down(small) {
+    min-height: 50px;
+    font-size: 16px;
+    text-align: center;
+    padding: 15px;
+  }
 }
 </style>

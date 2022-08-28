@@ -9,17 +9,25 @@ export const useCoinStore = defineStore('coin', {
   }),
   getters: {},
   actions: {
-    async getCoins() {
+    mutate_emptyCoins() {
+      this.coins = []
+    },
+    async fetchCoins() {
       try {
         const response = await axios.get(
           `${this.server_url}/coins`,
           this.axios_config
         )
         const result = await response.data
-        this.coins = result.coins
+        const coinsArr = result.coins.map((coin) => coin)
+        localStorage.setItem('coins', JSON.stringify(coinsArr))
       } catch (error) {
         console.log(error.message)
       }
+    },
+    getCoins() {
+      this.coins = JSON.parse(localStorage.getItem('coins'))
+      console.log(this.coins)
     },
   },
 })

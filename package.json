@@ -1,8 +1,13 @@
 {
   "name": "moonholdings.xyz",
   "version": "2.0.0",
-  "description": "Crypto Portfolio Tracker App",
-  "author": "Leon <leongaban@gmail.com> (https://twitter.com/leongaban)",
+  "description": "MoonHoldings the Crypto Portfolio App",
+  "author": "Leon <leon@moonholdings.xyz> (https://twitter.com/leongaban)",
+  "contributors": [
+    "Leon Gaban",
+    "Abeer Mithela",
+    "Ajoy Thomas"
+  ],
   "scripts": {
     "build": "vite build",
     "test:unit": "vue-cli-service test:unit",
@@ -45,10 +50,6 @@
     "start-server-and-test": "^1.14.0",
     "vite": "^2.9.9"
   },
-  "contributors": [
-    "Leon Gaban",
-    "Abeer Mithela"
-  ],
   "jest": {
     "testPathIgnorePatterns": [
       "<rootDir>/.next/",

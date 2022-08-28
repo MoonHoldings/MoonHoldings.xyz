@@ -8,6 +8,7 @@ const name = ref('')
 const email = ref('')
 const description = ref('')
 const isSubscribed = ref(false)
+const disabledSubmit = ref(false)
 const nameFieldClasses = ref(['default-field'])
 const emailFieldClasses = ref(['default-field'])
 
@@ -30,6 +31,7 @@ const submitInvite = async () => {
       return
     }
 
+    disabledSubmit.value = true
     const response = await userStore.inviteBetaTester({
       name: name.value,
       email: email.value,
@@ -45,6 +47,7 @@ const submitInvite = async () => {
       utilStore.mutate_errorSignup(true)
       utilStore.mutate_errorMessage(response.message)
     }
+    disabledSubmit.value = false
   } else {
     if (name.value === '') {
       nameFieldClasses.value = ['error-field']
@@ -117,7 +120,9 @@ const submitInvite = async () => {
         >
       </div>
 
-      <button class="submit" @click="submitInvite">Get on the list</button>
+      <button class="submit" :disabled="disabledSubmit" @click="submitInvite">
+        Get on the list
+      </button>
     </div>
     <div class="monster-img">
       <img :src="monster" alt="" />
@@ -271,10 +276,11 @@ const submitInvite = async () => {
     }
     img {
       height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
       @include bp-down(small) {
-        width: 100%;
         height: 180px;
-        object-fit: cover;
         object-position: 50% 40%;
         border: 3px solid rgb(255, 87, 61);
       }

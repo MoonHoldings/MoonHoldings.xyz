@@ -37,6 +37,7 @@ watch(route, () => {
 </template>
 
 <style lang="scss">
+@import url('https://rsms.me/inter/inter.css');
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400;800&display=swap');
 @import '@/sass';
 

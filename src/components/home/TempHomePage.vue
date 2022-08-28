@@ -128,13 +128,12 @@ const submitInvite = async () => {
       </button>
     </div>
     <div class="monster-img">
-      <img :src="monster" alt="" />
+      <img :src="monster" alt="MoonHoldings Astronaut" title="MoonHoldings Astronaut" />
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import url('https://rsms.me/inter/inter.css');
 @import '@/sass/mixins/breakpoints.scss';
 
 .error-field {
@@ -213,79 +212,81 @@ const submitInvite = async () => {
       ::placeholder {
         color: var(--gray);
       }
-
-      .name,
-      .email,
-      .description {
-        input {
-          width: 100%;
-          font-size: 18px;
-          padding: 5px 2px;
-          outline: none;
-          @include bp-down(small) {
-            font-size: 15px;
-          }
-        }
-        label {
-          display: block;
-          font-size: 13px;
-          margin-top: 5px;
-        }
-      }
-    }
-
-    .agree-checkbox {
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      margin-bottom: 33px;
-      @include bp-down(small) {
-        align-items: flex-start;
-        margin-bottom: 20px;
-
-        label {
-          transform: translateY(-4px);
-        }
-      }
-
-      input {
-        margin-right: 7px;
-      }
-    }
-    .submit {
-      padding: 20px 37px;
-      font-size: 14px;
-      font-weight: 600;
-      text-transform: uppercase;
-      background: none;
-      border: 2px solid #000;
-      border-radius: 50px;
-      @include bp-down(small) {
-        padding: 15px 26px;
-        font-size: 13px;
-        margin-bottom: 30px;
-      }
-
-      &:hover {
-        background: #eee;
-      }
     }
   }
-  .monster-img {
+}
+
+.name,
+.email,
+.description {
+  input {
+    width: 100%;
+    font-size: 18px;
+    padding: 5px 2px;
+    outline: none;
     @include bp-down(small) {
-      order: 1;
-      width: 100%;
-      padding: 20px 20px 0 20px;
+      font-size: 15px;
     }
-    img {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-      object-position: 50% 50%;
-      @include bp-down(small) {
-        height: 180px;
-        object-position: 50% 40%;
-      }
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    margin-top: 5px;
+  }
+}
+
+.agree-checkbox {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 33px;
+  @include bp-down(small) {
+    align-items: flex-start;
+    margin-bottom: 20px;
+
+    label {
+      transform: translateY(-4px);
+    }
+  }
+
+  input {
+    margin-right: 7px;
+  }
+}
+
+.submit {
+  padding: 20px 37px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: none;
+  border: 2px solid #000;
+  border-radius: 50px;
+  @include bp-down(small) {
+    padding: 15px 26px;
+    font-size: 13px;
+    margin-bottom: 30px;
+  }
+
+  &:hover {
+    background: #eee;
+  }
+}
+
+.monster-img {
+  @include bp-down(small) {
+    order: 1;
+    width: 100%;
+    padding: 20px 20px 0 20px;
+  }
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    @include bp-down(small) {
+      height: 180px;
+      object-position: 50% 40%;
     }
   }
 }

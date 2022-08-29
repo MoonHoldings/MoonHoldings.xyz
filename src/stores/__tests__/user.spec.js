@@ -2,7 +2,9 @@ import axios from 'axios'
 import { setActivePinia, createPinia } from 'pinia'
 import { useUserStore } from '../user.js'
 
-const localhost_url = 'http://localhost:9000/api'
+const localhost_api_url = 'http://localhost:9000/api'
+const prod_api_url = 'https://moonholdings.xyz/api'
+const api_url = prod_api_url // * Change this local / prod
 
 const resLoginSuccess = {
   data: {
@@ -38,7 +40,7 @@ describe('API calls & stores', () => {
 
   test('getters twitter_url', async () => {
     const store = useUserStore()
-    expect(store.twitter_url).toBe(`${localhost_url}/auth/twitter`)
+    expect(store.twitter_url).toBe(`${api_url}/auth/twitter`)
   })
 
   test('getUser with success', async () => {

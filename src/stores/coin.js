@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+const localhost_api_url = 'http://localhost:9000/api'
+const prod_api_url = 'https://moonholdings.xyz/api'
+const api_url = prod_api_url // * Change this local / prod
+
 export const useCoinStore = defineStore('coin', {
   state: () => ({
-    server_url: 'http://localhost:9000/api',
+    server_url: api_url,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
     coins: [],
   }),

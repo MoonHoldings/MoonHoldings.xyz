@@ -1,4 +1,4 @@
-;[
+export const coinStyles = [
   {
     id: 'BTC',
     name: 'Bitcoin',

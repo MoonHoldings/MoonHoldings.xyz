@@ -1,4 +1,3 @@
-export const MOON_XYZ = 'MOONHOLDINGS.XYZ'
 export const MOON_HOLDINGS = 'Moon Holdings'
 export const MOONHOLDINGS = 'MoonHoldings'
 export const LOGIN = 'Log in'

@@ -3,30 +3,31 @@ import { setActivePinia, createPinia } from 'pinia'
 import { useUserStore } from '../user.js'
 
 const localhost_api_url = 'http://localhost:9000/api'
-const prod_api_url = 'https://moon-server.vercel.app/api'
+const prod_api_url = 'https://moonholdings-2.vercel.app/api'
+// const prod_api_url = 'https://moon-server.vercel.app/api'
 const api_url = prod_api_url // * Change this local / prod
 
 const resLoginSuccess = {
   data: {
     success: true,
-    message: 'Success'
-  }
+    message: 'Success',
+  },
 }
 
 const resLoginFail = {
   data: {
     success: false,
-    message: 'There is no account associated to this email'
-  }
+    message: 'There is no account associated to this email',
+  },
 }
 
 const resGetUserSuccess = {
   data: {
     success: true,
     user: {
-      email: 'foo@bar.com'
-    }
-  }
+      email: 'foo@bar.com',
+    },
+  },
 }
 
 const resSignupSuccess = resGetUserSuccess
@@ -44,7 +45,7 @@ describe('API calls & stores', () => {
   })
 
   test('getUser with success', async () => {
-    axios.get.mockResolvedValueOnce(resGetUserSuccess);
+    axios.get.mockResolvedValueOnce(resGetUserSuccess)
     const store = useUserStore()
     expect(store.gotten_user).toBe(null)
     const result = await store.getUser()
@@ -54,8 +55,8 @@ describe('API calls & stores', () => {
 
   test('getUser with failure', async () => {
     axios.get.mockImplementation(() => {
-      throw new Error('Something went wrong');
-    });
+      throw new Error('Something went wrong')
+    })
 
     const store = useUserStore()
     expect(store.gotten_user).toBe(null)
@@ -65,69 +66,69 @@ describe('API calls & stores', () => {
   })
 
   test('login user with credentials', async () => {
-    axios.post.mockResolvedValueOnce(resLoginSuccess);
+    axios.post.mockResolvedValueOnce(resLoginSuccess)
 
     const store = useUserStore()
     const result = await store.login({
       email: 'foo@bar.com',
-      password: '123456a!'
+      password: '123456a!',
     })
-    
+
     expect(result.success).toBe(true)
     expect(result.message).toBe('Success')
   })
 
   test('login user with invalid credentials', async () => {
-    axios.post.mockResolvedValueOnce(resLoginFail);
+    axios.post.mockResolvedValueOnce(resLoginFail)
 
     const store = useUserStore()
     const result = await store.login({
       email: 'bad@email.com',
-      password: '123456a!'
+      password: '123456a!',
     })
-    
+
     expect(result.success).toBe(false)
     expect(result.message).toBe('There is no account associated to this email')
   })
 
   test('login throws error', async () => {
     axios.post.mockImplementation(() => {
-      throw new Error('Something went wrong');
-    });
+      throw new Error('Something went wrong')
+    })
 
     const store = useUserStore()
     const result = await store.login({
       email: 'bad@email.com',
-      password: '123456a!'
+      password: '123456a!',
     })
-    
+
     expect(result.success).toBe(false)
     expect(result.message).toEqual(new Error('Something went wrong'))
   })
 
   test('sign up with valid credentials', async () => {
-    axios.post.mockResolvedValueOnce(resSignupSuccess);
+    axios.post.mockResolvedValueOnce(resSignupSuccess)
 
     const store = useUserStore()
     const result = await store.signup({
       email: 'bad@email.com',
-      password: '123456a!'
+      password: '123456a!',
     })
-    
+
     expect(result.success).toBe(true)
   })
 
   test('sign up with invalid credentials', async () => {
     axios.post.mockImplementation(() => {
-      throw new Error('Something went wrong');
-    });
+      throw new Error('Something went wrong')
+    })
 
     const store = useUserStore()
     const result = await store.signup({
       email: 'bad@email.com',
-      password: '123456a!'
+      password: '123456a!',
     })
-    
+
     expect(result.success).toBe(false)
     expect(result.message).toEqual(new Error('Something went wrong'))
   })

@@ -1,10 +1,8 @@
-# moonholdings.xyz
+# MoonHoldings
 
-#### Moon Holdings 2.0
+#### moonholdings.xyz
 
-## Track. Compare. Compete.
-
-### The bold portfolio tracker for brave investors.
+### The Portfolio app to Rule them All
 
 ## Recommended IDE Setup
 

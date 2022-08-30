@@ -2,7 +2,7 @@
 import { RouterLink } from 'vue-router'
 import { computed, ref, reactive, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { MOON_XYZ, SUBMIT } from '../constants/copy'
+import { MOONHOLDINGS, SUBMIT } from '../constants/copy'
 import { CONTINUE, SIGN_UP } from '../constants'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
@@ -189,7 +189,7 @@ watch(clicks, () => {
     <div class="signup-section">
       <div class="signup-window" :class="{ 'inc-signup': incSignup }">
         <RouterLink to="/">
-          <h1>{{ MOON_XYZ }}</h1>
+          <h1>{{ MOONHOLDINGS }}</h1>
         </RouterLink>
         <h2>{{ SIGN_UP }}</h2>
 

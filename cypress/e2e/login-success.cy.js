@@ -1,4 +1,4 @@
-import { LOGIN, MOON_XYZ } from '../../src/constants'
+import { LOGIN, MOONHOLDINGS } from '../../src/constants'
 
 /// <reference types="cypress" />
 
@@ -16,7 +16,7 @@ describe('Log In flow - Happy Path', () => {
   })
 
   it('Happy Path', () => {
-    cy.get('.login-window h1').contains(MOON_XYZ)
+    cy.get('.login-window h1').contains(MOONHOLDINGS)
     cy.get('.login-window h2').contains(LOGIN)
     cy.get('.email-input a').should('have.attr', 'href', '/forgot-password')
     cy.contains('Log In With Twitter')

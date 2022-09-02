@@ -2,7 +2,7 @@
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 import {
-  MOON_XYZ,
+  MOONHOLDINGS,
   LOGIN,
   SIGN_UP,
   EMAIL_NOT_VALID,
@@ -103,7 +103,7 @@ const blink = () => {
     <div class="login-section">
       <div class="login-window">
         <RouterLink to="/">
-          <h1>{{ MOON_XYZ }}</h1>
+          <h1>{{ MOONHOLDINGS }}</h1>
         </RouterLink>
         <h2>{{ LOGIN }}</h2>
 

@@ -1,5 +1,5 @@
 <script setup>
-import { MOON_XYZ, RESET_PASSWORD, SUBMIT } from '../constants/copy'
+import { MOONHOLDINGS, RESET_PASSWORD, SUBMIT } from '../constants/copy'
 </script>
 
 <template>
@@ -7,7 +7,7 @@ import { MOON_XYZ, RESET_PASSWORD, SUBMIT } from '../constants/copy'
     <div />
     <div class="reset-section">
       <div class="reset-window">
-        <h1>{{ MOON_XYZ }}</h1>
+        <h1>{{ MOONHOLDINGS }}</h1>
         <h2>{{ RESET_PASSWORD }}</h2>
 
         <form>

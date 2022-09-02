@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import {
-  MOON_XYZ,
+  MOONHOLDINGS,
   LOGIN,
   LOGIN_PATH,
   GET_STARTED,
@@ -15,7 +15,7 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
     <header>
       <h1>
         <RouterLink to="/" title="MoonHoldings.xyz">
-          {{ MOON_XYZ }}
+          {{ MOONHOLDINGS }}
         </RouterLink>
       </h1>
       <nav>

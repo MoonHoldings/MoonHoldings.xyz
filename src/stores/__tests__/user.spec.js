@@ -3,9 +3,9 @@ import { setActivePinia, createPinia } from 'pinia'
 import { useUserStore } from '../user.js'
 
 const localhost_api_url = 'http://localhost:9000/api'
-const prod_api_url = 'https://moonholdings-2.vercel.app/api'
 // const prod_api_url = 'https://moon-server.vercel.app/api'
-const api_url = prod_api_url // * Change this local / prod
+const prod_api_url = 'https://moon-server.vercel.app/api'
+const api_url = localhost_api_url // * Change this local / prod
 
 const resLoginSuccess = {
   data: {

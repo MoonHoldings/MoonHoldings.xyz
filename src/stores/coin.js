@@ -2,9 +2,9 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 const localhost_api_url = 'http://localhost:9000/api'
-const prod_api_url = 'https://moon-server.vercel.app/api'
-// const prod_api_url = 'https://moon-server.vercel.app/api'
-const api_url = localhost_api_url // * Change this local / prod
+const prod_api_url = 'https://moonserver.herokuapp.com//api'
+// const prod_api_url = 'https://moonserver.herokuapp.com//api'
+const api_url = prod_api_url // * Change this local / prod
 
 export const useCoinStore = defineStore('coin', {
   state: () => ({

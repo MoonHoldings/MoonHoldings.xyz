@@ -4,7 +4,7 @@ import { useUserStore } from '../user.js'
 
 const localhost_api_url = 'http://localhost:9000/api'
 // const prod_api_url = 'https://moonserver.herokuapp.com//api'
-const prod_api_url = 'https://moonserver.herokuapp.com//api'
+const prod_api_url = 'https://moonserver.herokuapp.com/api'
 const api_url = localhost_api_url // * Change this local / prod
 
 const resLoginSuccess = {

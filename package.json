@@ -23,6 +23,7 @@
     "test-watch": "NODE_ENV=test jest --watch --no-cache"
   },
   "dependencies": {
+    "@vueup/vue-quill": "^1.0.0-beta.10",
     "animate.css": "^4.1.1",
     "axios": "^0.27.2",
     "pinia": "^2.0.14",

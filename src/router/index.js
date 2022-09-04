@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import SignUpView from '../views/SignUpView.vue'
-import PrivacyPolicy from '../views/PrivacyPolicy.vue'
-import { MOON_HOLDINGS } from '../constants/copy'
-import { titleCreator } from '../utils/formatters'
+import HomeView from '@/views/HomeView.vue'
+import LoginView from '@/views/LoginView.vue'
+import SignUpView from '@/views/SignUpView.vue'
+import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
+import { MOON_HOLDINGS } from '@/constants/copy'
+import { titleCreator } from '@/utils/formatters'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,12 +30,12 @@ const router = createRouter({
     {
       path: '/reset-password',
       name: 'reset-password',
-      component: () => import('../views/ResetPassword.vue'),
+      component: () => import('@/views/ResetPassword.vue'),
     },
     {
       path: '/portfolio',
       name: 'portfolio',
-      component: () => import('../views/Portfolio.vue'),
+      component: () => import('@/views/Portfolio.vue'),
     },
     {
       path: '/privacy-policy',
@@ -45,7 +45,12 @@ const router = createRouter({
     {
       path: '/terms-of-service',
       name: 'terms-of-service',
-      component: () => import('../views/TermsOfService.vue'),
+      component: () => import('@/views/TermsOfService.vue'),
+    },
+    {
+      path: '/newsletter-mail',
+      name: 'newsletter-mail',
+      component: () => import('@/views/Newsletter.vue'),
     },
   ],
 })

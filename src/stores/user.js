@@ -4,7 +4,7 @@ import axios from 'axios'
 const localhost_api_url = 'http://localhost:9000/api'
 const prod_api_url = 'https://moonserver.herokuapp.com/api'
 // const prod_api_url = 'https://moonserver.herokuapp.com//api'
-const api_url = prod_api_url // * Change this local / prod
+const api_url = localhost_api_url // * Change this local / prod
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -85,6 +85,23 @@ export const useUserStore = defineStore('user', {
         //   success: response.data.success,
         //   message: response.data.message,
         // }
+      }
+    },
+    async sendNewsletter(payload) {
+      console.log('entered')
+      try {
+        const response = await axios.post(
+          `${this.server_url}/send-newsletter`,
+          payload,
+          this.axios_config
+        )
+        const result = await response.data
+        return result
+      } catch (error) {
+        return {
+          success: false,
+          message: error,
+        }
       }
     },
   },

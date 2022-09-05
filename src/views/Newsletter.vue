@@ -48,8 +48,6 @@ const sendBtnClick = async () => {
 
 .newsletter {
   padding: 20px 200px;
-
-  // changing the css what was set in root
   transition: initial;
   line-height: initial;
   font-size: initial;

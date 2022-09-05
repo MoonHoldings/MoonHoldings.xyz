@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const localhost_api_url = 'http://localhost:9000/api'
 const prod_api_url = 'https://moonserver.herokuapp.com/api'
-const api_url = localhost_api_url // TODO Change this local / prod
+const api_url = prod_api_url // TODO Change this local / prod
 
 export const useCoinStore = defineStore('coin', {
   state: () => ({

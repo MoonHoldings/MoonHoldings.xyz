@@ -1,5 +1,6 @@
 <script setup>
 import monster from '/monster-logo.png'
+import loader from '/gif/rhombus-loader.gif'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
@@ -123,12 +124,21 @@ const submitInvite = async () => {
         >
       </div>
 
-      <button class="submit" :disabled="disabledSubmit" @click="submitInvite">
-        Get on the list
-      </button>
+      <div class="submit-div">
+        <button class="submit" :disabled="disabledSubmit" @click="submitInvite">
+          Get on the list
+        </button>
+        <span class="loader" :hidden="!disabledSubmit">
+          <img :src="loader" alt="" />
+        </span>
+      </div>
     </div>
     <div class="monster-img">
-      <img :src="monster" alt="MoonHoldings Astronaut" title="MoonHoldings Astronaut" />
+      <img
+        :src="monster"
+        alt="MoonHoldings Astronaut"
+        title="MoonHoldings Astronaut"
+      />
     </div>
   </div>
 </template>
@@ -253,23 +263,34 @@ const submitInvite = async () => {
     margin-right: 7px;
   }
 }
+.submit-div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+  .submit {
+    padding: 20px 37px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: none;
+    border: 2px solid #000;
+    border-radius: 50px;
+    margin-right: 20px;
+    @include bp-down(small) {
+      padding: 15px 26px;
+      font-size: 13px;
+      margin-bottom: 30px;
+    }
 
-.submit {
-  padding: 20px 37px;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  background: none;
-  border: 2px solid #000;
-  border-radius: 50px;
-  @include bp-down(small) {
-    padding: 15px 26px;
-    font-size: 13px;
-    margin-bottom: 30px;
+    &:hover {
+      background: #eee;
+    }
   }
-
-  &:hover {
-    background: #eee;
+  .loader {
+    img {
+      width: 50px;
+      height: 50px;
+    }
   }
 }
 

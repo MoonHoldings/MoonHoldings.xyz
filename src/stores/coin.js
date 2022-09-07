@@ -7,7 +7,7 @@ const api_url = localhost_api_url // TODO Change this local / prod
 
 export const useCoinStore = defineStore('coin', {
   state: () => ({
-    server_url: `${import.meta.env.VITE_FE_URL}/api`,
+    server_url: `${import.meta.env.VITE_MOONSERVER_URL}/api`,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
     coins: [],
   }),

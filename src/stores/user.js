@@ -7,7 +7,7 @@ const api_url = prod_api_url // TODO Change this local / prod
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    server_url: api_url,
+    server_url: `${import.meta.env.VITE_FE_URL}/api`,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
     gotten_user: null,
   }),

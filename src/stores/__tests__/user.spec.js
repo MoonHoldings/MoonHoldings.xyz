@@ -2,7 +2,7 @@ import axios from 'axios'
 import { setActivePinia, createPinia } from 'pinia'
 import { useUserStore } from '../user.js'
 
-const api_url = 'http://localhost:9000/api'
+const api_url = `${import.meta.env.VITE_FE_URL}/api`
 
 const resLoginSuccess = {
   data: {

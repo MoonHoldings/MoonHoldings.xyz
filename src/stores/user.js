@@ -1,10 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-const localhost_api_url = 'http://localhost:9000/api'
-const prod_api_url = 'https://moonserver.herokuapp.com/api'
-const api_url = prod_api_url // TODO Change this local / prod
-
 export const useUserStore = defineStore('user', {
   state: () => ({
     server_url: `${import.meta.env.VITE_MOONSERVER_URL}/api`,

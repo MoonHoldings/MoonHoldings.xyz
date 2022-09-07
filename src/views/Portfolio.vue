@@ -15,14 +15,7 @@ const coinNameInput = ref('')
 const searchedCoins = ref([])
 
 onMounted(async () => {
-  const localStorageCoins = localStorage.getItem('coins')
-  if (localStorageCoins === null) {
-    await coinStore.fetchCoins()
-    coinStore.getCoins()
-  } else {
-    coinStore.getCoins()
-  }
-  fetchedCoins.value = [...coinStore.coins]
+  //
 })
 
 watch([coinNameInput, fetchedCoins], () => {
@@ -43,6 +36,10 @@ watch([coinNameInput, fetchedCoins], () => {
 //     searchedCoins.value = []
 //   }
 // }
+const singleCoinSearch = async () => {
+  const response = await coinStore.getSingleCoin('BTC')
+  console.log(response)
+}
 </script>
 
 <template>
@@ -50,6 +47,7 @@ watch([coinNameInput, fetchedCoins], () => {
   <div class="portfolio">
     <div class="portfolio__coin-search">
       <input v-model="coinNameInput" type="text" placeholder="Search Coins" />
+      <button @click="singleCoinSearch">Search</button>
       <span>&lt; {{ PORTFOLIO_GET_STARTED }}</span>
       <transition
         mode="out-in"

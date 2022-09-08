@@ -1,12 +1,14 @@
 <script setup>
-import { watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useRoute, RouterView } from 'vue-router'
 import SuccessAlert from '@/components/partials/SuccessAlert.vue'
 import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 import { useUtilStore } from '@/stores/util'
+import { useCoinStore } from '@/stores/coin'
 
 const route = useRoute()
 const utilStore = useUtilStore()
+const coinStore = useCoinStore()
 
 watch(route, () => {
   utilStore.mutate_errorSignup(false)
@@ -14,6 +16,13 @@ watch(route, () => {
   utilStore.mutate_errorMessage('')
   utilStore.mutate_showSuccessAlert(false)
   utilStore.mutate_successMessage('')
+})
+
+onMounted(async () => {
+  const coinStorage = localStorage.getItem('MoonCoins')
+  if (!coinStorage) {
+    await coinStore.getAllCoinsBrowser()
+  }
 })
 </script>
 

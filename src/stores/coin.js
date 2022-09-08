@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '@/firebase'
 
 export const useCoinStore = defineStore('coin', {
   state: () => ({
@@ -39,12 +41,21 @@ export const useCoinStore = defineStore('coin', {
       }
     },
     async getAllCoinsBrowser() {
-      const docRef = await doc(db, 'coins', 'all_coins')
-      const docSnap = await getDoc(docRef)
+      let allCoins
+      try {
+        const docRef = await doc(db, 'coins', 'all_coins')
+        const docSnap = await getDoc(docRef)
 
-      if (docSnap.exists()) {
+        if (docSnap.exists()) {
+          allCoins = docSnap.data()
+        } else {
+          console.log('Firestore error')
+        }
+
+        localStorage.setItem('MoonCoins', JSON.stringify(allCoins))
+      } catch (error) {
+        console.log(error.message)
       }
-      //TODO: make error if don't exist
     },
     async fetchCoins() {
       try {

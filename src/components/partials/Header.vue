@@ -2,104 +2,114 @@
 
 <template>
   <div class="header">
-    <div class="header__left">
-      <RouterLink to="/">
-        <img src="/svg/moon-holdings-logo.svg" alt="logo" />
-        <span>MOONHOLDINGS.XYZ</span>
-      </RouterLink>
-      <nav>
-        <ul>
-          <li>
-            <RouterLink to="/portfolio">PORTFOLIO</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/portfolio">RANKS</RouterLink>
-          </li>
-        </ul>
-      </nav>
-    </div>
-    <div class="header__right">
-      <button>
-        <img src="/svg/icon-hamburger-menu.svg" alt="hamburger menu" />
-      </button>
+    <div class="header__pink-bar" />
+    <div class="header__main">
+      <div class="left-side">
+        <div class="logo">
+          <img
+            src="/svg/moon-holdings-logo-black.svg"
+            alt="moonholdings logo"
+          />
+          <span>MoonHoldings</span>
+        </div>
+        <div class="portfolio-btns">
+          <span>Portfolio:</span>
+          <router-link to="#" class="coin-btn">
+            <img src="/svg/icon-coins.svg" alt="coins icon" />
+            <span>Coins</span>
+          </router-link>
+          <router-link to="#" class="nfts-btn">
+            <img src="/svg/icon-diamond.svg" alt="diamond icon" />
+            <span>NFTS</span>
+          </router-link>
+        </div>
+      </div>
+      <div class="right-side">
+        <div class="menu">
+          <img src="/svg/icon-hamburger-menu.svg" alt="hamburger menu" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .header {
-  position: fixed;
+  position: absolute;
   top: 0;
-  left: 0;
   right: 0;
-  min-height: 70px;
-  background: var(--light-gray);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 25px;
+  left: 0;
   z-index: 99;
+  font-family: 'Inter', monospace;
 
-  &__left {
+  &__pink-bar {
+    height: 10px;
+    background-color: var(--pink);
+  }
+
+  &__main {
+    min-height: 72px;
+    padding: 28px 46px 10px 46px;
     display: flex;
-    align-items: center;
+    justify-content: space-between;
 
-    > a {
+    .left-side {
       display: flex;
       align-items: center;
-      color: inherit;
-      text-decoration: none;
-      margin-right: 26px;
+      .logo {
+        font-size: 16px;
+        font-weight: 700;
+        margin-right: 42px;
 
-      img {
-        height: 32px;
-        margin-right: 20px;
+        img {
+          height: 28px;
+          margin-right: 10px;
+        }
+        span {
+          position: relative;
+          bottom: 5px;
+        }
       }
-      span {
-        font-size: 24px;
-        font-weight: 600;
-      }
-    }
-    nav {
-      // border: 1px solid magenta;
-      // display: flex;
-      // align-items: center;
-
-      ul {
-        list-style: none;
+      .portfolio-btns {
         display: flex;
-
-        li {
-          &:first-child {
-            font-size: 20px;
-            font-weight: 600;
-            margin-right: 15px;
-
-            a {
-              text-decoration: underline;
-              color: var(--light-pink);
-            }
+        align-items: center;
+        & > span {
+          text-transform: uppercase;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 15px;
+          color: #878787;
+          margin-right: 15px;
+        }
+        a {
+          display: flex;
+          align-items: center;
+          text-decoration: none;
+          img {
+            width: 31px;
+            margin-right: 8px;
           }
-          &:nth-last-child(1) {
-            font-size: 20px;
+          & > span {
+            text-transform: uppercase;
             font-weight: 700;
-
-            a {
-              text-decoration: none;
-              color: #cccccc;
-            }
+            font-size: 16px;
+            line-height: 15px;
+            color: #878787;
+            margin-right: 15px;
+          }
+        }
+        .coin-btn {
+          & > span {
+            color: var(--pink) !important;
           }
         }
       }
     }
-  }
-  &__right {
-    button {
-      border: none;
-      background: none;
-
-      img {
-        height: 32px;
+    .right-side {
+      .menu {
+        img {
+          height: 35px;
+        }
       }
     }
   }

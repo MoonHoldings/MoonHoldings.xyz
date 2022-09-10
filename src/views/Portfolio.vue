@@ -84,8 +84,8 @@ const singleCoinSearch = async () => {
   display: inline-block;
   min-height: 100vh;
   min-width: 100vw;
-  padding: 96px 26px 26px 26px;
-  background-image: linear-gradient(to bottom, var(--pink), var(--purple));
+  padding: 120px 26px 26px 26px;
+  background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
 
   &__coin-search {
     input {

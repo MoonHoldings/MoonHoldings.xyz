@@ -45,11 +45,11 @@ const singleCoinSearch = async () => {
 <template>
   <Header />
   <div class="portfolio">
-    <!-- <div class="portfolio__coin-search">
+    <div class="portfolio__coin-search">
       <input v-model="coinNameInput" type="text" placeholder="Search Coins" />
-      <button @click="singleCoinSearch">Search</button>
-      <span>&lt; {{ PORTFOLIO_GET_STARTED }}</span>
-      <transition
+      <!-- <button @click="singleCoinSearch">Search</button> -->
+      <!-- <span>&lt; {{ PORTFOLIO_GET_STARTED }}</span> -->
+      <!-- <transition
         mode="out-in"
         enter-active-class="animate__animated animate__fadeInLeft"
         leave-active-class="animate__animated animate__fadeOutLeft"
@@ -61,8 +61,8 @@ const singleCoinSearch = async () => {
             </li>
           </ul>
         </div>
-      </transition>
-    </div> -->
+      </transition> -->
+    </div>
     <div class="portfolio__welcome-msg">
       <h1>{{ PORTFOLIO_WELCOME_HEADER }}</h1>
       <p>
@@ -78,31 +78,31 @@ const singleCoinSearch = async () => {
 
 <style lang="scss" scoped>
 .portfolio {
-  // border: 1px solid magenta;
   padding: 1em;
   display: inline-block;
   color: var(--ash);
   min-height: 100vh;
   min-width: 100%;
-  padding: 120px 26px 26px 26px;
+  padding: 110px 26px 26px 26px;
   background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
-  overflow: hidden;
 
   &__coin-search {
     input {
-      min-height: 48px;
-      min-width: 220px;
-      background-color: rgba(255, 255, 255, 0.25);
-      border: 1px solid #ffffff;
+      min-height: 44px;
+      min-width: 240px;
+      background: rgba(182, 75, 212, 0.033);
+      border: 1px solid var(--pink);
+      box-shadow: 0px 1px 10px 1px rgba(182, 75, 212, 0.13);
+      -webkit-box-shadow: 0px 1px 10px 1px rgba(183, 75, 212, 0.16);
+      -moz-box-shadow: 0px 1px 10px 1px rgba(183, 75, 212, 0.16);
+      border-radius: 2px;
       outline: none;
-      font-size: 17px;
+      font-size: 18px;
       padding-left: 12px;
-      color: #ffffff;
-      box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
-      margin-right: 15px;
+      // margin-right: 15px;
     }
     ::placeholder {
-      color: #ffffff;
+      color: inherit;
     }
     span {
       font-size: 17px;

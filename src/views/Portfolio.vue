@@ -48,7 +48,15 @@ const singleCoinSearch = async () => {
     <div class="portfolio__coin-search">
       <input v-model="coinNameInput" type="text" placeholder="Search Coins" />
       <!-- <button @click="singleCoinSearch">Search</button> -->
-      <!-- <span>&lt; {{ PORTFOLIO_GET_STARTED }}</span> -->
+      <div class="sort-text">Portfolio display style:</div>
+      <div class="sort-btns">
+        <button class="grid-btn">
+          <img src="/svg/icon-grid.svg" alt="grid icon" />
+        </button>
+        <button class="list-btn">
+          <img src="/svg/icon-list.svg" alt="list icon" />
+        </button>
+      </div>
       <!-- <transition
         mode="out-in"
         enter-active-class="animate__animated animate__fadeInLeft"
@@ -87,6 +95,9 @@ const singleCoinSearch = async () => {
   background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
 
   &__coin-search {
+    display: flex;
+    align-items: center;
+
     input {
       min-height: 44px;
       min-width: 240px;
@@ -99,13 +110,25 @@ const singleCoinSearch = async () => {
       outline: none;
       font-size: 18px;
       padding-left: 12px;
-      // margin-right: 15px;
+      margin-right: 30px;
+      font-family: 'Inter', monospace;
     }
     ::placeholder {
       color: inherit;
     }
-    span {
-      font-size: 17px;
+    .sort-text {
+      font-size: 14px;
+      margin-right: 7px;
+    }
+    .sort-btns {
+      button {
+        background: none;
+        border: none;
+        outline: none;
+        img {
+          height: 30px;
+        }
+      }
     }
     .dropdown-list {
       width: 380px;

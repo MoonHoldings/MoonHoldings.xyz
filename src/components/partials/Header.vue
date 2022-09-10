@@ -94,7 +94,7 @@
             font-weight: 700;
             font-size: 16px;
             line-height: 15px;
-            color: #878787;
+            color: var(--ash);
             margin-right: 15px;
           }
         }

@@ -45,7 +45,7 @@ const singleCoinSearch = async () => {
 <template>
   <Header />
   <div class="portfolio">
-    <div class="portfolio__coin-search">
+    <!-- <div class="portfolio__coin-search">
       <input v-model="coinNameInput" type="text" placeholder="Search Coins" />
       <button @click="singleCoinSearch">Search</button>
       <span>&lt; {{ PORTFOLIO_GET_STARTED }}</span>
@@ -62,7 +62,7 @@ const singleCoinSearch = async () => {
           </ul>
         </div>
       </transition>
-    </div>
+    </div> -->
     <div class="portfolio__welcome-msg">
       <h1>{{ PORTFOLIO_WELCOME_HEADER }}</h1>
       <p>
@@ -78,14 +78,15 @@ const singleCoinSearch = async () => {
 
 <style lang="scss" scoped>
 .portfolio {
-  position: relative;
-  color: #ffffff;
+  // border: 1px solid magenta;
   padding: 1em;
   display: inline-block;
+  color: var(--ash);
   min-height: 100vh;
-  min-width: 100vw;
+  min-width: 100%;
   padding: 120px 26px 26px 26px;
   background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
+  overflow: hidden;
 
   &__coin-search {
     input {
@@ -134,8 +135,8 @@ const singleCoinSearch = async () => {
     transform: translateX(-50%) translateY(-50%);
     text-align: center;
     h1 {
-      font-size: 40px;
-      font-weight: 500;
+      font-size: 45px;
+      font-weight: 600;
     }
     p {
       font-size: 28px;

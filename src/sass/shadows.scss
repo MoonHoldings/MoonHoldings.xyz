@@ -1,0 +1,74 @@
+@import './mixins/shadow-before-after.scss';
+
+.shadow-common {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  border-radius: 2px;
+  width: 180px;
+  height: 180px;
+  z-index: 5;
+}
+
+.btc-shadow {
+  background: linear-gradient(180deg, #ee932e 0%, #f8bf76 100%);
+
+  &::before {
+    @include shadow-before;
+    background: #ee932e;
+  }
+  &::after {
+    @include shadow-after;
+    background: #f8bf76;
+  }
+}
+.eth-shadow {
+  background: linear-gradient(180deg, #5d17ad 0%, #1d0334 100%);
+
+  &::before {
+    @include shadow-before;
+    background: #5d17ad;
+  }
+  &::after {
+    @include shadow-after;
+    background: #1d0334;
+  }
+}
+.sol-shadow {
+  background: linear-gradient(180deg, #b712e6 0%, #060107 100%);
+
+  &::before {
+    @include shadow-before;
+    background: #b712e6;
+  }
+  &::after {
+    @include shadow-after;
+    background: #060107;
+  }
+}
+.algo-shadow {
+  background: linear-gradient(180deg, #ffffff 0%, #060107 100%);
+
+  &::before {
+    @include shadow-before;
+    background: #f6f6f6;
+  }
+  &::after {
+    @include shadow-after;
+    background: #060107;
+  }
+}
+.doge-shadow {
+  background: linear-gradient(180deg, #c2a633 0%, #eddb91 100%);
+
+  &::before {
+    @include shadow-before;
+    background: #c2a633;
+  }
+  &::after {
+    @include shadow-after;
+    background: #eddb91;
+  }
+}

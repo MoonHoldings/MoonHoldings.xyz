@@ -1,0 +1,23 @@
+@mixin shadow-before {
+  content: '';
+  width: 11px;
+  height: 11px;
+  border-top: 1px solid #000;
+  border-radius: 2px;
+  position: absolute;
+  top: -4.5px;
+  right: 1px;
+  transform: rotate(45deg);
+}
+
+@mixin shadow-after {
+  content: '';
+  width: 11px;
+  height: 11px;
+  border-bottom: 1px solid #000;
+  border-radius: 2px;
+  position: absolute;
+  bottom: 1px;
+  left: -4.5px;
+  transform: rotate(45deg);
+}

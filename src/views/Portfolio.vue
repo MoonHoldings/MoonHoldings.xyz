@@ -14,6 +14,15 @@ const fetchedCoins = ref([])
 const coinNameInput = ref('')
 const searchedCoins = ref([])
 const showWelcome = ref(false)
+// const tempCoins = ref([
+//   {
+//     symbol: 'BTC',
+//     name: 'Bitcoin',
+//     price: '23,955.69',
+//     logo_url:
+//       'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg',
+//   },
+// ])
 
 onMounted(async () => {
   //
@@ -75,9 +84,67 @@ const singleCoinSearch = async () => {
       </div>
       <!-- Coins -->
       <div class="portfolio__coins">
-        <div v-for="(e, i) in 10" :key="i" class="portfolio__coin-box">
-          <div class="surface"></div>
+        <div v-for="(e, i) in 7" :key="i" class="portfolio__coin-box">
+          <div class="surface">
+            <div class="symbol">
+              <div class="left">
+                <img
+                  src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg"
+                  alt=""
+                />
+                <span>BTC</span>
+              </div>
+              <div class="right">Bitcoin</div>
+            </div>
+            <div class="price">
+              <div class="text">Price</div>
+              <div class="number">$23,955.69</div>
+            </div>
+            <div class="holdings">
+              <div class="text">Holdings</div>
+              <div class="number">21</div>
+            </div>
+            <div class="value">
+              <div class="text">Value</div>
+              <div class="number">$692,069.49</div>
+            </div>
+            <div class="change">+2.69% 24 hr</div>
+          </div>
           <div class="shadow-common doge-shadow"></div>
+        </div>
+      </div>
+      <!-- Watch List -->
+      <div class="portfolio__watch">
+        <h1>Watch</h1>
+        <div class="portfolio__watch-coins">
+          <div v-for="(e, i) in 2" :key="i" class="portfolio__coin-box">
+            <div class="surface">
+              <div class="symbol">
+                <div class="left">
+                  <img
+                    src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg"
+                    alt=""
+                  />
+                  <span>BTC</span>
+                </div>
+                <div class="right">Bitcoin</div>
+              </div>
+              <div class="price">
+                <div class="text">Price</div>
+                <div class="number">$23,955.69</div>
+              </div>
+              <div class="holdings">
+                <div class="text">Holdings</div>
+                <div class="number">21</div>
+              </div>
+              <div class="value">
+                <div class="text">Value</div>
+                <div class="number">$692,069.49</div>
+              </div>
+              <div class="change">+2.69% 24 hr</div>
+            </div>
+            <div class="shadow-common doge-shadow"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -182,10 +249,12 @@ const singleCoinSearch = async () => {
     }
   }
 
+  // --------------portfolio coins-------------
   &__coins {
     display: flex;
     gap: 18px;
     flex-wrap: wrap;
+    margin-bottom: 60px;
   }
 
   &__coin-box {
@@ -195,10 +264,75 @@ const singleCoinSearch = async () => {
       border: 1px solid #000;
       border-radius: 2px;
       background-color: #ffffff;
+      padding: 9px;
       width: 180px;
       height: 180px;
       z-index: 6;
+
+      .symbol {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+        .left {
+          display: flex;
+          align-items: center;
+
+          img {
+            width: 24px;
+            height: 24px;
+            margin-right: 7px;
+          }
+          span {
+            color: #000000;
+            font-weight: 700;
+            font-size: 14px;
+            font-family: 'Inter', monospace;
+          }
+        }
+        .right {
+          font-size: 14px;
+          color: #000000;
+          font-family: 'Inter', monospace;
+        }
+      }
+      .price,
+      .holdings,
+      .value {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .text,
+        .number {
+          font-size: 12px;
+        }
+      }
+      .price,
+      .holdings {
+        margin-bottom: 5px;
+      }
+      .value {
+        margin-bottom: 20px;
+      }
+      .change {
+        font-size: 12px;
+        text-align: center;
+      }
     }
+  }
+
+  //-------------watch list--------------
+  &__watch {
+    h1 {
+      font-size: 18px;
+      font-family: 'Inter', monospace;
+      margin-bottom: 20px;
+    }
+  }
+
+  &__watch-coins {
+    display: flex;
+    gap: 18px;
   }
 
   // ============ Stats =============
@@ -207,11 +341,9 @@ const singleCoinSearch = async () => {
 
   &__total-value {
     .value {
-      background-color: #3f473f;
+      color: #000;
       min-height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      float: right;
       font-weight: 600;
       font-family: 'Inconsolata', monospace;
 
@@ -219,21 +351,16 @@ const singleCoinSearch = async () => {
         position: relative;
         .s1 {
           font-size: 38px;
-          color: #fff;
           margin-right: 15px;
         }
         .s2 {
           font-size: 38px;
-          color: var(--green);
+          color: #5fcd9f;
         }
         small {
-          // border: 1px solid magenta;
-          position: absolute;
-          bottom: 0;
           margin-left: 15px;
-          font-size: 14px;
+          font-size: 15px;
           line-height: 42px;
-          color: #fff;
         }
       }
     }

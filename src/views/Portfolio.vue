@@ -48,20 +48,38 @@ const singleCoinSearch = async () => {
 <template>
   <Header />
   <div class="portfolio">
-    <div class="portfolio__entries">
-      <div class="portfolio__coin-search">
-        <input v-model="coinNameInput" type="text" placeholder="Search Coins" />
-        <!-- <button @click="singleCoinSearch">Search</button> -->
-        <div class="sort-text">Portfolio display style:</div>
-        <div class="sort-btns">
-          <button class="grid-btn">
-            <img src="/svg/icon-grid.svg" alt="grid icon" />
-          </button>
-          <button class="list-btn">
-            <img src="/svg/icon-list.svg" alt="list icon" />
-          </button>
-        </div>
-        <!-- <transition
+    <div v-if="showWelcome" class="portfolio__welcome-msg">
+      <h1>{{ PORTFOLIO_WELCOME_HEADER }}</h1>
+      <p>
+        {{ PORTFOLIO_WELCOME_MSG1 }} <br />
+        {{ PORTFOLIO_WELCOME_MSG2 }}
+      </p>
+      <div class="monster-div">
+        <img src="/gif/monster-friend.gif" alt="monster friend" />
+      </div>
+    </div>
+
+    <div v-else class="portfolio__main">
+      <!-- Sub header -->
+      <div class="portfolio__sub-header">
+        <!-- Search coins -->
+        <div class="portfolio__coin-search">
+          <input
+            v-model="coinNameInput"
+            type="text"
+            placeholder="Search Coins"
+          />
+          <!-- <button @click="singleCoinSearch">Search</button> -->
+          <div class="sort-text">Portfolio display style:</div>
+          <div class="sort-btns">
+            <button class="grid-btn">
+              <img src="/svg/icon-grid.svg" alt="grid icon" />
+            </button>
+            <button class="list-btn">
+              <img src="/svg/icon-list.svg" alt="list icon" />
+            </button>
+          </div>
+          <!-- <transition
         mode="out-in"
         enter-active-class="animate__animated animate__fadeInLeft"
         leave-active-class="animate__animated animate__fadeOutLeft"
@@ -74,39 +92,42 @@ const singleCoinSearch = async () => {
           </ul>
         </div>
         </transition> -->
-      </div>
-      <!-- Coins -->
-      <div class="portfolio__coins">
-        <CoinBox v-for="(e, i) in 7" :key="i" />
-      </div>
-      <!-- Watch List -->
-      <div class="portfolio__watch">
-        <h1>Watch</h1>
-        <div class="portfolio__watch-coins">
-          <WatchCoin v-for="(e, i) in 2" :key="i" />
         </div>
-      </div>
-    </div>
-    <div class="portfolio__stats">
-      <div class="portfolio__total-value">
-        <div class="value">
-          <div class="value-number">
-            <span class="s1">$57,599.55</span> <span class="s2">+5.35%</span>
-            <small>24hr</small>
+
+        <!-- Total Value -->
+        <div class="portfolio__total-value">
+          <div class="value">
+            <div class="value-number">
+              <span class="s1">$57,599.55</span> <span class="s2">+5.35%</span>
+              <small>24hr</small>
+            </div>
+          </div>
+          <div class="value-currency">
+            <span class="text">Currency </span>
+            <button class="usd active-currency">USD</button
+            ><span class="pipe"> | </span> <button class="btc">BTC</button
+            ><span class="pipe"> | </span> <button class="eth">ETH</button
+            ><span class="pipe"> | </span>
+            <button class="sol">SOL</button>
           </div>
         </div>
-        <div class="value-currency"></div>
       </div>
-    </div>
-
-    <div v-if="showWelcome" class="portfolio__welcome-msg">
-      <h1>{{ PORTFOLIO_WELCOME_HEADER }}</h1>
-      <p>
-        {{ PORTFOLIO_WELCOME_MSG1 }} <br />
-        {{ PORTFOLIO_WELCOME_MSG2 }}
-      </p>
-      <div class="monster-div">
-        <img src="/gif/monster-friend.gif" alt="monster friend" />
+      <!-- Entries -->
+      <div class="portfolio__coins-stats">
+        <div class="portfolio__all-coins">
+          <!-- Coins -->
+          <div class="portfolio__coins">
+            <CoinBox v-for="(e, i) in 7" :key="i" />
+          </div>
+          <!-- Watch List -->
+          <div class="portfolio__watch">
+            <h1>Watch</h1>
+            <div class="portfolio__watch-coins">
+              <WatchCoin v-for="(e, i) in 2" :key="i" />
+            </div>
+          </div>
+        </div>
+        <div class="portfolio__stats"></div>
       </div>
     </div>
   </div>
@@ -114,19 +135,70 @@ const singleCoinSearch = async () => {
 
 <style lang="scss" scoped>
 @import '@/sass/shadows.scss';
+
+.active-currency {
+  position: relative;
+  color: var(--pink);
+  font-weight: 600;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 1.5px;
+    width: 100%;
+    background-color: var(--pink);
+  }
+}
 .portfolio {
   padding: 1em;
-  display: grid;
-  grid-template-columns: 60% 40%;
   color: var(--ash);
   min-height: 100vh;
   min-width: 100%;
   padding: 110px 41px 41px 41px;
   background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
 
+  // ========== Welcome ===========
+  &__welcome-msg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+    h1 {
+      font-size: 45px;
+      font-weight: 600;
+    }
+    p {
+      font-size: 28px;
+    }
+    .monster-div {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translateX(100%) translateY(130%);
+      img {
+        height: 90px;
+      }
+    }
+  }
+
+  // ========== Main ===========
+
+  &__coins-stats {
+    display: grid;
+    grid-template-columns: 60% 40%;
+  }
+
   // ============== Entries ===============
   &__entries {
     padding-right: 30px;
+  }
+
+  &__sub-header {
+    display: flex;
+    justify-content: space-between;
   }
 
   &__coin-search {
@@ -212,10 +284,10 @@ const singleCoinSearch = async () => {
   }
 
   // ============ Stats =============
-  &__stats {
-  }
 
   &__total-value {
+    font-family: 'Inter', monospace;
+    color: #000;
     .value {
       color: #000;
       min-height: 64px;
@@ -240,29 +312,22 @@ const singleCoinSearch = async () => {
         }
       }
     }
-  }
+    .value-currency {
+      text-align: right;
 
-  // ========== Welcome ===========
-  &__welcome-msg {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    text-align: center;
-    h1 {
-      font-size: 45px;
-      font-weight: 600;
-    }
-    p {
-      font-size: 28px;
-    }
-    .monster-div {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      transform: translateX(100%) translateY(130%);
-      img {
-        height: 90px;
+      .text {
+        font-size: 14px;
+      }
+      button {
+        border: none;
+        outline: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        font-size: 14px;
+      }
+      .pipe {
+        font-size: 16px;
       }
     }
   }

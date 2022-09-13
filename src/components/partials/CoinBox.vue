@@ -92,7 +92,8 @@
       margin-bottom: 20px;
     }
     .change {
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: 600;
       text-align: center;
     }
   }

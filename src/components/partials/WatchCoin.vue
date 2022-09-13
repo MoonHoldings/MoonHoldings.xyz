@@ -33,13 +33,16 @@
     padding: 9px;
     width: 180px;
     height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     z-index: 6;
 
     .symbol {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 25px;
+
       .left {
         display: flex;
         align-items: center;
@@ -62,26 +65,14 @@
         font-family: 'Inter', monospace;
       }
     }
-    .price,
-    .holdings,
-    .value {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .text,
-      .number {
-        font-size: 12px;
-      }
-    }
-    .price,
-    .holdings {
-      margin-bottom: 5px;
-    }
-    .value {
-      margin-bottom: 20px;
+    .price {
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
     }
     .change {
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: 600;
       text-align: center;
     }
   }

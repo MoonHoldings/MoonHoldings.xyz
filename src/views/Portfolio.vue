@@ -43,6 +43,54 @@ const singleCoinSearch = async () => {
   const response = await coinStore.getSingleCoin('BTC')
   console.log(response)
 }
+
+const pct_coins = ref([
+  {
+    id: 'BTC',
+    name: 'Bitcoin',
+    pct: 40,
+    colors: {
+      text: '#000',
+      gradient: ['#F7931A', '#FFC783'],
+    },
+  },
+  {
+    id: 'ETH',
+    name: 'Ethereum',
+    pct: 30,
+    colors: {
+      text: '#fff',
+      gradient: ['#761FC3', '#19012F'],
+    },
+  },
+  {
+    id: 'USDT',
+    name: 'Tether',
+    pct: 15,
+    colors: {
+      text: '#fff',
+      background: '#53AE94',
+    },
+  },
+  {
+    id: 'USDC',
+    name: 'USD Coin',
+    pct: 10,
+    colors: {
+      text: '#fff',
+      background: '#2775CA',
+    },
+  },
+  {
+    id: 'BNB',
+    name: 'Binance Coin',
+    pct: 5,
+    colors: {
+      text: '#000',
+      background: '#F3BA2F',
+    },
+  },
+])
 </script>
 
 <template>
@@ -127,7 +175,31 @@ const singleCoinSearch = async () => {
             </div>
           </div>
         </div>
-        <div class="portfolio__stats"></div>
+        <div class="portfolio__stats">
+          <div class="portfolio__pct-bar">
+            <div
+              class="coin-pct"
+              v-for="(coin, i) in pct_coins"
+              :key="i"
+              :style="{ width: coin.pct + '%' }"
+            >
+              <div class="pct-num">{{ coin.pct }}%</div>
+              <div
+                class="pct-color"
+                :style="{
+                  backgroundImage: coin.colors.gradient
+                    ? `linear-gradient(to bottom, ${coin.colors.gradient[0]}, ${coin.colors.gradient[1]})`
+                    : 'initial',
+                  backgroundColor: coin.colors.background
+                    ? coin.colors.background
+                    : 'initial',
+                }"
+              >
+                <div :style="{ color: coin.colors.text }">{{ coin.id }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -199,6 +271,57 @@ const singleCoinSearch = async () => {
   &__sub-header {
     display: flex;
     justify-content: space-between;
+  }
+
+  &__pct-bar {
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+    margin-top: 20px;
+    font-family: 'Inter', monospace;
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 100%;
+      height: 80px;
+      background: #000;
+      border-radius: 3px;
+    }
+    .coin-pct {
+      .pct-num {
+        font-size: 16px;
+        color: #000;
+      }
+      .pct-color {
+        position: relative;
+        height: 80px;
+        width: 100%;
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000;
+        border-right: 1px solid #000;
+
+        & > div {
+          font-size: 15px;
+          position: absolute;
+          bottom: 0px;
+          left: 3px;
+        }
+      }
+      &:first-child {
+        .pct-color {
+          border-left: 1px solid #000;
+          border-radius: 3px 0 0 3px;
+        }
+      }
+      &:last-child {
+        .pct-color {
+          border-radius: 0 3px 3px 0;
+        }
+      }
+    }
   }
 
   &__coin-search {

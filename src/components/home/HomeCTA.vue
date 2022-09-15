@@ -7,7 +7,7 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
   <main>
     <div class="moon-cta">
       <section class="tagline">
-        <h1>The Bold Portfolio Tracker For Brave Crypto Investors</h1>
+        <h1>The Web3 Portfolio Intelligence App.</h1>
         <h2>Start or continue your crypto investing journey with us.</h2>
         <PrimaryBtn :copy="GET_STARTED" :url="SIGN_UP_PATH" />
       </section>

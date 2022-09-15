@@ -5,11 +5,11 @@
       <h1>Moon Holdings Terms of Use</h1>
 
       <p>
-        Welcome to Moon Holdings, a crypto portfolio tracker for bold and brave
-        investors. You are just minutes away from enjoying Moon Holdings's
-        unique and beautiful portfolio dashboard. Before you get started, we ask
-        that you take a few minutes and read the important Terms of Use
-        Agreement below. We look forward to your use of our app.
+        Welcome to Moon Holdings. The Web3 Portfolio Intelligence App. You are
+        just minutes away from enjoying Moon Holdings's unique and beautiful
+        portfolio dashboard. Before you get started, we ask that you take a few
+        minutes and read the important Terms of Use Agreement below. We look
+        forward to your use of our app.
       </p>
 
       <h3>Terms of Use Agreement</h3>

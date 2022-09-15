@@ -2,7 +2,7 @@
 
 #### moonholdings.xyz
 
-### The Portfolio app to Rule them All
+### The Web3 Portfolio Intelligence App
 
 ## Recommended IDE Setup
 

@@ -1,4 +1,4 @@
-export const coinStyles = [
+export default [
   {
     id: 'BTC',
     name: 'Bitcoin',

@@ -8,7 +8,7 @@
     position: absolute;
     bottom: -1px;
     left: 0;
-    height: 1.5px;
+    height: 2px;
     width: 100%;
     background-color: var(--pink);
   }
@@ -61,6 +61,52 @@
   &__sub-header {
     display: flex;
     justify-content: space-between;
+  }
+
+  &__total-value {
+    font-family: 'Inter', monospace;
+    color: #000;
+    .value {
+      color: #000;
+      float: right;
+      font-weight: 600;
+      font-family: 'Inconsolata', monospace;
+
+      &-number {
+        position: relative;
+        .s1 {
+          font-size: 40px;
+          margin-right: 15px;
+        }
+        .s2 {
+          font-size: 40px;
+          color: #5fcd9f;
+        }
+        small {
+          margin-left: 16px;
+          font-size: 16px;
+          line-height: 42px;
+        }
+      }
+    }
+    .value-currency {
+      text-align: right;
+
+      .text {
+        font-size: 16px;
+      }
+      button {
+        border: none;
+        outline: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        font-size: 16px;
+      }
+      .pipe {
+        font-size: 17px;
+      }
+    }
   }
 
   &__pct-bar {
@@ -211,7 +257,7 @@
   // --------------portfolio coins-------------
   &__coins {
     display: flex;
-    gap: 18px;
+    gap: 25px;
     flex-wrap: wrap;
     margin-bottom: 60px;
   }
@@ -228,55 +274,8 @@
 
   &__watch-coins {
     display: flex;
-    gap: 18px;
+    gap: 25px;
   }
 
   // ============ Stats =============
-
-  &__total-value {
-    font-family: 'Inter', monospace;
-    color: #000;
-    .value {
-      color: #000;
-      min-height: 64px;
-      float: right;
-      font-weight: 600;
-      font-family: 'Inconsolata', monospace;
-
-      &-number {
-        position: relative;
-        .s1 {
-          font-size: 38px;
-          margin-right: 15px;
-        }
-        .s2 {
-          font-size: 38px;
-          color: #5fcd9f;
-        }
-        small {
-          margin-left: 15px;
-          font-size: 15px;
-          line-height: 42px;
-        }
-      }
-    }
-    .value-currency {
-      text-align: right;
-
-      .text {
-        font-size: 14px;
-      }
-      button {
-        border: none;
-        outline: none;
-        background: none;
-        padding: 0;
-        margin: 0;
-        font-size: 14px;
-      }
-      .pipe {
-        font-size: 16px;
-      }
-    }
-  }
 }

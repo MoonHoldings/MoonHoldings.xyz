@@ -1,23 +1,25 @@
 @mixin shadow-before {
-  content: '';
-  width: 11px;
-  height: 11px;
+  // content: '';
+  width: 14.5px;
+  height: 14.5px;
   border-top: 1px solid #000;
-  border-radius: 2px;
+  border-radius: 1.5px;
   position: absolute;
-  top: -4.5px;
-  right: 1px;
+  // top: -7px;
+  // right: 2px;
+  right: 3px;
+  top: -7px;
   transform: rotate(45deg);
 }
 
 @mixin shadow-after {
-  content: '';
-  width: 11px;
-  height: 11px;
+  // content: '';
+  width: 14.5px;
+  height: 14.5px;
   border-bottom: 1px solid #000;
   border-radius: 2px;
   position: absolute;
-  bottom: 1px;
-  left: -4.5px;
+  bottom: 3px;
+  left: -6.5px;
   transform: rotate(45deg);
 }

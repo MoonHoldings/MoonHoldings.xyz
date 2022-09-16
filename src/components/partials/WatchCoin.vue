@@ -16,7 +16,10 @@
       <div class="price">$23,955.69</div>
       <div class="change">+2.69% 24 hr</div>
     </div>
-    <div class="shadow-common doge-shadow"></div>
+    <div class="shadow-common btc-shadow">
+      <div class="top-corner"></div>
+      <div class="bottom-corner"></div>
+    </div>
   </div>
 </template>
 
@@ -29,10 +32,11 @@
     position: relative;
     border: 1px solid #000;
     border-radius: 2px;
+    color: #000000;
     background-color: #ffffff;
-    padding: 9px;
-    width: 180px;
-    height: 180px;
+    padding: 15px;
+    width: 240px;
+    height: 240px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -48,30 +52,29 @@
         align-items: center;
 
         img {
-          width: 24px;
-          height: 24px;
+          width: 30px;
+          height: 30px;
           margin-right: 7px;
         }
         span {
-          color: #000000;
           font-weight: 700;
-          font-size: 14px;
+          font-size: 18px;
           font-family: 'Inter', monospace;
         }
       }
       .right {
-        font-size: 14px;
-        color: #000000;
+        font-size: 18px;
+
         font-family: 'Inter', monospace;
       }
     }
     .price {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 600;
       text-align: center;
     }
     .change {
-      font-size: 14px;
+      font-size: 18px;
       font-weight: 600;
       text-align: center;
     }

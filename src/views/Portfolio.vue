@@ -10,6 +10,7 @@ import {
   PORTFOLIO_WELCOME_MSG2,
 } from '@/constants/copy'
 import { useCoinStore } from '@/stores/coin'
+import coinColors from '@/constants/coinStyles.js'
 
 const coinStore = useCoinStore()
 const fetchedCoins = ref([])
@@ -48,7 +49,13 @@ const pct_coins = ref([
   {
     id: 'BTC',
     name: 'Bitcoin',
+    price: '23,955.69',
+    holdings: '20',
+    value: '692,069.49',
+    logo_url:
+      'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg',
     pct: 40,
+    change_24: '+2.69',
     colors: {
       text: '#000',
       gradient: ['#F7931A', '#FFC783'],
@@ -57,7 +64,13 @@ const pct_coins = ref([
   {
     id: 'ETH',
     name: 'Ethereum',
+    price: '23,955.69',
+    holdings: '20',
+    value: '692,069.49',
+    logo_url:
+      'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/eth.svg',
     pct: 30,
+    change_24: '+2.69',
     colors: {
       text: '#fff',
       gradient: ['#761FC3', '#19012F'],
@@ -66,7 +79,13 @@ const pct_coins = ref([
   {
     id: 'USDT',
     name: 'Tether',
+    price: '23,955.69',
+    holdings: '20',
+    value: '692,069.49',
+    logo_url:
+      'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/usdt.svg',
     pct: 15,
+    change_24: '+2.69',
     colors: {
       text: '#fff',
       background: '#53AE94',
@@ -75,7 +94,13 @@ const pct_coins = ref([
   {
     id: 'USDC',
     name: 'USD Coin',
+    price: '23,955.69',
+    holdings: '20',
+    value: '692,069.49',
+    logo_url:
+      'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/usdc.svg',
     pct: 10,
+    change_24: '+2.69',
     colors: {
       text: '#fff',
       background: '#2775CA',
@@ -84,7 +109,13 @@ const pct_coins = ref([
   {
     id: 'BNB',
     name: 'Binance Coin',
+    price: '23,955.69',
+    holdings: '20',
+    value: '692,069.49',
+    logo_url:
+      'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/bnb.svg',
     pct: 5,
+    change_24: '+2.69',
     colors: {
       text: '#000',
       background: '#F3BA2F',
@@ -165,7 +196,7 @@ const pct_coins = ref([
         <div class="portfolio__all-coins">
           <!-- Coins -->
           <div class="portfolio__coins">
-            <CoinBox v-for="(e, i) in 7" :key="i" />
+            <CoinBox v-for="(coin, i) in pct_coins" :key="i" :coin="coin" />
           </div>
           <!-- Watch List -->
           <div class="portfolio__watch">

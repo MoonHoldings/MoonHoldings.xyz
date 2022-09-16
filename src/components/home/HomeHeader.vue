@@ -28,8 +28,8 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 
 <style lang="scss" scoped>
 h1 {
-  margin: 1em;
-  font-size: 1.375rem;
+  margin: 1.6rem;
+  font-size: 2.2rem;
   color: #fff;
 }
 
@@ -40,12 +40,12 @@ a {
 
 nav {
   position: absolute;
-  right: 2em;
+  right: 2rem;
 
   a {
     display: inline-block;
-    padding: 0 1rem;
-    font-size: 2em;
+    padding: 0 1.6rem;
+    font-size: 2rem;
     text-decoration: none;
     color: #fff;
     transition: 0.4s;

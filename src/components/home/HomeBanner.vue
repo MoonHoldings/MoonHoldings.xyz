@@ -6,7 +6,7 @@
 
 <style lang="scss" scoped>
 .moon-banner {
-  height: 280px;
+  height: 28rem;
   color: white;
   background: black;
   text-align: center;

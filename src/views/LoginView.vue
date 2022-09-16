@@ -207,15 +207,15 @@ const blink = () => {
 @import '@/sass/mixins/primary-btn.scss';
 .input-default {
   background: #eee;
-  border: 2px solid var(--pink);
+  border: 0.2rem solid var(--pink);
 }
 .error {
   background: rgba(255, 111, 111, 0.5);
-  border: 2px solid #ff6f6f;
+  border: 0.2rem solid #ff6f6f;
 }
 
 .login-window {
-  height: 580px;
+  height: 58rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -230,27 +230,27 @@ const blink = () => {
   margin-bottom: 20.41px;
 
   input {
-    margin-bottom: 20.41px;
-    border-radius: 4px;
+    margin-bottom: 2.041rem;
+    border-radius: 0.4rem;
   }
 
   a {
     color: #000;
     text-decoration: none;
-    font-size: 1rem;
-    margin-bottom: 20.41px;
+    font-size: 1.6rem;
+    margin-bottom: 2.041rem;
   }
 
   .eye {
     position: absolute;
-    top: 10px;
+    top: 1rem;
     background: none;
     border: none;
     outline: none;
     z-index: 25;
 
     svg {
-      height: 30px;
+      height: 3rem;
     }
   }
 
@@ -264,20 +264,20 @@ const blink = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20.41px;
+  margin-bottom: 2.041rem;
 
   a {
     color: #000;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.6rem;
   }
   button {
-    height: 48px;
+    height: 4.8rem;
   }
 }
 .social-signin {
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  row-gap: 2rem;
 }
 </style>

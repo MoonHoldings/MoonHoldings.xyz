@@ -13,6 +13,10 @@
 
 /* semantic color variables for this project */
 
+html {
+  font-size: 62.5%; // 1em = 10px
+}
+
 *,
 *::before,
 *::after {
@@ -26,7 +30,6 @@ body {
   min-height: 100vh;
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
-  font-size: 62.5%; // 1em = 10px
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

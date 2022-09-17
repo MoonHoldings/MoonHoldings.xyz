@@ -157,7 +157,7 @@ const pct_coins = ref([
             enter-active-class="animate__animated animate__fadeInLeft"
             leave-active-class="animate__animated animate__fadeOutLeft"
           > -->
-          <div class="dropdown-list" v-if="searchedCoins.length == 0">
+          <div class="dropdown-list" v-if="searchedCoins.length !== 0">
             <ul>
               <li v-for="coin in searchedCoins" :key="coin.id">
                 <button>{{ coin.id }} - {{ coin.name }}</button>

@@ -196,6 +196,7 @@
   }
 
   &__coin-search {
+    position: relative;
     display: flex;
     align-items: center;
     margin-bottom: 5.8rem;
@@ -219,7 +220,7 @@
       color: inherit;
     }
     .sort-text {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       margin-right: 0.7rem;
     }
     .sort-btns {
@@ -233,9 +234,14 @@
       }
     }
     .dropdown-list {
+      position: absolute;
+      top: 4.4rem;
       width: 38rem;
       min-height: 15rem;
       background-color: #fff;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      z-index: 7;
       ul {
         padding: 0.7rem 0;
         list-style: none;

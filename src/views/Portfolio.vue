@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import Header from '@/components/partials/Header.vue'
 import CoinBox from '@/components/partials/CoinBox.vue'
 import WatchCoin from '@/components/partials/WatchCoin.vue'
@@ -13,36 +13,43 @@ import { useCoinStore } from '@/stores/coin'
 import coinColors from '@/constants/coinStyles.js'
 
 const coinStore = useCoinStore()
-const fetchedCoins = ref([])
-const coinNameInput = ref('')
+const storedCoins = ref([])
+const searchInput = ref('')
 const searchedCoins = ref([])
 const showWelcome = ref(false)
 
-onMounted(async () => {
-  //
+onMounted(() => {
+  const moonCoins = localStorage.getItem('MoonCoins')
+  const parsedCoins = JSON.parse(moonCoins).coins
+  storedCoins.value = [...parsedCoins]
 })
 
-watch([coinNameInput, fetchedCoins], () => {
-  //   fn()
+watch([searchInput], () => {
+  fn()
 })
-// const fn = () => {
-//   if (coinNameInput.value.length >= 2 && fetchedCoins.value.length !== 0) {
-//     const coinNameInputCap = coinNameInput.value.toUpperCase()
+const fn = () => {
+  const inputUp = searchInput.value.toUpperCase()
+  if (inputUp.length >= 2) {
+    searchedCoins.value = []
+    storedCoins.value.forEach((coin) => {
+      const coinNameChar = slicedWordUp(coin.name)
+      if (coinNameChar === inputUp) {
+        const doesExist = searchedCoins.value.some(
+          (sc) => sc.name === coin.name
+        )
+        if (!doesExist) searchedCoins.value.push(coin)
+      }
+    })
 
-//     const coinsMapped = fetchedCoins.value.map((coin) => {
-//       const coinIdChar = coin.id.slice(0, coinNameInput.value.length)
+    console.log(searchedCoins.value)
+  }
+  if (inputUp.length === 0) {
+    searchedCoins.value = []
+  }
+}
 
-//       if (coinIdChar === coinNameInputCap) return coin
-//     })
-//     searchedCoins.value = coinsMapped
-//   }
-//   if (coinNameInput.value.length === 0) {
-//     searchedCoins.value = []
-//   }
-// }
-const singleCoinSearch = async () => {
-  const response = await coinStore.getSingleCoin('BTC')
-  console.log(response)
+const slicedWordUp = (name) => {
+  return name.slice(0, searchInput.value.length).toUpperCase()
 }
 
 const pct_coins = ref([
@@ -143,12 +150,21 @@ const pct_coins = ref([
       <div class="portfolio__sub-header">
         <!-- Search coins -->
         <div class="portfolio__coin-search">
-          <input
-            v-model="coinNameInput"
-            type="text"
-            placeholder="Search Coins"
-          />
-          <!-- <button @click="singleCoinSearch">Search</button> -->
+          <input v-model="searchInput" type="text" placeholder="Search Coins" />
+          <!-- Dropdown -->
+          <!-- <transition
+            mode="out-in"
+            enter-active-class="animate__animated animate__fadeInLeft"
+            leave-active-class="animate__animated animate__fadeOutLeft"
+          > -->
+          <div class="dropdown-list" v-if="searchedCoins.length == 0">
+            <ul>
+              <li v-for="coin in searchedCoins" :key="coin.id">
+                <button>{{ coin.id }} - {{ coin.name }}</button>
+              </li>
+            </ul>
+          </div>
+          <!-- </transition> -->
           <div class="sort-text">Portfolio display style:</div>
           <div class="sort-btns">
             <button class="grid-btn">
@@ -158,19 +174,6 @@ const pct_coins = ref([
               <img src="/svg/icon-list.svg" alt="list icon" />
             </button>
           </div>
-          <!-- <transition
-        mode="out-in"
-        enter-active-class="animate__animated animate__fadeInLeft"
-        leave-active-class="animate__animated animate__fadeOutLeft"
-        >
-        <div class="dropdown-list" v-if="searchedCoins.length !== 0">
-          <ul>
-            <li v-for="coin in searchedCoins" :key="coin.id">
-              <button>{{ coin.id }} - {{ coin.name }}</button>
-            </li>
-          </ul>
-        </div>
-        </transition> -->
         </div>
 
         <!-- Total Value -->

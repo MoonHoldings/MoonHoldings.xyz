@@ -33,14 +33,14 @@ const fn = () => {
     searchedCoins.value = []
     storedCoins.value.forEach((coin) => {
       const coinNameChar = slicedWordUp(coin.name)
-      if (coinNameChar === inputUp) {
+      const coinSymbolChar = slicedWordUp(coin.symbol)
+      if (coinNameChar === inputUp || coinSymbolChar === inputUp) {
         const doesExist = searchedCoins.value.some(
           (sc) => sc.name === coin.name
         )
         if (!doesExist) searchedCoins.value.push(coin)
       }
     })
-
     console.log(searchedCoins.value)
   }
   if (inputUp.length === 0) {

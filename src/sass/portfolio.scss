@@ -239,8 +239,9 @@
       width: 38rem;
       min-height: 15rem;
       background-color: #fff;
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px,
+        rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px,
+        rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
       z-index: 7;
       ul {
         padding: 0.7rem 0;
@@ -249,7 +250,7 @@
           button {
             width: 100%;
             text-align: left;
-            padding: 0.5rem 1rem;
+            padding: 0.8rem 1.3rem;
             font-size: 1.6rem;
             background: none;
             border: none;

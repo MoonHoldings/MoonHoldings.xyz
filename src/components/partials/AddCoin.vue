@@ -70,6 +70,7 @@ import cross from '/svg/icon-cross.svg'
     .totality {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      padding: 0.6rem;
 
       > div {
         text-align: right;

@@ -12,11 +12,36 @@ import cross from '/svg/icon-cross.svg'
           <div>Holdings</div>
           <div>Value</div>
         </div>
-        <div class="empty-text">
+        <div class="empty-text" v-if="false">
           Select <strong>Add Exchange</strong> or <strong>Add Wallet</strong> to
           start building your <strong>Bitcoin</strong>
           Portfolio
         </div>
+        <ul class="holdings-list">
+          <li v-for="(n, i) in 10" :key="i">
+            <div class="holdings-field" v-if="false">
+              <div class="wallet-input">
+                <input v-if="true" type="text" placeholder="Search Exchanges" />
+                <input v-else type="text" placeholder="Search Wallets" />
+              </div>
+              <div class="holdings-input">
+                <input type="text" placeholder="0" />
+              </div>
+              <div class="save-btn-input">
+                <button>Save</button>
+              </div>
+            </div>
+            <div class="holdings-value" v-else>
+              <div class="wallet">Coinbase</div>
+              <div class="holdings">21</div>
+              <div class="value">$429,610.02</div>
+              <button class="remove-btn">
+                <img :src="cross" alt="remove cross" />
+                Remove
+              </button>
+            </div>
+          </li>
+        </ul>
         <div class="totality">
           <div>Total</div>
           <div>0</div>
@@ -47,8 +72,8 @@ import cross from '/svg/icon-cross.svg'
 
   &__window {
     position: relative;
-    max-width: 60rem;
-    min-height: 50rem;
+    max-width: 67rem;
+    min-height: 55rem;
     margin-left: auto;
     margin-right: auto;
     margin-top: 50vh;
@@ -66,21 +91,24 @@ import cross from '/svg/icon-cross.svg'
   }
 
   &__form {
+    padding-top: 2rem;
     .header,
     .totality {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 40% 27% 33%;
       padding: 0.6rem;
 
       > div {
-        text-align: right;
-        font-size: 1.7rem;
+        font-size: 1.8rem;
         color: rgba(51, 51, 51, 0.2);
+        &:not(:first-child) {
+          text-align: right;
+        }
       }
     }
 
     .empty-text {
-      margin: 4.2rem 11rem;
+      margin: 4.2rem 12rem;
       text-align: center;
       font-size: 1.6rem;
       line-height: 2.8rem;
@@ -93,6 +121,106 @@ import cross from '/svg/icon-cross.svg'
 
       > div {
         font-weight: 800;
+        padding: 0 0.5rem;
+      }
+    }
+    .holdings-list {
+      list-style: none;
+      width: inherit;
+      max-height: 30rem;
+      padding: 0 0.6rem;
+      overflow-y: auto;
+
+      /* width */
+      &::-webkit-scrollbar {
+        width: 1rem;
+      }
+
+      /* Track */
+      &::-webkit-scrollbar-track {
+        background: #eee;
+        border-radius: 1rem;
+      }
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: var(--pink);
+        border-radius: 1rem;
+      }
+
+      /* Handle on hover */
+      &::-webkit-scrollbar-thumb:hover {
+        background: rgb(201, 28, 220);
+      }
+
+      li {
+        padding: 1.5rem 0;
+        &:not(:first-child) {
+          border-top: 1px solid rgba(0, 0, 0, 0.15);
+        }
+      }
+
+      .holdings-field {
+        display: flex;
+        gap: 1rem;
+
+        div {
+          flex: 1;
+
+          input {
+            width: 100%;
+            min-height: 4rem;
+            font-size: 1.6rem;
+            padding: 0 1rem;
+            border: 1px solid var(--pink);
+            border-radius: 0.3rem;
+            outline: none;
+            background: #eeeeee;
+          }
+
+          button {
+            width: 100%;
+            background-color: var(--pink);
+            color: #fff;
+            min-height: 4rem;
+            font-size: 1.6rem;
+            outline: none;
+            border: 1px solid #a1a1a1;
+            border-radius: 0.3rem;
+          }
+        }
+      }
+      .holdings-value {
+        position: relative;
+        display: grid;
+        grid-template-columns: 40% 27% 33%;
+
+        & > div {
+          font-size: 1.55rem;
+          padding: 0 0.5rem;
+          &:not(:first-child) {
+            text-align: right;
+          }
+        }
+
+        .remove-btn {
+          position: absolute;
+          top: -0.4rem;
+          right: 15%;
+          display: flex;
+          align-items: center;
+          font-size: 1.5rem;
+          background-color: rgb(255, 68, 65);
+          color: #fff;
+          border: none;
+          outline: none;
+          border-radius: 0.3rem;
+          padding: 0.5rem 0.7rem;
+          img {
+            max-height: 2rem;
+            margin-right: 0.2rem;
+          }
+        }
       }
     }
   }
@@ -103,7 +231,7 @@ import cross from '/svg/icon-cross.svg'
     align-items: center;
 
     button {
-      min-width: 16.4rem;
+      min-width: 19.4rem;
       min-height: 5rem;
       border: 1px solid #a1a1a1;
       border-radius: 0.3rem;

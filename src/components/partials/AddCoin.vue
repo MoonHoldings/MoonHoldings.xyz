@@ -1,5 +1,7 @@
 <script setup>
 import cross from '/svg/icon-cross.svg'
+import deleteRow from '/svg/icon-delete-row.svg'
+import edit from '/svg/icon-edit.svg'
 </script>
 
 <template>
@@ -43,10 +45,14 @@ import cross from '/svg/icon-cross.svg'
                   <img src="/svg/icon-three-dots-vertical.svg" alt="" />
                 </button>
               </div>
-              <button v-if="false" class="remove-btn">
-                <img :src="cross" alt="remove cross" />
-                Remove
-              </button>
+              <div class="menu-options" v-if="false">
+                <button class="edit-btn">
+                  <img :src="edit" alt="edit icon" />
+                </button>
+                <button class="delete-btn">
+                  <img :src="deleteRow" alt="delete row icon" />
+                </button>
+              </div>
             </div>
           </li>
         </ul>
@@ -243,23 +249,22 @@ import cross from '/svg/icon-cross.svg'
             }
           }
         }
-
-        .remove-btn {
+        .menu-options {
+          // border: 1px solid magenta;
           position: absolute;
-          top: -0.4rem;
-          right: 15%;
           display: flex;
-          align-items: center;
-          font-size: 1.5rem;
-          background-color: rgb(255, 68, 65);
-          color: #fff;
-          border: none;
-          outline: none;
-          border-radius: 0.3rem;
-          padding: 0.5rem 0.7rem;
-          img {
-            max-height: 2rem;
-            margin-right: 0.2rem;
+          right: 0;
+          background: #fff;
+          padding: 0.8rem;
+          margin-right: 2.5rem;
+          border-radius: 0.5rem;
+          box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+            rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+
+          .edit-btn {
+            position: relative;
+            bottom: 0.15rem;
+            margin-right: 0.5rem;
           }
         }
       }

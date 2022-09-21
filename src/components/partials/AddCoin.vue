@@ -2,6 +2,9 @@
 import cross from '/svg/icon-cross.svg'
 import deleteRow from '/svg/icon-delete-row.svg'
 import edit from '/svg/icon-edit.svg'
+import { useUtilStore } from '@/stores/util'
+
+const utilStore = useUtilStore()
 </script>
 
 <template>
@@ -67,7 +70,10 @@ import edit from '/svg/icon-edit.svg'
         <button class="wallet">Add Wallet</button>
         <button class="save">Save & Complete</button>
       </div>
-      <button class="cross-btn">
+      <button
+        @click="utilStore.mutate_addCoinModalsToggle(false)"
+        class="cross-btn"
+      >
         <img :src="cross" alt="" />
       </button>
     </div>

@@ -11,9 +11,11 @@ import {
   PORTFOLIO_WELCOME_MSG2,
 } from '@/constants/copy'
 import { useCoinStore } from '@/stores/coin'
+import { useUtilStore } from '@/stores/util'
 import coinColors from '@/constants/coinStyles.js'
 
 const coinStore = useCoinStore()
+const utilStore = useUtilStore()
 const storedCoins = ref([])
 const searchInput = ref('')
 const searchedCoins = ref([])
@@ -50,6 +52,10 @@ const fn = () => {
 
 const slicedWordUp = (name) => {
   return name.slice(0, searchInput.value.length).toUpperCase()
+}
+
+const searchCoinClick = () => {
+  utilStore.mutate_addCoinModalsToggle(true)
 }
 
 const pct_coins = ref([
@@ -133,7 +139,13 @@ const pct_coins = ref([
 
 <template>
   <teleport to="#modals-root">
-    <AddCoin />
+    <transition
+      mode="out-in"
+      enter-active-class="animate__animated animate__fadeIn"
+      leave-active-class="animate__animated animate__fadeOut"
+    >
+      <AddCoin v-if="utilStore.addCoinModalsToggle" />
+    </transition>
   </teleport>
   <Header />
   <div class="portfolio">
@@ -163,7 +175,9 @@ const pct_coins = ref([
             <div class="dropdown-list" v-if="searchedCoins.length !== 0">
               <ul>
                 <li v-for="coin in searchedCoins" :key="coin.id">
-                  <button>{{ coin.id }} - {{ coin.name }}</button>
+                  <button @click="searchCoinClick">
+                    {{ coin.id }} - {{ coin.name }}
+                  </button>
                 </li>
               </ul>
             </div>

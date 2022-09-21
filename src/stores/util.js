@@ -8,6 +8,7 @@ export const useUtilStore = defineStore('util', {
     errorSignup: false,
     errorLogin: false,
     errorMessage: '',
+    addCoinModalsToggle: false,
   }),
   getters: {},
   actions: {
@@ -28,6 +29,9 @@ export const useUtilStore = defineStore('util', {
     },
     mutate_errorMessage(payload) {
       this.errorMessage = payload
+    },
+    mutate_addCoinModalsToggle(payload) {
+      this.addCoinModalsToggle = payload
     },
   },
 })

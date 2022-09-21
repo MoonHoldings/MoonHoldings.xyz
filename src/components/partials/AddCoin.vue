@@ -21,8 +21,8 @@ import cross from '/svg/icon-cross.svg'
           Portfolio
         </div>
         <ul class="holdings-list">
-          <li v-for="(n, i) in 10" :key="i">
-            <div class="holdings-field" v-if="true">
+          <li v-for="(n, i) in 4" :key="i">
+            <div class="holdings-field" v-if="false">
               <div class="wallet-input">
                 <input v-if="true" type="text" placeholder="Search Exchanges" />
                 <input v-else type="text" placeholder="Search Wallets" />
@@ -111,8 +111,8 @@ import cross from '/svg/icon-cross.svg'
     .header,
     .totality {
       display: grid;
-      grid-template-columns: 40% 27% 33%;
-      padding: 0.6rem;
+      grid-template-columns: 45% 25.5% 29.5%;
+      padding: 0.6rem 3rem 0.6rem 0;
 
       & > div {
         font-size: 1.8rem;
@@ -150,7 +150,7 @@ import cross from '/svg/icon-cross.svg'
 
       /* width */
       &::-webkit-scrollbar {
-        width: 1rem;
+        width: 0.8rem;
       }
 
       /* Track */
@@ -211,29 +211,33 @@ import cross from '/svg/icon-cross.svg'
       .holdings-value {
         position: relative;
         display: flex;
+        align-items: center;
 
         & > div {
           font-size: 1.55rem;
-          padding: 0 0.5rem;
           &:not(:first-child) {
             text-align: right;
           }
           &:nth-child(1) {
-            flex: 40;
+            flex: 45;
+            padding-right: 0.5rem;
           }
           &:nth-child(2) {
-            flex: 27;
+            flex: 25;
           }
           &:nth-child(3) {
-            flex: 33;
+            flex: 30;
+            padding-left: 0.5rem;
           }
           button {
-            // width: 2rem;
+            display: flex;
+            align-items: center;
             padding: 0;
             margin: 0;
             border: none;
             outline: none;
             background: none;
+            cursor: default;
             img {
               height: 2.5rem;
             }

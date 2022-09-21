@@ -5,7 +5,10 @@ import cross from '/svg/icon-cross.svg'
 <template>
   <div class="add-coin">
     <div class="add-coin__window">
-      <h1>BTC - Bitcoin</h1>
+      <div class="add-coin__title">
+        <h1>BTC - Bitcoin</h1>
+        <div class="price">Price: <strong>$21,500.69</strong></div>
+      </div>
       <div class="add-coin__form">
         <div class="header">
           <div>Wallet</div>
@@ -19,7 +22,7 @@ import cross from '/svg/icon-cross.svg'
         </div>
         <ul class="holdings-list">
           <li v-for="(n, i) in 10" :key="i">
-            <div class="holdings-field" v-if="false">
+            <div class="holdings-field" v-if="true">
               <div class="wallet-input">
                 <input v-if="true" type="text" placeholder="Search Exchanges" />
                 <input v-else type="text" placeholder="Search Wallets" />
@@ -35,7 +38,12 @@ import cross from '/svg/icon-cross.svg'
               <div class="wallet">Coinbase</div>
               <div class="holdings">21</div>
               <div class="value">$429,610.02</div>
-              <button class="remove-btn">
+              <div class="3-dots">
+                <button>
+                  <img src="/svg/icon-three-dots-vertical.svg" alt="" />
+                </button>
+              </div>
+              <button v-if="false" class="remove-btn">
                 <img :src="cross" alt="remove cross" />
                 Remove
               </button>
@@ -44,8 +52,8 @@ import cross from '/svg/icon-cross.svg'
         </ul>
         <div class="totality">
           <div>Total</div>
-          <div>0</div>
-          <div>$0</div>
+          <div><strong>0</strong></div>
+          <div><strong>$0</strong></div>
         </div>
       </div>
       <div class="add-coin__buttons">
@@ -83,10 +91,18 @@ import cross from '/svg/icon-cross.svg'
     display: grid;
     grid-template-rows: 3rem auto 7rem;
     background: #fff;
+  }
 
+  &__title {
+    display: flex;
+    justify-content: space-between;
     h1 {
       font-size: 1.8rem;
       font-weight: 800;
+    }
+    .price {
+      font-size: 1.8rem;
+      font-family: 'Inconsolata', monospace;
     }
   }
 
@@ -98,9 +114,9 @@ import cross from '/svg/icon-cross.svg'
       grid-template-columns: 40% 27% 33%;
       padding: 0.6rem;
 
-      > div {
+      & > div {
         font-size: 1.8rem;
-        color: rgba(51, 51, 51, 0.2);
+        color: #000;
         &:not(:first-child) {
           text-align: right;
         }
@@ -120,15 +136,16 @@ import cross from '/svg/icon-cross.svg'
       border-top: 1px solid rgba(0, 0, 0, 0.25);
 
       > div {
-        font-weight: 800;
         padding: 0 0.5rem;
+        &:first-child {
+          font-weight: 800;
+        }
       }
     }
     .holdings-list {
       list-style: none;
       width: inherit;
       max-height: 30rem;
-      padding: 0 0.6rem;
       overflow-y: auto;
 
       /* width */
@@ -162,6 +179,7 @@ import cross from '/svg/icon-cross.svg'
 
       .holdings-field {
         display: flex;
+        margin-right: 0.3rem;
         gap: 1rem;
 
         div {
@@ -192,14 +210,33 @@ import cross from '/svg/icon-cross.svg'
       }
       .holdings-value {
         position: relative;
-        display: grid;
-        grid-template-columns: 40% 27% 33%;
+        display: flex;
 
         & > div {
           font-size: 1.55rem;
           padding: 0 0.5rem;
           &:not(:first-child) {
             text-align: right;
+          }
+          &:nth-child(1) {
+            flex: 40;
+          }
+          &:nth-child(2) {
+            flex: 27;
+          }
+          &:nth-child(3) {
+            flex: 33;
+          }
+          button {
+            // width: 2rem;
+            padding: 0;
+            margin: 0;
+            border: none;
+            outline: none;
+            background: none;
+            img {
+              height: 2.5rem;
+            }
           }
         }
 

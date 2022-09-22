@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import Header from '@/components/partials/Header.vue'
 import CoinBox from '@/components/partials/CoinBox.vue'
 import WatchCoin from '@/components/partials/WatchCoin.vue'
@@ -19,6 +19,7 @@ const utilStore = useUtilStore()
 const storedCoins = ref([])
 const searchInput = ref('')
 const searchedCoins = ref([])
+const modalCoin = reactive({})
 const showWelcome = ref(false)
 
 onMounted(() => {
@@ -54,8 +55,20 @@ const slicedWordUp = (name) => {
   return name.slice(0, searchInput.value.length).toUpperCase()
 }
 
-const searchCoinClick = () => {
+const searchCoinClick = async (coin) => {
   utilStore.mutate_addCoinModalsToggle(true)
+  const searchedCoin = await coinStore.getSingleCoin(coin.symbol)
+
+  modalCoin.id = searchedCoin.id
+  modalCoin.symbol = searchedCoin.symbol
+  modalCoin.name = searchedCoin.name
+  modalCoin.price = searchedCoin.price
+  modalCoin.logo_url = searchedCoin.logo_url
+  modalCoin._24hr = searchedCoin._24hr
+  modalCoin.holdings = 0
+  modalCoin.value = 0
+
+  searchedCoins.value = []
 }
 
 const pct_coins = ref([
@@ -139,12 +152,15 @@ const pct_coins = ref([
 
 <template>
   <teleport to="#modals-root">
+    <div>
+      {{ modalCoin }}
+    </div>
     <transition
       mode="out-in"
       enter-active-class="animate__animated animate__fadeIn"
       leave-active-class="animate__animated animate__fadeOut"
     >
-      <AddCoin v-if="utilStore.addCoinModalsToggle" />
+      <AddCoin :modalCoin="modalCoin" v-if="utilStore.addCoinModalsToggle" />
     </transition>
   </teleport>
   <Header />
@@ -175,7 +191,7 @@ const pct_coins = ref([
             <div class="dropdown-list" v-if="searchedCoins.length !== 0">
               <ul>
                 <li v-for="coin in searchedCoins" :key="coin.id">
-                  <button @click="searchCoinClick">
+                  <button @click="searchCoinClick(coin)">
                     {{ coin.id }} - {{ coin.name }}
                   </button>
                 </li>

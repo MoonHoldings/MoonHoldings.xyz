@@ -2,17 +2,38 @@
 import cross from '/svg/icon-cross.svg'
 import deleteRow from '/svg/icon-delete-row.svg'
 import edit from '/svg/icon-edit.svg'
+import loader from '/gif/rhombus-loader.gif'
 import { useUtilStore } from '@/stores/util'
+import { ref, watch } from 'vue'
 
+const props = defineProps(['modalCoin'])
+const { modalCoin } = props
 const utilStore = useUtilStore()
+const isCoinLoaded = ref(true)
+
+watch([modalCoin], () => {
+  if (modalCoin.price) {
+    isCoinLoaded.value = false
+  }
+})
 </script>
 
 <template>
   <div class="add-coin">
-    <div class="add-coin__window">
+    <transition
+      mode="out-in"
+      leave-active-class="animate__animated animate__fadeOut"
+    >
+      <div class="add-coin__loading" v-if="isCoinLoaded">
+        <img :src="loader" alt="loader" />
+      </div>
+    </transition>
+    <div class="add-coin__window" v-if="!isCoinLoaded">
       <div class="add-coin__title">
-        <h1>BTC - Bitcoin</h1>
-        <div class="price">Price: <strong>$21,500.69</strong></div>
+        <h1>{{ modalCoin.symbol }} - {{ modalCoin.name }}</h1>
+        <div class="price">
+          Price: <strong>${{ modalCoin.price }}</strong>
+        </div>
       </div>
       <div class="add-coin__form">
         <div class="header">
@@ -20,12 +41,12 @@ const utilStore = useUtilStore()
           <div>Holdings</div>
           <div>Value</div>
         </div>
-        <div class="empty-text" v-if="false">
+        <div class="empty-text" v-if="true">
           Select <strong>Add Exchange</strong> or <strong>Add Wallet</strong> to
           start building your <strong>Bitcoin</strong>
           Portfolio
         </div>
-        <ul class="holdings-list">
+        <ul class="holdings-list" v-else>
           <li v-for="(n, i) in 4" :key="i">
             <div class="holdings-field" v-if="false">
               <div class="wallet-input">
@@ -89,6 +110,20 @@ const utilStore = useUtilStore()
   left: 0;
   background: rgba(0, 0, 0, 0.7);
   z-index: 95;
+
+  &__loading {
+    position: relative;
+    max-width: 67rem;
+    min-height: 55rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50vh;
+    transform: translateY(-50%);
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   &__window {
     position: relative;

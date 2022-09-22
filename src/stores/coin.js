@@ -7,12 +7,16 @@ export const useCoinStore = defineStore('coin', {
   state: () => ({
     server_url: `${import.meta.env.VITE_MOONSERVER_URL}/api`,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
+    portfolioCoins: [],
     coins: [],
   }),
   getters: {},
   actions: {
     mutate_emptyCoins() {
       this.coins = []
+    },
+    addPortfolioCoin(pCoin) {
+      this.portfolioCoins.push(pCoin)
     },
     async getSingleCoin(coinSymbol) {
       const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY

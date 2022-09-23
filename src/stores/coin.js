@@ -7,36 +7,59 @@ export const useCoinStore = defineStore('coin', {
   state: () => ({
     server_url: `${import.meta.env.VITE_MOONSERVER_URL}/api`,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
+    modalCoin: {},
     portfolioCoins: [],
     coins: [],
   }),
-  getters: {},
+  getters: {
+    get_modalCoin(state) {
+      return state.modalCoin
+    },
+    get_modalCoinWallets(state) {
+      return state.modalCoin.wallets
+    },
+    get_walletsLength(state) {
+      return this.get_modalCoinWallets?.length
+    },
+  },
   actions: {
     mutate_emptyCoins() {
       this.coins = []
     },
+    mutate_emptyModalCoin() {
+      this.modalCoin = {}
+    },
     addPortfolioCoin(pCoin) {
       this.portfolioCoins.push(pCoin)
     },
-    async getSingleCoin(coinSymbol) {
+    addNewWallet() {
+      this.modalCoin.wallets.push({
+        name: '',
+      })
+    },
+    addHoldings(walletName, holding) {
+      //
+    },
+    async getSingleCoin(coinId) {
       const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY
       try {
         const response = await axios.get(
-          `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${coinSymbol}&intervals=1d,30d`
+          `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${coinId}&intervals=1d,30d`
         )
 
         const coin = response.data[0]
 
-        const coinObj = {
-          id: coin.id,
-          symbol: coin.symbol,
-          name: coin.name,
-          logo_url: coin.logo_url,
-          price: coin.price,
-          _24hr: coin['1d']['price_change_pct'],
-        }
+        const _24hr = coin['1d'] ? coin['1d']['price_change_pct'] : ''
 
-        return coinObj
+        this.modalCoin = {
+          id: coin?.id,
+          symbol: coin?.symbol,
+          name: coin?.name,
+          price: coin?.price,
+          logo_url: coin?.logo_url,
+          _24hr,
+          wallets: [],
+        }
       } catch (error) {
         return {
           success: false,

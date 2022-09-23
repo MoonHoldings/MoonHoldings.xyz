@@ -4,18 +4,34 @@ import deleteRow from '/svg/icon-delete-row.svg'
 import edit from '/svg/icon-edit.svg'
 import loader from '/gif/rhombus-loader.gif'
 import { useUtilStore } from '@/stores/util'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useCoinStore } from '@/stores/coin'
 
-const props = defineProps(['modalCoin'])
-const { modalCoin } = props
 const utilStore = useUtilStore()
-const isCoinLoaded = ref(true)
+const coinStore = useCoinStore()
+const isCoinLoaded = ref(false)
+const walletInput = ref('')
+const holdingsInput = ref(null)
 
-watch([modalCoin], () => {
-  if (modalCoin.price) {
-    isCoinLoaded.value = false
+const closeModal = () => {
+  utilStore.mutate_addCoinModalsToggle(false)
+  coinStore.mutate_emptyModalCoin()
+}
+
+const inputFilled = computed(() => {
+  if (walletInput.value && holdingsInput.value) {
+    return true
+  } else {
+    return false
   }
 })
+
+watch(
+  () => coinStore.get_modalCoin,
+  () => {
+    isCoinLoaded.value = true
+  }
+)
 </script>
 
 <template>
@@ -24,15 +40,18 @@ watch([modalCoin], () => {
       mode="out-in"
       leave-active-class="animate__animated animate__fadeOut"
     >
-      <div class="add-coin__loading" v-if="isCoinLoaded">
+      <div class="add-coin__loading" v-if="!isCoinLoaded">
         <img :src="loader" alt="loader" />
       </div>
     </transition>
-    <div class="add-coin__window" v-if="!isCoinLoaded">
+    <div class="add-coin__window">
       <div class="add-coin__title">
-        <h1>{{ modalCoin.symbol }} - {{ modalCoin.name }}</h1>
+        <h1>
+          {{ coinStore.get_modalCoin.id }} -
+          {{ coinStore.get_modalCoin.name }}
+        </h1>
         <div class="price">
-          Price: <strong>${{ modalCoin.price }}</strong>
+          Price: <strong>${{ coinStore.get_modalCoin.price }}</strong>
         </div>
       </div>
       <div class="add-coin__form">
@@ -41,20 +60,23 @@ watch([modalCoin], () => {
           <div>Holdings</div>
           <div>Value</div>
         </div>
-        <div class="empty-text" v-if="true">
+        <div class="empty-text" v-if="coinStore.get_walletsLength === 0">
           Select <strong>Add Exchange</strong> or <strong>Add Wallet</strong> to
           start building your <strong>Bitcoin</strong>
           Portfolio
         </div>
         <ul class="holdings-list" v-else>
-          <li v-for="(n, i) in 4" :key="i">
-            <div class="holdings-field" v-if="false">
+          <li v-for="(wallet, i) in coinStore.modalCoin.wallets" :key="i">
+            <div class="holdings-field" v-if="wallet.name === ''">
               <div class="wallet-input">
-                <input v-if="true" type="text" placeholder="Search Exchanges" />
-                <input v-else type="text" placeholder="Search Wallets" />
+                <input
+                  type="text"
+                  placeholder="Enter Exchange / Wallet"
+                  v-model="walletInput"
+                />
               </div>
               <div class="holdings-input">
-                <input type="text" placeholder="0" />
+                <input type="text" placeholder="0" v-model="holdingsInput" />
               </div>
               <div class="save-btn-input">
                 <button>Save</button>
@@ -87,14 +109,15 @@ watch([modalCoin], () => {
         </div>
       </div>
       <div class="add-coin__buttons">
-        <button class="exchange">Add Exchange</button>
-        <button class="wallet">Add Wallet</button>
-        <button class="save">Save & Complete</button>
+        <button class="exchange" @click="coinStore.addNewWallet()">
+          Add Exchange / Wallet
+        </button>
+
+        <button class="save" :class="{ 'green-btn': inputFilled }">
+          Save & Complete
+        </button>
       </div>
-      <button
-        @click="utilStore.mutate_addCoinModalsToggle(false)"
-        class="cross-btn"
-      >
+      <button @click="closeModal" class="cross-btn" v-if="isCoinLoaded">
         <img :src="cross" alt="" />
       </button>
     </div>
@@ -102,6 +125,10 @@ watch([modalCoin], () => {
 </template>
 
 <style lang="scss" scoped>
+.green-btn {
+  background: #13f195 !important;
+  color: #000 !important;
+}
 .add-coin {
   position: fixed;
   top: 0;
@@ -112,22 +139,23 @@ watch([modalCoin], () => {
   z-index: 95;
 
   &__loading {
-    position: relative;
-    max-width: 67rem;
+    position: absolute;
+    width: 80rem;
     min-height: 55rem;
-    margin-left: auto;
-    margin-right: auto;
+    left: 50%;
+    right: auto;
     margin-top: 50vh;
-    transform: translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
     background: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 97;
   }
 
   &__window {
     position: relative;
-    max-width: 67rem;
+    max-width: 80rem;
     min-height: 55rem;
     margin-left: auto;
     margin-right: auto;
@@ -138,6 +166,7 @@ watch([modalCoin], () => {
     display: grid;
     grid-template-rows: 3rem auto 7rem;
     background: #fff;
+    z-index: 96;
   }
 
   &__title {
@@ -171,7 +200,8 @@ watch([modalCoin], () => {
     }
 
     .empty-text {
-      margin: 4.2rem 12rem;
+      width: 33.2rem;
+      margin: 4.2rem auto;
       text-align: center;
       font-size: 1.6rem;
       line-height: 2.8rem;
@@ -318,7 +348,7 @@ watch([modalCoin], () => {
     align-items: center;
 
     button {
-      min-width: 19.4rem;
+      min-width: 21rem;
       min-height: 5rem;
       border: 1px solid #a1a1a1;
       border-radius: 0.3rem;

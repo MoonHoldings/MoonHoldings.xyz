@@ -19,7 +19,6 @@ const utilStore = useUtilStore()
 const storedCoins = ref([])
 const searchInput = ref('')
 const searchedCoins = ref([])
-const modalCoin = reactive({})
 const showWelcome = ref(false)
 
 onMounted(() => {
@@ -57,16 +56,7 @@ const slicedWordUp = (name) => {
 
 const searchCoinClick = async (coin) => {
   utilStore.mutate_addCoinModalsToggle(true)
-  const searchedCoin = await coinStore.getSingleCoin(coin.symbol)
-
-  modalCoin.id = searchedCoin.id
-  modalCoin.symbol = searchedCoin.symbol
-  modalCoin.name = searchedCoin.name
-  modalCoin.price = searchedCoin.price
-  modalCoin.logo_url = searchedCoin.logo_url
-  modalCoin._24hr = searchedCoin._24hr
-  modalCoin.holdings = 0
-  modalCoin.value = 0
+  await coinStore.getSingleCoin(coin.id)
 
   searchedCoins.value = []
 }
@@ -152,15 +142,12 @@ const pct_coins = ref([
 
 <template>
   <teleport to="#modals-root">
-    <div>
-      {{ modalCoin }}
-    </div>
     <transition
       mode="out-in"
       enter-active-class="animate__animated animate__fadeIn"
       leave-active-class="animate__animated animate__fadeOut"
     >
-      <AddCoin :modalCoin="modalCoin" v-if="utilStore.addCoinModalsToggle" />
+      <AddCoin :modalCoin="u" v-if="utilStore.addCoinModalsToggle" />
     </transition>
   </teleport>
   <Header />

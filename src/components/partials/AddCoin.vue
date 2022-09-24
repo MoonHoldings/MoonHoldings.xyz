@@ -1,10 +1,11 @@
 <script setup>
 import cross from '/svg/icon-cross.svg'
 import deleteRow from '/svg/icon-delete-row.svg'
+import crossBlack from '/svg/icon-cross-black.svg'
 import edit from '/svg/icon-edit.svg'
-import loader from '/gif/rhombus-loader.gif'
+import loader from '/gif/ufo.gif'
 import { useUtilStore } from '@/stores/util'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useCoinStore } from '@/stores/coin'
 
 const utilStore = useUtilStore()
@@ -12,14 +13,35 @@ const coinStore = useCoinStore()
 const isCoinLoaded = ref(false)
 const walletInput = ref('')
 const holdingsInput = ref(null)
+// const areAllSaved = ref(false)
 
 const closeModal = () => {
   utilStore.mutate_addCoinModalsToggle(false)
   coinStore.mutate_emptyModalCoin()
 }
 
-const inputFilled = computed(() => {
-  if (walletInput.value && holdingsInput.value) {
+const removeWalletInputs = () => {
+  coinStore.removeNewWallet()
+  walletInput.value = ''
+  holdingsInput.value = null
+}
+
+const saveNewWalletHoldings = () => {
+  coinStore.addHoldings(walletInput.value, holdingsInput.value)
+  walletInput.value = ''
+  holdingsInput.value = null
+}
+
+const addWallet = () => {
+  coinStore.addNewWallet()
+}
+
+const areAllSaved = computed(() => {
+  if (
+    isCoinLoaded.value === true &&
+    coinStore.get_walletsLength !== 0 &&
+    !coinStore.get_unsavedWalletExist
+  ) {
     return true
   } else {
     return false
@@ -29,7 +51,14 @@ const inputFilled = computed(() => {
 watch(
   () => coinStore.get_modalCoin,
   () => {
-    isCoinLoaded.value = true
+    if (coinStore.get_modalCoin !== {}) {
+      isCoinLoaded.value = true
+    }
+
+    // const unsavedWallet = coinStore.get_modalCoin.wallets.find(
+    //   (wallet) => wallet.saved === false
+    // )
+    // if (!unsavedWallet) areAllSaved.value === true
   }
 )
 </script>
@@ -67,7 +96,7 @@ watch(
         </div>
         <ul class="holdings-list" v-else>
           <li v-for="(wallet, i) in coinStore.modalCoin.wallets" :key="i">
-            <div class="holdings-field" v-if="wallet.name === ''">
+            <div class="holdings-field" v-if="!wallet.saved">
               <div class="wallet-input">
                 <input
                   type="text"
@@ -79,13 +108,16 @@ watch(
                 <input type="text" placeholder="0" v-model="holdingsInput" />
               </div>
               <div class="save-btn-input">
-                <button>Save</button>
+                <button @click="saveNewWalletHoldings">Save</button>
+                <button @click="removeWalletInputs">
+                  <img :src="crossBlack" alt="cross black" />
+                </button>
               </div>
             </div>
             <div class="holdings-value" v-else>
-              <div class="wallet">Coinbase</div>
-              <div class="holdings">21</div>
-              <div class="value">$429,610.02</div>
+              <div class="wallet">{{ wallet.name }}</div>
+              <div class="holdings">{{ wallet.holding }}</div>
+              <div class="value">${{ wallet.value }}</div>
               <div class="3-dots">
                 <button>
                   <img src="/svg/icon-three-dots-vertical.svg" alt="" />
@@ -109,11 +141,11 @@ watch(
         </div>
       </div>
       <div class="add-coin__buttons">
-        <button class="exchange" @click="coinStore.addNewWallet()">
+        <button class="exchange" @click="addWallet">
           Add Exchange / Wallet
         </button>
 
-        <button class="save" :class="{ 'green-btn': inputFilled }">
+        <button class="save" :class="{ 'green-btn': areAllSaved }">
           Save & Complete
         </button>
       </div>
@@ -126,7 +158,7 @@ watch(
 
 <style lang="scss" scoped>
 .green-btn {
-  background: #13f195 !important;
+  background: var(--green) !important;
   color: #000 !important;
 }
 .add-coin {
@@ -151,6 +183,10 @@ watch(
     justify-content: center;
     align-items: center;
     z-index: 97;
+
+    img {
+      width: 10rem;
+    }
   }
 
   &__window {
@@ -272,16 +308,32 @@ watch(
             outline: none;
             background: #eeeeee;
           }
+          &:last-child {
+            display: grid;
+            grid-template-columns: auto 5rem;
 
-          button {
-            width: 100%;
-            background-color: var(--pink);
-            color: #fff;
-            min-height: 4rem;
-            font-size: 1.6rem;
-            outline: none;
-            border: 1px solid #a1a1a1;
-            border-radius: 0.3rem;
+            button {
+              min-height: 4rem;
+              &:first-child {
+                background-color: var(--pink);
+                color: #fff;
+                min-height: 4rem;
+                font-size: 1.6rem;
+                outline: none;
+                border: 1px solid #a1a1a1;
+                border-radius: 0.3rem;
+              }
+              &:last-child {
+                border: none;
+                outline: none;
+                background: none;
+                height: 4rem;
+
+                img {
+                  height: 100%;
+                }
+              }
+            }
           }
         }
       }

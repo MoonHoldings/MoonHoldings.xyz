@@ -21,6 +21,17 @@ export const useCoinStore = defineStore('coin', {
     get_walletsLength(state) {
       return this.get_modalCoinWallets?.length
     },
+    get_unsavedWalletExist(state) {
+      const unsavedWallet = state.modalCoin.wallets.find(
+        (wallet) => wallet.saved === false
+      )
+
+      if (unsavedWallet) {
+        return true
+      } else {
+        return false
+      }
+    },
   },
   actions: {
     mutate_emptyCoins() {
@@ -33,12 +44,33 @@ export const useCoinStore = defineStore('coin', {
       this.portfolioCoins.push(pCoin)
     },
     addNewWallet() {
-      this.modalCoin.wallets.push({
-        name: '',
-      })
+      const emptyWallet = this.modalCoin.wallets.find(
+        (wallet) => wallet.saved === false
+      )
+      if (!emptyWallet) {
+        this.modalCoin.wallets.push({
+          name: '',
+          holding: null,
+          value: null,
+          saved: false,
+        })
+      }
+    },
+    removeNewWallet() {
+      const unsavedWalletIndex = this.modalCoin.wallets.findIndex(
+        (wallet) => wallet.saved === false
+      )
+      this.modalCoin.wallets.splice(unsavedWalletIndex, 1)
     },
     addHoldings(walletName, holding) {
-      //
+      const unsavedWalletIndex = this.modalCoin.wallets.findIndex(
+        (wallet) => wallet.saved === false
+      )
+      const totalValue = Number(this.modalCoin.price) * Number(holding)
+      this.modalCoin.wallets[unsavedWalletIndex].name = walletName
+      this.modalCoin.wallets[unsavedWalletIndex].holding = holding
+      this.modalCoin.wallets[unsavedWalletIndex].value = totalValue
+      this.modalCoin.wallets[unsavedWalletIndex].saved = true
     },
     async getSingleCoin(coinId) {
       const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY

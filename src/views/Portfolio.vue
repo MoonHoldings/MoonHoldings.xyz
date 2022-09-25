@@ -225,7 +225,7 @@ const pct_coins = ref([
             />
           </div>
           <!-- Watch List -->
-          <div class="portfolio__watch">
+          <div class="portfolio__watch" v-if="false">
             <h1>Watch</h1>
             <div class="portfolio__watch-coins">
               <WatchCoin v-for="(e, i) in 2" :key="i" />

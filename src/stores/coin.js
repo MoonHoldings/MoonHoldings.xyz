@@ -76,6 +76,14 @@ export const useCoinStore = defineStore('coin', {
       this.modalCoin.wallets[unsavedWalletIndex].value = totalValue
       this.modalCoin.wallets[unsavedWalletIndex].saved = true
     },
+    totalPortfolioValue() {
+      let totalValue = 0
+      const allCoins = this.portfolioCoins
+
+      allCoins.forEach((coin) => {
+        totalValue += Number
+      })
+    },
     async getSingleCoin(coinId) {
       const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY
       try {

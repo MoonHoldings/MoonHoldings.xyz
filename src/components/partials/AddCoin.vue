@@ -39,7 +39,16 @@ const addWallet = () => {
 }
 
 const saveNcomplete = () => {
-  coinStore.addPortfolioCoin(totalHoldings.value, totalValue.value)
+  let holdingSum = 0
+  coinStore.get_modalCoin.wallets.forEach((wallet) => {
+    holdingSum += Number(wallet.holding)
+  })
+  let valueSum = 0
+  coinStore.get_modalCoin.wallets.forEach((wallet) => {
+    valueSum += Number(wallet.value)
+  })
+
+  coinStore.addPortfolioCoin(holdingSum, valueSum)
   utilStore.mutate_addCoinModalsToggle(false)
 }
 

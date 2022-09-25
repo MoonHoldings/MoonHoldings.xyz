@@ -1,6 +1,8 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import coinStyles from '@/constants/coinStyles.js'
+import prettyNumber from '@/utils/prettyNumber'
+import decimalCount from '@/utils/decimalCount'
 
 const props = defineProps(['coin'])
 const { coin } = props
@@ -51,6 +53,17 @@ const bottom_corner_color = computed(() => {
   return finalCornerColors
 })
 
+const organizeNumber = (theNum) => {
+  const fractionDigitNum = decimalCount(theNum)
+  if (fractionDigitNum > 6) {
+    const cutNum = theNum.toFixed(6)
+    const prettyValue = prettyNumber(cutNum)
+    return prettyValue
+  } else {
+    const prettyValue = prettyNumber(theNum)
+    return prettyValue
+  }
+}
 
 const surfaceMouseover = () => {
   tooltipShow.value = true
@@ -76,9 +89,9 @@ const surfaceMouseout = () => {
       </div>
       <div class="holdings-value">
         <div class="holdings">
-          {{ coin.totalHoldings }}
+          {{ prettyNumber(coin.totalHoldings) }}
         </div>
-        <div class="value">${{ coin.totalValue }}</div>
+        <div class="value">${{ organizeNumber(coin.totalValue) }}</div>
       </div>
     </div>
     <div class="shadow-common btc-shadow" :style="{ background: shadowColor }">

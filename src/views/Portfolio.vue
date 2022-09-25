@@ -254,7 +254,7 @@ const pct_coins = ref([
               </div>
             </div>
           </div>
-          <div class="portfolio__twitter-share">
+          <div v-if="false" class="portfolio__twitter-share">
             <img src="/twitter-logo.png" alt="" />
             <div class="shadow"></div>
             <button class="twitter-btn">Share Portfolio</button>

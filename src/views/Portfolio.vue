@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import Header from '@/components/partials/Header.vue'
 import CoinBox from '@/components/partials/CoinBox.vue'
 import WatchCoin from '@/components/partials/WatchCoin.vue'
@@ -19,6 +19,13 @@ const storedCoins = ref([])
 const searchInput = ref('')
 const searchedCoins = ref([])
 const showWelcome = ref(false)
+
+const barChart = computed(() => {
+  const pct_array = []
+  const portfolioCoins = coinStore.get_portfolioCoins
+
+  portfolioCoins.forEach((coin) => {})
+})
 
 onMounted(() => {
   const moonCoins = localStorage.getItem('MoonCoins')
@@ -199,11 +206,12 @@ const pct_coins = ref([
         <div class="portfolio__total-value">
           <div class="value">
             <div class="value-number">
-              <span class="s1">$57,599.55</span> <span class="s2">+5.35%</span>
-              <small>24hr</small>
+              <span class="s1">${{ coinStore.get_totalPortfolioValue }}</span>
+              <span class="s2" v-if="false">+5.35%</span>
+              <small v-if="false">24hr</small>
             </div>
           </div>
-          <div class="value-currency">
+          <div class="value-currency" v-if="false">
             <span class="text">Currency </span>
             <button class="usd active-currency">USD</button
             ><span class="pipe"> | </span> <button class="btc">BTC</button

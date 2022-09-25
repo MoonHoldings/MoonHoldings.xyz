@@ -12,6 +12,18 @@ export const useCoinStore = defineStore('coin', {
     coins: [],
   }),
   getters: {
+    get_portfolioCoins(state) {
+      return state.portfolioCoins
+    },
+    get_totalPortfolioValue() {
+      let totalValue = 0
+      const allCoins = this.get_portfolioCoins
+
+      for (let i = 0; i < allCoins.length; i++) {
+        totalValue += allCoins[i].totalValue
+      }
+      return totalValue
+    },
     get_modalCoin(state) {
       return state.modalCoin
     },
@@ -75,14 +87,6 @@ export const useCoinStore = defineStore('coin', {
       this.modalCoin.wallets[unsavedWalletIndex].holding = holding
       this.modalCoin.wallets[unsavedWalletIndex].value = totalValue
       this.modalCoin.wallets[unsavedWalletIndex].saved = true
-    },
-    totalPortfolioValue() {
-      let totalValue = 0
-      const allCoins = this.portfolioCoins
-
-      allCoins.forEach((coin) => {
-        totalValue += Number
-      })
     },
     async getSingleCoin(coinId) {
       const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY

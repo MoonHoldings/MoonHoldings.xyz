@@ -12,7 +12,6 @@ import {
 } from '@/constants/copy'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
-import coinColors from '@/constants/coinStyles.js'
 
 const coinStore = useCoinStore()
 const utilStore = useUtilStore()
@@ -219,7 +218,11 @@ const pct_coins = ref([
         <div class="portfolio__all-coins">
           <!-- Coins -->
           <div class="portfolio__coins">
-            <CoinBox v-for="(coin, i) in pct_coins" :key="i" :coin="coin" />
+            <CoinBox
+              v-for="(coin, i) in coinStore.portfolioCoins"
+              :key="i"
+              :coin="coin"
+            />
           </div>
           <!-- Watch List -->
           <div class="portfolio__watch">

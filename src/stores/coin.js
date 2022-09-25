@@ -40,8 +40,12 @@ export const useCoinStore = defineStore('coin', {
     mutate_emptyModalCoin() {
       this.modalCoin = {}
     },
-    addPortfolioCoin(pCoin) {
-      this.portfolioCoins.push(pCoin)
+    addPortfolioCoin(totalHoldings, totalValue) {
+      this.modalCoin.totalHoldings = totalHoldings
+      this.modalCoin.totalValue = totalValue
+
+      this.portfolioCoins.push(this.modalCoin)
+      this.modalCoin = {}
     },
     addNewWallet() {
       const emptyWallet = this.modalCoin.wallets.find(

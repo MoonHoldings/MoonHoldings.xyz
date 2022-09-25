@@ -1,20 +1,56 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
+import coinStyles from '@/constants/coinStyles.js'
 
 const props = defineProps(['coin'])
 const { coin } = props
 const tooltipShow = ref(false)
 
-const shadowColor = coin.colors.gradient
-  ? `linear-gradient(180deg, ${coin.colors.gradient[0]} 0%, ${coin.colors.gradient[1]} 100%)`
-  : coin.colors.background
+const shadowColor = computed(() => {
+  let finalShadowColors
 
-const top_corner_color = coin.colors.gradient
-  ? coin.colors.gradient[0]
-  : coin.colors.background
-const bottom_corner_color = coin.colors.gradient
-  ? coin.colors.gradient[1]
-  : coin.colors.background
+  const colorObj = coinStyles.find((obj) => obj.id === coin.id)
+
+  if (colorObj) {
+    finalShadowColors = colorObj.colors.gradient
+      ? `linear-gradient(180deg, ${colorObj.colors.gradient[0]} 0%, ${colorObj.colors.gradient[1]} 100%)`
+      : colorObj.colors.background
+  } else {
+    finalShadowColors = '#fff'
+  }
+  return finalShadowColors
+})
+
+const top_corner_color = computed(() => {
+  let finalCornerColors
+
+  const colorObj = coinStyles.find((obj) => obj.id === coin.id)
+
+  if (colorObj) {
+    finalCornerColors = colorObj.colors.gradient
+      ? colorObj.colors.gradient[0]
+      : colorObj.colors.background
+  } else {
+    finalCornerColors = '#fff'
+  }
+  return finalCornerColors
+})
+
+const bottom_corner_color = computed(() => {
+  let finalCornerColors
+
+  const colorObj = coinStyles.find((obj) => obj.id === coin.id)
+
+  if (colorObj) {
+    finalCornerColors = colorObj.colors.gradient
+      ? colorObj.colors.gradient[1]
+      : colorObj.colors.background
+  } else {
+    finalCornerColors = '#fff'
+  }
+  return finalCornerColors
+})
+
 
 const surfaceMouseover = () => {
   tooltipShow.value = true
@@ -40,24 +76,10 @@ const surfaceMouseout = () => {
       </div>
       <div class="holdings-value">
         <div class="holdings">
-          {{ coin.holdings }}
+          {{ coin.totalHoldings }}
         </div>
-        <div class="value">${{ coin.value }}</div>
+        <div class="value">${{ coin.totalValue }}</div>
       </div>
-
-      <!-- <div class="price">
-        <div class="text">Price</div>
-        <div class="number">${{ coin.price }}</div>
-      </div>
-      <div class="holdings">
-        <div class="text">Holdings</div>
-        <div class="number">{{ coin.holdings }}</div>
-      </div>
-      <div class="value">
-        <div class="text">Value</div>
-        <div class="number">${{ coin.value }}</div>
-      </div>
-      <div class="change">{{ coin.change_24 }}% 24 hr</div> -->
     </div>
     <div class="shadow-common btc-shadow" :style="{ background: shadowColor }">
       <div class="top-corner" :style="{ background: top_corner_color }"></div>
@@ -68,7 +90,7 @@ const surfaceMouseout = () => {
     </div>
     <div class="tooltip" v-if="tooltipShow">
       <div class="price">Price ${{ coin.price }}</div>
-      <div class="change">{{ coin.change_24 }}% 24 hr</div>
+      <div class="change">{{ coin._24hr }}% 24 hr</div>
     </div>
   </div>
 </template>
@@ -128,30 +150,6 @@ const surfaceMouseout = () => {
         text-align: center;
       }
     }
-
-    // .price,
-    // .holdings,
-    // .value {
-    //   display: flex;
-    //   align-items: center;
-    //   justify-content: space-between;
-    //   .text,
-    //   .number {
-    //     font-size: 16px;
-    //   }
-    // }
-    // .price,
-    // .holdings {
-    //   margin-bottom: 10px;
-    // }
-    // .value {
-    //   margin-bottom: 30px;
-    // }
-    // .change {
-    //   font-size: 18px;
-    //   font-weight: 600;
-    //   text-align: center;
-    // }
   }
   .tooltip {
     position: absolute;

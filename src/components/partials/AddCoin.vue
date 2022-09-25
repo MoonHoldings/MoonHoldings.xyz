@@ -39,7 +39,8 @@ const addWallet = () => {
 }
 
 const saveNcomplete = () => {
-  //
+  coinStore.addPortfolioCoin(totalHoldings.value, totalValue.value)
+  utilStore.mutate_addCoinModalsToggle(false)
 }
 
 const areAllSaved = computed(() => {

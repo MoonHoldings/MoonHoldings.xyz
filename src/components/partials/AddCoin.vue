@@ -7,13 +7,14 @@ import loader from '/gif/ufo.gif'
 import { useUtilStore } from '@/stores/util'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useCoinStore } from '@/stores/coin'
+import decimalCount from '@/utils/decimalCount'
+import prettyNumber from '@/utils/prettyNumber'
 
 const utilStore = useUtilStore()
 const coinStore = useCoinStore()
 const isCoinLoaded = ref(false)
 const walletInput = ref('')
 const holdingsInput = ref(null)
-// const areAllSaved = ref(false)
 
 const closeModal = () => {
   utilStore.mutate_addCoinModalsToggle(false)
@@ -48,17 +49,48 @@ const areAllSaved = computed(() => {
   }
 })
 
+const totalHoldings = computed(() => {
+  if (isCoinLoaded.value === true) {
+    let holdingSum = 0
+    coinStore.get_modalCoin.wallets.forEach((wallet) => {
+      holdingSum += Number(wallet.holding)
+    })
+    return prettyNumber(String(holdingSum))
+  } else {
+    return 0
+  }
+})
+const totalValue = computed(() => {
+  if (isCoinLoaded.value === true) {
+    let valueSum = 0
+    coinStore.get_modalCoin.wallets.forEach((wallet) => {
+      valueSum += Number(wallet.value)
+    })
+
+    return organizeNumber(valueSum)
+  } else {
+    return 0
+  }
+})
+
+const organizeNumber = (theNum) => {
+  const fractionDigitNum = decimalCount(theNum)
+  if (fractionDigitNum > 6) {
+    const cutNum = theNum.toFixed(6)
+    const prettyValue = prettyNumber(cutNum)
+    return prettyValue
+  } else {
+    const prettyValue = prettyNumber(theNum)
+    return prettyValue
+  }
+}
+
 watch(
   () => coinStore.get_modalCoin,
   () => {
     if (coinStore.get_modalCoin !== {}) {
       isCoinLoaded.value = true
     }
-
-    // const unsavedWallet = coinStore.get_modalCoin.wallets.find(
-    //   (wallet) => wallet.saved === false
-    // )
-    // if (!unsavedWallet) areAllSaved.value === true
   }
 )
 </script>
@@ -117,7 +149,7 @@ watch(
             <div class="holdings-value" v-else>
               <div class="wallet">{{ wallet.name }}</div>
               <div class="holdings">{{ wallet.holding }}</div>
-              <div class="value">${{ wallet.value }}</div>
+              <div class="value">${{ organizeNumber(wallet.value) }}</div>
               <div class="3-dots">
                 <button>
                   <img src="/svg/icon-three-dots-vertical.svg" alt="" />
@@ -136,8 +168,12 @@ watch(
         </ul>
         <div class="totality">
           <div>Total</div>
-          <div><strong>0</strong></div>
-          <div><strong>$0</strong></div>
+          <div>
+            <strong>{{ totalHoldings }}</strong>
+          </div>
+          <div>
+            <strong>${{ totalValue }}</strong>
+          </div>
         </div>
       </div>
       <div class="add-coin__buttons">
@@ -145,7 +181,11 @@ watch(
           Add Exchange / Wallet
         </button>
 
-        <button class="save" :class="{ 'green-btn': areAllSaved }">
+        <button
+          class="save"
+          :disabled="!areAllSaved"
+          :class="{ 'green-btn': areAllSaved }"
+        >
           Save & Complete
         </button>
       </div>

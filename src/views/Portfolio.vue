@@ -12,6 +12,7 @@ import {
 } from '@/constants/copy'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
+import coinStyles from '@/constants/coinStyles'
 
 const coinStore = useCoinStore()
 const utilStore = useUtilStore()
@@ -24,7 +25,44 @@ const barChart = computed(() => {
   const pct_array = []
   const portfolioCoins = coinStore.get_portfolioCoins
 
-  portfolioCoins.forEach((coin) => {})
+  portfolioCoins.forEach((coin) => {
+    const pct = (coin.totalValue / coinStore.get_totalPortfolioValue) * 100
+
+    const roundPct = Math.round(pct)
+    const coinStyle = coinStyles.find((cs) => cs.id === coin.id)
+
+    if (!coinStyle) {
+      pct_array.push({
+        id: coin.id,
+        pct: roundPct,
+        coinStyle: {
+          id: coin.id,
+          name: coin.name,
+          colors: {
+            text: '#000',
+            background: '#fff',
+          },
+        },
+      })
+    } else {
+      pct_array.push({
+        id: coin.id,
+        pct: roundPct,
+        coinStyle,
+      })
+    }
+  })
+
+  pct_array.sort((a, b) => b.pct - a.pct)
+  return pct_array
+})
+
+const barWidth = computed(() => {
+  let barWidth = 0
+  barChart.value.forEach((coin) => {
+    barWidth += coin.pct
+  })
+  return barWidth
 })
 
 onMounted(() => {
@@ -66,84 +104,6 @@ const searchCoinClick = async (coin) => {
 
   searchedCoins.value = []
 }
-
-const pct_coins = ref([
-  {
-    id: 'BTC',
-    name: 'Bitcoin',
-    price: '23,955.69',
-    holdings: '20',
-    value: '692,069.49',
-    logo_url:
-      'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg',
-    pct: 40,
-    change_24: '+2.69',
-    colors: {
-      text: '#000',
-      gradient: ['#F7931A', '#FFC783'],
-    },
-  },
-  {
-    id: 'ETH',
-    name: 'Ethereum',
-    price: '23,955.69',
-    holdings: '20',
-    value: '692,069.49',
-    logo_url:
-      'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/eth.svg',
-    pct: 30,
-    change_24: '+2.69',
-    colors: {
-      text: '#fff',
-      gradient: ['#761FC3', '#19012F'],
-    },
-  },
-  {
-    id: 'USDT',
-    name: 'Tether',
-    price: '23,955.69',
-    holdings: '20',
-    value: '692,069.49',
-    logo_url:
-      'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/usdt.svg',
-    pct: 15,
-    change_24: '+2.69',
-    colors: {
-      text: '#fff',
-      background: '#53AE94',
-    },
-  },
-  {
-    id: 'USDC',
-    name: 'USD Coin',
-    price: '23,955.69',
-    holdings: '20',
-    value: '692,069.49',
-    logo_url:
-      'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/usdc.svg',
-    pct: 10,
-    change_24: '+2.69',
-    colors: {
-      text: '#fff',
-      background: '#2775CA',
-    },
-  },
-  {
-    id: 'BNB',
-    name: 'Binance Coin',
-    price: '23,955.69',
-    holdings: '20',
-    value: '692,069.49',
-    logo_url:
-      'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/bnb.svg',
-    pct: 5,
-    change_24: '+2.69',
-    colors: {
-      text: '#000',
-      background: '#F3BA2F',
-    },
-  },
-])
 </script>
 
 <template>
@@ -242,10 +202,13 @@ const pct_coins = ref([
         </div>
         <div class="portfolio__stats">
           <!-- percent bar -->
-          <div class="portfolio__pct-bar">
+          <div
+            class="portfolio__pct-bar"
+            :style="{ width: barWidth + '%' + ' !important' }"
+          >
             <div
               class="coin-pct"
-              v-for="(coin, i) in pct_coins"
+              v-for="(coin, i) in barChart"
               :key="i"
               :style="{ width: coin.pct + '%' }"
             >
@@ -253,15 +216,17 @@ const pct_coins = ref([
               <div
                 class="pct-color"
                 :style="{
-                  backgroundImage: coin.colors.gradient
-                    ? `linear-gradient(to bottom, ${coin.colors.gradient[0]}, ${coin.colors.gradient[1]})`
+                  backgroundImage: coin.coinStyle.colors.gradient
+                    ? `linear-gradient(to bottom, ${coin.coinStyle.colors.gradient[0]}, ${coin.coinStyle.colors.gradient[1]})`
                     : 'initial',
-                  backgroundColor: coin.colors.background
-                    ? coin.colors.background
+                  backgroundColor: coin.coinStyle.colors.background
+                    ? coin.coinStyle.colors.background
                     : 'initial',
                 }"
               >
-                <div :style="{ color: coin.colors.text }">{{ coin.id }}</div>
+                <div :style="{ color: coin.coinStyle.colors.text }">
+                  {{ coin.id }}
+                </div>
               </div>
             </div>
           </div>

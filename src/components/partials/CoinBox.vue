@@ -102,6 +102,7 @@ const surfaceMouseout = () => {
       ></div>
     </div>
     <div class="tooltip" v-if="tooltipShow">
+      <div class="name">{{ coin.name }}</div>
       <div class="price">Price ${{ coin.price }}</div>
       <div class="change">{{ coin._24hr }}% 24 hr</div>
     </div>
@@ -132,6 +133,7 @@ const surfaceMouseout = () => {
       .left {
         display: flex;
         align-items: center;
+        margin-right: 1rem;
 
         img {
           width: 2.8rem;
@@ -149,6 +151,10 @@ const surfaceMouseout = () => {
         font-size: 1.7rem;
         color: #000000;
         font-family: 'Inter', monospace;
+        margin-left: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 
@@ -167,9 +173,9 @@ const surfaceMouseout = () => {
   .tooltip {
     position: absolute;
     right: -1.5rem;
-    bottom: -11rem;
-    width: 80%;
-    height: 50%;
+    bottom: -16rem;
+    width: 85%;
+    height: 70%;
     background: #000;
     color: #fff;
     font-size: 1.6rem;
@@ -178,6 +184,10 @@ const surfaceMouseout = () => {
     justify-content: center;
     align-items: center;
     z-index: 50;
+    .name {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
 
     &::after {
       content: '';

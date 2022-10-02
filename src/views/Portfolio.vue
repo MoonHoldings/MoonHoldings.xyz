@@ -103,6 +103,7 @@ const searchCoinClick = async (coin) => {
   await coinStore.getSingleCoin(coin.id)
 
   searchedCoins.value = []
+  searchInput.value = ''
 }
 </script>
 
@@ -118,6 +119,57 @@ const searchCoinClick = async (coin) => {
   </teleport>
   <Header />
   <div class="portfolio">
+    <!-- Sub header -->
+    <div class="portfolio__sub-header">
+      <!-- Search coins -->
+      <div class="portfolio__coin-search">
+        <input v-model="searchInput" type="text" placeholder="Search Coins" />
+        <!-- Dropdown -->
+        <transition
+          mode="out-in"
+          enter-active-class="animate__animated animate__fadeInLeft"
+          leave-active-class="animate__animated animate__fadeOutLeft"
+        >
+          <div class="dropdown-list" v-if="searchedCoins.length !== 0">
+            <ul>
+              <li v-for="coin in searchedCoins" :key="coin.id">
+                <button @click="searchCoinClick(coin)">
+                  {{ coin.id }} - {{ coin.name }}
+                </button>
+              </li>
+            </ul>
+          </div>
+        </transition>
+        <div class="sort-text">Portfolio display style:</div>
+        <div class="sort-btns">
+          <button class="grid-btn">
+            <img src="/svg/icon-grid.svg" alt="grid icon" />
+          </button>
+          <button class="list-btn">
+            <img src="/svg/icon-list.svg" alt="list icon" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Total Value -->
+      <div class="portfolio__total-value">
+        <div class="value">
+          <div class="value-number">
+            <span class="s1">${{ coinStore.get_totalPortfolioValue }}</span>
+            <span class="s2" v-if="false">+5.35%</span>
+            <small v-if="false">24hr</small>
+          </div>
+        </div>
+        <div class="value-currency" v-if="false">
+          <span class="text">Currency </span>
+          <button class="usd active-currency">USD</button
+          ><span class="pipe"> | </span> <button class="btc">BTC</button
+          ><span class="pipe"> | </span> <button class="eth">ETH</button
+          ><span class="pipe"> | </span>
+          <button class="sol">SOL</button>
+        </div>
+      </div>
+    </div>
     <div v-if="showWelcome" class="portfolio__welcome-msg">
       <h1>{{ PORTFOLIO_WELCOME_HEADER }}</h1>
       <p>
@@ -130,57 +182,6 @@ const searchCoinClick = async (coin) => {
     </div>
 
     <div v-else class="portfolio__main">
-      <!-- Sub header -->
-      <div class="portfolio__sub-header">
-        <!-- Search coins -->
-        <div class="portfolio__coin-search">
-          <input v-model="searchInput" type="text" placeholder="Search Coins" />
-          <!-- Dropdown -->
-          <transition
-            mode="out-in"
-            enter-active-class="animate__animated animate__fadeInLeft"
-            leave-active-class="animate__animated animate__fadeOutLeft"
-          >
-            <div class="dropdown-list" v-if="searchedCoins.length !== 0">
-              <ul>
-                <li v-for="coin in searchedCoins" :key="coin.id">
-                  <button @click="searchCoinClick(coin)">
-                    {{ coin.id }} - {{ coin.name }}
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </transition>
-          <div class="sort-text">Portfolio display style:</div>
-          <div class="sort-btns">
-            <button class="grid-btn">
-              <img src="/svg/icon-grid.svg" alt="grid icon" />
-            </button>
-            <button class="list-btn">
-              <img src="/svg/icon-list.svg" alt="list icon" />
-            </button>
-          </div>
-        </div>
-
-        <!-- Total Value -->
-        <div class="portfolio__total-value">
-          <div class="value">
-            <div class="value-number">
-              <span class="s1">${{ coinStore.get_totalPortfolioValue }}</span>
-              <span class="s2" v-if="false">+5.35%</span>
-              <small v-if="false">24hr</small>
-            </div>
-          </div>
-          <div class="value-currency" v-if="false">
-            <span class="text">Currency </span>
-            <button class="usd active-currency">USD</button
-            ><span class="pipe"> | </span> <button class="btc">BTC</button
-            ><span class="pipe"> | </span> <button class="eth">ETH</button
-            ><span class="pipe"> | </span>
-            <button class="sol">SOL</button>
-          </div>
-        </div>
-      </div>
       <!-- Entries -->
       <div class="portfolio__coins-stats">
         <div class="portfolio__all-coins">

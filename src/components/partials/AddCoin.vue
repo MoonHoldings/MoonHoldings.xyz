@@ -28,19 +28,37 @@ const removeWalletInputs = () => {
   coinStore.removeNewWallet()
   walletInput.value = ''
   holdingsInput.value = null
+
+  walletInputError.value = false
+  holdingsInputError.value = false
+  utilStore.mutate_errorToggle(false)
+  utilStore.mutate_errorMessage('')
 }
 
 const saveNewWalletHoldings = () => {
+  walletInputError.value = false
+  holdingsInputError.value = false
+
   if (!walletInput.value && !holdingsInput.value) {
     walletInputError.value = true
     holdingsInputError.value = true
+    utilStore.mutate_errorToggle(true)
+    utilStore.mutate_errorMessage('All the input fields need to be fulfilled')
   } else if (!walletInput.value) {
     walletInputError.value = true
+    utilStore.mutate_errorToggle(true)
+    utilStore.mutate_errorMessage('All the input fields need to be fulfilled')
   } else if (!holdingsInput.value) {
     holdingsInputError.value = true
+    utilStore.mutate_errorToggle(true)
+    utilStore.mutate_errorMessage('All the input fields need to be fulfilled')
+  } else if (/[^0-9]/g.test(holdingsInput.value)) {
+    holdingsInputError.value = true
+    utilStore.mutate_errorToggle(true)
+    utilStore.mutate_errorMessage('Invalid input')
   } else {
-    walletInputError.value = false
-    holdingsInputError.value = false
+    utilStore.mutate_errorToggle(false)
+    utilStore.mutate_errorMessage('')
     coinStore.addHoldings(walletInput.value, holdingsInput.value)
     walletInput.value = ''
     holdingsInput.value = null

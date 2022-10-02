@@ -16,6 +16,8 @@ const coinStore = useCoinStore()
 const isCoinLoaded = ref(false)
 const walletInput = ref('')
 const holdingsInput = ref(null)
+const walletInputError = ref(false)
+const holdingsInputError = ref(false)
 
 const closeModal = () => {
   utilStore.mutate_addCoinModalsToggle(false)
@@ -29,9 +31,20 @@ const removeWalletInputs = () => {
 }
 
 const saveNewWalletHoldings = () => {
-  coinStore.addHoldings(walletInput.value, holdingsInput.value)
-  walletInput.value = ''
-  holdingsInput.value = null
+  if (!walletInput.value && !holdingsInput.value) {
+    walletInputError.value = true
+    holdingsInputError.value = true
+  } else if (!walletInput.value) {
+    walletInputError.value = true
+  } else if (!holdingsInput.value) {
+    holdingsInputError.value = true
+  } else {
+    walletInputError.value = false
+    holdingsInputError.value = false
+    coinStore.addHoldings(walletInput.value, holdingsInput.value)
+    walletInput.value = ''
+    holdingsInput.value = null
+  }
 }
 
 const addWallet = () => {
@@ -148,11 +161,17 @@ watch(
                 <input
                   type="text"
                   placeholder="Enter Exchange / Wallet"
+                  :class="{ 'input-error': walletInputError }"
                   v-model="walletInput"
                 />
               </div>
               <div class="holdings-input">
-                <input type="text" placeholder="0" v-model="holdingsInput" />
+                <input
+                  type="text"
+                  placeholder="0"
+                  :class="{ 'input-error': holdingsInputError }"
+                  v-model="holdingsInput"
+                />
               </div>
               <div class="save-btn-input">
                 <button @click="saveNewWalletHoldings">Save</button>

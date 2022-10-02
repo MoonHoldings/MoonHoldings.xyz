@@ -11,8 +11,7 @@ const utilStore = useUtilStore()
 const coinStore = useCoinStore()
 
 watch(route, () => {
-  utilStore.mutate_errorSignup(false)
-  utilStore.mutate_errorLogin(false)
+  utilStore.mutate_errorToggle(false)
   utilStore.mutate_errorMessage('')
   utilStore.mutate_showSuccessAlert(false)
   utilStore.mutate_successMessage('')
@@ -39,7 +38,7 @@ onMounted(async () => {
     enter-active-class="animate__animated animate__fadeInLeftBig"
     leave-active-class="animate__animated animate__fadeOutRightBig"
   >
-    <ErrorAlert v-if="utilStore.errorSignup || utilStore.errorLogin" />
+    <ErrorAlert v-if="utilStore.errorToggle" />
   </transition>
 
   <RouterView />

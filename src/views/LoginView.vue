@@ -48,14 +48,14 @@ const validateEmail = () => {
   const isValidEmail = email.value.includes('@')
   if (!email.value) {
     errorEmail.value = true
-    utilStore.mutate_errorLogin(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage("Email field can't be empty")
   } else if (!isValidEmail) {
     errorEmail.value = true
-    utilStore.mutate_errorLogin(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('Email is not valid')
   } else {
-    utilStore.mutate_errorLogin(false)
+    utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
     errorEmail.value = false
     emTranslate.value = -130
@@ -65,7 +65,7 @@ const validateEmail = () => {
   }
 }
 const login = async () => {
-  utilStore.mutate_errorLogin(false)
+  utilStore.mutate_errorToggle(false)
   try {
     const response = await userStore.login({
       email: email.value,
@@ -73,7 +73,7 @@ const login = async () => {
     })
 
     if (!response.success) {
-      utilStore.mutate_errorLogin(true)
+      utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage(response.message)
       return
     }
@@ -82,7 +82,7 @@ const login = async () => {
     utilStore.mutate_successMessage('You have been logged in successfully!')
     clicks.value++
   } catch (error) {
-    utilStore.mutate_errorLogin(true)
+    utilStore.mutate_errorToggle(true)
     console.log('error', error)
     utilStore.mutate_errorMessage(error.message)
   }

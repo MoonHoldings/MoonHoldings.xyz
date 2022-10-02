@@ -52,15 +52,15 @@ const validateEmail = () => {
   const isValidEmail = email.value.includes('@')
   if (!email.value) {
     errorEmail.value = true
-    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage("Email field can't be empty")
   } else if (!isValidEmail) {
     errorEmail.value = true
-    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('Email is not valid')
   } else {
     if (checkboxValue.value === true) {
-      utilStore.mutate_errorSignup(false)
+      utilStore.mutate_errorToggle(false)
       utilStore.mutate_errorMessage('')
       errorEmail.value = false
       emTranslate.value = -130
@@ -70,7 +70,7 @@ const validateEmail = () => {
     } else {
       // clickedOnce.value = true
       errorEmail.value = false
-      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage('Check the terms and policies')
     }
   }
@@ -80,15 +80,15 @@ const validatePassword = () => {
   const isValid = passwordValidate(password.value)
   if (!password.value) {
     errorPassword.value = true
-    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage("Password field can't be empty")
   } else if (!isValid) {
     errorPassword.value = true
-    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage("Password doesn't meet the criteria")
   } else {
     errorPassword.value = false
-    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
     pTranslate.value = -130
     cpTranslate.value = 0
@@ -101,12 +101,12 @@ const signup = async () => {
   submitClick.value = true
   if (password.value !== confirmPassword.value) {
     errorCPassword.value = true
-    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('Password does not match')
     submitClick.value = false
   } else {
     errorCPassword.value = false
-    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
     try {
       const response = await userStore.signup({
@@ -115,7 +115,7 @@ const signup = async () => {
       })
 
       if (!response.success) {
-        utilStore.mutate_errorSignup(true)
+        utilStore.mutate_errorToggle(true)
         utilStore.mutate_errorMessage('')
         utilStore.mutate_headingEndPoint('login')
         submitClick.value = false
@@ -129,7 +129,7 @@ const signup = async () => {
       clicks.value++
     } catch (error) {
       errorCPassword.value = true
-      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage(error.message)
       submitClick.value = false
     }
@@ -148,7 +148,7 @@ const fieldBack = () => {
     }
     clicks.value--
     errorEmail.value = false
-    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
   }
 }
@@ -174,7 +174,7 @@ onMounted(() => {
 })
 watch(route, (newValue) => {
   if (newValue.path !== '/sign-up') {
-    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorToggle(false)
     utilStore.mutate_showSuccessAlert(false)
   }
 })

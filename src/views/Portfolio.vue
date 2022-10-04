@@ -128,8 +128,8 @@ const searchCoinClick = async (coin) => {
         <!-- Dropdown -->
         <transition
           mode="out-in"
-          enter-active-class="animate__animated animate__fadeInLeft"
-          leave-active-class="animate__animated animate__fadeOutLeft"
+          enter-active-class="animate__animated animate__bounceInDown"
+          leave-active-class="animate__animated animate__bounceOutUp"
         >
           <div class="dropdown-list" v-if="searchedCoins.length !== 0">
             <ul>

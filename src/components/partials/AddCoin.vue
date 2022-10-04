@@ -17,6 +17,7 @@ const walletInput = ref('')
 const holdingsInput = ref(null)
 const walletInputError = ref(false)
 const holdingsInputError = ref(false)
+const _3dotsOpen = ref(false)
 
 const closeModal = () => {
   utilStore.mutate_addCoinModalsToggle(false)
@@ -82,6 +83,20 @@ const saveNcomplete = () => {
   utilStore.mutate_addCoinModalsToggle(false)
 }
 
+const editWallet = (walletName) => {
+  coinStore.unsaveWallet(walletName)
+  _3dotsOpen.value = false
+}
+
+const deleteWallet = (walletName) => {
+  coinStore.removeWallet(walletName)
+  _3dotsOpen.value = false
+}
+
+const modalCoin = computed(() => {
+  return coinStore.get_modalCoin
+})
+
 const areAllSaved = computed(() => {
   if (
     isCoinLoaded.value === true &&
@@ -140,11 +155,11 @@ watch(
     <div class="add-coin__window">
       <div class="add-coin__title">
         <h1>
-          {{ coinStore.get_modalCoin.id }} -
-          {{ coinStore.get_modalCoin.name }}
+          {{ modalCoin.id }} -
+          {{ modalCoin.name }}
         </h1>
         <div class="price">
-          Price: <strong>${{ coinStore.get_modalCoin.price }}</strong>
+          Price: <strong>${{ modalCoin.price }}</strong>
         </div>
       </div>
       <div class="add-coin__form">
@@ -159,7 +174,7 @@ watch(
           Portfolio
         </div>
         <ul class="holdings-list" v-else>
-          <li v-for="(wallet, i) in coinStore.modalCoin.wallets" :key="i">
+          <li v-for="(wallet, i) in modalCoin.wallets" :key="i">
             <div class="holdings-field" v-if="!wallet.saved">
               <div class="wallet-input">
                 <input
@@ -189,15 +204,15 @@ watch(
               <div class="holdings">{{ decorateNumber(wallet.holding) }}</div>
               <div class="value">${{ decorateNumber(wallet.value, true) }}</div>
               <div class="3-dots">
-                <button>
+                <button @click="_3dotsOpen = !_3dotsOpen">
                   <img src="/svg/icon-three-dots-vertical.svg" alt="" />
                 </button>
               </div>
-              <div class="menu-options" v-if="false">
-                <button class="edit-btn">
+              <div class="menu-options" v-if="_3dotsOpen">
+                <button class="edit-btn" @click="editWallet(wallet.name)">
                   <img :src="edit" alt="edit icon" />
                 </button>
-                <button class="delete-btn">
+                <button class="delete-btn" @click="deleteWallet(wallet.name)">
                   <img :src="deleteRow" alt="delete row icon" />
                 </button>
               </div>

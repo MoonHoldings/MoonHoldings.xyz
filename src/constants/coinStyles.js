@@ -100,7 +100,7 @@ export default [
     name: 'Dai',
     colors: {
       text: '#000',
-      background: ['F4C353', 'EAE6E1'],
+      background: ['#F4C353', '#EAE6E1'],
     },
   },
   {
@@ -164,7 +164,7 @@ export default [
     name: 'Uniswap',
     colors: {
       text: '#fff',
-      background: ['D53171', 'B74BD4'],
+      background: ['#D53171', '#B74BD4'],
     },
   },
   {
@@ -188,7 +188,7 @@ export default [
     name: 'Cosmos',
     colors: {
       text: '#fff',
-      background: ['111111', '7D3097', 'A6C8F4'],
+      background: ['#111111', '#7D3097', '#A6C8F4'],
     },
   },
   {
@@ -204,7 +204,7 @@ export default [
     name: 'Monero',
     colors: {
       text: '#fff',
-      background: ['FA6800', '4C4C4C'],
+      background: ['#FA6800', '#4C4C4C'],
     },
   },
   {
@@ -260,7 +260,7 @@ export default [
     name: 'Decentraland',
     colors: {
       text: '#fff',
-      background: ['EB4E5A', 'F5BF6C'],
+      background: ['#EB4E5A', '#F5BF6C'],
     },
   },
   {
@@ -300,7 +300,7 @@ export default [
     name: 'Aave',
     colors: {
       text: '#fff',
-      background: ['905696', '7FB4C1'],
+      background: ['#905696', '#7FB4C1'],
     },
   },
   {
@@ -308,7 +308,7 @@ export default [
     name: 'Axie Infinity',
     colors: {
       text: '#fff',
-      background: ['744B28', 'F1A341'],
+      background: ['#744B28', '#F1A341'],
     },
   },
   {
@@ -316,7 +316,7 @@ export default [
     name: '1inch',
     colors: {
       text: '#fff',
-      background: ['273E83', '3455AB'],
+      background: ['#273E83', '#3455AB'],
     },
   },
   {
@@ -348,7 +348,7 @@ export default [
     name: 'The Graph',
     colors: {
       text: '#fff',
-      background: ['39208D', '5378C6'],
+      background: ['#39208D', '#5378C6'],
     },
   },
   {
@@ -364,7 +364,7 @@ export default [
     name: 'Zcash',
     colors: {
       text: '#000',
-      background: ['CB9342', 'E8BE60'],
+      background: ['#CB9342', '#E8BE60'],
     },
   },
   {
@@ -380,7 +380,7 @@ export default [
     name: 'Neo',
     colors: {
       text: '#fff',
-      background: ['6FB836', 'B7DF50'],
+      background: ['#6FB836', '#B7DF50'],
     },
   },
   {
@@ -388,7 +388,7 @@ export default [
     name: 'Gas',
     colors: {
       text: '#fff',
-      background: ['6FB836', 'B7DF50'],
+      background: ['#6FB836', '#B7DF50'],
     },
   },
   {
@@ -420,7 +420,7 @@ export default [
     name: 'Curve DAO Token',
     colors: {
       text: '#000',
-      background: ['791710', 'EBD94B', '2B65ED'],
+      background: ['#791710', '#EBD94B', '#2B65ED'],
     },
   },
   {
@@ -444,7 +444,7 @@ export default [
     name: 'PAX Gold',
     colors: {
       text: '#000',
-      background: ['C6A843', 'EEE84F'],
+      background: ['#C6A843', '#EEE84F'],
     },
   },
   {
@@ -468,7 +468,7 @@ export default [
     name: 'PancakeSwap',
     colors: {
       text: '#000',
-      background: ['C78B59', 'F4D795'],
+      background: ['#C78B59', '#F4D795'],
     },
   },
   {
@@ -508,7 +508,7 @@ export default [
     name: 'Decred',
     colors: {
       text: '#000',
-      background: ['436DF2', '8CD8BB'],
+      background: ['#436DF2', '#8CD8BB'],
     },
   },
   {
@@ -524,7 +524,7 @@ export default [
     name: 'Sushi',
     colors: {
       text: '#fff',
-      background: ['5680E7', 'C131D2'],
+      background: ['#5680E7', '#C131D2'],
     },
   },
   {
@@ -532,7 +532,7 @@ export default [
     name: 'Ethereum Name Service',
     colors: {
       text: '#fff',
-      background: ['8198F3', '6BAEED'],
+      background: ['#8198F3', '#6BAEED'],
     },
   },
   {
@@ -540,7 +540,7 @@ export default [
     name: 'Rocket Pool',
     colors: {
       text: '#fff',
-      background: ['EC5C42', 'F3B284'],
+      background: ['#EC5C42', '#F3B284'],
     },
   },
   {
@@ -548,7 +548,7 @@ export default [
     name: 'Audius',
     colors: {
       text: '#fff',
-      background: ['261084', 'C028CA'],
+      background: ['#261084', '#C028CA'],
     },
   },
   {
@@ -588,7 +588,7 @@ export default [
     name: 'Horizen',
     colors: {
       text: '#fff',
-      background: ['08173F', '479BDF'],
+      background: ['#08173F', '#479BDF'],
     },
   },
   {
@@ -596,7 +596,7 @@ export default [
     name: 'yearn.finance',
     colors: {
       text: '#fff',
-      background: ['3171EF', '295FB7'],
+      background: ['#3171EF', '#295FB7'],
     },
   },
   {
@@ -652,7 +652,7 @@ export default [
     name: 'Raydium',
     colors: {
       text: '#00E4FF',
-      background: ['141A32', 'A326ED'],
+      background: ['#141A32', '#A326ED'],
     },
   },
   {
@@ -780,7 +780,7 @@ export default [
     name: 'Step Finance',
     colors: {
       text: '#00E4FF',
-      background: ['72F4BB', 'FAE4AB', 'C95623'],
+      background: ['#72F4BB', '#FAE4AB', '#C95623'],
     },
   },
   {

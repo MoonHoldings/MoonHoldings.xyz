@@ -13,6 +13,7 @@ import {
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
 import coinStyles from '@/constants/coinStyles'
+import decorateNumber from '@/utils/decorateNumber'
 
 const coinStore = useCoinStore()
 const utilStore = useUtilStore()
@@ -155,7 +156,9 @@ const searchCoinClick = async (coin) => {
       <div class="portfolio__total-value">
         <div class="value">
           <div class="value-number">
-            <span class="s1">${{ coinStore.get_totalPortfolioValue }}</span>
+            <span class="s1"
+              >${{ decorateNumber(coinStore.get_totalPortfolioValue) }}</span
+            >
             <span class="s2" v-if="false">+5.35%</span>
             <small v-if="false">24hr</small>
           </div>

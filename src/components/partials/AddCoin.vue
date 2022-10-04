@@ -7,9 +7,8 @@ import loader from '/gif/ufo.gif'
 import { useUtilStore } from '@/stores/util'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useCoinStore } from '@/stores/coin'
-import decimalCount from '@/utils/decimalCount'
-import prettyNumber from '@/utils/prettyNumber'
 import digitCount from '@/utils/digitCount'
+import decorateNumber from '@/utils/decorateNumber'
 
 const utilStore = useUtilStore()
 const coinStore = useCoinStore()
@@ -52,7 +51,7 @@ const saveNewWalletHoldings = () => {
     holdingsInputError.value = true
     utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('All the input fields need to be fulfilled')
-  } else if (/[^0-9]/g.test(holdingsInput.value)) {
+  } else if (/[^0-9]\./g.test(holdingsInput.value)) {
     holdingsInputError.value = true
     utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('Invalid input')
@@ -101,7 +100,7 @@ const totalHoldings = computed(() => {
     coinStore.get_modalCoin.wallets.forEach((wallet) => {
       holdingSum += Number(wallet.holding)
     })
-    return prettyNumber(String(holdingSum))
+    return decorateNumber(holdingSum)
   } else {
     return 0
   }
@@ -113,23 +112,11 @@ const totalValue = computed(() => {
       valueSum += Number(wallet.value)
     })
 
-    return organizeNumber(valueSum)
+    return decorateNumber(valueSum)
   } else {
     return 0
   }
 })
-
-const organizeNumber = (theNum) => {
-  const fractionDigitNum = decimalCount(theNum)
-  if (fractionDigitNum > 6) {
-    const cutNum = theNum.toFixed(6)
-    const prettyValue = prettyNumber(cutNum)
-    return prettyValue
-  } else {
-    const prettyValue = prettyNumber(theNum)
-    return prettyValue
-  }
-}
 
 watch(
   () => coinStore.get_modalCoin,
@@ -200,8 +187,8 @@ watch(
             </div>
             <div class="holdings-value" v-else>
               <div class="wallet">{{ wallet.name }}</div>
-              <div class="holdings">{{ wallet.holding }}</div>
-              <div class="value">${{ organizeNumber(wallet.value) }}</div>
+              <div class="holdings">{{ decorateNumber(wallet.holding) }}</div>
+              <div class="value">${{ decorateNumber(wallet.value) }}</div>
               <div class="3-dots">
                 <button>
                   <img src="/svg/icon-three-dots-vertical.svg" alt="" />

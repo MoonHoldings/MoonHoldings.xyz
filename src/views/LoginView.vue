@@ -82,6 +82,10 @@ const login = async () => {
     utilStore.mutate_successMessage('You have been logged in successfully!')
     clicks.value++
   } catch (error) {
+    mixpanel.track('Error: LoginView.vue > login', {
+      'error': error,
+      'message': error.message
+    })
     utilStore.mutate_errorToggle(true)
     console.log('error', error)
     utilStore.mutate_errorMessage(error.message)

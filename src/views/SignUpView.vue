@@ -128,6 +128,10 @@ const signup = async () => {
       )
       clicks.value++
     } catch (error) {
+      mixpanel.track('Error: SignUpView.vue > signup', {
+      'error': error,
+      'message': error.message
+    })
       errorCPassword.value = true
       utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage(error.message)

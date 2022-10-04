@@ -84,8 +84,13 @@ const saveNcomplete = () => {
 }
 
 const editWallet = (walletName) => {
-  coinStore.unsaveWallet(walletName)
   _3dotsOpen.value = false
+  const theWallet = modalCoin.value.wallets.find((w) => w.name === walletName)
+
+  walletInput.value = theWallet.name
+  holdingsInput.value = theWallet.holding
+
+  coinStore.unsaveWallet(walletName)
 }
 
 const deleteWallet = (walletName) => {
@@ -112,7 +117,7 @@ const areAllSaved = computed(() => {
 const totalHoldings = computed(() => {
   if (isCoinLoaded.value === true) {
     let holdingSum = 0
-    coinStore.get_modalCoin.wallets.forEach((wallet) => {
+    modalCoin.value.wallets.forEach((wallet) => {
       holdingSum += Number(wallet.holding)
     })
     return decorateNumber(holdingSum)
@@ -182,6 +187,7 @@ watch(
                   placeholder="Enter Exchange / Wallet"
                   :class="{ 'input-error': walletInputError }"
                   v-model="walletInput"
+                  @keyup.enter="saveNewWalletHoldings"
                 />
               </div>
               <div class="holdings-input">
@@ -190,6 +196,7 @@ watch(
                   placeholder="0"
                   :class="{ 'input-error': holdingsInputError }"
                   v-model="holdingsInput"
+                  @keyup.enter="saveNewWalletHoldings"
                 />
               </div>
               <div class="save-btn-input">

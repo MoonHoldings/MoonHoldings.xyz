@@ -1,4 +1,4 @@
-export default (num) => {
+export default (num, currency = false) => {
   const numStr = String(num)
   let intPart, fracPart
 
@@ -11,13 +11,16 @@ export default (num) => {
 
     const commaInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
-    if (countInt < 3 && countFrac > 6) {
+    if (currency === true) {
+      const fixedNum = Number(numStr).toFixed(2).toString()
+      return commaInt + '.' + fixedNum.split('.')[1]
+    } else if (countInt < 3 && countFrac > 6 && currency === false) {
       const fixedNum = Number(numStr).toFixed(6).toString()
       return commaInt + '.' + fixedNum.split('.')[1]
-    } else if (countInt === 3 && countFrac > 4) {
+    } else if (countInt === 3 && countFrac > 4 && currency === false) {
       const fixedNum = Number(numStr).toFixed(4).toString()
       return commaInt + '.' + fixedNum.split('.')[1]
-    } else if (countInt > 3 && countFrac > 2) {
+    } else if (countInt > 3 && countFrac > 2 && currency === false) {
       const fixedNum = Number(numStr).toFixed(2).toString()
       return commaInt + '.' + fixedNum.split('.')[1]
     } else {

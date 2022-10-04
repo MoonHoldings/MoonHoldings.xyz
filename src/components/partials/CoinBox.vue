@@ -85,7 +85,7 @@ const surfaceMouseout = () => {
         >
           {{ decorateNumber(coin.totalHoldings) }}
         </div>
-        <div class="value">${{ decorateNumber(coin.totalValue) }}</div>
+        <div class="value">${{ decorateNumber(coin.totalValue, true) }}</div>
       </div>
     </div>
     <div class="shadow-common btc-shadow" :style="{ background: shadowColor }">

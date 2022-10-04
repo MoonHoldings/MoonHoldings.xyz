@@ -111,8 +111,7 @@ const totalValue = computed(() => {
     coinStore.get_modalCoin.wallets.forEach((wallet) => {
       valueSum += Number(wallet.value)
     })
-
-    return decorateNumber(valueSum)
+    return decorateNumber(valueSum, true)
   } else {
     return 0
   }
@@ -188,7 +187,7 @@ watch(
             <div class="holdings-value" v-else>
               <div class="wallet">{{ wallet.name }}</div>
               <div class="holdings">{{ decorateNumber(wallet.holding) }}</div>
-              <div class="value">${{ decorateNumber(wallet.value) }}</div>
+              <div class="value">${{ decorateNumber(wallet.value, true) }}</div>
               <div class="3-dots">
                 <button>
                   <img src="/svg/icon-three-dots-vertical.svg" alt="" />

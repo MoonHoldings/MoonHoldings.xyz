@@ -157,7 +157,9 @@ const searchCoinClick = async (coin) => {
         <div class="value">
           <div class="value-number">
             <span class="s1"
-              >${{ decorateNumber(coinStore.get_totalPortfolioValue) }}</span
+              >${{
+                decorateNumber(coinStore.get_totalPortfolioValue, true)
+              }}</span
             >
             <span class="s2" v-if="false">+5.35%</span>
             <small v-if="false">24hr</small>

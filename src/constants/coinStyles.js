@@ -4,7 +4,7 @@ export default [
     name: 'Bitcoin',
     colors: {
       text: '#000',
-      gradient: ['#F7931A', '#FFC783'],
+      background: ['#F7931A', '#FFC783'],
     },
   },
   {
@@ -12,7 +12,7 @@ export default [
     name: 'Ethereum',
     colors: {
       text: '#fff',
-      gradient: ['#761FC3', '#19012F'],
+      background: ['#761FC3', '#19012F'],
     },
   },
   {
@@ -68,7 +68,7 @@ export default [
     name: 'Solana',
     colors: {
       text: '#fff',
-      background: ['#5B218F', 'DB00FF'],
+      background: ['#5B218F', '#DB00FF'],
     },
   },
   {

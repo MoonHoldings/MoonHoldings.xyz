@@ -14,9 +14,15 @@ const shadowColor = computed(() => {
   const colorObj = coinStyles.find((obj) => obj.id === coin.id)
 
   if (colorObj) {
-    finalShadowColors = colorObj.colors.gradient
-      ? `linear-gradient(180deg, ${colorObj.colors.gradient[0]} 0%, ${colorObj.colors.gradient[1]} 100%)`
-      : colorObj.colors.background
+    if (Array.isArray(colorObj.colors.background)) {
+      if (colorObj.colors.background.length === 2) {
+        finalShadowColors = `linear-gradient(180deg, ${colorObj.colors.background[0]} 0%, ${colorObj.colors.background[1]} 100%)`
+      } else {
+        finalShadowColors = `linear-gradient(180deg, ${colorObj.colors.background[0]} 0%, ${colorObj.colors.background[1]} 60%, ${colorObj.colors.background[2]} 100%)`
+      }
+    } else {
+      finalShadowColors = colorObj.colors.background
+    }
   } else {
     finalShadowColors = '#fff'
   }
@@ -25,13 +31,14 @@ const shadowColor = computed(() => {
 
 const top_corner_color = computed(() => {
   let finalCornerColors
-
   const colorObj = coinStyles.find((obj) => obj.id === coin.id)
 
   if (colorObj) {
-    finalCornerColors = colorObj.colors.gradient
-      ? colorObj.colors.gradient[0]
-      : colorObj.colors.background
+    if (Array.isArray(colorObj.colors.background)) {
+      finalCornerColors = colorObj.colors.background[0]
+    } else {
+      finalCornerColors = colorObj.colors.background
+    }
   } else {
     finalCornerColors = '#fff'
   }
@@ -44,9 +51,12 @@ const bottom_corner_color = computed(() => {
   const colorObj = coinStyles.find((obj) => obj.id === coin.id)
 
   if (colorObj) {
-    finalCornerColors = colorObj.colors.gradient
-      ? colorObj.colors.gradient[1]
-      : colorObj.colors.background
+    if (Array.isArray(colorObj.colors.background)) {
+      finalCornerColors =
+        colorObj.colors.background[colorObj.colors.background.length - 1]
+    } else {
+      finalCornerColors = colorObj.colors.background
+    }
   } else {
     finalCornerColors = '#fff'
   }

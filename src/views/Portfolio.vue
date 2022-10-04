@@ -37,19 +37,29 @@ const barChart = computed(() => {
         id: coin.id,
         pct: roundPct,
         coinStyle: {
-          id: coin.id,
-          name: coin.name,
-          colors: {
-            text: '#000',
-            background: '#fff',
-          },
+          text: '#000',
+          background: '#fff',
         },
       })
     } else {
+      let coinBg
+      if (Array.isArray(coinStyle.colors.background)) {
+        if (coinStyle.colors.background.length === 2) {
+          coinBg = `linear-gradient(180deg, ${coinStyle.colors.background[0]} 0%, ${coinStyle.colors.background[1]} 100%)`
+        } else {
+          coinBg = `linear-gradient(180deg, ${coinStyle.colors.background[0]} 0%, ${coinStyle.colors.background[1]} 60%, ${coinStyle.colors.background[2]} 100%)`
+        }
+      } else {
+        coinBg = coinStyle.colors.background
+      }
+
       pct_array.push({
         id: coin.id,
         pct: roundPct,
-        coinStyle,
+        coinStyle: {
+          text: coinStyle.colors.text,
+          background: coinBg,
+        },
       })
     }
   })
@@ -106,6 +116,27 @@ const searchCoinClick = async (coin) => {
   searchedCoins.value = []
   searchInput.value = ''
 }
+
+const shadowColor = computed(() => {
+  let finalShadowColors
+
+  const colorObj = coinStyles.find((obj) => obj.id === coin.id)
+
+  if (colorObj) {
+    if (Array.isArray(colorObj.colors.background)) {
+      if (colorObj.colors.background.length === 2) {
+        finalShadowColors = `linear-gradient(180deg, ${colorObj.colors.background[0]} 0%, ${colorObj.colors.background[1]} 100%)`
+      } else {
+        finalShadowColors = `linear-gradient(180deg, ${colorObj.colors.background[0]} 0%, ${colorObj.colors.background[1]} 60%, ${colorObj.colors.background[2]} 100%)`
+      }
+    } else {
+      finalShadowColors = colorObj.colors.background
+    }
+  } else {
+    finalShadowColors = '#fff'
+  }
+  return finalShadowColors
+})
 </script>
 
 <template>
@@ -221,16 +252,9 @@ const searchCoinClick = async (coin) => {
               <div class="pct-num">{{ coin.pct }}%</div>
               <div
                 class="pct-color"
-                :style="{
-                  backgroundImage: coin.coinStyle.colors.gradient
-                    ? `linear-gradient(to bottom, ${coin.coinStyle.colors.gradient[0]}, ${coin.coinStyle.colors.gradient[1]})`
-                    : 'initial',
-                  backgroundColor: coin.coinStyle.colors.background
-                    ? coin.coinStyle.colors.background
-                    : 'initial',
-                }"
+                :style="{ background: coin.coinStyle.background }"
               >
-                <div :style="{ color: coin.coinStyle.colors.text }">
+                <div :style="{ color: coin.coinStyle.text }">
                   {{ coin.id }}
                 </div>
               </div>

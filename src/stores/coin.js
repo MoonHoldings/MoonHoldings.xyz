@@ -124,6 +124,10 @@ export const useCoinStore = defineStore('coin', {
           wallets: [],
         }
       } catch (error) {
+        mixpanel.track('Error: coin.js > getSingleCoin', {
+          'error': error,
+          'message': error.message
+        })
         return {
           success: false,
           error: error.message,
@@ -144,6 +148,10 @@ export const useCoinStore = defineStore('coin', {
 
         localStorage.setItem('MoonCoins', JSON.stringify(allCoins))
       } catch (error) {
+        mixpanel.track('Error: coin.js > getAllCoinsBrowser', {
+          'error': error,
+          'message': error.message
+        })
         console.log(error.message)
       }
     },
@@ -157,6 +165,10 @@ export const useCoinStore = defineStore('coin', {
         const coinsArr = result.coins.map((coin) => coin)
         localStorage.setItem('coins', JSON.stringify(coinsArr))
       } catch (error) {
+        mixpanel.track('Error: coin.js > fetchCoins', {
+          'error': error,
+          'message': error.message
+        })
         console.log(error.message)
       }
     },

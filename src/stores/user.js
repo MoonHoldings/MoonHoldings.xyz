@@ -22,6 +22,10 @@ export const useUserStore = defineStore('user', {
         const result = await response.data
         return result
       } catch (error) {
+        mixpanel.track('Error: user.js > inviteBetaTester', {
+          'error': error,
+          'message': error.message
+        })
         const { response } = error
         return {
           success: response.data.success,
@@ -41,6 +45,10 @@ export const useUserStore = defineStore('user', {
           //
         }
       } catch (error) {
+        mixpanel.track('Error: user.js > getUser', {
+          'error': error,
+          'message': error.message
+        })
         return error.message
       }
     },
@@ -54,6 +62,11 @@ export const useUserStore = defineStore('user', {
         const result = await response.data
         return result
       } catch (error) {
+        mixpanel.track('Error: user.js > login', {
+          'error': error,
+          'message': error.message,
+          'payload': payload
+        })
         return {
           success: false,
           message: error,
@@ -71,6 +84,11 @@ export const useUserStore = defineStore('user', {
         const result = await response.data
         return result
       } catch (error) {
+        mixpanel.track('Error: user.js > signup', {
+          'error': error,
+          'message': error.message,
+          'payload': payload
+        })
         // const { response } = error
         return {
           success: false,
@@ -92,6 +110,11 @@ export const useUserStore = defineStore('user', {
         const result = await response.data
         return result
       } catch (error) {
+        mixpanel.track('Error: user.js > sendNewsletter', {
+          'error': error,
+          'message': error.message,
+          'payload': payload
+        })
         return {
           success: false,
           message: error,

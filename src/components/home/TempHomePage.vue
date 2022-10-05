@@ -40,6 +40,11 @@ const submitInvite = async () => {
       subscription: isSubscribed.value,
     })
     if (response.success === true) {
+      mixpanel.track('Beta signup', {
+        'name': name.value,
+        'email': email.value
+      })
+
       utilStore.mutate_showSuccessAlert(true)
       utilStore.mutate_successMessage(
         'Woot!! You are invited! An invite email has been sent!'

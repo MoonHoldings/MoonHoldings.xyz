@@ -174,9 +174,7 @@ watch(
           <div>Value</div>
         </div>
         <div class="empty-text" v-if="coinStore.get_walletsLength === 0">
-          Select <strong>Add Exchange</strong> or <strong>Add Wallet</strong> to
-          start building your <strong>Bitcoin</strong>
-          Portfolio
+          Select <strong>Add Wallet</strong> to start building your <strong>{{ modalCoin.name }}</strong> position.
         </div>
         <ul class="holdings-list" v-else>
           <li v-for="(wallet, i) in modalCoin.wallets" :key="i">
@@ -243,7 +241,7 @@ watch(
       </div>
       <div class="add-coin__buttons">
         <button class="exchange" @click="addWallet">
-          Add Exchange / Wallet
+          Add Wallet
         </button>
 
         <button

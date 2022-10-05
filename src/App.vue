@@ -73,7 +73,6 @@ html {
 
 #app {
   max-width: auto;
-  // height: 100%;
   margin: 0 auto;
   font-family: 'Inconsolata', monospace;
   font-weight: normal;

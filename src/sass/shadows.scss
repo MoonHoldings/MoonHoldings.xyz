@@ -13,8 +13,6 @@
 }
 
 .btc-shadow {
-  // background: linear-gradient(180deg, #f7931a 0%, #ffc783 100%);
-
   .top-corner {
     @include shadow-before;
     background: #f7931a;

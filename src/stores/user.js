@@ -89,15 +89,10 @@ export const useUserStore = defineStore('user', {
           'message': error.message,
           'payload': payload
         })
-        // const { response } = error
         return {
           success: false,
           message: error,
         }
-        // return {
-        //   success: response.data.success,
-        //   message: response.data.message,
-        // }
       }
     },
     async sendNewsletter(payload) {

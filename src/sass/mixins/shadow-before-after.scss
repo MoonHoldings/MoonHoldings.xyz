@@ -1,19 +1,15 @@
 @mixin shadow-before {
-  // content: '';
   width: 14.5px;
   height: 14.5px;
   border-top: 1px solid #000;
   border-radius: 1.5px;
   position: absolute;
-  // top: -7px;
-  // right: 2px;
   right: 3px;
   top: -7px;
   transform: rotate(45deg);
 }
 
 @mixin shadow-after {
-  // content: '';
   width: 14.5px;
   height: 14.5px;
   border-bottom: 1px solid #000;

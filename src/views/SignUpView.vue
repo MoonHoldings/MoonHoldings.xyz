@@ -8,7 +8,6 @@ import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
 import passwordValidate from '@/utils/passwordValidate'
-// import delay from '@/utils/delay'
 
 const route = useRoute()
 
@@ -68,7 +67,6 @@ const validateEmail = () => {
 
       clicks.value++
     } else {
-      // clickedOnce.value = true
       errorEmail.value = false
       utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage('Check the terms and policies')

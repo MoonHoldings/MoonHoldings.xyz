@@ -28,56 +28,55 @@
 
 .coin-box {
   position: relative;
-  .surface {
-    position: relative;
-    border: 1px solid #000;
-    border-radius: 2px;
-    color: #000000;
-    background-color: #ffffff;
-    padding: 15px;
-    width: 240px;
-    height: 240px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    z-index: 6;
+}
+.surface {
+  position: relative;
+  border: 1px solid #000;
+  border-radius: 2px;
+  color: #000000;
+  background-color: #ffffff;
+  padding: 15px;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 6;
+}
 
-    .symbol {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+.symbol {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-      .left {
-        display: flex;
-        align-items: center;
-
-        img {
-          width: 30px;
-          height: 30px;
-          margin-right: 7px;
-        }
-        span {
-          font-weight: 700;
-          font-size: 18px;
-          font-family: 'Inter', monospace;
-        }
-      }
-      .right {
-        font-size: 18px;
-
-        font-family: 'Inter', monospace;
-      }
-    }
-    .price {
-      font-size: 16px;
-      font-weight: 600;
-      text-align: center;
-    }
-    .change {
-      font-size: 18px;
-      font-weight: 600;
-      text-align: center;
-    }
+.left {
+  display: flex;
+  align-items: center;
+  img {
+    width: 30px;
+    height: 30px;
+    margin-right: 7px;
   }
+  span {
+    font-weight: 700;
+    font-size: 18px;
+    font-family: 'Inter', monospace;
+  }
+}
+.right {
+  font-size: 18px;
+  font-family: 'Inter', monospace;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.change {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
 }
 </style>

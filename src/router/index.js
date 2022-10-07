@@ -5,6 +5,9 @@ import SignUpView from '@/views/SignUpView.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import { MOON_HOLDINGS } from '@/constants/copy'
 import { titleCreator } from '@/utils/formatters'
+import { useCookies } from 'vue3-cookies'
+
+const { cookies } = useCookies()
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +39,7 @@ const router = createRouter({
       path: '/portfolio',
       name: 'portfolio',
       component: () => import('@/views/Portfolio.vue'),
+      beforeEnter: requireAuth,
     },
     {
       path: '/privacy-policy',
@@ -58,5 +62,13 @@ const router = createRouter({
 router.beforeEach((to) => {
   document.title = to.name ? titleCreator(to.name) : MOON_HOLDINGS
 })
+
+function requireAuth(to, from, next) {
+  const user = cookies.get('user')
+  if (user) {
+    next()
+  }
+  next('/')
+}
 
 export default router

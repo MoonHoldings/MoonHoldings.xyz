@@ -10,11 +10,13 @@ const route = useRoute()
 const utilStore = useUtilStore()
 const coinStore = useCoinStore()
 
-watch(route, () => {
-  utilStore.mutate_errorToggle(false)
-  utilStore.mutate_errorMessage('')
-  utilStore.mutate_showSuccessAlert(false)
-  utilStore.mutate_successMessage('')
+watch(route, (prev, present) => {
+  if (prev.path !== '/login' && present.path !== '/portfolio') {
+    utilStore.mutate_errorToggle(false)
+    utilStore.mutate_errorMessage('')
+    utilStore.mutate_showSuccessAlert(false)
+    utilStore.mutate_successMessage('')
+  }
 })
 
 onMounted(async () => {

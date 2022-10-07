@@ -1,6 +1,6 @@
 <script setup>
-import { RouterLink } from 'vue-router'
-import { ref } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
 import {
   MOONHOLDINGS,
   LOGIN,
@@ -14,6 +14,7 @@ import {
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
+import { useCookies } from 'vue3-cookies'
 
 const clicks = ref(0)
 const email = ref('')
@@ -26,11 +27,13 @@ const errorPassword = ref(false)
 const emTranslate = ref(0)
 const pTranslate = ref(130)
 
+const router = useRouter()
+const route = useRoute()
+const { cookies } = useCookies()
 const userStore = useUserStore()
 const utilStore = useUtilStore()
 
 const continueBtn = async () => {
-  console.log('continueBtn clicked')
   switch (clicks.value) {
     case 0:
       validateEmail()
@@ -81,10 +84,15 @@ const login = async () => {
     utilStore.mutate_showSuccessAlert(true)
     utilStore.mutate_successMessage('You have been logged in successfully!')
     clicks.value++
+
+    cookies.set('user', response.user)
+
+    //navigate to portfolio vue
+    router.push('/portfolio')
   } catch (error) {
     mixpanel.track('Error: LoginView.vue > login', {
-      'error': error,
-      'message': error.message
+      error: error,
+      message: error.message,
     })
     utilStore.mutate_errorToggle(true)
     console.log('error', error)
@@ -99,6 +107,17 @@ const blink = () => {
     isEyeOpen.value = 'password'
   }
 }
+
+onMounted(() => {
+  const error = route.query.error ? true : false
+
+  if (error) {
+    utilStore.mutate_errorToggle(true)
+    utilStore.mutate_errorMessage(
+      'Confirm Email Link is invalid or has been expired. Login and confirm 😀👌'
+    )
+  }
+})
 </script>
 
 <template>

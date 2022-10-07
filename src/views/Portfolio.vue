@@ -116,27 +116,6 @@ const searchCoinClick = async (coin) => {
   searchedCoins.value = []
   searchInput.value = ''
 }
-
-const shadowColor = computed(() => {
-  let finalShadowColors
-
-  const colorObj = coinStyles.find((obj) => obj.id === coin.id)
-
-  if (colorObj) {
-    if (Array.isArray(colorObj.colors.background)) {
-      if (colorObj.colors.background.length === 2) {
-        finalShadowColors = `linear-gradient(180deg, ${colorObj.colors.background[0]} 0%, ${colorObj.colors.background[1]} 100%)`
-      } else {
-        finalShadowColors = `linear-gradient(180deg, ${colorObj.colors.background[0]} 0%, ${colorObj.colors.background[1]} 60%, ${colorObj.colors.background[2]} 100%)`
-      }
-    } else {
-      finalShadowColors = colorObj.colors.background
-    }
-  } else {
-    finalShadowColors = '#fff'
-  }
-  return finalShadowColors
-})
 </script>
 
 <template>

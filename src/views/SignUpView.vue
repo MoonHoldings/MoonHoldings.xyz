@@ -114,7 +114,9 @@ const signup = async () => {
 
       if (!response.success) {
         utilStore.mutate_errorToggle(true)
-        utilStore.mutate_errorMessage('')
+        utilStore.mutate_errorMessage(
+          'There is an account associated with this email'
+        )
         utilStore.mutate_headingEndPoint('login')
         submitClick.value = false
         return
@@ -127,9 +129,9 @@ const signup = async () => {
       clicks.value++
     } catch (error) {
       mixpanel.track('Error: SignUpView.vue > signup', {
-      'error': error,
-      'message': error.message
-    })
+        error: error,
+        message: error.message,
+      })
       errorCPassword.value = true
       utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage(error.message)

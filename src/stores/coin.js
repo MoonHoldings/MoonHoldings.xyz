@@ -52,12 +52,22 @@ export const useCoinStore = defineStore('coin', {
     mutate_emptyModalCoin() {
       this.modalCoin = {}
     },
-    addPortfolioCoin(totalHoldings, totalValue) {
+    async addPortfolioCoin(totalHoldings, totalValue) {
       this.modalCoin.totalHoldings = totalHoldings
       this.modalCoin.totalValue = totalValue
 
-      this.portfolioCoins.push(this.modalCoin)
+      const response = await axios.put(
+        `${this.server_url}/save-coin`,
+        this.modalCoin,
+        this.axios_config
+      )
+
       this.modalCoin = {}
+      // this.modalCoin.totalHoldings = totalHoldings
+      // this.modalCoin.totalValue = totalValue
+
+      // this.portfolioCoins.push(this.modalCoin)
+      // this.modalCoin = {}
     },
     addNewWallet() {
       const emptyWallet = this.modalCoin.wallets.find(
@@ -125,8 +135,8 @@ export const useCoinStore = defineStore('coin', {
         }
       } catch (error) {
         mixpanel.track('Error: coin.js > getSingleCoin', {
-          'error': error,
-          'message': error.message
+          error: error,
+          message: error.message,
         })
         return {
           success: false,
@@ -149,8 +159,8 @@ export const useCoinStore = defineStore('coin', {
         localStorage.setItem('MoonCoins', JSON.stringify(allCoins))
       } catch (error) {
         mixpanel.track('Error: coin.js > getAllCoinsBrowser', {
-          'error': error,
-          'message': error.message
+          error: error,
+          message: error.message,
         })
         console.log(error.message)
       }
@@ -166,8 +176,8 @@ export const useCoinStore = defineStore('coin', {
         localStorage.setItem('coins', JSON.stringify(coinsArr))
       } catch (error) {
         mixpanel.track('Error: coin.js > fetchCoins', {
-          'error': error,
-          'message': error.message
+          error: error,
+          message: error.message,
         })
         console.log(error.message)
       }

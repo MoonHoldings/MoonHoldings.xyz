@@ -30,7 +30,8 @@
     "mixpanel-browser": "^2.45.0",
     "pinia": "^2.0.14",
     "vue": "^3.2.36",
-    "vue-router": "^4.0.15"
+    "vue-router": "^4.0.15",
+    "vue3-cookies": "^1.0.6"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",

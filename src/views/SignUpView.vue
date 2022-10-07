@@ -119,6 +119,11 @@ const signup = async () => {
         )
         utilStore.mutate_headingEndPoint('login')
         submitClick.value = false
+
+        mixpanel.track('*User Signed up*', {
+          'email': email.value
+        })
+
         return
       }
 

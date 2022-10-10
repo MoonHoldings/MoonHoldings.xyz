@@ -37,7 +37,7 @@ export const useCoinStore = defineStore('coin', {
       return this.get_modalCoinWallets?.length
     },
     get_unsavedWalletExist(state) {
-      const unsavedWallet = state.modalCoin.wallets.find(
+      const unsavedWallet = state.modalCoin.wallets?.find(
         (wallet) => wallet.saved === false
       )
 
@@ -111,11 +111,6 @@ export const useCoinStore = defineStore('coin', {
       }
 
       this.modalCoin = {}
-      // this.modalCoin.totalHoldings = totalHoldings
-      // this.modalCoin.totalValue = totalValue
-
-      // this.portfolioCoins.push(this.modalCoin)
-      // this.modalCoin = {}
     },
     addNewWallet() {
       const emptyWallet = this.modalCoin.wallets.find(

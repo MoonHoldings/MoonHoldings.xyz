@@ -116,7 +116,7 @@ const areAllSaved = computed(() => {
 const totalHoldings = computed(() => {
   if (isCoinLoaded.value === true) {
     let holdingSum = 0
-    modalCoin.value.wallets.forEach((wallet) => {
+    modalCoin.value.wallets?.forEach((wallet) => {
       holdingSum += Number(wallet.holding)
     })
     return decorateNumber(holdingSum)
@@ -127,7 +127,7 @@ const totalHoldings = computed(() => {
 const totalValue = computed(() => {
   if (isCoinLoaded.value === true) {
     let valueSum = 0
-    coinStore.get_modalCoin.wallets.forEach((wallet) => {
+    coinStore.get_modalCoin.wallets?.forEach((wallet) => {
       valueSum += Number(wallet.value)
     })
     return decorateNumber(valueSum, true)

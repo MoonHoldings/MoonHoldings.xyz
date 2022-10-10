@@ -12,8 +12,13 @@ export default (num, currency = false) => {
     const commaInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
     if (currency === true) {
-      const fixedNum = Number(numStr).toFixed(2).toString()
-      return commaInt + '.' + fixedNum.split('.')[1]
+      if (!intPart || intPart === '0' || intPart === '00') {
+        const fixedNum = Number(numStr).toFixed(5).toString()
+        return commaInt + '.' + fixedNum.split('.')[1]
+      } else {
+        const fixedNum = Number(numStr).toFixed(2).toString()
+        return commaInt + '.' + fixedNum.split('.')[1]
+      }
     } else if (countInt < 3 && countFrac > 6 && currency === false) {
       const fixedNum = Number(numStr).toFixed(6).toString()
       return commaInt + '.' + fixedNum.split('.')[1]

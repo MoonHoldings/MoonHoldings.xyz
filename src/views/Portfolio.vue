@@ -14,19 +14,35 @@ import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
 import coinStyles from '@/constants/coinStyles'
 import decorateNumber from '@/utils/decorateNumber'
+import { useCookies } from 'vue3-cookies'
 
+const { cookies } = useCookies()
 const coinStore = useCoinStore()
 const utilStore = useUtilStore()
 const storedCoins = ref([])
 const searchInput = ref('')
 const searchedCoins = ref([])
 const showWelcome = ref(false)
+const windowWidth = ref(0)
+
+const portfolioCoins = computed(() => {
+  const coins = coinStore.get_portfolioCoins
+  const values = coins.map((coin) => coin.totalValue)
+  values.sort((a, b) => b - a)
+
+  const finalCoins = []
+  values.forEach((value) => {
+    const theCoin = coins.find((c) => c.totalValue === value)
+    finalCoins.push(theCoin)
+  })
+
+  return finalCoins
+})
 
 const barChart = computed(() => {
   const pct_array = []
-  const portfolioCoins = coinStore.get_portfolioCoins
 
-  portfolioCoins.forEach((coin) => {
+  portfolioCoins.value.forEach((coin) => {
     const pct = (coin.totalValue / coinStore.get_totalPortfolioValue) * 100
 
     const roundPct = Math.round(pct)
@@ -76,10 +92,30 @@ const barWidth = computed(() => {
   return barWidth
 })
 
+const disappearPct = (pct) => {
+  if (windowWidth.value < 1225 && pct < 7) {
+    return true
+  } else if (windowWidth.value > 1225 && pct < 7) {
+    return true
+  } else {
+    return false
+  }
+}
+
 onMounted(() => {
   const moonCoins = localStorage.getItem('MoonCoins')
   const parsedCoins = JSON.parse(moonCoins).coins
   storedCoins.value = [...parsedCoins]
+
+  const user = cookies.get('user')
+  user?.portfolio.coins.forEach((coin) => {
+    coinStore.mutate_portfolioCoins(coin)
+  })
+
+  window.addEventListener('resize', () => {
+    const width = window.innerWidth
+    windowWidth.value = width
+  })
 })
 
 watch([searchInput], () => {
@@ -203,7 +239,7 @@ const searchCoinClick = async (coin) => {
           <!-- Coins -->
           <div class="portfolio__coins">
             <CoinBox
-              v-for="(coin, i) in coinStore.portfolioCoins"
+              v-for="(coin, i) in portfolioCoins"
               :key="i"
               :coin="coin"
             />
@@ -228,13 +264,15 @@ const searchCoinClick = async (coin) => {
               :key="i"
               :style="{ width: coin.pct + '%' }"
             >
-              <div class="pct-num">{{ coin.pct }}%</div>
+              <div class="pct-num">
+                {{ disappearPct(coin.pct) ? '' : `${coin.pct}%` }}
+              </div>
               <div
                 class="pct-color"
                 :style="{ background: coin.coinStyle.background }"
               >
                 <div :style="{ color: coin.coinStyle.text }">
-                  {{ coin.id }}
+                  {{ disappearPct(coin.pct) ? '' : coin.id }}
                 </div>
               </div>
             </div>

@@ -107,7 +107,7 @@ const surfaceMouseout = () => {
     </div>
     <div class="tooltip" v-if="tooltipShow">
       <div class="name">{{ coin.name }}</div>
-      <div class="price">Price ${{ coin.price }}</div>
+      <div class="price">Price ${{ decorateNumber(coin.price, true) }}</div>
       <div class="change">{{ coin._24hr }}% 24 hr</div>
     </div>
   </div>

@@ -4,7 +4,9 @@ import axios from 'axios'
 export const useUserStore = defineStore('user', {
   state: () => ({
     server_url: `${import.meta.env.VITE_MOONSERVER_URL}/api`,
-    axios_config: { headers: { 'Content-Type': 'application/json' } },
+    axios_config: {
+      headers: { 'Content-Type': 'application/json' },
+    },
     gotten_user: null,
   }),
   getters: {

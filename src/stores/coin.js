@@ -2,6 +2,9 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/firebase'
+import { useCookies } from 'vue3-cookies'
+
+const { cookies } = useCookies()
 
 export const useCoinStore = defineStore('coin', {
   state: () => ({
@@ -52,15 +55,30 @@ export const useCoinStore = defineStore('coin', {
     mutate_emptyModalCoin() {
       this.modalCoin = {}
     },
+    mutate_portfolioCoins(payload) {
+      this.portfolioCoins.push(payload)
+    },
     async addPortfolioCoin(totalHoldings, totalValue) {
       this.modalCoin.totalHoldings = totalHoldings
       this.modalCoin.totalValue = totalValue
 
-      const response = await axios.put(
-        `${this.server_url}/save-coin`,
-        this.modalCoin,
-        this.axios_config
-      )
+      const user = cookies.get('user')
+
+      try {
+        const response = await axios.put(`${this.server_url}/save-coin`, {
+          coin: this.modalCoin,
+          email: user.email,
+        })
+
+        const result = await response.data
+        if (result.success) {
+          user.portfolio.coins.push(this.modalCoin)
+          cookies.set('user', user)
+          this.mutate_portfolioCoins(this.modalCoin)
+        }
+      } catch (error) {
+        console.log(error)
+      }
 
       this.modalCoin = {}
       // this.modalCoin.totalHoldings = totalHoldings

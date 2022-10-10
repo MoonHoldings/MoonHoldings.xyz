@@ -163,7 +163,7 @@ watch(
           {{ modalCoin.name }}
         </h1>
         <div class="price">
-          Price: <strong>${{ modalCoin.price }}</strong>
+          Price: <strong>${{ decorateNumber(modalCoin.price, true) }}</strong>
         </div>
       </div>
       <div class="add-coin__form">
@@ -173,7 +173,8 @@ watch(
           <div>Value</div>
         </div>
         <div class="empty-text" v-if="coinStore.get_walletsLength === 0">
-          Select <strong>Add Wallet</strong> to start building your <strong>{{ modalCoin.name }}</strong> position.
+          Select <strong>Add Wallet</strong> to start building your
+          <strong>{{ modalCoin.name }}</strong> position.
         </div>
         <ul class="holdings-list" v-else>
           <li v-for="(wallet, i) in modalCoin.wallets" :key="i">
@@ -239,9 +240,7 @@ watch(
         </div>
       </div>
       <div class="add-coin__buttons">
-        <button class="exchange" @click="addWallet">
-          Add Wallet
-        </button>
+        <button class="exchange" @click="addWallet">Add Wallet</button>
 
         <button
           class="save"

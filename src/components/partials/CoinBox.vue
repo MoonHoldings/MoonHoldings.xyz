@@ -85,18 +85,23 @@ const surfaceMouseout = () => {
         </div>
         <div class="right">{{ coin.name }}</div>
       </div>
-      <div class="holdings-value">
-        <div
-          class="holdings"
-          :class="{
-            'font-50': digitCount(coin.totalHoldings) > 6,
-            'font-40': digitCount(coin.totalHoldings) > 8,
-          }"
-        >
-          {{ decorateNumber(coin.totalHoldings) }}
-        </div>
-        <div class="value">${{ decorateNumber(coin.totalValue, true) }}</div>
+      <div
+        class="holdings"
+        :class="{
+          'font-45':
+            digitCount(coin.totalHoldings) > 6 &&
+            digitCount(coin.totalHoldings) < 8,
+          'font-35':
+            digitCount(coin.totalHoldings) >= 8 &&
+            digitCount(coin.totalHoldings) < 10,
+          'font-25':
+            digitCount(coin.totalHoldings) >= 10 &&
+            digitCount(coin.totalHoldings) < 13,
+        }"
+      >
+        {{ decorateNumber(coin.totalHoldings) }}
       </div>
+      <div class="value">${{ decorateNumber(coin.totalValue, true) }}</div>
     </div>
     <div class="shadow-common btc-shadow" :style="{ background: shadowColor }">
       <div class="top-corner" :style="{ background: top_corner_color }"></div>
@@ -127,13 +132,19 @@ const surfaceMouseout = () => {
     padding: 15px;
     width: 240px;
     height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     z-index: 6;
+
+    & > div {
+      color: #000;
+    }
 
     .symbol {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 3rem;
       .left {
         display: flex;
         align-items: center;
@@ -161,23 +172,21 @@ const surfaceMouseout = () => {
         text-overflow: ellipsis;
       }
     }
-
-    .holdings-value {
-      color: #000;
-      .holdings {
-        font-size: 6rem;
-        text-align: center;
-      }
-      .value {
-        font-size: 2.2rem;
-        text-align: center;
-      }
+    .holdings {
+      font-size: 6rem;
+      line-height: 1;
+      text-align: center;
+    }
+    .value {
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 1rem;
     }
   }
   .tooltip {
     position: absolute;
     right: -1.5rem;
-    bottom: -16rem;
+    bottom: -17rem;
     width: 85%;
     height: 70%;
     background: #000;

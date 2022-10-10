@@ -190,10 +190,62 @@ const searchCoinClick = async (coin) => {
         <div class="sort-text">Portfolio display style:</div>
         <div class="sort-btns">
           <button class="grid-btn">
-            <img src="/svg/icon-grid.svg" alt="grid icon" />
+            <svg
+              fill="#b74bd4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              width="50px"
+              height="50px"
+            >
+              <path d="M3 7H4V8H3zM3.5 3A.5.5 0 1 0 3.5 4 .5.5 0 1 0 3.5 3z" />
+              <path
+                fill="none"
+                stroke="#b74bd4"
+                stroke-miterlimit="10"
+                d="M5.5 13.5h-3c-.552 0-1-.448-1-1v-10c0-.552.448-1 1-1h3V13.5zM1.375 9.5L5.5 9.5M1.375 5.5L5.5 5.5"
+              />
+              <path
+                d="M7 3H8V4H7zM3.5 11A.5.5 0 1 0 3.5 12 .5.5 0 1 0 3.5 11zM11.5 11A.5.5 0 1 0 11.5 12 .5.5 0 1 0 11.5 11z"
+              />
+              <path
+                fill="none"
+                stroke="#b74bd4"
+                stroke-miterlimit="10"
+                d="M5.5 1.5H9.5V13.5H5.5zM5.375 9.5L9.5 9.5M5.375 5.5L9.5 5.5"
+              />
+              <path
+                d="M7 11H8V12H7zM11 7H12V8H11zM11.5 3A.5.5 0 1 0 11.5 4 .5.5 0 1 0 11.5 3zM7.5 7A.5.5 0 1 0 7.5 8 .5.5 0 1 0 7.5 7z"
+              />
+              <path
+                fill="none"
+                stroke="#b74bd4"
+                stroke-miterlimit="10"
+                d="M12.5 13.5h-3v-12h3c.552 0 1 .448 1 1v10C13.5 13.052 13.052 13.5 12.5 13.5zM9.375 9.5L13.5 9.5M9.375 5.5L13.5 5.5"
+              />
+            </svg>
           </button>
-          <button class="list-btn">
-            <img src="/svg/icon-list.svg" alt="list icon" />
+          <button class="list-btn" v-if="false">
+            <svg
+              fill="#000000"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              width="50px"
+              height="50px"
+            >
+              <path
+                fill="#000000"
+                stroke="#b74bd4"
+                stroke-miterlimit="10"
+                d="M7 3.5L14 3.5M7 7.5L14 7.5M7 11.5L14 11.5"
+              />
+              <path
+                fill="none"
+                stroke="#b74bd4"
+                stroke-linejoin="round"
+                stroke-miterlimit="10"
+                d="M2.5 10.5H4.5V12.5H2.5zM2.5 6.5H4.5V8.5H2.5zM2.5 2.5H4.5V4.5H2.5z"
+              />
+            </svg>
           </button>
         </div>
       </div>

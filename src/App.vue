@@ -51,11 +51,17 @@ onMounted(async () => {
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400;800&display=swap');
 @import '@/sass';
 
+.font-45 {
+  font-size: 4.5rem !important;
+}
 .font-40 {
   font-size: 4rem !important;
 }
-.font-50 {
-  font-size: 5rem !important;
+.font-35 {
+  font-size: 3.5rem !important;
+}
+.font-25 {
+  font-size: 2.5rem !important;
 }
 .font-15 {
   font-size: 1.5rem !important;

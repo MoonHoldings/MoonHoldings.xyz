@@ -3,10 +3,14 @@ import { ref, reactive, computed } from 'vue'
 import coinStyles from '@/constants/coinStyles.js'
 import decorateNumber from '@/utils/decorateNumber'
 import digitCount from '@/utils/digitCount'
+import { useUtilStore } from '@/stores/util'
+import { useCoinStore } from '@/stores/coin'
 
 const props = defineProps(['coin'])
 const { coin } = props
 const tooltipShow = ref(false)
+const utilStore = useUtilStore()
+const coinStore = useCoinStore()
 
 const shadowColor = computed(() => {
   let finalShadowColors
@@ -69,6 +73,10 @@ const surfaceMouseover = () => {
 const surfaceMouseout = () => {
   tooltipShow.value = false
 }
+const clickCoinBox = () => {
+  utilStore.mutate_addCoinModalsToggle(true)
+  coinStore.mutate_modalCoin(coin)
+}
 </script>
 
 <template>
@@ -77,6 +85,7 @@ const surfaceMouseout = () => {
       class="surface"
       @mouseover="surfaceMouseover"
       @mouseout="surfaceMouseout"
+      @click="clickCoinBox"
     >
       <div class="symbol">
         <div class="left">
@@ -136,6 +145,7 @@ const surfaceMouseout = () => {
     flex-direction: column;
     justify-content: space-between;
     z-index: 6;
+    cursor: pointer;
 
     & > div {
       color: #000;

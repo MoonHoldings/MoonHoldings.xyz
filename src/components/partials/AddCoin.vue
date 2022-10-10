@@ -136,6 +136,13 @@ const totalValue = computed(() => {
   }
 })
 
+onMounted(() => {
+  const modalCoin = coinStore.get_modalCoin
+  if (modalCoin) {
+    isCoinLoaded.value = true
+  }
+})
+
 watch(
   () => coinStore.get_modalCoin,
   () => {

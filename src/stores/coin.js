@@ -58,19 +58,49 @@ export const useCoinStore = defineStore('coin', {
     mutate_portfolioCoins(payload) {
       this.portfolioCoins.push(payload)
     },
+    mutate_modalCoin(payload) {
+      this.modalCoin = payload
+    },
     async addPortfolioCoin(totalHoldings, totalValue) {
       this.modalCoin.totalHoldings = totalHoldings
       this.modalCoin.totalValue = totalValue
 
-      const user = cookies.get('user')
-
       try {
-        const response = await axios.put(`${this.server_url}/save-coin`, {
-          coin: this.modalCoin,
-          email: user.email,
-        })
+        let response
+        const user = cookies.get('user')
+        const recordCoin = user.portfolio.coins.find(
+          (c) => c.id === this.modalCoin.id
+        )
+        if (recordCoin) {
+          response = await axios.put(`${this.server_url}/update-coin`, {
+            coin: this.modalCoin,
+            email: user.email,
+          })
+          const result = await response.data
+          if (result.success) {
+            const coinIndex = user.portfolio.coins.findIndex(
+              (coin) => coin.id === this.modalCoin.id
+            )
+            user.portfolio.coins[coinIndex] = this.modalCoin
+            cookies.set('user', user)
+            const pCoinIndex = this.portfolioCoins.findIndex(
+              (coin) => coin.id === this.modalCoin.id
+            )
+            this.portfolioCoins[pCoinIndex] = this.modalCoin
+          }
+        } else {
+          response = await axios.put(`${this.server_url}/save-coin`, {
+            coin: this.modalCoin,
+            email: user.email,
+          })
+          const result = await response.data
+          if (result.success) {
+            user.portfolio.coins.push(this.modalCoin)
+            cookies.set('user', user)
+            this.mutate_portfolioCoins(this.modalCoin)
+          }
+        }
 
-        const result = await response.data
         if (result.success) {
           user.portfolio.coins.push(this.modalCoin)
           cookies.set('user', user)

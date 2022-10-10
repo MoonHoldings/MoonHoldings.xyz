@@ -14,10 +14,11 @@ export const PASSWORD_REQUIREMENTS =
 
 export const PORTFOLIO_GET_STARTED = 'Get started with your Portfolio'
 export const PORTFOLIO_WELCOME_HEADER = 'Welcome to Moon Holdings'
-export const PORTFOLIO_WELCOME_MSG1 = 'Web3 portfolio management and intelligence'
-export const PORTFOLIO_WELCOME_MSG2 = 'Use Search To Start'
+export const SEARCH_TO_START = 'Use Search To Start'
+export const TAG_LINE = 'Web3 portfolio management and intelligence'
+export const TRACK_COMPARE_COMPETE = 'Track. Compare. Compete.'
 
-export const TITLE_HOME = `Moon Holdings | ${PORTFOLIO_WELCOME_MSG1}`
+export const TITLE_HOME = `Moon Holdings | ${TAG_LINE}`
 export const TITLE_SIGNUP = 'Moon Holdings Sign Up'
 export const TITLE_PRIVACY_POLICY = 'Moon Holdings | Privacy Policy'
 export const TITLE_TERMS_SERVICE = 'Moon Holdings | Terms Of Service'

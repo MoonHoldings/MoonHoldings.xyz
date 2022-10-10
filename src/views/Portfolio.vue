@@ -7,8 +7,8 @@ import AddCoin from '@/components/partials/AddCoin.vue'
 import {
   PORTFOLIO_GET_STARTED,
   PORTFOLIO_WELCOME_HEADER,
-  PORTFOLIO_WELCOME_MSG1,
-  PORTFOLIO_WELCOME_MSG2,
+  TAG_LINE,
+  SEARCH_TO_START,
 } from '@/constants/copy'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
@@ -276,8 +276,8 @@ const searchCoinClick = async (coin) => {
     <div v-if="showWelcome" class="portfolio__welcome-msg">
       <h1>{{ PORTFOLIO_WELCOME_HEADER }}</h1>
       <p>
-        {{ PORTFOLIO_WELCOME_MSG1 }} <br />
-        {{ PORTFOLIO_WELCOME_MSG2 }}
+        {{ TAG_LINE }} <br />
+        {{ SEARCH_TO_START }}
       </p>
       <div class="monster-div">
         <img src="/gif/monster-friend.gif" alt="monster friend" />

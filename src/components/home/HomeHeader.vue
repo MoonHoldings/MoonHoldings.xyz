@@ -101,4 +101,18 @@ nav {
     padding-right: calc(var(--section-gap) / 2);
   }
 }
+
+@media (max-width: 640px) {
+  nav {
+    position: relative !important;
+    margin: 1.5rem 0 0 16rem;
+    a {
+      font-weight: 800;
+    }
+  }
+
+  button {
+    font-size: 1.5rem;
+  }
+}
 </style>

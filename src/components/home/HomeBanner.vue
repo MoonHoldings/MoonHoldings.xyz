@@ -15,4 +15,22 @@
     height: 100%;
   }
 }
+
+@media (max-width: 1400px) {
+  .moon-banner {
+    height: 24rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  .moon-banner {
+    height: 20rem;
+  }
+}
+
+@media (max-width: 990px) {
+  .moon-banner {
+    height: 16rem;
+  }
+}
 </style>

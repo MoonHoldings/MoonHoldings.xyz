@@ -4,7 +4,7 @@ import {
   MOONHOLDINGS,
   LOGIN,
   LOGIN_PATH,
-  GET_STARTED,
+  SIGN_UP,
   SIGN_UP_PATH,
 } from '../../constants'
 import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
@@ -20,7 +20,7 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
       </h1>
       <nav>
         <RouterLink :to="LOGIN_PATH">{{ LOGIN }}</RouterLink>
-        <PrimaryBtn :copy="GET_STARTED" :url="SIGN_UP_PATH" />
+        <PrimaryBtn :copy="SIGN_UP" :url="SIGN_UP_PATH" />
       </nav>
     </header>
   </main>
@@ -68,11 +68,52 @@ nav {
   }
 }
 
+@media (max-width: 1400px) {
+  nav {
+    position: relative;
+    margin-left: 64rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  header {
+    display: flex;
+    grid-template-columns: 1fr 1fr;
+    min-width: 640px;
+  }
+
+  nav {
+    position: fixed;
+    margin: 0rem 0 0 4rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  nav {
+    margin: 1rem 0 0 4rem;
+  }
+}
+
 @media (min-width: 1024px) {
   header {
     display: flex;
     place-items: center;
     padding-right: calc(var(--section-gap) / 2);
+  }
+}
+
+@media (max-width: 640px) {
+  nav {
+    position: relative !important;
+    margin-top: 1.5rem;
+
+    a {
+      font-weight: 800;
+    }
+  }
+
+  button {
+    font-size: 1.5rem;
   }
 }
 </style>

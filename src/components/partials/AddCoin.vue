@@ -69,7 +69,7 @@ const addWallet = () => {
   coinStore.addNewWallet()
 }
 
-const saveNcomplete = () => {
+const saveNcomplete = async () => {
   let holdingSum = 0
   coinStore.get_modalCoin.wallets.forEach((wallet) => {
     holdingSum += Number(wallet.holding)
@@ -78,7 +78,8 @@ const saveNcomplete = () => {
   coinStore.get_modalCoin.wallets.forEach((wallet) => {
     valueSum += Number(wallet.value)
   })
-  coinStore.addPortfolioCoin(holdingSum, valueSum)
+  isCoinLoaded.value = false
+  await coinStore.addPortfolioCoin(holdingSum, valueSum)
   utilStore.mutate_addCoinModalsToggle(false)
 }
 
@@ -95,6 +96,18 @@ const editWallet = (walletName) => {
 const deleteWallet = (walletName) => {
   coinStore.removeWallet(walletName)
   _3dotsOpen.value = false
+}
+
+const removeCoin = async () => {
+  const wallets = coinStore.get_modalCoin.wallets
+
+  if (wallets.length) {
+    isCoinLoaded.value = false
+    await coinStore.removePortfolioCoin()
+    utilStore.mutate_addCoinModalsToggle(false)
+  } else {
+    closeModal()
+  }
 }
 
 const modalCoin = computed(() => {
@@ -136,6 +149,13 @@ const totalValue = computed(() => {
   }
 })
 
+onMounted(() => {
+  const modalCoin = coinStore.get_modalCoin
+  if (modalCoin.id) {
+    isCoinLoaded.value = true
+  }
+})
+
 watch(
   () => coinStore.get_modalCoin,
   () => {
@@ -156,7 +176,7 @@ watch(
         <img :src="loader" alt="loader" />
       </div>
     </transition>
-    <div class="add-coin__window">
+    <div class="add-coin__window" v-if="isCoinLoaded">
       <div class="add-coin__title">
         <h1>
           {{ modalCoin.id }} -
@@ -240,7 +260,11 @@ watch(
         </div>
       </div>
       <div class="add-coin__buttons">
-        <button class="exchange" @click="addWallet">Add Wallet</button>
+        <button class="remove" @click="removeCoin">
+          Remove {{ coinStore.get_modalCoin.id }}
+        </button>
+
+        <button class="wallet" @click="addWallet">Add Wallet</button>
 
         <button
           class="save"

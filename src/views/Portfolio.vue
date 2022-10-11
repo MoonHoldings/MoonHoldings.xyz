@@ -26,17 +26,7 @@ const showWelcome = ref(false)
 const windowWidth = ref(0)
 
 const portfolioCoins = computed(() => {
-  const coins = coinStore.get_portfolioCoins
-  const values = coins.map((coin) => coin.totalValue)
-  values.sort((a, b) => b - a)
-
-  const finalCoins = []
-  values.forEach((value) => {
-    const theCoin = coins.find((c) => c.totalValue === value)
-    finalCoins.push(theCoin)
-  })
-
-  return finalCoins
+  return coinStore.get_portfolioCoins
 })
 
 const barChart = computed(() => {

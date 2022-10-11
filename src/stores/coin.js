@@ -61,6 +61,50 @@ export const useCoinStore = defineStore('coin', {
     mutate_modalCoin(payload) {
       this.modalCoin = payload
     },
+    addNewWallet() {
+      const emptyWallet = this.modalCoin.wallets.find(
+        (wallet) => wallet.saved === false
+      )
+      if (!emptyWallet) {
+        this.modalCoin.wallets.push({
+          name: '',
+          holding: null,
+          value: null,
+          saved: false,
+        })
+      }
+    },
+    removeNewWallet() {
+      const unsavedWalletIndex = this.modalCoin.wallets.findIndex(
+        (wallet) => wallet.saved === false
+      )
+      this.modalCoin.wallets.splice(unsavedWalletIndex, 1)
+    },
+    unsaveWallet(walletName) {
+      console.log('works')
+      const walletIndex = this.modalCoin.wallets.findIndex(
+        (wallet) => wallet.name === walletName
+      )
+      this.modalCoin.wallets[walletIndex].saved = false
+      this.modalCoin.wallets[walletIndex].holding = 0
+      this.modalCoin.wallets[walletIndex].value = 0
+    },
+    removeWallet(walletName) {
+      const walletIndex = this.modalCoin.wallets.findIndex(
+        (wallet) => wallet.name === walletName
+      )
+      this.modalCoin.wallets.splice(walletIndex, 1)
+    },
+    addHoldings(walletName, holding) {
+      const unsavedWalletIndex = this.modalCoin.wallets.findIndex(
+        (wallet) => wallet.saved === false
+      )
+      const totalValue = Number(this.modalCoin.price) * Number(holding)
+      this.modalCoin.wallets[unsavedWalletIndex].name = walletName
+      this.modalCoin.wallets[unsavedWalletIndex].holding = holding
+      this.modalCoin.wallets[unsavedWalletIndex].value = totalValue
+      this.modalCoin.wallets[unsavedWalletIndex].saved = true
+    },
     async addPortfolioCoin(totalHoldings, totalValue) {
       this.modalCoin.totalHoldings = totalHoldings
       this.modalCoin.totalValue = totalValue
@@ -112,49 +156,39 @@ export const useCoinStore = defineStore('coin', {
 
       this.modalCoin = {}
     },
-    addNewWallet() {
-      const emptyWallet = this.modalCoin.wallets.find(
-        (wallet) => wallet.saved === false
-      )
-      if (!emptyWallet) {
-        this.modalCoin.wallets.push({
-          name: '',
-          holding: null,
-          value: null,
-          saved: false,
-        })
+    async removePortfolioCoin() {
+      const user = cookies.get('user')
+      try {
+        const response = await axios.put(
+          `${this.server_url}/remove-coin`,
+          {
+            coinId: this.modalCoin.id,
+            email: user.email,
+          },
+          this.axios_config
+        )
+
+        const result = await response.data
+
+        if (result.success) {
+          // removing from state
+          const coinIndex = this.portfolioCoins.findIndex(
+            (coin) => coin.id === this.modalCoin.id
+          )
+          this.portfolioCoins.splice(coinIndex, 1)
+
+          // removing from cookies
+          const cookiesCoinIndex = user.portfolio.coins.findIndex(
+            (coin) => coin.id === this.modalCoin.id
+          )
+          user.portfolio.coins.splice(cookiesCoinIndex, 1)
+          cookies.set('user', user)
+        }
+      } catch (error) {
+        console.log(error.message)
       }
-    },
-    removeNewWallet() {
-      const unsavedWalletIndex = this.modalCoin.wallets.findIndex(
-        (wallet) => wallet.saved === false
-      )
-      this.modalCoin.wallets.splice(unsavedWalletIndex, 1)
-    },
-    unsaveWallet(walletName) {
-      console.log('works')
-      const walletIndex = this.modalCoin.wallets.findIndex(
-        (wallet) => wallet.name === walletName
-      )
-      this.modalCoin.wallets[walletIndex].saved = false
-      this.modalCoin.wallets[walletIndex].holding = 0
-      this.modalCoin.wallets[walletIndex].value = 0
-    },
-    removeWallet(walletName) {
-      const walletIndex = this.modalCoin.wallets.findIndex(
-        (wallet) => wallet.name === walletName
-      )
-      this.modalCoin.wallets.splice(walletIndex, 1)
-    },
-    addHoldings(walletName, holding) {
-      const unsavedWalletIndex = this.modalCoin.wallets.findIndex(
-        (wallet) => wallet.saved === false
-      )
-      const totalValue = Number(this.modalCoin.price) * Number(holding)
-      this.modalCoin.wallets[unsavedWalletIndex].name = walletName
-      this.modalCoin.wallets[unsavedWalletIndex].holding = holding
-      this.modalCoin.wallets[unsavedWalletIndex].value = totalValue
-      this.modalCoin.wallets[unsavedWalletIndex].saved = true
+
+      this.modalCoin = {}
     },
     async getSingleCoin(coinId) {
       const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY

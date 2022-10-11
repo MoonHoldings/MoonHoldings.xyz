@@ -39,5 +39,9 @@ footer {
     max-width: 640px;
     min-width: 640px;
   }
+
+  footer {
+    width: 80%;
+  }
 }
 </style>

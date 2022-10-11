@@ -68,6 +68,11 @@ h2 {
 }
 
 @media (max-width: 640px) {
+  .moon-cta {
+    width: auto;
+    max-width: 80%;
+  }
+
   main {
     top: -20rem;
   }

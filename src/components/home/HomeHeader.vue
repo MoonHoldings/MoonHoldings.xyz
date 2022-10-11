@@ -105,7 +105,8 @@ nav {
 @media (max-width: 640px) {
   nav {
     position: relative !important;
-    margin: 1.5rem 0 0 16rem;
+    margin-top: 1.5rem;
+
     a {
       font-weight: 800;
     }

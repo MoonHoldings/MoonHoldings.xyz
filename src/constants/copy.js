@@ -17,6 +17,7 @@ export const PORTFOLIO_WELCOME_HEADER = 'Welcome to Moon Holdings'
 export const SEARCH_TO_START = 'Use Search To Start'
 export const TAG_LINE = 'Web3 portfolio management and intelligence'
 export const TRACK_COMPARE_COMPETE = 'Track. Compare. Compete.'
+export const TRACK_MANAGE_ANALYZE = 'Track. Manage. Analyze.'
 
 export const TITLE_HOME = `Moon Holdings | ${TAG_LINE}`
 export const TITLE_SIGNUP = 'Moon Holdings Sign Up'

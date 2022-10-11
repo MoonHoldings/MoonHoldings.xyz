@@ -1,5 +1,5 @@
 <script setup>
-import { GET_STARTED, SIGN_UP_PATH, TAG_LINE, TRACK_COMPARE_COMPETE } from '../../constants'
+import { GET_STARTED, SIGN_UP_PATH, TAG_LINE, TRACK_MANAGE_ANALYZE } from '../../constants'
 import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 </script>
 
@@ -8,7 +8,7 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
     <div class="moon-cta">
       <section class="tagline">
         <h2>{{TAG_LINE}}</h2>
-        <h1>{{TRACK_COMPARE_COMPETE}}</h1>
+        <h1>{{TRACK_MANAGE_ANALYZE}}</h1>
         <PrimaryBtn :copy="GET_STARTED" :url="SIGN_UP_PATH" />
       </section>
     </div>
@@ -17,22 +17,24 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 
 <style lang="scss" scoped>
 main {
-  height: 400px;
+  top: -30rem;
 }
+
 h1 {
-  // width: 640px;
-  margin-bottom: 1em;
-  font-size: 6em;
+  margin-bottom: 8rem;
+  font-size: 6rem;
   font-weight: 800;
-  line-height: 1.3em;
+  line-height: 1.3rem;
 }
+
 h2 {
-  // margin: 2em 0;
-  font-size: 4em;
+  margin-bottom: 4rem;
+  font-size: 4rem;
 }
+
 .moon-cta {
   display: grid;
-  margin-top: 5em;
+  margin-top: 5rem;
   width: auto;
   height: 200px;
   color: white;
@@ -44,5 +46,42 @@ h2 {
   justify-items: center;
   align-content: space-evenly;
   align-items: center;
+}
+
+@media (max-width: 1100px) {
+  h1 {
+    font-size: 5rem;
+  }
+  h2 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .tagline {
+    justify-items: stretch;
+  }
+
+  button {
+    height: 6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  main {
+    top: -20rem;
+  }
+
+  h1 {
+    font-size: 4rem;
+  }
+
+  h2 {
+    padding: 1rem;
+  }
+
+  button {
+    margin: 0 4rem;
+  }
 }
 </style>

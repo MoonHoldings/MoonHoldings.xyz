@@ -81,8 +81,6 @@ const login = async () => {
       return
     }
 
-    utilStore.mutate_showSuccessAlert(true)
-    utilStore.mutate_successMessage('You have been logged in successfully!')
     clicks.value++
 
     cookies.set('user', response.user)

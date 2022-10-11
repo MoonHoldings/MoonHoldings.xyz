@@ -38,8 +38,13 @@
 
 @media (max-width: 640px) {
   .moon-banner {
-    top: -10rem;
-    height: 10rem;
+    margin-top: 100px;
+    width: 390px; 
+    height: 8rem;
+
+    img {
+      height: 78px;
+    }
   }
 }
 </style>

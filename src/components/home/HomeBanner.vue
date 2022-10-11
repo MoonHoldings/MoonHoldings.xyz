@@ -6,6 +6,7 @@
 
 <style lang="scss" scoped>
 .moon-banner {
+  top: -16rem;
   height: 28rem;
   color: white;
   background: black;
@@ -18,6 +19,7 @@
 
 @media (max-width: 1400px) {
   .moon-banner {
+    top: -17rem;
     height: 24rem;
   }
 }
@@ -31,6 +33,13 @@
 @media (max-width: 990px) {
   .moon-banner {
     height: 16rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .moon-banner {
+    top: -10rem;
+    height: 10rem;
   }
 }
 </style>

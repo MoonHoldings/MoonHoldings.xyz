@@ -17,16 +17,18 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 
 <style lang="scss" scoped>
 main {
-  height: 100vh;
+  top: -30rem;
 }
+
 h1 {
-  margin-bottom: 6rem;
+  margin-bottom: 8rem;
   font-size: 6rem;
   font-weight: 800;
   line-height: 1.3rem;
 }
+
 h2 {
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
   font-size: 4rem;
 }
 
@@ -62,6 +64,24 @@ h2 {
 
   button {
     height: 6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  main {
+    top: -20rem;
+  }
+
+  h1 {
+    font-size: 4rem;
+  }
+
+  h2 {
+    padding: 1rem;
+  }
+
+  button {
+    margin: 0 4rem;
   }
 }
 </style>

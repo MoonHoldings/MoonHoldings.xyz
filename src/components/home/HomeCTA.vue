@@ -33,6 +33,7 @@ h2 {
 }
 
 .moon-cta {
+  z-index: 1;
   display: grid;
   margin-top: 5rem;
   width: auto;

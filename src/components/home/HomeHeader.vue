@@ -11,7 +11,7 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 </script>
 
 <template>
-  <main>
+  <main class="homeheader-main">
     <header>
       <h1>
         <RouterLink to="/" title="MoonHoldings.xyz">
@@ -27,6 +27,10 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 </template>
 
 <style lang="scss" scoped>
+.homeheader-main {
+  z-index: 10000;
+}
+
 h1 {
   margin: 1.6rem;
   font-size: 2.2rem;

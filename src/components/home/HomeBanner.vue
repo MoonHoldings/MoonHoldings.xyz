@@ -19,9 +19,15 @@
   }
 }
 
-@media (max-width: 1400px) {
+// @media (min-width: 1400px) {
+//   .moon-banner {
+//     height: 240px;
+//   }
+// }
+
+@media (max-width: 1440px) {
   .moon-banner {
-    height: 240px;
+    height: 200px;
   }
 }
 

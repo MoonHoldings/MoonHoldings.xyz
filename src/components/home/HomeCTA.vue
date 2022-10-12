@@ -49,9 +49,15 @@ h2 {
   align-items: center;
 }
 
-@media (max-width: 1400px) {
+@media (min-width: 1400px) {
   .tagline {
     margin-top: 240px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .tagline {
+    margin-top: 200px;
   }
 }
 

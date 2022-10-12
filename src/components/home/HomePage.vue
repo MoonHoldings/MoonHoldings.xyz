@@ -10,7 +10,7 @@ import HomeCTA from './HomeCTA.vue'
     <HomeBanner />
     <HomeCTA />
     <footer>
-      <a href="">Twitter</a> | <a href="">Discord</a>
+      <a href="https://twitter.com/moonholdingsxyz" target="_blank">Twitter</a> | <a href="https://discord.gg/JPPvAf5BMW" target="_blank">Discord</a>
     </footer>
   </div>
 </template>

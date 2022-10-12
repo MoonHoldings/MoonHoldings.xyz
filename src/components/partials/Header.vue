@@ -12,7 +12,7 @@
           />
           <span>MoonHoldings</span>
         </div>
-        <div class="portfolio-btns">
+        <!-- <div class="portfolio-btns">
           <span>Portfolio:</span>
           <router-link to="#" class="coin-btn">
             <img src="/svg/icon-coins.svg" alt="coins icon" />
@@ -22,7 +22,7 @@
             <img src="/svg/icon-diamond.svg" alt="diamond icon" />
             <span>NFTS</span>
           </router-link>
-        </div>
+        </div> -->
       </div>
       <div class="right-side">
         <div class="menu">

@@ -6,8 +6,8 @@ import HomeCTA from './HomeCTA.vue'
 
 <template>
   <div class="homepage">
-    <!-- <HomeHeader />
-    <HomeBanner />
+    <HomeHeader />
+    <!-- <HomeBanner />
     <HomeCTA /> -->
     <footer>
       <a href="">Twitter</a> | <a href="">Discord</a>

@@ -34,6 +34,7 @@ h1 {
 }
 
 a {
+  margin-top: 0.5rem;
   color: #fff;
   text-decoration: none;
 }
@@ -102,18 +103,12 @@ nav {
   }
 }
 
-@media (max-width: 640px) {
-  nav {
-    position: relative !important;
-    margin-top: 1.5rem;
-
-    a {
-      font-weight: 800;
-    }
+@media screen and (min-width:320px) and (max-width:640px) {
+  header {
+    min-width: 320px;
   }
-
-  button {
-    font-size: 1.5rem;
+  nav {
+    right: 1rem;
   }
 }
 </style>

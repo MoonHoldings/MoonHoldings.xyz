@@ -1,5 +1,5 @@
 <script setup>
-import { GET_STARTED, SIGN_UP_PATH, TAG_LINE, TRACK_MANAGE_ANALYZE } from '../../constants'
+import { SIGN_UP, SIGN_UP_PATH, TAG_LINE, TRACK_MANAGE_ANALYZE } from '../../constants'
 import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 </script>
 
@@ -9,7 +9,7 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
       <section class="tagline">
         <h2>{{TAG_LINE}}</h2>
         <h1>{{TRACK_MANAGE_ANALYZE}}</h1>
-        <PrimaryBtn :copy="GET_STARTED" :url="SIGN_UP_PATH" />
+        <PrimaryBtn :copy="SIGN_UP" :url="SIGN_UP_PATH" />
       </section>
     </div>
   </main>
@@ -41,6 +41,7 @@ h2 {
   text-align: center;
 }
 .tagline {
+  margin-top: 380px;
   display: grid;
   justify-content: space-evenly;
   justify-items: center;
@@ -48,45 +49,45 @@ h2 {
   align-items: center;
 }
 
+@media (max-width: 1400px) {
+  .tagline {
+    margin-top: 240px;
+  }
+}
+
 @media (max-width: 1100px) {
+  .tagline {
+    margin-top: 200px;
+  }
+
   h1 {
     font-size: 5rem;
   }
-  h2 {
-    font-size: 3rem;
-  }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 990px) {
   .tagline {
-    justify-items: stretch;
+    margin-top: 120px;
   }
 
-  button {
-    height: 6rem;
+  h1 {
+    font-size: 5rem;
   }
 }
 
-@media (max-width: 640px) {
-  .moon-cta {
-    width: auto;
-    max-width: 80%;
-  }
-
-  main {
-    top: -20rem;
+@media screen and (min-width:320px) and (max-width:640px) {
+  .tagline {
+    margin-top: 240px;
   }
 
   h1 {
     font-size: 4rem;
+    line-height: 4rem;
   }
 
   h2 {
-    padding: 1rem;
-  }
-
-  button {
-    margin: 0 4rem;
+    font-size: 2.5rem;
   }
 }
+
 </style>

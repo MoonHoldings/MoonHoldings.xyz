@@ -6,8 +6,10 @@
 
 <style lang="scss" scoped>
 .moon-banner {
-  top: -16rem;
-  height: 28rem;
+  position: absolute;
+  top: 68px;
+  width: 100%;
+  height: 400px;
   color: white;
   background: black;
   text-align: center;
@@ -19,32 +21,25 @@
 
 @media (max-width: 1400px) {
   .moon-banner {
-    top: -17rem;
-    height: 24rem;
-  }
-}
-
-@media (max-width: 1100px) {
-  .moon-banner {
-    height: 20rem;
+    height: 240px;
   }
 }
 
 @media (max-width: 990px) {
   .moon-banner {
-    height: 16rem;
+    height: 150px;
   }
 }
 
-@media (max-width: 640px) {
+@media screen and (min-width:320px) and (max-width:640px) {
   .moon-banner {
-    margin-top: 100px;
-    width: 390px; 
-    height: 8rem;
+    height: 100px;
 
     img {
-      height: 78px;
+      // max-width: 640px;
+      min-width: 320px;
     }
   }
 }
+
 </style>

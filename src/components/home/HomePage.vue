@@ -33,15 +33,16 @@ footer {
   }
 }
 
-@media (max-width: 640px) {
+/* for screens that are at least 320 pixels wide but less than or equal to 640 pixels wide */
+@media screen and (min-width:320px) and (max-width:640px) {
   .homepage {
-    width: 640px;
+    width: auto;
     max-width: 640px;
-    min-width: 640px;
+    min-width: 390px;
   }
 
   footer {
-    width: 80%;
+    width: 100%;
   }
 }
 </style>

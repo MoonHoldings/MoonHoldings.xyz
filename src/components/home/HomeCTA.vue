@@ -51,33 +51,41 @@ h2 {
 
 @media (min-width: 1400px) {
   .tagline {
-    margin-top: 240px;
+    margin-top: 350px;
   }
 }
 
 @media (max-width: 1400px) {
   .tagline {
-    margin-top: 200px;
+    margin-top: 300px;
   }
 }
 
 @media (max-width: 1100px) {
-  .tagline {
-    margin-top: 200px;
-  }
+  // .tagline {
+  //   margin-top: 200px;
+  // }
 
   h1 {
     font-size: 5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
   }
 }
 
 @media (max-width: 990px) {
   .tagline {
-    margin-top: 120px;
+    margin-top: 300px;
   }
 
   h1 {
     font-size: 5rem;
+  }
+
+  h2 {
+    padding: 0 2rem;
   }
 }
 

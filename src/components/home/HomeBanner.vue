@@ -27,7 +27,7 @@
 
 @media (max-width: 1440px) {
   .moon-banner {
-    height: 200px;
+    height: 180px;
   }
 }
 

@@ -29,6 +29,7 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 <style lang="scss" scoped>
 .homeheader-main {
   z-index: 10000;
+  height: 68px;
 }
 
 h1 {

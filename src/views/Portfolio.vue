@@ -177,7 +177,7 @@ const searchCoinClick = async (coin) => {
             </ul>
           </div>
         </transition>
-        <div class="sort-text">Portfolio display style:</div>
+        <!-- <div class="sort-text">Portfolio display style:</div>
         <div class="sort-btns">
           <button class="grid-btn">
             <svg
@@ -237,7 +237,7 @@ const searchCoinClick = async (coin) => {
               />
             </svg>
           </button>
-        </div>
+        </div> -->
       </div>
 
       <!-- Total Value -->

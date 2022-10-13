@@ -23,6 +23,8 @@ import HomeCTA from './HomeCTA.vue'
 }
 
 footer {
+  position: absolute;
+  bottom: 2rem;
   width: 100%;
   text-align: center;
   font-size: 2rem;
@@ -39,12 +41,6 @@ footer {
     width: auto;
     max-width: 640px;
     min-width: 390px;
-  }
-
-  footer {
-    position: absolute;
-    bottom: 2rem;
-    width: 100%;
   }
 }
 </style>

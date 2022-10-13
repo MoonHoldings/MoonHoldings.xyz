@@ -144,12 +144,6 @@ export const useCoinStore = defineStore('coin', {
             this.mutate_portfolioCoins(this.modalCoin)
           }
         }
-
-        if (result.success) {
-          user.portfolio.coins.push(this.modalCoin)
-          cookies.set('user', user)
-          this.mutate_portfolioCoins(this.modalCoin)
-        }
       } catch (error) {
         console.log(error)
       }

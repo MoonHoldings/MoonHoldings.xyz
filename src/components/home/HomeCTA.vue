@@ -43,7 +43,6 @@ h2 {
   text-align: center;
 }
 .tagline {
-  // margin-top: 380px;
   display: grid;
   justify-content: space-evenly;
   justify-items: center;
@@ -56,12 +55,6 @@ h2 {
     top: 248px;
   }
 }
-
-// @media (max-width: 1400px) {
-//   .tagline {
-//     margin-top: 300px;
-//   }
-// }
 
 @media (max-width: 1100px) {
   h1 {

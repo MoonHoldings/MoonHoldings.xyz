@@ -42,6 +42,8 @@ footer {
   }
 
   footer {
+    position: absolute;
+    bottom: 2rem;
     width: 100%;
   }
 }

@@ -17,7 +17,9 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 
 <style lang="scss" scoped>
 main {
-  top: -30rem;
+  position: fixed;
+  top: 468px;
+  width: 100%;
 }
 
 h1 {
@@ -41,7 +43,6 @@ h2 {
   text-align: center;
 }
 .tagline {
-  margin-top: 380px;
   display: grid;
   justify-content: space-evenly;
   justify-items: center;
@@ -50,36 +51,36 @@ h2 {
 }
 
 @media (max-width: 1400px) {
-  .tagline {
-    margin-top: 240px;
+  main {
+    top: 248px;
   }
 }
 
 @media (max-width: 1100px) {
-  .tagline {
-    margin-top: 200px;
-  }
-
   h1 {
     font-size: 5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
   }
 }
 
 @media (max-width: 990px) {
-  .tagline {
-    margin-top: 120px;
+  main {
+    top: 218px;
   }
 
   h1 {
     font-size: 5rem;
   }
+
+  h2 {
+    padding: 0 2rem;
+  }
 }
 
 @media screen and (min-width:320px) and (max-width:640px) {
-  .tagline {
-    margin-top: 240px;
-  }
-
   h1 {
     font-size: 4rem;
     line-height: 4rem;

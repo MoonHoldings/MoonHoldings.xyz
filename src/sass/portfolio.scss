@@ -50,7 +50,7 @@
 
   &__coins-stats {
     display: grid;
-    grid-template-columns: 60% 40%;
+    // grid-template-columns: 60% 40%;
   }
 
   &__all-coins {
@@ -71,7 +71,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    margin-bottom: 5.8rem;
+    // margin-bottom: 5.8rem;
 
     input {
       position: relative;

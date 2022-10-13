@@ -275,6 +275,39 @@ const searchCoinClick = async (coin) => {
     </div>
 
     <div v-else class="portfolio__main">
+
+      <div class="portfolio__stats">
+        <!-- percent bar -->
+        <div
+          class="portfolio__pct-bar"
+          :style="{ width: barWidth + '%' + ' !important' }"
+        >
+          <div
+            class="coin-pct"
+            v-for="(coin, i) in barChart"
+            :key="i"
+            :style="{ width: coin.pct + '%' }"
+          >
+            <div class="pct-num">
+              {{ disappearPct(coin.pct) ? '' : `${coin.pct}%` }}
+            </div>
+            <div
+              class="pct-color"
+              :style="{ background: coin.coinStyle.background }"
+            >
+              <div :style="{ color: coin.coinStyle.text }">
+                {{ disappearPct(coin.pct) ? '' : coin.id }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="false" class="portfolio__twitter-share">
+          <img src="/twitter-logo.png" alt="" />
+          <div class="shadow"></div>
+          <button class="twitter-btn">Share Portfolio</button>
+        </div>
+      </div>
+
       <!-- Entries -->
       <div class="portfolio__coins-stats">
         <div class="portfolio__all-coins">
@@ -294,37 +327,7 @@ const searchCoinClick = async (coin) => {
             </div>
           </div>
         </div>
-        <div class="portfolio__stats">
-          <!-- percent bar -->
-          <div
-            class="portfolio__pct-bar"
-            :style="{ width: barWidth + '%' + ' !important' }"
-          >
-            <div
-              class="coin-pct"
-              v-for="(coin, i) in barChart"
-              :key="i"
-              :style="{ width: coin.pct + '%' }"
-            >
-              <div class="pct-num">
-                {{ disappearPct(coin.pct) ? '' : `${coin.pct}%` }}
-              </div>
-              <div
-                class="pct-color"
-                :style="{ background: coin.coinStyle.background }"
-              >
-                <div :style="{ color: coin.coinStyle.text }">
-                  {{ disappearPct(coin.pct) ? '' : coin.id }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div v-if="false" class="portfolio__twitter-share">
-            <img src="/twitter-logo.png" alt="" />
-            <div class="shadow"></div>
-            <button class="twitter-btn">Share Portfolio</button>
-          </div>
-        </div>
+
       </div>
     </div>
   </div>

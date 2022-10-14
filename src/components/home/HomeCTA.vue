@@ -50,7 +50,7 @@ h2 {
   align-items: center;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1440px) {
   main {
     top: 248px;
   }

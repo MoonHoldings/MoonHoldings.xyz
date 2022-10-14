@@ -80,6 +80,7 @@ const saveNcomplete = async () => {
   })
   isCoinLoaded.value = false
   await coinStore.addPortfolioCoin(holdingSum, valueSum)
+  utilStore.mutate_updateBoxesKey()
   utilStore.mutate_addCoinModalsToggle(false)
 }
 
@@ -104,6 +105,7 @@ const removeCoin = async () => {
   if (wallets.length) {
     isCoinLoaded.value = false
     await coinStore.removePortfolioCoin()
+    utilStore.mutate_updateBoxesKey()
     utilStore.mutate_addCoinModalsToggle(false)
   } else {
     closeModal()

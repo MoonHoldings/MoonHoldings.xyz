@@ -8,9 +8,13 @@ export const useUtilStore = defineStore('util', {
     errorToggle: false,
     errorMessage: '',
     addCoinModalsToggle: false,
+    updateBoxesKey: 0,
   }),
   getters: {},
   actions: {
+    mutate_updateBoxesKey() {
+      this.updateBoxesKey++
+    },
     mutate_headingEndPoint(payload) {
       this.headingEndPoint = payload
     },

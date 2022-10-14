@@ -26,7 +26,9 @@ const showWelcome = ref(false)
 const windowWidth = ref(0)
 
 const portfolioCoins = computed(() => {
-  return coinStore.get_portfolioCoins
+  const coins = coinStore.get_portfolioCoins
+  coins.sort((a, b) => b.totalValue - a.totalValue)
+  return coins
 })
 
 const barChart = computed(() => {
@@ -81,6 +83,8 @@ const barWidth = computed(() => {
   })
   return barWidth
 })
+
+const updateBoxesKey = computed(() => utilStore.updateBoxesKey)
 
 const disappearPct = (pct) => {
   if (windowWidth.value < 1225 && pct < 7) {
@@ -275,7 +279,6 @@ const searchCoinClick = async (coin) => {
     </div>
 
     <div v-else class="portfolio__main">
-
       <div class="portfolio__stats">
         <!-- percent bar -->
         <div
@@ -312,7 +315,7 @@ const searchCoinClick = async (coin) => {
       <div class="portfolio__coins-stats">
         <div class="portfolio__all-coins">
           <!-- Coins -->
-          <div class="portfolio__coins">
+          <div :key="updateBoxesKey" class="portfolio__coins">
             <CoinBox
               v-for="(coin, i) in portfolioCoins"
               :key="i"
@@ -327,7 +330,6 @@ const searchCoinClick = async (coin) => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>

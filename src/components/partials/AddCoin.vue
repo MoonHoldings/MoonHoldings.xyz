@@ -3,7 +3,7 @@ import cross from '/svg/icon-cross.svg'
 import deleteRow from '/svg/icon-delete-row.svg'
 import crossBlack from '/svg/icon-cross-black.svg'
 import edit from '/svg/icon-edit.svg'
-import loader from '/gif/ufo.gif'
+import loader from '/gif/bar-loader.gif'
 import { useUtilStore } from '@/stores/util'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useCoinStore } from '@/stores/coin'
@@ -52,14 +52,16 @@ const saveNewWalletHoldings = () => {
     holdingsInputError.value = true
     utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('All the input fields need to be fulfilled')
-  } else if (/[^0-9]\./g.test(holdingsInput.value)) {
+  } else if (/[^0-9\.]/g.test(holdingsInput.value)) {
     holdingsInputError.value = true
     utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('Invalid input')
   } else {
     utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
+
     coinStore.addHoldings(walletInput.value, holdingsInput.value)
+
     walletInput.value = ''
     holdingsInput.value = null
   }

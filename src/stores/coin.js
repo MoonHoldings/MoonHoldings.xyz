@@ -81,7 +81,6 @@ export const useCoinStore = defineStore('coin', {
       this.modalCoin.wallets.splice(unsavedWalletIndex, 1)
     },
     unsaveWallet(walletName) {
-      console.log('works')
       const walletIndex = this.modalCoin.wallets.findIndex(
         (wallet) => wallet.name === walletName
       )

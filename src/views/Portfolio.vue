@@ -267,7 +267,7 @@ const searchCoinClick = async (coin) => {
         </div>
       </div>
     </div>
-    <div v-if="showWelcome" class="portfolio__welcome-msg">
+    <div v-if="portfolioCoins.length === 0" class="portfolio__welcome-msg">
       <h1>{{ PORTFOLIO_WELCOME_HEADER }}</h1>
       <p>
         {{ TAG_LINE }} <br />

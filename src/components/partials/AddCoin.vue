@@ -195,6 +195,7 @@ watch(
           <div>Wallet</div>
           <div>Holdings</div>
           <div>Value</div>
+          <div />
         </div>
         <div class="empty-text" v-if="coinStore.get_walletsLength === 0">
           Select <strong>Add Wallet</strong> to start building your
@@ -232,12 +233,12 @@ watch(
               <div class="wallet">{{ wallet.name }}</div>
               <div class="holdings">{{ decorateNumber(wallet.holding) }}</div>
               <div class="value">${{ decorateNumber(wallet.value, true) }}</div>
-              <div class="3-dots">
+              <!-- <div class="3-dots">
                 <button @click="_3dotsOpen = !_3dotsOpen">
                   <img src="/svg/icon-three-dots-vertical.svg" alt="" />
                 </button>
-              </div>
-              <div class="menu-options" v-if="_3dotsOpen">
+              </div> -->
+              <div class="menu-options" v-if="!_3dotsOpen">
                 <button class="edit-btn" @click="editWallet(wallet.name)">
                   <img :src="edit" alt="edit icon" />
                 </button>
@@ -261,6 +262,7 @@ watch(
           >
             <strong>${{ totalValue }}</strong>
           </div>
+          <div />
         </div>
       </div>
       <div class="add-coin__buttons">

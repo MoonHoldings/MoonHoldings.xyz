@@ -35,13 +35,13 @@
 
   &__window {
     position: relative;
-    max-width: 80rem;
-    min-height: 55rem;
+    max-width: 90rem;
+    min-height: 56rem;
     margin-left: auto;
     margin-right: auto;
     margin-top: 50vh;
     transform: translateY(-50%);
-    padding: 2rem;
+    padding: 1.2rem 2rem;
     font-family: 'Inter', monospace;
     display: grid;
     grid-template-rows: 3rem auto 7rem;
@@ -66,15 +66,31 @@
     padding-top: 2rem;
     .header,
     .totality {
-      display: grid;
-      grid-template-columns: 45% 25.5% 29.5%;
-      padding: 0.6rem 3rem 0.6rem 0;
+      display: flex;
+      padding: 0.6rem 2.5rem 0.6rem 0;
 
       & > div {
         font-size: 1.8rem;
         color: #000;
         &:not(:first-child) {
           text-align: right;
+        }
+
+        &:nth-child(1) {
+          flex: 37;
+          padding-right: 0.5rem;
+        }
+        &:nth-child(2) {
+          flex: 24;
+        }
+        &:nth-child(3) {
+          flex: 24;
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+        }
+        &:nth-child(4) {
+          flex: 15;
+          padding-left: 2rem;
         }
       }
     }
@@ -186,20 +202,25 @@
         align-items: center;
 
         & > div {
+          padding: 0 0.5rem;
           font-size: 1.55rem;
           &:not(:first-child) {
             text-align: right;
           }
           &:nth-child(1) {
-            flex: 45;
+            flex: 37;
             padding-right: 0.5rem;
           }
           &:nth-child(2) {
-            flex: 25;
+            flex: 24;
           }
           &:nth-child(3) {
-            flex: 30;
+            flex: 24;
             padding-left: 0.5rem;
+          }
+          &:nth-child(4) {
+            flex: 15;
+            padding-left: 2rem;
           }
           button {
             display: flex;
@@ -211,25 +232,20 @@
             background: none;
             cursor: default;
             img {
-              height: 2.5rem;
+              height: 3rem;
             }
           }
         }
         .menu-options {
-          position: absolute;
           display: flex;
-          right: 0;
+          justify-content: flex-end;
           background: #fff;
-          padding: 0.8rem 1.5rem;
           margin-right: 2.5rem;
-          border-radius: 0.5rem;
-          box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-            rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 
           .edit-btn {
             position: relative;
             bottom: 0.15rem;
-            margin-right: 1.4rem;
+            margin-right: 0.8rem;
           }
         }
       }
@@ -242,8 +258,8 @@
     align-items: center;
 
     button {
-      min-width: 21rem;
-      min-height: 5rem;
+      min-width: 23rem;
+      min-height: 4.3rem;
       border: 1px solid #a1a1a1;
       border-radius: 0.3rem;
       font-size: 1.6rem;

@@ -1,0 +1,60 @@
+<script setup>
+</script>
+
+<template>
+  <div class="side-bar">
+    <div class="side-bar__pink-bar" />
+    <div class="side-bar__main">
+      <div class="left-side">
+        <div class="logo">
+          <img
+            src="/svg/moon-holdings-logo-black.svg"
+            alt="moonholdings logo"
+          />
+          <span>MoonHoldings</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<style lang="scss" scoped>
+.side-bar {
+  width: 200px;
+  border-right: 1px solid #6D2E46;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
+
+  &__pink-bar {
+    height: 10px;
+    background: #6D2E46;
+  }
+
+  &__main {
+    min-height: 72px;
+
+    .left-side {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+      .logo {
+        font-size: 16px;
+        font-weight: 700;
+        img {
+          height: 28px;
+          margin-right: 10px;
+        }
+        span {
+          position: relative;
+          bottom: 5px;
+        }
+      }
+    }
+  }
+}
+</style>

@@ -158,7 +158,6 @@ const searchCoinClick = async (coin) => {
       <AddCoin :modalCoin="u" v-if="utilStore.addCoinModalsToggle" />
     </transition>
   </teleport>
-  <Header />
   <div class="crypto">
     <!-- Sub header -->
     <div class="crypto__sub-header">

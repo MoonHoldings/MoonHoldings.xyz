@@ -3,6 +3,7 @@ import { onMounted, watch } from 'vue'
 import { useRoute, RouterView } from 'vue-router'
 import SuccessAlert from '@/components/partials/SuccessAlert.vue'
 import ErrorAlert from '@/components/partials/ErrorAlert.vue'
+import SideBar from '@/components/partials/SideBar.vue'
 import { useUtilStore } from '@/stores/util'
 import { useCoinStore } from '@/stores/coin'
 
@@ -40,7 +41,7 @@ onMounted(async () => {
   >
     <ErrorAlert v-if="utilStore.errorToggle" />
   </transition>
-
+  <SideBar />
   <RouterView />
 </template>
 

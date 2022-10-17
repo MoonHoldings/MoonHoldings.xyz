@@ -44,7 +44,7 @@
 
   &__pink-bar {
     height: 10px;
-    background-color: var(--pink);
+    background-color: #6D2E46;
   }
 
   &__main {

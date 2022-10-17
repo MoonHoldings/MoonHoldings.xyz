@@ -40,8 +40,8 @@
 
         <div
           class="item-sub"
-          @click="goPage('nfts/collections')"
-          :style="currentRoute == 'nfts/collections' || currentRoute == 'nfts/lend-borrow' ? 'color: #C74FF9 !important; font-weight: 700;' : 'color: black; font-weight: 400;'"
+          @click="goPage('nfts/collection')"
+          :style="currentRoute == 'nfts/collection' || currentRoute == 'nfts/lend-borrow' ? 'color: #C74FF9 !important; font-weight: 700;' : 'color: black; font-weight: 400;'"
         >
           <img
             src="/svg/icon-diamond.svg"
@@ -52,8 +52,8 @@
 
         <div
           class="item-sub-menu"
-          @click="goPage('nfts/collections')"
-          :style="currentRoute == 'nfts/collections' ? 'color: #C74FF9 !important; font-weight: 700;' : 'color: black; font-weight: 300;'"
+          @click="goPage('nfts/collection')"
+          :style="currentRoute == 'nfts/collection' ? 'color: #C74FF9 !important; font-weight: 700;' : 'color: black; font-weight: 300;'"
         >
           Collections
         </div>

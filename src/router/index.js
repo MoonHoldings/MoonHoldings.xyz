@@ -42,6 +42,18 @@ const router = createRouter({
       beforeEnter: requireAuth,
     },
     {
+      path: '/nfts/collection',
+      name: 'nftsCollection',
+      component: () => import('@/views/NftsCollection.vue'),
+      beforeEnter: requireAuth,
+    },
+    {
+      path: '/nfts/lend-borrow',
+      name: 'nftsLendBorrow',
+      component: () => import('@/views/NftsLendBorrow.vue'),
+      beforeEnter: requireAuth,
+    },
+    {
       path: '/privacy-policy',
       name: 'privacy-policy',
       component: PrivacyPolicy,

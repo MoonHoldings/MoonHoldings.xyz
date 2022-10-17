@@ -85,8 +85,8 @@ const login = async () => {
 
     cookies.set('user', response.user)
 
-    //navigate to portfolio vue
-    router.push('/portfolio')
+    //navigate to crypto vue
+    router.push('/crypto')
   } catch (error) {
     mixpanel.track('Error: LoginView.vue > login', {
       error: error,

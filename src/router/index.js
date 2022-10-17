@@ -36,9 +36,9 @@ const router = createRouter({
       component: () => import('@/views/ResetPassword.vue'),
     },
     {
-      path: '/portfolio',
-      name: 'portfolio',
-      component: () => import('@/views/Portfolio.vue'),
+      path: '/crypto',
+      name: 'crypto',
+      component: () => import('@/views/Crypto.vue'),
       beforeEnter: requireAuth,
     },
     {

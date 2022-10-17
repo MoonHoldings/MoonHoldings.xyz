@@ -25,8 +25,8 @@ const searchedCoins = ref([])
 const showWelcome = ref(false)
 const windowWidth = ref(0)
 
-const portfolioCoins = computed(() => {
-  const coins = coinStore.get_portfolioCoins
+const cryptoCoins = computed(() => {
+  const coins = coinStore.get_cryptoCoins
   coins.sort((a, b) => b.totalValue - a.totalValue)
   return coins
 })
@@ -34,7 +34,7 @@ const portfolioCoins = computed(() => {
 const barChart = computed(() => {
   const pct_array = []
 
-  portfolioCoins.value.forEach((coin) => {
+  cryptoCoins.value.forEach((coin) => {
     const pct = (coin.totalValue / coinStore.get_totalPortfolioValue) * 100
 
     const roundPct = Math.round(pct)
@@ -103,7 +103,7 @@ onMounted(() => {
 
   const user = cookies.get('user')
   user?.portfolio.coins.forEach((coin) => {
-    coinStore.mutate_portfolioCoins(coin)
+    coinStore.mutate_cryptoCoins(coin)
   })
 
   window.addEventListener('resize', () => {
@@ -159,11 +159,11 @@ const searchCoinClick = async (coin) => {
     </transition>
   </teleport>
   <Header />
-  <div class="portfolio">
+  <div class="crypto">
     <!-- Sub header -->
-    <div class="portfolio__sub-header">
+    <div class="crypto__sub-header">
       <!-- Search coins -->
-      <div class="portfolio__coin-search">
+      <div class="crypto__coin-search">
         <input v-model="searchInput" type="text" placeholder="Search Coins" />
         <!-- Dropdown -->
         <transition
@@ -245,7 +245,7 @@ const searchCoinClick = async (coin) => {
       </div>
 
       <!-- Total Value -->
-      <div class="portfolio__total-value">
+      <div class="crypto__total-value">
         <div class="value">
           <div class="value-number">
             <span class="s1"
@@ -267,7 +267,7 @@ const searchCoinClick = async (coin) => {
         </div>
       </div>
     </div>
-    <div v-if="portfolioCoins.length === 0" class="portfolio__welcome-msg">
+    <div v-if="cryptoCoins.length === 0" class="crypto__welcome-msg">
       <h1>{{ PORTFOLIO_WELCOME_HEADER }}</h1>
       <p>
         {{ TAG_LINE }} <br />
@@ -278,11 +278,11 @@ const searchCoinClick = async (coin) => {
       </div>
     </div>
 
-    <div v-else class="portfolio__main">
-      <div class="portfolio__stats">
+    <div v-else class="crypto__main">
+      <div class="crypto__stats">
         <!-- percent bar -->
         <div
-          class="portfolio__pct-bar"
+          class="crypto__pct-bar"
           :style="{ width: barWidth + '%' + ' !important' }"
         >
           <div
@@ -304,7 +304,7 @@ const searchCoinClick = async (coin) => {
             </div>
           </div>
         </div>
-        <div v-if="false" class="portfolio__twitter-share">
+        <div v-if="false" class="crypto__twitter-share">
           <img src="/twitter-logo.png" alt="" />
           <div class="shadow"></div>
           <button class="twitter-btn">Share Portfolio</button>
@@ -312,20 +312,20 @@ const searchCoinClick = async (coin) => {
       </div>
 
       <!-- Entries -->
-      <div class="portfolio__coins-stats">
-        <div class="portfolio__all-coins">
+      <div class="crypto__coins-stats">
+        <div class="crypto__all-coins">
           <!-- Coins -->
-          <div :key="updateBoxesKey" class="portfolio__coins">
+          <div :key="updateBoxesKey" class="crypto__coins">
             <CoinBox
-              v-for="(coin, i) in portfolioCoins"
+              v-for="(coin, i) in cryptoCoins"
               :key="i"
               :coin="coin"
             />
           </div>
           <!-- Watch List -->
-          <div class="portfolio__watch" v-if="false">
+          <div class="crypto__watch" v-if="false">
             <h1>Watch</h1>
-            <div class="portfolio__watch-coins">
+            <div class="crypto__watch-coins">
               <WatchCoin v-for="(e, i) in 2" :key="i" />
             </div>
           </div>
@@ -337,5 +337,5 @@ const searchCoinClick = async (coin) => {
 
 <style lang="scss" scoped>
 @import '@/sass/shadows.scss';
-@import '@/sass/portfolio.scss';
+@import '@/sass/crypto.scss';
 </style>

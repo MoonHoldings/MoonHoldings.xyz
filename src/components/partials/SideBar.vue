@@ -1,4 +1,14 @@
 <script setup>
+  import { ref } from 'vue';
+  import { useRouter } from 'vue-router';
+  const router = useRouter();
+
+  const currentRoute = ref('');
+
+  const goPage = (routePage) => {
+    currentRoute.value = routePage;
+    router.push(`/${routePage}`);
+  };
 </script>
 
 <template>
@@ -16,7 +26,11 @@
       </div>
 
       <div class="item-container">
-        <div class="item-logo">
+        <div
+          class="item-logo"
+          @click="goPage('crypto')"
+          :style="currentRoute == 'crypto' ? 'color: #C74FF9 !important; font-weight: 700;' : 'color: black; font-weight: 400;'"
+        >
           <img
             src="/svg/icon-diamond.svg"
             alt="moonholdings logo"
@@ -24,7 +38,11 @@
           <span>CRYPTO</span>
         </div>
 
-        <div class="item-sub">
+        <div
+          class="item-sub"
+          @click="goPage('nfts/collections')"
+          :style="currentRoute == 'nfts/collections' || currentRoute == 'nfts/lend-borrow' ? 'color: #C74FF9 !important; font-weight: 700;' : 'color: black; font-weight: 400;'"
+        >
           <img
             src="/svg/icon-diamond.svg"
             alt="moonholdings logo"
@@ -32,11 +50,19 @@
           <span>NFTS</span>
         </div>
 
-        <div class="item-sub-menu">
+        <div
+          class="item-sub-menu"
+          @click="goPage('nfts/collections')"
+          :style="currentRoute == 'nfts/collections' ? 'color: #C74FF9 !important; font-weight: 700;' : 'color: black; font-weight: 300;'"
+        >
           Collections
         </div>
 
-        <div class="item-sub-menu">
+        <div
+          class="item-sub-menu"
+          @click="goPage('nfts/lend-borrow')"
+          :style="currentRoute == 'nfts/lend-borrow' ? 'color: #C74FF9 !important; font-weight: 700;' : 'color: black; font-weight: 300;'"
+        >
           Lend & Borrow
         </div>
       </div>
@@ -91,7 +117,7 @@
         font-size: 18px;
         font-weight: 700;
         cursor: pointer;
-        margin-bottom: 28px;
+        margin-bottom: 24px;
         img {
           height: 21px;
           margin-right: 10px;

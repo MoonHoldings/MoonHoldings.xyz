@@ -112,7 +112,7 @@ onMounted(() => {
   if (error) {
     utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage(
-      'Confirm Email Link is invalid or has been expired. Login and confirm 😀👌'
+      'Verify link is invalid, reset password in order to reset verify link.'
     )
   }
 })

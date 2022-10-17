@@ -14,6 +14,32 @@
           <span>MoonHoldings</span>
         </div>
       </div>
+
+      <div class="item-container">
+        <div class="item-logo">
+          <img
+            src="/svg/icon-diamond.svg"
+            alt="moonholdings logo"
+          />
+          <span>CRYPTO</span>
+        </div>
+
+        <div class="item-sub">
+          <img
+            src="/svg/icon-diamond.svg"
+            alt="moonholdings logo"
+          />
+          <span>NFTS</span>
+        </div>
+
+        <div class="item-sub-menu">
+          Collections
+        </div>
+
+        <div class="item-sub-menu">
+          Lend & Borrow
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -36,15 +62,17 @@
   }
 
   &__main {
+    margin-left: 20px;
+    margin-right: 8px;
     min-height: 72px;
 
     .left-side {
       display: flex;
-      justify-content: center;
       margin-top: 16px;
       .logo {
         font-size: 16px;
         font-weight: 700;
+        cursor: pointer;
         img {
           height: 28px;
           margin-right: 10px;
@@ -53,6 +81,45 @@
           position: relative;
           bottom: 5px;
         }
+      }
+    }
+    .item-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 56px;
+      .item-logo {
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-bottom: 28px;
+        img {
+          height: 21px;
+          margin-right: 10px;
+        }
+        span {
+          position: relative;
+          bottom: 5px;
+        }
+      }
+      .item-sub {
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        img {
+          height: 21px;
+          margin-right: 10px;
+        }
+        span {
+          position: relative;
+          bottom: 5px;
+        }
+      }
+      .item-sub-menu {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 34px;
+        margin-left: 32px;
+        cursor: pointer;
       }
     }
   }

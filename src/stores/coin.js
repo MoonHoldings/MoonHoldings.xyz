@@ -11,16 +11,16 @@ export const useCoinStore = defineStore('coin', {
     server_url: `${import.meta.env.VITE_MOONSERVER_URL}/api`,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
     modalCoin: {},
-    portfolioCoins: [],
+    cryptoCoins: [],
     coins: [],
   }),
   getters: {
-    get_portfolioCoins(state) {
-      return state.portfolioCoins
+    get_cryptoCoins(state) {
+      return state.cryptoCoins
     },
     get_totalPortfolioValue() {
       let totalValue = 0
-      const allCoins = this.get_portfolioCoins
+      const allCoins = this.get_cryptoCoins
 
       for (let i = 0; i < allCoins.length; i++) {
         totalValue += allCoins[i].totalValue
@@ -55,8 +55,8 @@ export const useCoinStore = defineStore('coin', {
     mutate_emptyModalCoin() {
       this.modalCoin = {}
     },
-    mutate_portfolioCoins(payload) {
-      this.portfolioCoins.push(payload)
+    mutate_cryptoCoins(payload) {
+      this.cryptoCoins.push(payload)
     },
     mutate_modalCoin(payload) {
       this.modalCoin = payload
@@ -126,10 +126,10 @@ export const useCoinStore = defineStore('coin', {
             )
             user.portfolio.coins[coinIndex] = this.modalCoin
             cookies.set('user', user)
-            const pCoinIndex = this.portfolioCoins.findIndex(
+            const pCoinIndex = this.cryptoCoins.findIndex(
               (coin) => coin.id === this.modalCoin.id
             )
-            this.portfolioCoins[pCoinIndex] = this.modalCoin
+            this.cryptoCoins[pCoinIndex] = this.modalCoin
           }
         } else {
           response = await axios.put(`${this.server_url}/save-coin`, {
@@ -140,7 +140,7 @@ export const useCoinStore = defineStore('coin', {
           if (result.success) {
             user.portfolio.coins.push(this.modalCoin)
             cookies.set('user', user)
-            this.mutate_portfolioCoins(this.modalCoin)
+            this.mutate_cryptoCoins(this.modalCoin)
           }
         }
       } catch (error) {
@@ -165,10 +165,10 @@ export const useCoinStore = defineStore('coin', {
 
         if (result.success) {
           // removing from state
-          const coinIndex = this.portfolioCoins.findIndex(
+          const coinIndex = this.cryptoCoins.findIndex(
             (coin) => coin.id === this.modalCoin.id
           )
-          this.portfolioCoins.splice(coinIndex, 1)
+          this.cryptoCoins.splice(coinIndex, 1)
 
           // removing from cookies
           const cookiesCoinIndex = user.portfolio.coins.findIndex(

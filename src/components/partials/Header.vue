@@ -12,8 +12,8 @@
           />
           <span>MoonHoldings</span>
         </div>
-        <!-- <div class="portfolio-btns">
-          <span>Portfolio:</span>
+        <!-- <div class="crypto-btns">
+          <span>Crypto:</span>
           <router-link to="#" class="coin-btn">
             <img src="/svg/icon-coins.svg" alt="coins icon" />
             <span>Coins</span>
@@ -70,7 +70,7 @@
           bottom: 5px;
         }
       }
-      .portfolio-btns {
+      .crypto-btns {
         display: flex;
         align-items: center;
         & > span {

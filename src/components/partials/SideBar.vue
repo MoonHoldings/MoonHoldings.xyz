@@ -1,8 +1,8 @@
 <script setup>
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  const router = useRouter();
 
+  const router = useRouter();
   const currentRoute = ref('');
 
   const goPage = (routePage) => {
@@ -51,6 +51,7 @@
         </div>
 
         <div
+          v-if="currentRoute == 'nfts/collection' || currentRoute == 'nfts/lend-borrow'"
           class="item-sub-menu"
           @click="goPage('nfts/collection')"
           :style="currentRoute == 'nfts/collection' ? 'color: #C74FF9 !important; font-weight: 700;' : 'color: black; font-weight: 300;'"
@@ -59,6 +60,7 @@
         </div>
 
         <div
+          v-if="currentRoute == 'nfts/collection' || currentRoute == 'nfts/lend-borrow'"
           class="item-sub-menu"
           @click="goPage('nfts/lend-borrow')"
           :style="currentRoute == 'nfts/lend-borrow' ? 'color: #C74FF9 !important; font-weight: 700;' : 'color: black; font-weight: 300;'"

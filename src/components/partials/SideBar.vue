@@ -32,7 +32,7 @@
           :style="currentRoute == 'crypto' ? 'color: #C74FF9 !important; font-weight: 700;' : 'color: black; font-weight: 400;'"
         >
           <img
-            src="/svg/icon-diamond.svg"
+            src="/svg/moon-holdings-logo-black.svg"
             alt="moonholdings logo"
           />
           <span>CRYPTO</span>

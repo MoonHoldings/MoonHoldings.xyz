@@ -1,6 +1,7 @@
 <script setup>
 import { watch, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
 
 const route = useRoute()
 const router = useRouter()
@@ -13,7 +14,7 @@ const goPage = (routePage) => {
 }
 
 watch(route, (prev, present) => {
-  isSidebar.value = route.fullPath !== "/" && route.fullPath !== "/login" && route.fullPath !== "/sign-up"
+  isSidebar.value = route.fullPath !== "/" && route.fullPath !== "/login" && route.fullPath !== "/sign-up" && !useUserStore.gotten_user
 })
 </script>
 

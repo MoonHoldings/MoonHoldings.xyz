@@ -1,8 +1,9 @@
 <script setup>
+import Header from '@/components/partials/Header.vue'
 </script>
 
 <template>
-  <div>NFT Collection View</div>
+  <Header />
 </template>
 
 <style scoped></style>

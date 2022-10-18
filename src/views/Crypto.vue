@@ -101,6 +101,8 @@ onMounted(() => {
   const parsedCoins = JSON.parse(moonCoins).coins
   storedCoins.value = [...parsedCoins]
 
+  coinStore.mutate_emptyCryptoCoins()
+
   const user = cookies.get('user')
   user?.portfolio.coins.forEach((coin) => {
     coinStore.mutate_cryptoCoins(coin)

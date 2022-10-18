@@ -5,24 +5,20 @@
     <div class="header__pink-bar" />
     <div class="header__main">
       <div class="left-side">
-        <div class="logo">
-          <img
-            src="/svg/moon-holdings-logo-black.svg"
-            alt="moonholdings logo"
-          />
-          <span>MoonHoldings</span>
+        <div class="label">
+          <span>
+            Current supported chains:
+          </span>
+          <img src="/svg/icon-support-chain.svg" alt="chain-icon" />
         </div>
-        <!-- <div class="crypto-btns">
-          <span>Crypto:</span>
-          <router-link to="#" class="coin-btn">
-            <img src="/svg/icon-coins.svg" alt="coins icon" />
-            <span>Coins</span>
-          </router-link>
-          <router-link to="#" class="nfts-btn">
-            <img src="/svg/icon-diamond.svg" alt="diamond icon" />
-            <span>NFTS</span>
-          </router-link>
-        </div> -->
+
+        <div class="style">
+          <span>
+            Portfolio display style:
+          </span>
+          <img src="/svg/icon-grid.svg" alt="chain-icon" />
+          <img src="/svg/icon-list.svg" alt="chain-icon" />
+        </div>
       </div>
       <div class="right-side">
         <div class="menu">
@@ -56,6 +52,35 @@
     .left-side {
       display: flex;
       align-items: center;
+      gap: 20px;
+      .label {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 18px;
+        img {
+          height: 28px;
+        }
+        span {
+          margin-right: 4px;
+          position: relative;
+          bottom: 8px;
+        }
+      }
+      .style {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 18px;
+        img {
+          height: 28px;
+          margin-right: 8px;
+          cursor: pointer;
+        }
+        span {
+          margin-right: 4px;
+          position: relative;
+          bottom: 8px;
+        }
+      }
       .logo {
         font-size: 16px;
         font-weight: 700;

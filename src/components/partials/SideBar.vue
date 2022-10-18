@@ -1,18 +1,24 @@
 <script setup>
-  import { ref } from 'vue';
-  import { useRouter } from 'vue-router';
+import { watch, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-  const router = useRouter();
-  const currentRoute = ref('');
+const route = useRoute()
+const router = useRouter()
+const currentRoute = ref('')
+const isSidebar = ref(false)
 
-  const goPage = (routePage) => {
-    currentRoute.value = routePage;
-    router.push(`/${routePage}`);
-  };
+const goPage = (routePage) => {
+  currentRoute.value = routePage
+  router.push(`/${routePage}`)
+}
+
+watch(route, (prev, present) => {
+  isSidebar.value = route.fullPath !== "/" && route.fullPath !== "/login" && route.fullPath !== "/sign-up"
+})
 </script>
 
 <template>
-  <div class="side-bar">
+  <div v-if="isSidebar" class="side-bar">
     <div class="side-bar__pink-bar" />
     <div class="side-bar__main">
       <div class="left-side">

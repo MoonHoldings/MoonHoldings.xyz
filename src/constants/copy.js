@@ -22,3 +22,8 @@ export const TITLE_HOME = `Moon Holdings | ${TAG_LINE}`
 export const TITLE_SIGNUP = 'Moon Holdings Sign Up'
 export const TITLE_PRIVACY_POLICY = 'Moon Holdings | Privacy Policy'
 export const TITLE_TERMS_SERVICE = 'Moon Holdings | Terms Of Service'
+
+export const CRYPTO = "CRYPTO";
+export const NFTS = "NFTS";
+export const COLLECTIONS = "Collections";
+export const LEND_BORROW = "Lend & Borrow";

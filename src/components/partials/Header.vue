@@ -38,7 +38,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  left: 0;
+  left: 200px;
   z-index: 90;
   font-family: 'Inter', monospace;
 

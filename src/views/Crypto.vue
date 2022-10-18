@@ -101,6 +101,8 @@ onMounted(() => {
   const parsedCoins = JSON.parse(moonCoins).coins
   storedCoins.value = [...parsedCoins]
 
+  coinStore.mutate_emptyCryptoCoins()
+
   const user = cookies.get('user')
   user?.portfolio.coins.forEach((coin) => {
     coinStore.mutate_cryptoCoins(coin)
@@ -140,8 +142,20 @@ const slicedWordUp = (name) => {
 }
 
 const searchCoinClick = async (coin) => {
-  utilStore.mutate_addCoinModalsToggle(true)
-  await coinStore.getSingleCoin(coin.id)
+  const coins = coinStore.get_cryptoCoins
+  const coinExist = coins.find(item => {
+    if (item.id === coin.id) {
+      return item
+    }
+  }) ?? {}
+
+  if (coinExist) {
+    utilStore.mutate_addCoinModalsToggle(true)
+    coinStore.mutate_modalCoin(coinExist)
+  } else {
+    utilStore.mutate_addCoinModalsToggle(true)
+    await coinStore.getSingleCoin(coin.id)
+  }
 
   searchedCoins.value = []
   searchInput.value = ''

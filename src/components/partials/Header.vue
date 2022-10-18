@@ -1,4 +1,9 @@
-<script setup></script>
+<script setup>
+import decorateNumber from '@/utils/decorateNumber'
+import { useCoinStore } from '@/stores/coin'
+
+const coinStore = useCoinStore()
+</script>
 
 <template>
   <div class="header">
@@ -22,10 +27,10 @@
       </div>
       <div class="right-side">
         <div class="number">
-          $949,268.29
+          ${{ decorateNumber(coinStore.get_totalPortfolioValue, true) }}
         </div>
         <div class="percent">
-          +5.35% 1D
+          <span class="percent-number">+5.35%</span> <span class="percent-date">1D</span>
         </div>
         <div class="menu">
           <img src="/svg/icon-hamburger-menu.svg" alt="hamburger menu" />
@@ -151,11 +156,21 @@
         background: #09814A;
         border-radius: 4px;
         padding: 10px;
-        font-size: 24px;
-        font-weight: bold;
-        font-family: "Inconsolata", monospace;
-        line-height: 16px;
         color: #fff;
+        display: flex;
+        gap: 8px;
+        .percent-number {
+          font-size: 24px;
+          font-weight: 700;
+          font-family: "Inconsolata";
+          line-height: 16px;
+        }
+        .percent-date {
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 16px;
+          font-family: "Poppins";
+        }
       }
       .menu {
         img {

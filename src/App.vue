@@ -48,6 +48,7 @@ onMounted(async () => {
 <style lang="scss">
 @import url('https://rsms.me/inter/inter.css');
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;800&display=swap');
 @import '@/sass';
 
 .font-45 {

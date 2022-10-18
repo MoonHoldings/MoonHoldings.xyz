@@ -21,6 +21,12 @@
         </div>
       </div>
       <div class="right-side">
+        <div class="number">
+          $949,268.29
+        </div>
+        <div class="percent">
+          +5.35% 1D
+        </div>
         <div class="menu">
           <img src="/svg/icon-hamburger-menu.svg" alt="hamburger menu" />
         </div>
@@ -131,6 +137,26 @@
       }
     }
     .right-side {
+      display: flex;
+      gap: 32px;
+      .number {
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 32px;
+        font-weight: bold;
+        font-family: "Inconsolata", monospace;
+        line-height: 16px;
+      }
+      .percent {
+        background: #09814A;
+        border-radius: 4px;
+        padding: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        font-family: "Inconsolata", monospace;
+        line-height: 16px;
+        color: #fff;
+      }
       .menu {
         img {
           height: 35px;

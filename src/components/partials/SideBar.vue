@@ -2,6 +2,13 @@
 import { watch, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import {
+  MOONHOLDINGS,
+  CRYPTO,
+  NFTS,
+  COLLECTIONS,
+  LEND_BORROW
+} from '@/constants/copy';
 
 const route = useRoute()
 const router = useRouter()
@@ -28,7 +35,7 @@ watch(route, (prev, present) => {
             src="/svg/moon-holdings-logo-black.svg"
             alt="moonholdings logo"
           />
-          <span>MoonHoldings</span>
+          <span>{{ MOONHOLDINGS }}</span>
         </div>
       </div>
 
@@ -41,7 +48,7 @@ watch(route, (prev, present) => {
             src="/svg/icon-crypto-black.svg"
             alt="crypto logo"
           />
-          <span>CRYPTO</span>
+          <span>{{ CRYPTO }}</span>
         </div>
 
         <div
@@ -52,7 +59,7 @@ watch(route, (prev, present) => {
             src="/svg/icon-nfts.svg"
             alt="nfts logo"
           />
-          <span>NFTS</span>
+          <span>{{ NFTS }}</span>
         </div>
 
         <div
@@ -60,7 +67,7 @@ watch(route, (prev, present) => {
           :class="currentRoute == 'nfts/collection' ? 'item-sub-menu item-sub-menu__active' : 'item-sub-menu'"
           @click="goPage('nfts/collection')"
         >
-          Collections
+          {{ COLLECTIONS }}
         </div>
 
         <div
@@ -68,7 +75,7 @@ watch(route, (prev, present) => {
           :class="currentRoute == 'nfts/lend-borrow' ? 'item-sub-menu item-sub-menu__active' : 'item-sub-menu'"
           @click="goPage('nfts/lend-borrow')"
         >
-          Lend & Borrow
+          {{ LEND_BORROW }}
         </div>
       </div>
     </div>

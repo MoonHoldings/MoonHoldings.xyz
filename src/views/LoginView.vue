@@ -13,6 +13,7 @@ import {
 } from '../constants/copy'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
+import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
 import { useCookies } from 'vue3-cookies'
 
@@ -31,6 +32,7 @@ const router = useRouter()
 const route = useRoute()
 const { cookies } = useCookies()
 const userStore = useUserStore()
+const coinStore = useCoinStore()
 const utilStore = useUtilStore()
 
 const continueBtn = async () => {

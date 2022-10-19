@@ -15,6 +15,7 @@ import { useUtilStore } from '@/stores/util'
 import coinStyles from '@/constants/coinStyles'
 import decorateNumber from '@/utils/decorateNumber'
 import { useCookies } from 'vue3-cookies'
+// import monsterFriend from '/gif/monster-friend.gif'
 
 const { cookies } = useCookies()
 const coinStore = useCoinStore()
@@ -96,20 +97,22 @@ const disappearPct = (pct) => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   const moonCoins = localStorage.getItem('MoonCoins')
   const parsedCoins = JSON.parse(moonCoins).coins
   storedCoins.value = [...parsedCoins]
 
   const user = cookies.get('user')
   user?.portfolio.coins.forEach((coin) => {
-    coinStore.mutate_cryptoCoins(coin)
+    coinStore.mutate_cryptoCoin(coin)
   })
 
   window.addEventListener('resize', () => {
     const width = window.innerWidth
     windowWidth.value = width
   })
+
+  await refreshCryptoCoins()
 })
 
 watch([searchInput], () => {
@@ -159,6 +162,9 @@ const searchCoinClick = async (coin) => {
     </transition>
   </teleport>
   <Header />
+  <!-- <div class="monster-friend">
+    <img :src="monsterFriend" alt="monster friend" />
+  </div> -->
   <div class="crypto">
     <!-- Sub header -->
     <div class="crypto__sub-header">
@@ -316,11 +322,7 @@ const searchCoinClick = async (coin) => {
         <div class="crypto__all-coins">
           <!-- Coins -->
           <div :key="updateBoxesKey" class="crypto__coins">
-            <CoinBox
-              v-for="(coin, i) in cryptoCoins"
-              :key="i"
-              :coin="coin"
-            />
+            <CoinBox v-for="(coin, i) in cryptoCoins" :key="i" :coin="coin" />
           </div>
           <!-- Watch List -->
           <div class="crypto__watch" v-if="false">

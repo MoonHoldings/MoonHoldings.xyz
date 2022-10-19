@@ -55,7 +55,7 @@ export const useCoinStore = defineStore('coin', {
     mutate_emptyModalCoin() {
       this.modalCoin = {}
     },
-    mutate_cryptoCoins(payload) {
+    mutate_cryptoCoin(payload) {
       this.cryptoCoins.push(payload)
     },
     mutate_emptyCryptoCoins() {
@@ -107,6 +107,43 @@ export const useCoinStore = defineStore('coin', {
       this.modalCoin.wallets[unsavedWalletIndex].value = totalValue
       this.modalCoin.wallets[unsavedWalletIndex].saved = true
     },
+    async refreshCryptoCoins() {
+      const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY
+
+      const updatedCoins = this.cryptoCoins.map(async (coin) => {
+        const response = await axios.get(
+          `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${coin.id}&intervals=1d,30d`
+        )
+
+        const fetchedCoin = response.data[0]
+
+        const allWallets = fetchedCoin.wallets
+        const updatedWallets = allWallets.map((wallet) => {
+          const updatedValue = fetchedCoin.price * wallet.holding
+          return { ...wallet, value: updatedValue }
+        })
+
+        let newTotalValue = 0
+        updatedWallets.forEach((wallet) => {
+          newTotalValue += wallet.value
+        })
+
+        const _24hr = fetchedCoin['1d']
+          ? fetchedCoin['1d']['price_change_pct']
+          : ''
+
+        const updatedCoin = {
+          ...coin,
+          _24hr,
+          price: fetchedCoin.price,
+          totalValue: newTotalValue,
+        }
+
+        return updatedCoin
+      })
+
+      this.cryptoCoins = updatedCoins
+    },
     async addPortfolioCoin(totalHoldings, totalValue) {
       this.modalCoin.totalHoldings = totalHoldings
       this.modalCoin.totalValue = totalValue
@@ -143,7 +180,7 @@ export const useCoinStore = defineStore('coin', {
           if (result.success) {
             user.portfolio.coins.push(this.modalCoin)
             cookies.set('user', user)
-            this.mutate_cryptoCoins(this.modalCoin)
+            this.mutate_cryptoCoin(this.modalCoin)
           }
         }
       } catch (error) {

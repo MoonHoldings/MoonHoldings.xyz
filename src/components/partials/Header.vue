@@ -38,13 +38,13 @@
   position: absolute;
   top: 0;
   right: 0;
-  left: 0;
+  left: 200px;
   z-index: 90;
   font-family: 'Inter', monospace;
 
   &__pink-bar {
     height: 10px;
-    background-color: var(--pink);
+    background-color: #6D2E46;
   }
 
   &__main {

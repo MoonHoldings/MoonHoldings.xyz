@@ -147,6 +147,7 @@ onMounted(() => {
               :style="{ transform: `translateX(${pTranslate}%)` }"
               :type="isEyeOpen"
               placeholder="Password"
+              tabindex="0"
               v-model="password"
             />
             <transition
@@ -156,8 +157,10 @@ onMounted(() => {
             >
               <button
                 v-if="pTranslate === 0"
-                @click.prevent="blink"
+                @click.prevent="onSubmit"
+                @submit.prevent="onSubmit"
                 class="eye"
+                tabindex="-1"
               >
                 <svg
                   v-if="isEyeOpen === 'text'"
@@ -198,7 +201,7 @@ onMounted(() => {
           </div>
 
           <div class="dont-have-account">
-            <router-link to="/sign-up">{{ DONT_HAVE_ACCOUNT }}</router-link>
+            <router-link to="/sign-up" tabindex="1">{{ DONT_HAVE_ACCOUNT }}</router-link>
             <button
               class="signup-btn"
               @click.prevent="$router.push('/sign-up')"

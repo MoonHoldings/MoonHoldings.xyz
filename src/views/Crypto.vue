@@ -114,7 +114,7 @@ onMounted(async () => {
     windowWidth.value = width
   })
 
-  await refreshCryptoCoins()
+  await coinStore.refreshCryptoCoins()
 })
 
 watch([searchInput], () => {

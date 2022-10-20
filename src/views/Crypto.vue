@@ -182,6 +182,6 @@ onMounted(async () => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/sass/shadows.scss';
 @import '@/sass/crypto.scss';
+@import '@/sass/shadows.scss';
 </style>

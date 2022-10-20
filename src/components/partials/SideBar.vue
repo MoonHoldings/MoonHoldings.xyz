@@ -12,7 +12,7 @@ import {
   COIN_SWAP,
   RANKS,
   INSIGHTS
-} from '@/constants/copy';
+} from '@/constants/copy'
 
 const route = useRoute()
 const router = useRouter()
@@ -107,92 +107,26 @@ watch(route, (prev, present) => {
         <img v-else src="/svg/icon-circle-line.svg" alt="insights logo" />
         <span>{{ INSIGHTS }}</span>
       </div>
+
+      <div class="social">
+        <div class="item">
+          <img src="/svg/icon-twitter.svg" alt="twitter logo" />
+          <a class="link" href="https://twitter.com/moonholdingsxyz">
+            Follow us
+          </a>
+        </div>
+        <div class="item">
+          <img src="/svg/icon-discord.svg" alt="discord logo" />
+          <a class="link" href="http://discord.gg/JPPvAf5BMW">
+            Hang with us
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 
 <style lang="scss" scoped>
-.side-bar {
-  width: 200px;
-  border-right: 1px solid #6D2E46;
-  height: 100%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
-  &__pink-bar {
-    height: 10px;
-    background: #6D2E46;
-  }
-  &__main {
-    margin-left: 20px;
-    margin-right: 8px;
-    min-height: 72px;
-    .logo {
-      margin-top: 16px;
-      margin-bottom: 56px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      img {
-        height: 28px;
-        margin-right: 10px;
-      }
-      span {
-        position: relative;
-        bottom: 5px;
-      }
-    }
-    .item-logo {
-      margin-bottom: 24px;
-      font-size: 18px;
-      font-weight: 400;
-      cursor: pointer;
-
-      &__active {
-        color: #C74FF9;
-        font-weight: 700;
-      }
-      img {
-        height: 21px;
-        margin-right: 10px;
-      }
-      span {
-        position: relative;
-        bottom: 5px;
-      }
-    }
-    .item-sub {
-      font-size: 18px;
-      font-weight: 400;
-      cursor: pointer;
-      &__active {
-        color: #C74FF9;
-        font-weight: 700;
-      }
-      img {
-        height: 21px;
-        margin-right: 10px;
-      }
-      span {
-        position: relative;
-        bottom: 5px;
-      }
-    }
-    .item-sub-menu {
-      margin-left: 32px;
-      margin-bottom: 32px;
-      font-size: 16px;
-      font-weight: 300;
-      line-height: 0;
-      cursor: pointer;
-      &__active {
-        color: #C74FF9;
-        font-weight: 700;
-      }
-    }
-  }
-}
+@import '@/sass/sideBar.scss';
 </style>

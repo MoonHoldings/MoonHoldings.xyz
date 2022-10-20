@@ -1,15 +1,21 @@
 <script setup>
+import { computed, ref, watch } from 'vue'
+import { useRoute, RouterView } from 'vue-router'
 import decorateNumber from '@/utils/decorateNumber'
 import { useCoinStore } from '@/stores/coin'
 
+const route = useRoute()
 const coinStore = useCoinStore()
+const isNFTSView = computed(() => {
+  return route.fullPath == '/nfts/collection' || route.fullPath == '/nfts/lend-borrow'
+})
 </script>
 
 <template>
   <div class="header">
     <div class="header__pink-bar" />
     <div class="header__main">
-      <div class="left-side">
+      <div v-if="isNFTSView" class="left-side">
         <div class="label">
           <span>
             Current supported chains:

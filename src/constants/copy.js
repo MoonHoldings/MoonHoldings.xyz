@@ -27,3 +27,7 @@ export const CRYPTO = "CRYPTO";
 export const NFTS = "NFTS";
 export const COLLECTIONS = "Collections";
 export const LEND_BORROW = "Lend & Borrow";
+export const CALENDAR = "CALENDAR";
+export const COIN_SWAP = "COIN SWAP";
+export const RANKS = "RANKS";
+export const INSIGHTS = "INSIGHTS";

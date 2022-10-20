@@ -7,7 +7,11 @@ import {
   CRYPTO,
   NFTS,
   COLLECTIONS,
-  LEND_BORROW
+  LEND_BORROW,
+  CALENDAR,
+  COIN_SWAP,
+  RANKS,
+  INSIGHTS
 } from '@/constants/copy';
 
 const route = useRoute()
@@ -38,15 +42,17 @@ watch(route, (prev, present) => {
         :class="currentRoute == 'crypto' ? 'item-logo item-logo__active' : 'item-logo'"
         @click="goPage('crypto')"
       >
-        <img src="/svg/icon-crypto-black.svg" alt="crypto logo" />
+        <img v-if="currentRoute == 'crypto'" src="/svg/icon-circle-fill.svg" alt="crypto logo" />
+        <img v-else src="/svg/icon-circle-line.svg" alt="crypto logo" />
         <span>{{ CRYPTO }}</span>
       </div>
 
       <div
-        :class="currentRoute == 'nfts/collection' || currentRoute == 'nfts/lend-borrow' ? 'item-sub item-sub__active' : 'item-sub'"
+        :class="currentRoute == 'nfts/collection' || currentRoute == 'nfts/lend-borrow' ? 'item-logo item-logo__active' : 'item-logo'"
         @click="goPage('nfts/collection')"
       >
-        <img src="/svg/icon-nfts.svg" alt="nfts logo" />
+        <img v-if="currentRoute == 'nfts/collection' || currentRoute == 'nfts/lend-borrow'" src="/svg/icon-circle-fill.svg" alt="nfts logo" />
+        <img v-else src="/svg/icon-circle-line.svg" alt="nfts logo" />
         <span>{{ NFTS }}</span>
       </div>
 
@@ -64,6 +70,42 @@ watch(route, (prev, present) => {
         @click="goPage('nfts/lend-borrow')"
       >
         {{ LEND_BORROW }}
+      </div>
+
+      <div
+        :class="currentRoute == 'calendar' ? 'item-logo item-logo__active' : 'item-logo'"
+        @click="goPage('calendar')"
+      >
+        <img v-if="currentRoute == 'calendar'" src="/svg/icon-circle-fill.svg" alt="calendar logo" />
+        <img v-else src="/svg/icon-circle-line.svg" alt="calendar logo" />
+        <span>{{ CALENDAR }}</span>
+      </div>
+
+      <div
+        :class="currentRoute == 'coin-swap' ? 'item-logo item-logo__active' : 'item-logo'"
+        @click="goPage('coin-swap')"
+      >
+        <img v-if="currentRoute == 'coin-swap'" src="/svg/icon-circle-fill.svg" alt="coin-swap logo" />
+        <img v-else src="/svg/icon-circle-line.svg" alt="coin-swap logo" />
+        <span>{{ COIN_SWAP }}</span>
+      </div>
+
+      <div
+        :class="currentRoute == 'ranks' ? 'item-logo item-logo__active' : 'item-logo'"
+        @click="goPage('ranks')"
+      >
+        <img v-if="currentRoute == 'ranks'" src="/svg/icon-circle-fill.svg" alt="ranks logo" />
+        <img v-else src="/svg/icon-circle-line.svg" alt="ranks logo" />
+        <span>{{ RANKS }}</span>
+      </div>
+
+      <div
+        :class="currentRoute == 'insights' ? 'item-logo item-logo__active' : 'item-logo'"
+        @click="goPage('insights')"
+      >
+        <img v-if="currentRoute == 'insights'" src="/svg/icon-circle-fill.svg" alt="insights logo" />
+        <img v-else src="/svg/icon-circle-line.svg" alt="insights logo" />
+        <span>{{ INSIGHTS }}</span>
       </div>
     </div>
   </div>
@@ -141,9 +183,10 @@ watch(route, (prev, present) => {
     }
     .item-sub-menu {
       margin-left: 32px;
+      margin-bottom: 32px;
       font-size: 16px;
       font-weight: 300;
-      line-height: 34px;
+      line-height: 0;
       cursor: pointer;
       &__active {
         color: #C74FF9;

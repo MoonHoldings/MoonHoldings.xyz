@@ -117,13 +117,13 @@ watch(route, (prev, present) => {
       <div class="social">
         <div class="item">
           <img src="/svg/icon-twitter.svg" alt="twitter logo" />
-          <a class="link" href="https://twitter.com/moonholdingsxyz">
+          <a class="link" href="https://twitter.com/moonholdingsxyz" target="_blank">
             Follow us
           </a>
         </div>
         <div class="item">
           <img src="/svg/icon-discord.svg" alt="discord logo" />
-          <a class="link" href="http://discord.gg/JPPvAf5BMW">
+          <a class="link" href="http://discord.gg/JPPvAf5BMW" target="_blank">
             Hang with us
           </a>
         </div>

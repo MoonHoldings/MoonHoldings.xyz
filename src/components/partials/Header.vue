@@ -20,6 +20,10 @@ const isNFTSView = computed(() => {
   return route.fullPath == '/nfts/collection' || route.fullPath == '/nfts/lend-borrow'
 })
 
+const isCryptoView = computed(() => {
+  return route.fullPath == '/crypto'
+})
+
 const slicedWordUp = (name) => {
   return name.slice(0, searchInput.value.length).toUpperCase()
 }
@@ -100,6 +104,7 @@ watch([searchInput], () => {
       <AddCoin v-if="utilStore.addCoinModalsToggle" />
     </transition>
   </teleport>
+
   <div class="header">
     <div class="header__pink-bar" />
     <div class="header__main">
@@ -120,7 +125,7 @@ watch([searchInput], () => {
         </div>
       </div>
 
-      <div class="crypto__coin-search">
+      <div v-if="isCryptoView" class="crypto__coin-search">
         <input v-model="searchInput" type="text" placeholder="Search Coins" />
         <!-- Dropdown -->
         <transition

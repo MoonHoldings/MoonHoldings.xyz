@@ -101,6 +101,8 @@
     .right-side {
       display: flex;
       gap: 32px;
+      margin-top: auto;
+      margin-bottom: auto;
       .number {
         margin-top: auto;
         margin-bottom: auto;
@@ -110,6 +112,7 @@
         line-height: 16px;
       }
       .percent {
+        height: fit-content;
         background: #09814A;
         border-radius: 4px;
         padding: 10px;

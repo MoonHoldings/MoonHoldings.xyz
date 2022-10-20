@@ -59,7 +59,7 @@ export const useCoinStore = defineStore('coin', {
       this.cryptoCoins.push(payload)
     },
     mutate_emptyCryptoCoins() {
-      this.cryptoCoins = [];
+      this.cryptoCoins = []
     },
     mutate_modalCoin(payload) {
       this.modalCoin = payload
@@ -109,23 +109,25 @@ export const useCoinStore = defineStore('coin', {
     },
     async refreshCryptoCoins() {
       const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY
+      const updatedCoins = []
 
-      const updatedCoins = this.cryptoCoins.map(async (coin) => {
+      for (let i = 0; i < this.cryptoCoins.length; i++) {
         const response = await axios.get(
-          `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${coin.id}&intervals=1d,30d`
+          `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${this.cryptoCoins[i].id}&intervals=1d,30d`
         )
 
         const fetchedCoin = response.data[0]
 
         const allWallets = fetchedCoin.wallets
-        const updatedWallets = allWallets.map((wallet) => {
-          const updatedValue = fetchedCoin.price * wallet.holding
+        const updatedWallets = allWallets?.map((wallet) => {
+          const updatedValue =
+            Number(fetchedCoin.price) * Number(wallet.holding)
           return { ...wallet, value: updatedValue }
         })
 
         let newTotalValue = 0
-        updatedWallets.forEach((wallet) => {
-          newTotalValue += wallet.value
+        updatedWallets?.forEach((wallet) => {
+          newTotalValue += Number(wallet.value)
         })
 
         const _24hr = fetchedCoin['1d']
@@ -133,14 +135,14 @@ export const useCoinStore = defineStore('coin', {
           : ''
 
         const updatedCoin = {
-          ...coin,
+          ...this.cryptoCoins[i],
           _24hr,
           price: fetchedCoin.price,
           totalValue: newTotalValue,
         }
 
-        return updatedCoin
-      })
+        updatedCoins.push(updatedCoin)
+      }
 
       this.cryptoCoins = updatedCoins
     },

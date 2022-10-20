@@ -114,7 +114,7 @@ onMounted(async () => {
     windowWidth.value = width
   })
 
-  await refreshCryptoCoins()
+  await coinStore.refreshCryptoCoins()
 })
 
 watch([searchInput], () => {
@@ -146,11 +146,12 @@ const slicedWordUp = (name) => {
 
 const searchCoinClick = async (coin) => {
   const coins = coinStore.get_cryptoCoins
-  const coinExist = coins.find(item => {
-    if (item.id === coin.id) {
-      return item
-    }
-  }) ?? {}
+  const coinExist =
+    coins.find((item) => {
+      if (item.id === coin.id) {
+        return item
+      }
+    }) ?? {}
 
   if (coinExist) {
     utilStore.mutate_addCoinModalsToggle(true)

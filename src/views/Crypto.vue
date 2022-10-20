@@ -13,7 +13,6 @@ import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
 import { useCookies } from 'vue3-cookies'
 import coinStyles from '@/constants/coinStyles'
-import decorateNumber from '@/utils/decorateNumber'
 
 const { cookies } = useCookies()
 const coinStore = useCoinStore()
@@ -118,31 +117,6 @@ onMounted(async () => {
   <Header />
 
   <div class="crypto">
-    <!-- Sub header -->
-    <div class="crypto__sub-header">
-      <!-- Total Value -->
-      <div class="crypto__total-value">
-        <div class="value">
-          <div class="value-number">
-            <span class="s1"
-              >${{
-                decorateNumber(coinStore.get_totalPortfolioValue, true)
-              }}</span
-            >
-            <span class="s2" v-if="false">+5.35%</span>
-            <small v-if="false">24hr</small>
-          </div>
-        </div>
-        <div class="value-currency" v-if="false">
-          <span class="text">Currency </span>
-          <button class="usd active-currency">USD</button
-          ><span class="pipe"> | </span> <button class="btc">BTC</button
-          ><span class="pipe"> | </span> <button class="eth">ETH</button
-          ><span class="pipe"> | </span>
-          <button class="sol">SOL</button>
-        </div>
-      </div>
-    </div>
     <div v-if="cryptoCoins.length === 0" class="crypto__welcome-msg">
       <h1>{{ PORTFOLIO_WELCOME_HEADER }}</h1>
       <p>

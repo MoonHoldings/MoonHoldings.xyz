@@ -16,6 +16,7 @@ import { useUserStore } from '@/stores/user'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
 import { useCookies } from 'vue3-cookies'
+import decoding from 'jwt-decode'
 
 const clicks = ref(0)
 const email = ref('')
@@ -85,7 +86,9 @@ const login = async () => {
 
     clicks.value++
 
-    cookies.set('user', response.user)
+    const moonUser = await decoding(response.accessToken)
+    cookies.set('MOON_USER', moonUser)
+    cookies.set('MOON_TOKEN', response.accessToken)
 
     //navigate to crypto vue
     router.push('/crypto')
@@ -201,7 +204,9 @@ onMounted(() => {
           </div>
 
           <div class="dont-have-account">
-            <router-link to="/sign-up" tabindex="1">{{ DONT_HAVE_ACCOUNT }}</router-link>
+            <router-link to="/sign-up" tabindex="1">{{
+              DONT_HAVE_ACCOUNT
+            }}</router-link>
             <button
               class="signup-btn"
               @click.prevent="$router.push('/sign-up')"

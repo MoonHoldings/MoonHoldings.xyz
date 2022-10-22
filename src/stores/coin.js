@@ -152,47 +152,70 @@ export const useCoinStore = defineStore('coin', {
 
       try {
         let response
-        const user = cookies.get('user')
+        const user = cookies.get('MOON_USER')
+        console.log(user.portfolio.coins)
         const recordCoin = user.portfolio.coins.find(
           (c) => c.id === this.modalCoin.id
         )
+        const token = cookies.get('MOON_TOKEN')
+
         if (recordCoin) {
-          response = await axios.put(`${this.server_url}/update-coin`, {
-            coin: this.modalCoin,
-            email: user.email,
-          })
+          response = await axios.put(
+            `${this.server_url}/update-coin`,
+            {
+              coin: this.modalCoin,
+              email: user.email,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: token,
+              },
+            }
+          )
+
           const result = await response.data
           if (result.success) {
             const coinIndex = user.portfolio.coins.findIndex(
               (coin) => coin.id === this.modalCoin.id
             )
             user.portfolio.coins[coinIndex] = this.modalCoin
-            cookies.set('user', user)
+            cookies.set('MOON_USER', user)
             const pCoinIndex = this.cryptoCoins.findIndex(
               (coin) => coin.id === this.modalCoin.id
             )
             this.cryptoCoins[pCoinIndex] = this.modalCoin
           }
         } else {
-          response = await axios.put(`${this.server_url}/save-coin`, {
-            coin: this.modalCoin,
-            email: user.email,
-          })
+          console.log('works')
+          response = await axios.put(
+            `${this.server_url}/save-coin`,
+            {
+              coin: this.modalCoin,
+              email: user.email,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: token,
+              },
+            }
+          )
           const result = await response.data
           if (result.success) {
             user.portfolio.coins.push(this.modalCoin)
-            cookies.set('user', user)
+            cookies.set('MOON_USER', user)
             this.mutate_cryptoCoin(this.modalCoin)
           }
         }
       } catch (error) {
-        console.log(error)
+        console.log(error.message)
       }
 
       this.modalCoin = {}
     },
     async removePortfolioCoin() {
-      const user = cookies.get('user')
+      const user = cookies.get('MOON_USER')
       try {
         const response = await axios.put(
           `${this.server_url}/remove-coin`,
@@ -217,7 +240,7 @@ export const useCoinStore = defineStore('coin', {
             (coin) => coin.id === this.modalCoin.id
           )
           user.portfolio.coins.splice(cookiesCoinIndex, 1)
-          cookies.set('user', user)
+          cookies.set('MOON_USER', user)
         }
       } catch (error) {
         console.log(error.message)

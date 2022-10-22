@@ -99,7 +99,7 @@ onMounted(async () => {
 
   coinStore.mutate_emptyCryptoCoins()
 
-  const user = cookies.get('user')
+  const user = cookies.get('MOON_USER')
   user?.portfolio.coins.forEach((coin) => {
     coinStore.mutate_cryptoCoin(coin)
   })

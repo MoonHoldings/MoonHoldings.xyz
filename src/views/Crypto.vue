@@ -13,6 +13,7 @@ import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
 import { useCookies } from 'vue3-cookies'
 import coinStyles from '@/constants/coinStyles'
+import refreshCryptoCoins from '@/utils/refreshCryptoCoins'
 
 const { cookies } = useCookies()
 const coinStore = useCoinStore()
@@ -100,16 +101,19 @@ onMounted(async () => {
   coinStore.mutate_emptyCryptoCoins()
 
   const user = cookies.get('MOON_USER')
-  user?.portfolio.coins.forEach((coin) => {
-    coinStore.mutate_cryptoCoin(coin)
-  })
+  const refreshedCoins = await refreshCryptoCoins(user.portfolio.coins)
+  await coinStore.mutate_cryptoCoins(refreshedCoins)
+  // console.log(refreshedCoins)
+  // refreshedCoins?.forEach((coin) => {
+  //   coinStore.mutate_cryptoCoin(coin)
+  // })
 
   window.addEventListener('resize', () => {
     const width = window.innerWidth
     windowWidth.value = width
   })
 
-  await coinStore.refreshCryptoCoins()
+  // await coinStore.refreshCryptoCoins()
 })
 </script>
 

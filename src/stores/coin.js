@@ -58,6 +58,9 @@ export const useCoinStore = defineStore('coin', {
     mutate_cryptoCoin(payload) {
       this.cryptoCoins.push(payload)
     },
+    mutate_cryptoCoins(payload) {
+      this.cryptoCoins = payload
+    },
     mutate_emptyCryptoCoins() {
       this.cryptoCoins = []
     },

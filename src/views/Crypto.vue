@@ -101,8 +101,14 @@ onMounted(async () => {
   coinStore.mutate_emptyCryptoCoins()
 
   const user = cookies.get('MOON_USER')
-  const refreshedCoins = await refreshCryptoCoins(user.portfolio.coins)
-  await coinStore.mutate_cryptoCoins(refreshedCoins)
+  const token = cookies.get('MOON_TOKEN')
+  const server_url = coinStore.server_url
+  const refreshedCoins = await refreshCryptoCoins(
+    server_url,
+    user.portfolio.coins,
+    token
+  )
+  coinStore.mutate_cryptoCoins(refreshedCoins)
 
   window.addEventListener('resize', () => {
     const width = window.innerWidth

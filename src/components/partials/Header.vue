@@ -17,7 +17,10 @@ const storedCoins = ref([])
 const windowWidth = ref(0)
 
 const isNFTSView = computed(() => {
-  return route.fullPath == '/nfts/collection' || route.fullPath == '/nfts/lend-borrow'
+  return (
+    route.fullPath == '/nfts/collection' ||
+    route.fullPath == '/nfts/lend-borrow'
+  )
 })
 
 const isCryptoView = computed(() => {
@@ -37,7 +40,11 @@ const searchCoinClick = async (coin) => {
       }
     }) ?? {}
 
-  if (coinExist && Object.keys(coinExist).length > 0 && coinExist.constructor !== Object) {
+  if (
+    coinExist &&
+    Object.keys(coinExist).length > 0 &&
+    coinExist.constructor !== Object
+  ) {
     utilStore.mutate_addCoinModalsToggle(true)
     coinStore.mutate_modalCoin(coinExist)
   } else {
@@ -49,11 +56,25 @@ const searchCoinClick = async (coin) => {
   searchInput.value = ''
 }
 
+onMounted(async () => {
+  const moonCoins = localStorage.getItem('MoonCoins')
+  const parsedCoins = JSON.parse(moonCoins).coins
+  storedCoins.value = [...parsedCoins]
+
+  const token = cookies.get('MOON_TOKEN')
+  if (!token) coinStore.mutate_emptyCryptoCoins()
+
+  window.addEventListener('resize', () => {
+    const width = window.innerWidth
+    windowWidth.value = width
+  })
+})
+
 const fn = () => {
   const inputUp = searchInput.value.toUpperCase()
   if (inputUp.length >= 2) {
     searchedCoins.value = []
-                                storedCoins.value.forEach((coin) => {
+    storedCoins.value.forEach((coin) => {
       const coinNameChar = slicedWordUp(coin.name)
       const coinSymbolChar = slicedWordUp(coin.symbol)
       if (coinNameChar === inputUp || coinSymbolChar === inputUp) {
@@ -68,26 +89,6 @@ const fn = () => {
     searchedCoins.value = []
   }
 }
-
-onMounted(async () => {
-  const moonCoins = localStorage.getItem('MoonCoins')
-  const parsedCoins = JSON.parse(moonCoins).coins
-  storedCoins.value = [...parsedCoins]
-
-  coinStore.mutate_emptyCryptoCoins()
-
-  const user = cookies.get('user')
-  user?.portfolio.coins.forEach((coin) => {
-    coinStore.mutate_cryptoCoin(coin)
-  })
-
-  window.addEventListener('resize', () => {
-    const width = window.innerWidth
-    windowWidth.value = width
-  })
-
-  await coinStore.refreshCryptoCoins()
-})
 
 watch([searchInput], () => {
   fn()
@@ -110,16 +111,12 @@ watch([searchInput], () => {
     <div class="header__main">
       <div v-if="isNFTSView" class="left-side">
         <div class="label">
-          <span>
-            Current supported chains:
-          </span>
+          <span> Current supported chains: </span>
           <img src="/svg/icon-support-chain.svg" alt="chain-icon" />
         </div>
 
         <div class="style">
-          <span>
-            Portfolio display style:
-          </span>
+          <span> Portfolio display style: </span>
           <img src="/svg/icon-grid.svg" alt="chain-icon" />
           <img src="/svg/icon-list.svg" alt="chain-icon" />
         </div>
@@ -147,10 +144,11 @@ watch([searchInput], () => {
 
       <div class="right-side">
         <div class="number">
-          ${{ decorateNumber(coinStore.get_totalPortfolioValue, true) }}
+          ${{ decorateNumber(coinStore?.get_totalPortfolioValue, true) }}
         </div>
         <div class="percent">
-          <span class="percent-number">+5.35%</span> <span class="percent-date">1D</span>
+          <span class="percent-number">+5.35%</span>
+          <span class="percent-date">1D</span>
         </div>
         <div class="menu">
           <img src="/svg/icon-hamburger-menu.svg" alt="hamburger menu" />

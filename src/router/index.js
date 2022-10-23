@@ -76,7 +76,7 @@ router.beforeEach((to) => {
 })
 
 function requireAuth(to, from, next) {
-  const user = cookies.get('user')
+  const user = cookies.get('MOON_USER')
   if (user) {
     next()
   }

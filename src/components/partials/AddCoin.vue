@@ -81,7 +81,7 @@ const saveNcomplete = async () => {
     valueSum += Number(wallet.value)
   })
   isCoinLoaded.value = false
-  await coinStore.addPortfolioCoin(holdingSum, valueSum)
+  await coinStore.addCryptoCoin(holdingSum, valueSum)
   utilStore.mutate_updateBoxesKey()
   utilStore.mutate_addCoinModalsToggle(false)
 }
@@ -106,7 +106,7 @@ const removeCoin = async () => {
 
   if (wallets.length) {
     isCoinLoaded.value = false
-    await coinStore.removePortfolioCoin()
+    await coinStore.removeCryptoCoin()
     utilStore.mutate_updateBoxesKey()
     utilStore.mutate_addCoinModalsToggle(false)
   } else {

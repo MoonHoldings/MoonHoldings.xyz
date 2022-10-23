@@ -78,34 +78,38 @@ const clickCoinBox = () => {
       <div class="symbol">
         <div class="left">
           <img :src="coin.logo_url" alt="" />
-          <span>{{ coin.id }}</span>
+          <span>{{ coin?.id }}</span>
         </div>
-        <div class="right">{{ coin.name }}</div>
+        <div class="right">{{ coin?.name }}</div>
       </div>
       <div
         class="holdings"
         :class="{
           'font-45':
-            digitCount(coin.totalHoldings) > 6 &&
-            digitCount(coin.totalHoldings) < 8,
+            digitCount(coin?.totalHoldings) > 6 &&
+            digitCount(coin?.totalHoldings) < 8,
           'font-35':
-            digitCount(coin.totalHoldings) >= 8 &&
-            digitCount(coin.totalHoldings) < 10,
+            digitCount(coin?.totalHoldings) >= 8 &&
+            digitCount(coin?.totalHoldings) < 10,
           'font-25':
-            digitCount(coin.totalHoldings) >= 10 &&
-            digitCount(coin.totalHoldings) < 13,
+            digitCount(coin?.totalHoldings) >= 10 &&
+            digitCount(coin?.totalHoldings) < 13,
         }"
       >
-        {{ decorateNumber(coin.totalHoldings) }}
+        {{ decorateNumber(coin?.totalHoldings) }}
       </div>
       <div class="value">
         <div class="label">
           <div>Price</div>
-          <div class="price-label">${{ decorateNumber(coin.price, true) }}</div>
+          <div class="price-label">
+            ${{ decorateNumber(coin?.price, true) }}
+          </div>
         </div>
         <div class="label">
           <div>Total</div>
-          <div class="total-label">${{ decorateNumber(coin.totalValue, true) }}</div>
+          <div class="total-label">
+            ${{ decorateNumber(coin?.totalValue, true) }}
+          </div>
         </div>
       </div>
     </div>

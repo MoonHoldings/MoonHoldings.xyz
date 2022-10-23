@@ -22,7 +22,7 @@ const removeIt = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   width: 100%;
   min-height: 80px;
   padding: 1rem;
@@ -30,7 +30,7 @@ const removeIt = () => {
   z-index: 100;
   @include bp-down(small) {
     min-height: 50px;
-    font-size: 16px;
+    font-size: 1rem;
     text-align: center;
     padding: 15px;
   }

@@ -1,6 +1,6 @@
 <script setup>
-import { RouterLink } from 'vue-router'
-import { ref } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
 import {
   MOONHOLDINGS,
   LOGIN,
@@ -13,7 +13,10 @@ import {
 } from '../constants/copy'
 import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
+import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
+import { useCookies } from 'vue3-cookies'
+import decoding from 'jwt-decode'
 
 const clicks = ref(0)
 const email = ref('')
@@ -26,11 +29,14 @@ const errorPassword = ref(false)
 const emTranslate = ref(0)
 const pTranslate = ref(130)
 
+const router = useRouter()
+const route = useRoute()
+const { cookies } = useCookies()
 const userStore = useUserStore()
+const coinStore = useCoinStore()
 const utilStore = useUtilStore()
 
 const continueBtn = async () => {
-  console.log('continueBtn clicked')
   switch (clicks.value) {
     case 0:
       validateEmail()
@@ -48,14 +54,14 @@ const validateEmail = () => {
   const isValidEmail = email.value.includes('@')
   if (!email.value) {
     errorEmail.value = true
-    utilStore.mutate_errorLogin(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage("Email field can't be empty")
   } else if (!isValidEmail) {
     errorEmail.value = true
-    utilStore.mutate_errorLogin(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('Email is not valid')
   } else {
-    utilStore.mutate_errorLogin(false)
+    utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
     errorEmail.value = false
     emTranslate.value = -130
@@ -65,7 +71,7 @@ const validateEmail = () => {
   }
 }
 const login = async () => {
-  utilStore.mutate_errorLogin(false)
+  utilStore.mutate_errorToggle(false)
   try {
     const response = await userStore.login({
       email: email.value,
@@ -73,16 +79,25 @@ const login = async () => {
     })
 
     if (!response.success) {
-      utilStore.mutate_errorLogin(true)
+      utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage(response.message)
       return
     }
 
-    utilStore.mutate_showSuccessAlert(true)
-    utilStore.mutate_successMessage('You have been logged in successfully!')
     clicks.value++
+
+    const moonUser = await decoding(response.accessToken)
+    cookies.set('MOON_USER', moonUser)
+    cookies.set('MOON_TOKEN', response.accessToken)
+
+    //navigate to crypto vue
+    router.push('/crypto')
   } catch (error) {
-    utilStore.mutate_errorLogin(true)
+    mixpanel.track('Error: LoginView.vue > login', {
+      error: error,
+      message: error.message,
+    })
+    utilStore.mutate_errorToggle(true)
     console.log('error', error)
     utilStore.mutate_errorMessage(error.message)
   }
@@ -95,6 +110,17 @@ const blink = () => {
     isEyeOpen.value = 'password'
   }
 }
+
+onMounted(() => {
+  const error = route.query.error ? true : false
+
+  if (error) {
+    utilStore.mutate_errorToggle(true)
+    utilStore.mutate_errorMessage(
+      'Verify link is invalid, reset password in order to reset verify link.'
+    )
+  }
+})
 </script>
 
 <template>
@@ -124,6 +150,7 @@ const blink = () => {
               :style="{ transform: `translateX(${pTranslate}%)` }"
               :type="isEyeOpen"
               placeholder="Password"
+              tabindex="0"
               v-model="password"
             />
             <transition
@@ -133,8 +160,10 @@ const blink = () => {
             >
               <button
                 v-if="pTranslate === 0"
-                @click.prevent="blink"
+                @click.prevent="onSubmit"
+                @submit.prevent="onSubmit"
                 class="eye"
+                tabindex="-1"
               >
                 <svg
                   v-if="isEyeOpen === 'text'"
@@ -175,7 +204,9 @@ const blink = () => {
           </div>
 
           <div class="dont-have-account">
-            <router-link to="/sign-up">{{ DONT_HAVE_ACCOUNT }}</router-link>
+            <router-link to="/sign-up" tabindex="1">{{
+              DONT_HAVE_ACCOUNT
+            }}</router-link>
             <button
               class="signup-btn"
               @click.prevent="$router.push('/sign-up')"
@@ -207,15 +238,15 @@ const blink = () => {
 @import '@/sass/mixins/primary-btn.scss';
 .input-default {
   background: #eee;
-  border: 2px solid var(--pink);
+  border: 0.2rem solid var(--pink);
 }
 .error {
   background: rgba(255, 111, 111, 0.5);
-  border: 2px solid #ff6f6f;
+  border: 0.2rem solid #ff6f6f;
 }
 
 .login-window {
-  height: 580px;
+  height: 58rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -230,27 +261,27 @@ const blink = () => {
   margin-bottom: 20.41px;
 
   input {
-    margin-bottom: 20.41px;
-    border-radius: 4px;
+    margin-bottom: 2.041rem;
+    border-radius: 0.4rem;
   }
 
   a {
     color: #000;
     text-decoration: none;
-    font-size: 1rem;
-    margin-bottom: 20.41px;
+    font-size: 1.6rem;
+    margin-bottom: 2.041rem;
   }
 
   .eye {
     position: absolute;
-    top: 10px;
+    top: 1rem;
     background: none;
     border: none;
     outline: none;
     z-index: 25;
 
     svg {
-      height: 30px;
+      height: 3rem;
     }
   }
 
@@ -264,20 +295,20 @@ const blink = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20.41px;
+  margin-bottom: 2.041rem;
 
   a {
     color: #000;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.6rem;
   }
   button {
-    height: 48px;
+    height: 4.8rem;
   }
 }
 .social-signin {
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  row-gap: 2rem;
 }
 </style>

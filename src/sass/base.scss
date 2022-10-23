@@ -1,16 +1,29 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --light-pink: #e688ff;
-  --pink: #b74bd4;
+  --pink: #da57ff;
   --purple: #5b218f;
   --green: #13f195;
   --light-gray: #f0f6f0;
   --gray: #d5d6d7;
   --disable-gray: #cccccc;
   --disable-gray-2: rgb(110, 110, 110);
+  --ash: #3f473f;
 }
 
 /* semantic color variables for this project */
+@viewport {
+  width: device-width;
+  zoom: 1.0 ;
+}
+
+@-ms-viewport {
+  width: device-width;
+}
+
+html {
+  font-size: 62.5%; // 1em = 10px
+}
 
 *,
 *::before,
@@ -25,7 +38,6 @@ body {
   min-height: 100vh;
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
-  font-size: 62.5%; // 1em = 10px
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

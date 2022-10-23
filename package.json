@@ -1,7 +1,7 @@
 {
   "name": "moonholdings.xyz",
   "version": "1.0.0",
-  "description": "The Portfolio App to Rule them All",
+  "description": "The Web3 Portfolio Intelligence App.",
   "author": "Leon <leon@moonholdings.xyz> (https://twitter.com/leongaban)",
   "contributors": [
     "Leon Gaban",
@@ -27,9 +27,12 @@
     "animate.css": "^4.1.1",
     "axios": "^0.27.2",
     "firebase": "^9.9.4",
+    "jwt-decode": "^3.1.2",
+    "mixpanel-browser": "^2.45.0",
     "pinia": "^2.0.14",
     "vue": "^3.2.36",
-    "vue-router": "^4.0.15"
+    "vue-router": "^4.0.15",
+    "vue3-cookies": "^1.0.6"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",

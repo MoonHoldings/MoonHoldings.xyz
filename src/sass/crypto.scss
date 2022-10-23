@@ -1,0 +1,296 @@
+.active-currency {
+  position: relative;
+  color: var(--pink);
+  font-weight: 600;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -0.1rem;
+    left: 0;
+    height: 0.2rem;
+    width: 100%;
+    background-color: var(--pink);
+  }
+}
+.crypto {
+  color: var(--ash);
+  min-height: 100vh;
+  min-width: calc(100% - 200px);
+  padding: 11rem 4.1rem 4.1rem calc(4.1rem + 200px);
+  background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
+
+  // ========== Welcome ===========
+  &__welcome-msg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+    h1 {
+      font-size: 4.5rem;
+      font-weight: 600;
+    }
+    p {
+      font-size: 2.8rem;
+    }
+    .monster-div {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translateX(100%) translateY(130%);
+      img {
+        height: 9rem;
+      }
+    }
+  }
+
+  // ========== Main ===========
+
+  &__coins-stats {
+    display: grid;
+    // grid-template-columns: 60% 40%;
+  }
+
+  &__all-coins {
+    padding-right: 2rem;
+  }
+
+  // ============== Entries ===============
+  &__entries {
+    padding-right: 3rem;
+  }
+
+  &__sub-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__coin-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    // margin-bottom: 5.8rem;
+
+    input {
+      position: relative;
+      min-height: 4.4rem;
+      min-width: 24rem;
+      background: #e9eee9;
+      border: 0.1rem solid var(--pink);
+      box-shadow: 0px 1px 10px 1px rgba(182, 75, 212, 0.13);
+      -webkit-box-shadow: 0px 1px 10px 1px rgba(183, 75, 212, 0.16);
+      -moz-box-shadow: 0px 1px 10px 1px rgba(183, 75, 212, 0.16);
+      border-radius: 0.2rem;
+      outline: none;
+      font-size: 1.8rem;
+      padding-left: 1.2rem;
+      margin-right: 3rem;
+      font-family: 'Inter', monospace;
+      z-index: 8;
+    }
+    ::placeholder {
+      color: inherit;
+    }
+    .sort-text {
+      font-size: 1.6rem;
+      margin-right: 0.7rem;
+    }
+    .sort-btns {
+      button {
+        background: none;
+        border: none;
+        outline: none;
+        svg {
+          height: 3rem;
+          width: 3rem;
+        }
+      }
+    }
+    .dropdown-list {
+      position: absolute;
+      top: 4.4rem;
+      width: 38rem;
+      min-height: 15rem;
+      background-color: #fff;
+      box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px,
+        rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px,
+        rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+      z-index: 7;
+      ul {
+        padding: 0.7rem 0;
+        list-style: none;
+        li {
+          button {
+            width: 100%;
+            text-align: left;
+            padding: 0.8rem 1.3rem;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+
+  &__total-value {
+    font-family: 'Inter', monospace;
+    color: #000;
+    .value {
+      color: #000;
+      float: right;
+      font-weight: 600;
+      font-family: 'Inconsolata', monospace;
+
+      &-number {
+        position: relative;
+        .s1 {
+          font-size: 4rem;
+          margin-right: 1.5rem;
+        }
+        .s2 {
+          font-size: 4rem;
+          color: #5fcd9f;
+        }
+        small {
+          margin-left: 1.6rem;
+          font-size: 1.6rem;
+          line-height: 4.2rem;
+        }
+      }
+    }
+    .value-currency {
+      text-align: right;
+
+      .text {
+        font-size: 1.6rem;
+      }
+      button {
+        border: none;
+        outline: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        font-size: 1.6rem;
+      }
+      .pipe {
+        font-size: 1.7rem;
+      }
+    }
+  }
+
+  &__pct-bar {
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+    margin-top: 2rem;
+    font-family: 'Inter', monospace;
+    margin-bottom: 2.5rem;
+
+    // &::before {
+    //   content: '';
+    //   position: absolute;
+    //   bottom: -0.1rem;
+    //   right: -0.1rem;
+    //   width: 100%;
+    //   height: 8rem;
+    //   background: #000;
+    //   border-radius: 0.3rem;
+    // }
+    .coin-pct {
+      .pct-num {
+        font-size: 1.6rem;
+        color: #000;
+        min-height: 3rem;
+      }
+      .pct-color {
+        position: relative;
+        height: 8rem;
+        width: 100%;
+        border-top: 0.1rem solid #000;
+        border-bottom: 0.2rem solid #000;
+        border-right: 0.1rem solid #000;
+
+        & > div {
+          font-size: 1.5rem;
+          position: absolute;
+          bottom: 0;
+          left: 0.3rem;
+        }
+      }
+      &:first-child {
+        .pct-color {
+          border-left: 0.1rem solid #000;
+          border-radius: 0.3rem 0 0 0.3rem;
+        }
+      }
+      &:last-child {
+        .pct-color {
+          border-radius: 0 0.3rem 0.3rem 0;
+          border-right: 0.2rem solid #000;
+        }
+      }
+    }
+  }
+
+  &__twitter-share {
+    text-align: right;
+    img {
+      width: 3.6rem;
+      position: relative;
+      right: -2rem;
+      top: -1.5rem;
+      z-index: 9;
+    }
+    .shadow {
+      position: absolute;
+      bottom: -0.2rem;
+      right: -0.2rem;
+      min-width: 17.5rem;
+      min-height: 5.5rem;
+      background: rgba(75, 75, 75, 0.247);
+      border-radius: 0.2rem;
+    }
+    .twitter-btn {
+      position: relative;
+      z-index: 8;
+      min-width: 17.5rem;
+      min-height: 5.5rem;
+      background-color: var(--pink);
+      border-radius: 0.2rem;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: 'Inconsolata';
+      font-weight: 400;
+      font-size: 1.8rem;
+    }
+  }
+
+  // --------------portfolio coins-------------
+  &__coins {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 6rem;
+  }
+
+  //-------------watch list--------------
+  &__watch {
+    h1 {
+      color: #000;
+      font-size: 1.8rem;
+      font-family: 'Inter', monospace;
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__watch-coins {
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  // ============ Stats =============
+}

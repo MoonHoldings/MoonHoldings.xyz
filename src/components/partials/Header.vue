@@ -1,107 +1,164 @@
-<script setup></script>
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute, RouterView } from 'vue-router'
+import { useCoinStore } from '@/stores/coin'
+import { useUtilStore } from '@/stores/util'
+import { useCookies } from 'vue3-cookies'
+import decorateNumber from '@/utils/decorateNumber'
+import AddCoin from '@/components/partials/AddCoin.vue'
+
+const { cookies } = useCookies()
+const route = useRoute()
+const coinStore = useCoinStore()
+const utilStore = useUtilStore()
+const searchInput = ref('')
+const searchedCoins = ref([])
+const storedCoins = ref([])
+const windowWidth = ref(0)
+
+const isNFTSView = computed(() => {
+  return (
+    route.fullPath == '/nfts/collection' ||
+    route.fullPath == '/nfts/lend-borrow'
+  )
+})
+
+const isCryptoView = computed(() => {
+  return route.fullPath == '/crypto'
+})
+
+const slicedWordUp = (name) => {
+  return name.slice(0, searchInput.value.length).toUpperCase()
+}
+
+const searchCoinClick = async (coin) => {
+  const coins = coinStore.get_cryptoCoins
+  const coinExist =
+    coins.find((item) => {
+      if (item.id === coin.id) {
+        return item
+      }
+    }) ?? {}
+
+  if (
+    coinExist &&
+    Object.keys(coinExist).length > 0 &&
+    coinExist.constructor !== Object
+  ) {
+    utilStore.mutate_addCoinModalsToggle(true)
+    coinStore.mutate_modalCoin(coinExist)
+  } else {
+    utilStore.mutate_addCoinModalsToggle(true)
+    await coinStore.getSingleCoin(coin.id)
+  }
+
+  searchedCoins.value = []
+  searchInput.value = ''
+}
+
+onMounted(async () => {
+  const moonCoins = localStorage.getItem('MoonCoins')
+  const parsedCoins = JSON.parse(moonCoins).coins
+  storedCoins.value = [...parsedCoins]
+
+  const token = cookies.get('MOON_TOKEN')
+  if (!token) coinStore.mutate_emptyCryptoCoins()
+
+  window.addEventListener('resize', () => {
+    const width = window.innerWidth
+    windowWidth.value = width
+  })
+})
+
+const fn = () => {
+  const inputUp = searchInput.value.toUpperCase()
+  if (inputUp.length >= 2) {
+    searchedCoins.value = []
+    storedCoins.value.forEach((coin) => {
+      const coinNameChar = slicedWordUp(coin.name)
+      const coinSymbolChar = slicedWordUp(coin.symbol)
+      if (coinNameChar === inputUp || coinSymbolChar === inputUp) {
+        const doesExist = searchedCoins.value.some(
+          (sc) => sc.name === coin.name
+        )
+        if (!doesExist) searchedCoins.value.push(coin)
+      }
+    })
+  }
+  if (inputUp.length === 0) {
+    searchedCoins.value = []
+  }
+}
+
+watch([searchInput], () => {
+  fn()
+})
+</script>
 
 <template>
+  <teleport to="#modals-root">
+    <transition
+      mode="out-in"
+      enter-active-class="animate__animated animate__fadeIn"
+      leave-active-class="animate__animated animate__fadeOut"
+    >
+      <AddCoin v-if="utilStore.addCoinModalsToggle" />
+    </transition>
+  </teleport>
+
   <div class="header">
-    <div class="header__left">
-      <RouterLink to="/">
-        <img src="/svg/moon-holdings-logo.svg" alt="logo" />
-        <span>MOONHOLDINGS.XYZ</span>
-      </RouterLink>
-      <nav>
-        <ul>
-          <li>
-            <RouterLink to="/portfolio">PORTFOLIO</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/portfolio">RANKS</RouterLink>
-          </li>
-        </ul>
-      </nav>
-    </div>
-    <div class="header__right">
-      <button>
-        <img src="/svg/icon-hamburger-menu.svg" alt="hamburger menu" />
-      </button>
+    <div class="header__pink-bar" />
+    <div class="header__main">
+      <div v-if="isNFTSView" class="left-side">
+        <div class="label">
+          <span> Current supported chains: </span>
+          <img src="/svg/icon-support-chain.svg" alt="chain-icon" />
+        </div>
+
+        <div class="style">
+          <span> Portfolio display style: </span>
+          <img src="/svg/icon-grid.svg" alt="chain-icon" />
+          <img src="/svg/icon-list.svg" alt="chain-icon" />
+        </div>
+      </div>
+
+      <div v-if="isCryptoView" class="crypto__coin-search">
+        <input v-model="searchInput" type="text" placeholder="Search Coins" />
+        <!-- Dropdown -->
+        <transition
+          mode="out-in"
+          enter-active-class="animate__animated animate__bounceInDown"
+          leave-active-class="animate__animated animate__bounceOutUp"
+        >
+          <div class="dropdown-list" v-if="searchedCoins.length !== 0">
+            <ul>
+              <li v-for="coin in searchedCoins" :key="coin.id">
+                <button @click="searchCoinClick(coin)">
+                  {{ coin.id }} - {{ coin.name }}
+                </button>
+              </li>
+            </ul>
+          </div>
+        </transition>
+      </div>
+
+      <div class="right-side">
+        <div class="number">
+          ${{ decorateNumber(coinStore?.get_totalPortfolioValue, true) }}
+        </div>
+        <div class="percent">
+          <span class="percent-number">+5.35%</span>
+          <span class="percent-date">1D</span>
+        </div>
+        <div class="menu">
+          <img src="/svg/icon-hamburger-menu.svg" alt="hamburger menu" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  min-height: 70px;
-  background: var(--light-gray);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 25px;
-  z-index: 99;
-
-  &__left {
-    display: flex;
-    align-items: center;
-
-    > a {
-      display: flex;
-      align-items: center;
-      color: inherit;
-      text-decoration: none;
-      margin-right: 26px;
-
-      img {
-        height: 32px;
-        margin-right: 20px;
-      }
-      span {
-        font-size: 24px;
-        font-weight: 600;
-      }
-    }
-    nav {
-      // border: 1px solid magenta;
-      // display: flex;
-      // align-items: center;
-
-      ul {
-        list-style: none;
-        display: flex;
-
-        li {
-          &:first-child {
-            font-size: 20px;
-            font-weight: 600;
-            margin-right: 15px;
-
-            a {
-              text-decoration: underline;
-              color: var(--light-pink);
-            }
-          }
-          &:nth-last-child(1) {
-            font-size: 20px;
-            font-weight: 700;
-
-            a {
-              text-decoration: none;
-              color: #cccccc;
-            }
-          }
-        }
-      }
-    }
-  }
-  &__right {
-    button {
-      border: none;
-      background: none;
-
-      img {
-        height: 32px;
-      }
-    }
-  }
-}
+@import '@/sass/crypto.scss';
+@import '@/sass/header.scss';
 </style>

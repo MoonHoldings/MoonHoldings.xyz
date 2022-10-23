@@ -1,0 +1,72 @@
+@import './mixins/shadow-before-after.scss';
+
+.shadow-common {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  border-radius: 2px;
+  width: 240px;
+  height: 240px;
+  z-index: 5;
+}
+
+.btc-shadow {
+  .top-corner {
+    @include shadow-before;
+    background: #f7931a;
+  }
+  .bottom-corner {
+    @include shadow-after;
+    background: #ffc783;
+  }
+}
+.eth-shadow {
+  background: linear-gradient(180deg, #5d17ad 0%, #1d0334 100%);
+
+  .top-corner {
+    @include shadow-before;
+    background: #5d17ad;
+  }
+  .bottom-corner {
+    @include shadow-after;
+    background: #1d0334;
+  }
+}
+.sol-shadow {
+  background: linear-gradient(180deg, #b712e6 0%, #060107 100%);
+
+  .top-corner {
+    @include shadow-before;
+    background: #b712e6;
+  }
+  .bottom-corner {
+    @include shadow-after;
+    background: #060107;
+  }
+}
+.algo-shadow {
+  background: linear-gradient(180deg, #ffffff 0%, #060107 100%);
+
+  .top-corner {
+    @include shadow-before;
+    background: #f6f6f6;
+  }
+  .bottom-corner {
+    @include shadow-after;
+    background: #060107;
+  }
+}
+.doge-shadow {
+  background: linear-gradient(180deg, #c2a633 0%, #eddb91 100%);
+
+  .top-corner {
+    @include shadow-before;
+    background: #c2a633;
+  }
+  .bottom-corner {
+    @include shadow-after;
+    background: #eddb91;
+  }
+}

@@ -5,8 +5,8 @@ import TempHomePage from '@/components/home/TempHomePage.vue'
 
 <template>
   <main>
-    <!-- <HomePage /> -->
-    <TempHomePage />
+    <HomePage />
+    <!-- <TempHomePage /> -->
   </main>
 </template>
 

@@ -1,5 +1,5 @@
 <script setup>
-import { GET_STARTED, SIGN_UP_PATH } from '../../constants'
+import { SIGN_UP, SIGN_UP_PATH, TAG_LINE, TRACK_MANAGE_ANALYZE } from '../../constants'
 import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 </script>
 
@@ -7,9 +7,9 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
   <main>
     <div class="moon-cta">
       <section class="tagline">
-        <h1>The Bold Portfolio Tracker For Brave Crypto Investors</h1>
-        <h2>Start or continue your crypto investing journey with us.</h2>
-        <PrimaryBtn :copy="GET_STARTED" :url="SIGN_UP_PATH" />
+        <h2>{{TAG_LINE}}</h2>
+        <h1>{{TRACK_MANAGE_ANALYZE}}</h1>
+        <PrimaryBtn :copy="SIGN_UP" :url="SIGN_UP_PATH" />
       </section>
     </div>
   </main>
@@ -17,21 +17,26 @@ import PrimaryBtn from '@/components/partials/PrimaryBtn.vue'
 
 <style lang="scss" scoped>
 main {
-  height: 400px;
+  position: fixed;
+  top: 468px;
+  width: 100%;
 }
+
 h1 {
-  width: 640px;
-  font-size: 3.6em;
+  margin-bottom: 8rem;
+  font-size: 6rem;
   font-weight: 800;
-  line-height: 1.3em;
+  line-height: 1.3rem;
 }
+
 h2 {
-  margin: 2em 0;
-  font-size: 2em;
+  margin-bottom: 4rem;
+  font-size: 4rem;
 }
+
 .moon-cta {
   display: grid;
-  margin-top: 5em;
+  margin-top: 5rem;
   width: auto;
   height: 200px;
   color: white;
@@ -44,4 +49,46 @@ h2 {
   align-content: space-evenly;
   align-items: center;
 }
+
+@media (max-width: 1440px) {
+  main {
+    top: 248px;
+  }
+}
+
+@media (max-width: 1100px) {
+  h1 {
+    font-size: 5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 990px) {
+  main {
+    top: 218px;
+  }
+
+  h1 {
+    font-size: 5rem;
+  }
+
+  h2 {
+    padding: 0 2rem;
+  }
+}
+
+@media screen and (min-width:320px) and (max-width:640px) {
+  h1 {
+    font-size: 4rem;
+    line-height: 4rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
+}
+
 </style>

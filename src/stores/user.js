@@ -4,7 +4,9 @@ import axios from 'axios'
 export const useUserStore = defineStore('user', {
   state: () => ({
     server_url: `${import.meta.env.VITE_MOONSERVER_URL}/api`,
-    axios_config: { headers: { 'Content-Type': 'application/json' } },
+    axios_config: {
+      headers: { 'Content-Type': 'application/json' },
+    },
     gotten_user: null,
   }),
   getters: {
@@ -22,6 +24,10 @@ export const useUserStore = defineStore('user', {
         const result = await response.data
         return result
       } catch (error) {
+        mixpanel.track('Error: user.js > inviteBetaTester', {
+          error: error,
+          message: error.message,
+        })
         const { response } = error
         return {
           success: response.data.success,
@@ -41,6 +47,10 @@ export const useUserStore = defineStore('user', {
           //
         }
       } catch (error) {
+        mixpanel.track('Error: user.js > getUser', {
+          error: error,
+          message: error.message,
+        })
         return error.message
       }
     },
@@ -54,6 +64,11 @@ export const useUserStore = defineStore('user', {
         const result = await response.data
         return result
       } catch (error) {
+        mixpanel.track('Error: user.js > login', {
+          error: error,
+          message: error.message,
+          payload: payload,
+        })
         return {
           success: false,
           message: error,
@@ -71,15 +86,15 @@ export const useUserStore = defineStore('user', {
         const result = await response.data
         return result
       } catch (error) {
-        // const { response } = error
+        mixpanel.track('Error: user.js > signup', {
+          error: error,
+          message: error.message,
+          payload: payload,
+        })
         return {
           success: false,
           message: error,
         }
-        // return {
-        //   success: response.data.success,
-        //   message: response.data.message,
-        // }
       }
     },
     async sendNewsletter(payload) {
@@ -92,6 +107,11 @@ export const useUserStore = defineStore('user', {
         const result = await response.data
         return result
       } catch (error) {
+        mixpanel.track('Error: user.js > sendNewsletter', {
+          error: error,
+          message: error.message,
+          payload: payload,
+        })
         return {
           success: false,
           message: error,

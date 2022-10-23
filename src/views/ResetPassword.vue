@@ -29,12 +29,12 @@ import { MOONHOLDINGS, RESET_PASSWORD, SUBMIT } from '../constants/copy'
 .resetPassword-container {
   display: grid;
   grid-template-columns: 2fr 1fr 2fr;
-  height: 100%;
+  min-height: 100vh;
   background-image: linear-gradient(to bottom, var(--pink), var(--purple));
 
   .reset-section {
     height: 100%;
-    min-width: 400px;
+    min-width: 40rem;
     min-height: 100%;
     display: flex;
     flex-direction: column;
@@ -43,10 +43,10 @@ import { MOONHOLDINGS, RESET_PASSWORD, SUBMIT } from '../constants/copy'
   }
 
   .reset-window {
-    width: 400px;
+    width: 40rem;
     background: #ffffff;
     border: 1px solid #979797;
-    border-radius: 4px;
+    border-radius: 0.4rem;
     padding: 4em;
 
     h1,
@@ -55,48 +55,48 @@ import { MOONHOLDINGS, RESET_PASSWORD, SUBMIT } from '../constants/copy'
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 3.2rem;
       font-weight: 400;
       text-transform: uppercase;
     }
     h2 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
+      font-size: 2.4rem;
+      margin-bottom: 2rem;
     }
 
     form {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      row-gap: 20px;
+      row-gap: 2rem;
     }
 
     input {
       width: 100%;
       outline: none;
-      min-height: 53px;
-      padding-left: 19px;
-      font-size: 20px;
-      border: 2px solid var(--pink);
+      min-height: 5.3rem;
+      padding-left: 1.9rem;
+      font-size: 2rem;
+      border: 0.2rem solid var(--pink);
       background: #eee;
     }
 
     button {
       width: 100%;
-      min-height: 48px;
+      min-height: 4.8rem;
       background: #13f195;
       border: 1px solid #a1a1a1;
-      border-radius: 4px;
-      font-size: 20px;
+      border-radius: 0.4rem;
+      font-size: 2rem;
       font-weight: 400;
-      letter-spacing: 0.4px;
-      margin-bottom: 20px;
+      letter-spacing: 0.04rem;
+      margin-bottom: 2rem;
     }
 
     .guide-text {
-      font-size: 1rem;
+      font-size: 1.6rem;
       text-align: center;
-      line-height: 30px;
+      line-height: 3rem;
     }
   }
 }

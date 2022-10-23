@@ -8,7 +8,6 @@ import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
 import passwordValidate from '@/utils/passwordValidate'
-// import delay from '@/utils/delay'
 
 const route = useRoute()
 
@@ -52,15 +51,15 @@ const validateEmail = () => {
   const isValidEmail = email.value.includes('@')
   if (!email.value) {
     errorEmail.value = true
-    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage("Email field can't be empty")
   } else if (!isValidEmail) {
     errorEmail.value = true
-    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('Email is not valid')
   } else {
     if (checkboxValue.value === true) {
-      utilStore.mutate_errorSignup(false)
+      utilStore.mutate_errorToggle(false)
       utilStore.mutate_errorMessage('')
       errorEmail.value = false
       emTranslate.value = -130
@@ -68,9 +67,8 @@ const validateEmail = () => {
 
       clicks.value++
     } else {
-      // clickedOnce.value = true
       errorEmail.value = false
-      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage('Check the terms and policies')
     }
   }
@@ -80,15 +78,15 @@ const validatePassword = () => {
   const isValid = passwordValidate(password.value)
   if (!password.value) {
     errorPassword.value = true
-    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage("Password field can't be empty")
   } else if (!isValid) {
     errorPassword.value = true
-    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage("Password doesn't meet the criteria")
   } else {
     errorPassword.value = false
-    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
     pTranslate.value = -130
     cpTranslate.value = 0
@@ -101,12 +99,12 @@ const signup = async () => {
   submitClick.value = true
   if (password.value !== confirmPassword.value) {
     errorCPassword.value = true
-    utilStore.mutate_errorSignup(true)
+    utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('Password does not match')
     submitClick.value = false
   } else {
     errorCPassword.value = false
-    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
     try {
       const response = await userStore.signup({
@@ -115,10 +113,17 @@ const signup = async () => {
       })
 
       if (!response.success) {
-        utilStore.mutate_errorSignup(true)
-        utilStore.mutate_errorMessage('')
+        utilStore.mutate_errorToggle(true)
+        utilStore.mutate_errorMessage(
+          'There is an account associated with this email'
+        )
         utilStore.mutate_headingEndPoint('login')
         submitClick.value = false
+
+        mixpanel.track('*User Signed up*', {
+          'email': email.value
+        })
+
         return
       }
 
@@ -128,8 +133,12 @@ const signup = async () => {
       )
       clicks.value++
     } catch (error) {
+      mixpanel.track('Error: SignUpView.vue > signup', {
+        error: error,
+        message: error.message,
+      })
       errorCPassword.value = true
-      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage(error.message)
       submitClick.value = false
     }
@@ -148,7 +157,7 @@ const fieldBack = () => {
     }
     clicks.value--
     errorEmail.value = false
-    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
   }
 }
@@ -174,7 +183,7 @@ onMounted(() => {
 })
 watch(route, (newValue) => {
   if (newValue.path !== '/sign-up') {
-    utilStore.mutate_errorSignup(false)
+    utilStore.mutate_errorToggle(false)
     utilStore.mutate_showSuccessAlert(false)
   }
 })
@@ -330,42 +339,42 @@ watch(clicks, () => {
 .signup-window {
   position: relative;
   overflow: hidden;
-  min-height: 441px;
+  min-height: 44.1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   transition: min-height 0.4s ease;
-  padding: 2rem;
+  padding: 3.2rem;
 }
 .arrow {
   position: absolute;
-  left: -50px;
+  left: -5rem;
   width: 0;
   height: 0;
   background: none;
   outline: none;
-  border-top: 15px solid transparent;
-  border-bottom: 15px solid transparent;
-  border-left: 15px solid transparent;
-  border-right: 15px solid #fff;
+  border-top: 1.5rem solid transparent;
+  border-bottom: 1.5rem solid transparent;
+  border-left: 1.5rem solid transparent;
+  border-right: 1.5rem solid #fff;
 }
 
 .inc-signup {
-  min-height: 501px;
+  min-height: 50.1rem;
 }
 
 .input-default {
   background: #eee;
-  border: 2px solid var(--pink);
+  border: 0.2rem solid var(--pink);
 }
 
 .error {
   background: rgba(255, 111, 111, 0.5);
-  border: 2px solid #ff6f6f;
+  border: 0.2rem solid #ff6f6f;
 }
 
 .email-input {
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 
   input {
     left: 0;
@@ -379,15 +388,15 @@ watch(clicks, () => {
 
   .eye {
     position: absolute;
-    right: 2px;
-    top: 10px;
+    right: 0.2rem;
+    top: 1rem;
     background: none;
     border: none;
     outline: none;
     z-index: 25;
 
     svg {
-      height: 30px;
+      height: 3rem;
     }
   }
   .animate__animated.animate__fadeIn,
@@ -397,7 +406,7 @@ watch(clicks, () => {
 }
 
 form {
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
 .pass-note {
@@ -405,18 +414,18 @@ form {
   display: flex;
   align-items: flex-start;
   text-align: center;
-  font-size: 12px;
+  font-size: 1.2rem;
   transition: all 0.4s ease;
 }
 
 .note-open {
-  height: 60px;
+  height: 6rem;
 }
 
 .social-signin {
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  row-gap: 2rem;
 }
 
 .accept-terms-section {
@@ -424,7 +433,7 @@ form {
   grid-template-columns: 1fr 4fr;
   height: 0;
   margin-bottom: 0;
-  font-size: 12px;
+  font-size: 1.2rem;
   background-color: #fff;
   transition: all 0.4s ease;
   overflow: hidden;
@@ -433,11 +442,11 @@ form {
   }
 }
 .check-open {
-  height: 72.6px;
-  margin-bottom: 15px;
+  height: 7.26rem;
+  margin-bottom: 1.5rem;
 }
 
 #accept-terms {
-  height: 20px;
+  height: 2rem;
 }
 </style>

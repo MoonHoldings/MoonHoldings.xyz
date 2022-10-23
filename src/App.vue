@@ -3,6 +3,7 @@ import { onMounted, watch } from 'vue'
 import { useRoute, RouterView } from 'vue-router'
 import SuccessAlert from '@/components/partials/SuccessAlert.vue'
 import ErrorAlert from '@/components/partials/ErrorAlert.vue'
+import SideBar from '@/components/partials/SideBar.vue'
 import { useUtilStore } from '@/stores/util'
 import { useCoinStore } from '@/stores/coin'
 
@@ -10,9 +11,8 @@ const route = useRoute()
 const utilStore = useUtilStore()
 const coinStore = useCoinStore()
 
-watch(route, () => {
-  utilStore.mutate_errorSignup(false)
-  utilStore.mutate_errorLogin(false)
+watch(route, (prev, present) => {
+  utilStore.mutate_errorToggle(false)
   utilStore.mutate_errorMessage('')
   utilStore.mutate_showSuccessAlert(false)
   utilStore.mutate_successMessage('')
@@ -39,25 +39,48 @@ onMounted(async () => {
     enter-active-class="animate__animated animate__fadeInLeftBig"
     leave-active-class="animate__animated animate__fadeOutRightBig"
   >
-    <ErrorAlert v-if="utilStore.errorSignup || utilStore.errorLogin" />
+    <ErrorAlert v-if="utilStore.errorToggle" />
   </transition>
-
+  <SideBar />
   <RouterView />
 </template>
 
 <style lang="scss">
 @import url('https://rsms.me/inter/inter.css');
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;800&display=swap');
 @import '@/sass';
 
-html,
-body {
-  height: 100%;
+.font-45 {
+  font-size: 4.5rem !important;
+}
+.font-40 {
+  font-size: 4rem !important;
+}
+.font-35 {
+  font-size: 3.5rem !important;
+}
+.font-25 {
+  font-size: 2.5rem !important;
+}
+.font-15 {
+  font-size: 1.5rem !important;
+}
+.font-14 {
+  font-size: 1.4rem !important;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+* {
+  box-sizing: border-box;
 }
 
 #app {
   max-width: auto;
-  height: 100%;
   margin: 0 auto;
   font-family: 'Inconsolata', monospace;
   font-weight: normal;

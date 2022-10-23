@@ -19,7 +19,7 @@ const utilStore = useUtilStore()
 const submitInvite = async () => {
   nameFieldClasses.value = ['default-field']
   emailFieldClasses.value = ['default-field']
-  utilStore.mutate_errorSignup(false)
+  utilStore.mutate_errorToggle(false)
   utilStore.mutate_errorMessage('')
   utilStore.mutate_showSuccessAlert(false)
   utilStore.mutate_successMessage('')
@@ -27,7 +27,7 @@ const submitInvite = async () => {
   if (name.value !== '' && email.value !== '') {
     if (!email.value.includes('@')) {
       emailFieldClasses.value = ['error-field']
-      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage('This is not a valid email address')
       return
     }
@@ -40,24 +40,29 @@ const submitInvite = async () => {
       subscription: isSubscribed.value,
     })
     if (response.success === true) {
+      mixpanel.track('Beta signup', {
+        'name': name.value,
+        'email': email.value
+      })
+
       utilStore.mutate_showSuccessAlert(true)
       utilStore.mutate_successMessage(
         'Woot!! You are invited! An invite email has been sent!'
       )
     } else {
-      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage(response.message)
     }
     disabledSubmit.value = false
   } else {
     if (name.value === '') {
       nameFieldClasses.value = ['error-field']
-      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage('Every field needs to be fulfilled')
     }
     if (email.value === '') {
       emailFieldClasses.value = ['error-field']
-      utilStore.mutate_errorSignup(true)
+      utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage('Every field needs to be fulfilled')
     }
   }

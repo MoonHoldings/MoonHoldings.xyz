@@ -110,46 +110,7 @@ export const useCoinStore = defineStore('coin', {
       this.modalCoin.wallets[unsavedWalletIndex].value = totalValue
       this.modalCoin.wallets[unsavedWalletIndex].saved = true
     },
-    async refreshCryptoCoins() {
-      const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY
-      const updatedCoins = []
-
-      for (let i = 0; i < this.cryptoCoins.length; i++) {
-        const response = await axios.get(
-          `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${this.cryptoCoins[i].id}&intervals=1d,30d`
-        )
-
-        const fetchedCoin = response.data[0]
-
-        const allWallets = fetchedCoin.wallets
-        const updatedWallets = allWallets?.map((wallet) => {
-          const updatedValue =
-            Number(fetchedCoin.price) * Number(wallet.holding)
-          return { ...wallet, value: updatedValue }
-        })
-
-        let newTotalValue = 0
-        updatedWallets?.forEach((wallet) => {
-          newTotalValue += Number(wallet.value)
-        })
-
-        const _24hr = fetchedCoin['1d']
-          ? fetchedCoin['1d']['price_change_pct']
-          : ''
-
-        const updatedCoin = {
-          ...this.cryptoCoins[i],
-          _24hr,
-          price: fetchedCoin.price,
-          totalValue: newTotalValue,
-        }
-
-        updatedCoins.push(updatedCoin)
-      }
-
-      this.cryptoCoins = updatedCoins
-    },
-    async addPortfolioCoin(totalHoldings, totalValue) {
+    async addCryptoCoin(totalHoldings, totalValue) {
       this.modalCoin.totalHoldings = totalHoldings
       this.modalCoin.totalValue = totalValue
 
@@ -217,8 +178,9 @@ export const useCoinStore = defineStore('coin', {
 
       this.modalCoin = {}
     },
-    async removePortfolioCoin() {
+    async removeCryptoCoin() {
       const user = cookies.get('MOON_USER')
+      const token = cookies.get('MOON_TOKEN')
       try {
         const response = await axios.put(
           `${this.server_url}/remove-coin`,
@@ -226,7 +188,12 @@ export const useCoinStore = defineStore('coin', {
             coinId: this.modalCoin.id,
             email: user.email,
           },
-          this.axios_config
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token,
+            },
+          }
         )
 
         const result = await response.data

@@ -56,6 +56,20 @@ const searchCoinClick = async (coin) => {
   searchInput.value = ''
 }
 
+onMounted(async () => {
+  const moonCoins = localStorage.getItem('MoonCoins')
+  const parsedCoins = JSON.parse(moonCoins).coins
+  storedCoins.value = [...parsedCoins]
+
+  const token = cookies.get('MOON_TOKEN')
+  if (!token) coinStore.mutate_emptyCryptoCoins()
+
+  window.addEventListener('resize', () => {
+    const width = window.innerWidth
+    windowWidth.value = width
+  })
+})
+
 const fn = () => {
   const inputUp = searchInput.value.toUpperCase()
   if (inputUp.length >= 2) {
@@ -75,26 +89,6 @@ const fn = () => {
     searchedCoins.value = []
   }
 }
-
-onMounted(async () => {
-  const moonCoins = localStorage.getItem('MoonCoins')
-  const parsedCoins = JSON.parse(moonCoins).coins
-  storedCoins.value = [...parsedCoins]
-
-  coinStore.mutate_emptyCryptoCoins()
-
-  // const user = cookies.get('MOON_USER')
-  // user?.portfolio.coins.forEach((coin) => {
-  //   coinStore.mutate_cryptoCoin(coin)
-  // })
-
-  window.addEventListener('resize', () => {
-    const width = window.innerWidth
-    windowWidth.value = width
-  })
-
-  await coinStore.refreshCryptoCoins()
-})
 
 watch([searchInput], () => {
   fn()

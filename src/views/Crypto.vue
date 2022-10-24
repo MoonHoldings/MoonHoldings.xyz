@@ -133,6 +133,9 @@ onMounted(async () => {
     </div>
 
     <div v-else class="crypto__main">
+      <div class="loading-squares">
+        <img src="/gif/loading-squares.gif" width="200" height="200" alt="loading" />
+      </div>
       <div class="crypto__stats">
         <!-- percent bar -->
         <div

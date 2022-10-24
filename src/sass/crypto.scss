@@ -13,6 +13,12 @@
     background-color: var(--pink);
   }
 }
+
+.loading-squares {
+  position: relative;
+  z-index: 101;
+}
+
 .crypto {
   color: var(--ash);
   min-height: 100vh;

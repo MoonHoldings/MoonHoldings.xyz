@@ -21,6 +21,7 @@ const utilStore = useUtilStore()
 const storedCoins = ref([])
 const showWelcome = ref(false)
 const windowWidth = ref(0)
+const isLoading = ref(false)
 
 const cryptoCoins = computed(() => {
   const coins = coinStore.get_cryptoCoins
@@ -103,12 +104,14 @@ onMounted(async () => {
   const user = cookies.get('MOON_USER')
   const token = cookies.get('MOON_TOKEN')
   const server_url = coinStore.server_url
+  isLoading.value = true
   const refreshedCoins = await refreshCryptoCoins(
     server_url,
     user.portfolio.coins,
     token
   )
   coinStore.mutate_cryptoCoins(refreshedCoins)
+  isLoading.value = false
 
   window.addEventListener('resize', () => {
     const width = window.innerWidth
@@ -118,6 +121,14 @@ onMounted(async () => {
 </script>
 
 <template>
+  <div class="loading-squares" v-if="isLoading">
+    <img
+      src="/gif/loading-squares.gif"
+      width="200"
+      height="200"
+      alt="loading"
+    />
+  </div>
   <Header />
 
   <div class="crypto">

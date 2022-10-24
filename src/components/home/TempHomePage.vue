@@ -1,6 +1,5 @@
 <script setup>
 import monster from '/monster-logo.png'
-import loader from '/gif/rhombus-loader.gif'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useUtilStore } from '@/stores/util'
@@ -133,9 +132,6 @@ const submitInvite = async () => {
         <button class="submit" :disabled="disabledSubmit" @click="submitInvite">
           Get on the list
         </button>
-        <span class="loader" :hidden="!disabledSubmit">
-          <img :src="loader" alt="" />
-        </span>
       </div>
     </div>
     <div class="monster-img">

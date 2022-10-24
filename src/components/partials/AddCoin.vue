@@ -24,8 +24,8 @@ const closeModal = () => {
   coinStore.mutate_emptyModalCoin()
 }
 
-const removeWalletInputs = () => {
-  coinStore.removeNewWallet()
+const cancelSaveNewWalletHoldings = () => {
+  coinStore.cancelNewWallet()
   walletInput.value = ''
   holdingsInput.value = null
 
@@ -203,7 +203,7 @@ watch(
         </div>
         <ul class="holdings-list" v-else>
           <li v-for="(wallet, i) in modalCoin.wallets" :key="i">
-            <div class="holdings-field" v-if="!wallet.saved">
+            <div class="holdings-field" v-if="wallet.saved == false">
               <div class="wallet-input">
                 <input
                   type="text"
@@ -224,7 +224,7 @@ watch(
               </div>
               <div class="save-btn-input">
                 <button @click="saveNewWalletHoldings">Save</button>
-                <button @click="removeWalletInputs">
+                <button @click="cancelSaveNewWalletHoldings">
                   <img :src="crossBlack" alt="cross black" />
                 </button>
               </div>

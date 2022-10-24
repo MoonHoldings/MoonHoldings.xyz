@@ -197,7 +197,7 @@ onMounted(() => {
                 </svg>
               </button>
             </transition>
-            <a href="/forgot-password">{{ FORGOT_PASSWORD }}</a>
+            <a href="/reset-password">{{ FORGOT_PASSWORD }}</a>
             <button class="continue-btn" @click.prevent="continueBtn">
               {{ clicks === 1 ? SUBMIT : CONTINUE }}
             </button>
@@ -215,7 +215,7 @@ onMounted(() => {
             </button>
           </div>
 
-          <div class="social-signin">
+          <!-- <div class="social-signin">
             <SocialAuthBtn
               social-name="twitter"
               bg-color="#55ACEE"
@@ -226,7 +226,7 @@ onMounted(() => {
               bg-color="#7289DA"
               text="Log In With Discord"
             />
-          </div>
+          </div> -->
         </form>
       </div>
     </div>

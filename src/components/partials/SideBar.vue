@@ -29,7 +29,15 @@ onMounted(() => {
 })
 
 watch(route, (prev, present) => {
-  isSidebar.value = route.fullPath !== "/" && route.fullPath !== "/login" && route.fullPath !== "/sign-up" && !useUserStore.gotten_user
+  isSidebar.value =
+    route.fullPath == "/" ||
+    route.fullPath == "/crypto" ||
+    route.fullPath == "/nfts/collection" ||
+    route.fullPath == "/nfts/lend-borrow" ||
+    route.fullPath == "/calendar" ||
+    route.fullPath == "/coin-swap" ||
+    route.fullPath == "/ranks" ||
+    route.fullPath == "/insights"
 })
 
 

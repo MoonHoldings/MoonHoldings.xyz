@@ -18,7 +18,8 @@ const { nft } = props
       </div>
       <div class="header-right">
         <div class="image-container">
-          <img src="/svg/icon-arrow-circle-down.svg" alt="down value" />
+          <img v-if="nft?.floor > 20" src="/svg/icon-arrow-circle-down.svg" alt="down value" />
+          <img v-else src="/svg/icon-arrow-circle-up.svg" alt="up value" />
         </div>
       </div>
     </div>

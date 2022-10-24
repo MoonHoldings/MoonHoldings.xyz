@@ -29,6 +29,13 @@
       background-color: white;
       display: flex;
     }
+    .grid-box {
+      position: relative;
+    }
+    .grid-container {
+      position: relative;
+      z-index: 6;
+    }
     .header-left {
       width: calc(100% - 38px);
       padding: 8px;
@@ -63,6 +70,7 @@
       border-left: 1px solid black;
       border-right: 1px solid black;
       border-bottom: 1px solid black;
+      background-color: white;
     }
     .grid-name {
       width: 100%;
@@ -95,6 +103,19 @@
           line-height: 22px;
         }
       }
+    }
+    .grid-shadow {
+      position: absolute;
+      position: absolute;
+      top: 9px;
+      left: 9px;
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+      border-radius: 2px;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      background: linear-gradient(rgb(247, 147, 26) 0%, rgb(255, 199, 131) 100%);
     }
   }
   &__right-side {

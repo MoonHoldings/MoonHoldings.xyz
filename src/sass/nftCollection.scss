@@ -115,7 +115,28 @@
       width: 100%;
       height: 100%;
       z-index: 5;
-      background: linear-gradient(rgb(247, 147, 26) 0%, rgb(255, 199, 131) 100%);
+      background: linear-gradient(#DA57FF 36%, #F5D3FF 100%);
+    }
+    .top-corner {
+      width: 14.5px;
+      height: 14.5px;
+      border-top: 1px solid #000;
+      border-radius: 1.5px;
+      position: absolute;
+      right: 3px;
+      top: -7px;
+      transform: rotate(45deg);
+      background: #DA57FF;
+    }
+    .bottom-corner {
+      width: 14.5px;
+      height: 14.5px;
+      border-bottom: 1px solid #000;
+      border-radius: 2px;
+      position: absolute;
+      bottom: 3px;
+      left: -6.5px;
+      transform: rotate(45deg);
     }
   }
   &__right-side {

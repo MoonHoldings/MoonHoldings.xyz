@@ -45,7 +45,10 @@ import Header from '@/components/partials/Header.vue'
                 </div>
               </div>
             </div>
-            <div class="grid-shadow"></div>
+            <div class="grid-shadow">
+              <div class="top-corner"></div>
+              <div class="bottom-corner"></div>
+            </div>
           </div>
         </div>
         <div></div>

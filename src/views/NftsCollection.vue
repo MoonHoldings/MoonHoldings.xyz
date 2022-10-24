@@ -16,13 +16,11 @@ import Header from '@/components/partials/Header.vue'
         Connected Wallets
       </div>
 
-      <div class="button-section">
-        <div class="button">
-          Connect Wallet
-        </div>
-        <div class="button">
-          Add Address
-        </div>
+      <div class="button">
+        Connect Wallet
+      </div>
+      <div class="button">
+        Add Address
       </div>
 
       <div class="grid-container">
@@ -47,10 +45,8 @@ import Header from '@/components/partials/Header.vue'
         </div>
       </div>
 
-      <div class="button-section">
-        <div class="button">
-          Disconnect All
-        </div>
+      <div class="button">
+        Disconnect All
       </div>
     </div>
   </div>

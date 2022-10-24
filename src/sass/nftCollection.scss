@@ -23,23 +23,22 @@
       line-height: 27px;
       color: #000000;
     }
-    .button-section {
-      display: flex;
-      gap: 8px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
     .button {
+      margin-top: 8px;
+      margin-bottom: 8px;
       padding: 6px 16px;
-      border-radius: 2px;
-      background: #6D2E46;
+      border-radius: 4px;
+      background: #5B218F;
       font-size: 16px;
       font-weight: 400;
       line-height: 20px;
+      text-align: center;
       color: #fff;
       cursor: pointer;
     }
     .grid-container {
+      margin-top: 16px;
+      margin-bottom: 16px;
       display: grid;
       gap: 8px;
       grid-template-columns: auto auto auto;

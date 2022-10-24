@@ -160,8 +160,7 @@ onMounted(() => {
             >
               <button
                 v-if="pTranslate === 0"
-                @click.prevent="onSubmit"
-                @submit.prevent="onSubmit"
+                @click.prevent="blink"
                 class="eye"
                 tabindex="-1"
               >

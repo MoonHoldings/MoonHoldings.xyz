@@ -84,7 +84,12 @@ export const useCoinStore = defineStore('coin', {
       const cancelNewWallet = this.modalCoin.wallets.findIndex(
         (wallet) => wallet.saved === false
       )
-      this.modalCoin.wallets[cancelNewWallet].saved = true
+
+      if (this.modalCoin.wallets[cancelNewWallet].name !== '' && this.modalCoin.wallets[cancelNewWallet].holding) {
+        this.modalCoin.wallets[cancelNewWallet].saved = true
+      } else {
+        this.modalCoin.wallets.splice(cancelNewWallet, 1)
+      }
     },
     unsaveWallet(walletName) {
       const walletIndex = this.modalCoin.wallets.findIndex(

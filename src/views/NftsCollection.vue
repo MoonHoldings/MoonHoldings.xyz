@@ -1,6 +1,16 @@
 <script setup>
+import { ref, reactive, computed } from 'vue'
 import Header from '@/components/partials/Header.vue'
 import NftBox from '@/components/partials/NftBox.vue'
+
+const nfts = ref([
+  { id: 1, floor: 93.5, name: 'y00ts: mint t00bs', items: 10 },
+  { id: 2, floor: 185, name: 'Solana Monkey Business', items: 5 },
+  { id: 3, floor: 15, name: 'Chill Chat', items: 50 },
+  { id: 4, floor: 14.49, name: 'Lotus Gang NFT', items: 40 },
+  { id: 5, floor: 11, name: 'Test NFT', items: 11 },
+  { id: 6, floor: 12, name: 'Chris NFT', items: 12 }
+])
 </script>
 
 <template>
@@ -13,7 +23,7 @@ import NftBox from '@/components/partials/NftBox.vue'
       </div>
 
       <div class="grid">
-        <NftBox />
+        <NftBox v-for="(nft, i) in nfts" :key="i" :nft="nft" />
       </div>
     </div>
     <div class="collection__right-side">

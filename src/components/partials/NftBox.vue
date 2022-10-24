@@ -1,4 +1,9 @@
-<script setup></script>
+<script setup>
+import { ref, reactive, computed } from 'vue'
+
+const props = defineProps(['nft'])
+const { nft } = props
+</script>
 
 <template>
   <div class="grid-element">
@@ -8,7 +13,7 @@
           Floor
         </div>
         <div class="left-number">
-          93.9
+          {{ nft?.floor }}
         </div>
       </div>
       <div class="header-right">
@@ -21,12 +26,12 @@
       <div class="grid-container">
         <div class="grid-content"></div>
         <div class="grid-name">
-          yoots: mint t00bs
+          {{ nft?.name }}
         </div>
         <div class="grid-footer">
           <div class="footer-info">
             <div class="info-label">Items</div>
-            <div class="info-value">10</div>
+            <div class="info-value">{{ nft?.items }}</div>
           </div>
           <div class="footer-info">
             <div class="info-label">Total</div>

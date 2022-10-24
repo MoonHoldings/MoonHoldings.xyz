@@ -117,7 +117,6 @@ export const useCoinStore = defineStore('coin', {
       try {
         let response
         const user = cookies.get('MOON_USER')
-        console.log(user.portfolio.coins)
         const recordCoin = user.portfolio.coins.find(
           (c) => c.id === this.modalCoin.id
         )
@@ -151,7 +150,6 @@ export const useCoinStore = defineStore('coin', {
             this.cryptoCoins[pCoinIndex] = this.modalCoin
           }
         } else {
-          console.log('works')
           response = await axios.put(
             `${this.server_url}/save-coin`,
             {
@@ -219,25 +217,22 @@ export const useCoinStore = defineStore('coin', {
       this.modalCoin = {}
     },
     async getSingleCoin(coinId) {
-      const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY
+      const token = cookies.get('MOON_TOKEN')
       try {
-        const response = await axios.get(
-          `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${coinId}&intervals=1d,30d`
+        const response = await axios.post(
+          `${this.server_url}/get-coin`,
+          { coinId },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token,
+            },
+          }
         )
 
-        const coin = response.data[0]
+        const result = await response.data
 
-        const _24hr = coin['1d'] ? coin['1d']['price_change_pct'] : ''
-
-        this.modalCoin = {
-          id: coin?.id,
-          symbol: coin?.symbol,
-          name: coin?.name,
-          price: coin?.price,
-          logo_url: coin?.logo_url,
-          _24hr,
-          wallets: [],
-        }
+        this.modalCoin = result.coin
       } catch (error) {
         mixpanel.track('Error: coin.js > getSingleCoin', {
           error: error,

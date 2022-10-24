@@ -74,13 +74,6 @@ nav {
   }
 }
 
-@media (max-width: 1400px) {
-  nav {
-    position: relative;
-    margin-left: 64rem;
-  }
-}
-
 @media (max-width: 1100px) {
   header {
     display: flex;

@@ -68,5 +68,5 @@ const nfts = ref([
 </template>
 
 <style lang="scss" scoped>
-@import '@/sass/nftCollection.scss';
+@import '@/sass/nft-collection.scss';
 </style>

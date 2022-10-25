@@ -125,5 +125,5 @@ const clickCoinBox = () => {
 
 <style lang="scss" scoped>
 @import '@/sass/shadows.scss';
-@import '@/sass/coinBox.scss';
+@import '@/sass/coin-box.scss';
 </style>

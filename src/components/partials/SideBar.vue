@@ -141,5 +141,5 @@ watch(route, (prev, present) => {
 
 
 <style lang="scss" scoped>
-@import '@/sass/sideBar.scss';
+@import '@/sass/side-bar.scss';
 </style>

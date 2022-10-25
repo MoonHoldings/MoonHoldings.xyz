@@ -29,17 +29,16 @@ onMounted(() => {
 })
 
 watch(route, (prev, present) => {
-  isSidebar.value =
-    route.fullPath == "/" ||
-    route.fullPath == "/crypto" ||
-    route.fullPath == "/nfts/collection" ||
-    route.fullPath == "/nfts/lend-borrow" ||
-    route.fullPath == "/calendar" ||
-    route.fullPath == "/coin-swap" ||
-    route.fullPath == "/ranks" ||
-    route.fullPath == "/insights"
+  isSidebar.value = route.fullPath 
+    !== "/" && route.fullPath
+    !== "/login" && route.fullPath
+    !== "/sign-up" && route.fullPath
+    !== "/reset-password" && route.fullPath
+    !== "/privacy-policy" && route.fullPath
+    !== "/terms-of-service" && route.fullPath
+    !== "/newsletter-mail" && route.fullPath
+    && !useUserStore.gotten_user
 })
-
 
 </script>
 

@@ -289,5 +289,5 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-@import '@/sass/addCoin.scss';
+@import '@/sass/add-coin.scss';
 </style>

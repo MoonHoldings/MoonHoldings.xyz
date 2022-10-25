@@ -80,19 +80,22 @@ export const useCoinStore = defineStore('coin', {
         })
       }
     },
-    removeNewWallet() {
-      const unsavedWalletIndex = this.modalCoin.wallets.findIndex(
+    cancelNewWallet() {
+      const cancelNewWallet = this.modalCoin.wallets.findIndex(
         (wallet) => wallet.saved === false
       )
-      this.modalCoin.wallets.splice(unsavedWalletIndex, 1)
+
+      if (this.modalCoin.wallets[cancelNewWallet].name !== '' && this.modalCoin.wallets[cancelNewWallet].holding) {
+        this.modalCoin.wallets[cancelNewWallet].saved = true
+      } else {
+        this.modalCoin.wallets.splice(cancelNewWallet, 1)
+      }
     },
     unsaveWallet(walletName) {
       const walletIndex = this.modalCoin.wallets.findIndex(
         (wallet) => wallet.name === walletName
       )
       this.modalCoin.wallets[walletIndex].saved = false
-      this.modalCoin.wallets[walletIndex].holding = 0
-      this.modalCoin.wallets[walletIndex].value = 0
     },
     removeWallet(walletName) {
       const walletIndex = this.modalCoin.wallets.findIndex(

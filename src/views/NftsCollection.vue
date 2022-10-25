@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
+import { WalletMultiButton } from 'solana-wallets-vue'
 import Header from '@/components/partials/Header.vue'
 import NftBox from '@/components/partials/NftBox.vue'
 

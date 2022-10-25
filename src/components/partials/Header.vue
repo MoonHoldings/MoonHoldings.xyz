@@ -146,10 +146,11 @@ watch([searchInput], () => {
         <div class="number">
           ${{ decorateNumber(coinStore?.get_totalPortfolioValue, true) }}
         </div>
-        <div class="percent">
+        <!-- ? Hiding Percent - will re-display after historical data -->
+        <!-- <div class="percent">
           <span class="percent-number">+5.35%</span>
           <span class="percent-date">1D</span>
-        </div>
+        </div> -->
         <div class="menu">
           <img src="/svg/icon-hamburger-menu.svg" alt="hamburger menu" />
         </div>

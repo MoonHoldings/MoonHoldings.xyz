@@ -12,6 +12,10 @@ const nfts = ref([
   { id: 5, floor: 11, name: 'Test NFT', items: 11 },
   { id: 6, floor: 12, name: 'Chris NFT', items: 12 }
 ])
+
+const handleConnectWallet = async () => {
+  await console.log('Connect Wallet')
+}
 </script>
 
 <template>

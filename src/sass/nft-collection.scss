@@ -35,12 +35,22 @@
       padding: 6px 16px;
       border-radius: 4px;
       background: #5B218F;
+      user-select: none;
       font-size: 16px;
       font-weight: 400;
       line-height: 20px;
       text-align: center;
       color: #fff;
       cursor: pointer;
+
+      &:hover {
+        transition: background-color 0.25s ease;
+        background: #A13DFB;
+      }
+
+      &:active {
+        background: #481873;
+      }
     }
     .grid-container {
       margin-top: 16px;

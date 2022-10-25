@@ -1,5 +1,7 @@
 .coin-box {
   position: relative;
+  font-family: "Poppins";
+
   .surface {
     position: relative;
     border: 1px solid #000;
@@ -17,10 +19,12 @@
     & > div {
       color: #000;
     }
+
     .symbol {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       .left {
         display: flex;
         align-items: center;
@@ -47,33 +51,43 @@
         text-overflow: ellipsis;
       }
     }
+
     .holdings {
       font-size: 6rem;
       line-height: 1;
       text-align: center;
+      font-family: 'Inconsolata', monospace;
+      font-weight: 600;
     }
+
     .value {
       font-size: 2.2rem;
       text-align: center;
       margin-bottom: 1rem;
     }
+
     .label {
       display: flex;
       justify-content: space-between;
-      .price-label {
-        margin-top: 8px;
-        font-size: 20px;
-        font-weight: 700;
+      font-family: 'Inconsolata', monospace;
+      font-size: 20px;
+
+      .price-label,
+      .total-label {
+        margin-top: 4px;
         line-height: 24px;
       }
+
+      .price-label {
+        font-weight: 700;
+      }
+
       .total-label {
-        margin-top: 8px;
-        font-size: 20px;
         font-weight: 400;
-        line-height: 24px;
       }
     }
   }
+
   .tooltip {
     position: absolute;
     right: -1.5rem;
@@ -88,6 +102,7 @@
     justify-content: center;
     align-items: center;
     z-index: 50;
+
     .name {
       text-align: center;
       margin-bottom: 1rem;

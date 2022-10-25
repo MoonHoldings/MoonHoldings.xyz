@@ -48,6 +48,26 @@ const router = createRouter({
       beforeEnter: requireAuth,
     },
     {
+      path: '/calendar',
+      name: 'calendar',
+      beforeEnter: requireAuth,
+    },
+    {
+      path: '/coin-swap',
+      name: 'coin-swap',
+      beforeEnter: requireAuth,
+    },
+    {
+      path: '/ranks',
+      name: 'ranks',
+      beforeEnter: requireAuth,
+    },
+    {
+      path: '/insights',
+      name: 'insights',
+      beforeEnter: requireAuth,
+    },
+    {
       path: '/nfts/lend-borrow',
       name: 'nftsLendBorrow',
       component: () => import('@/views/NftsLendBorrow.vue'),

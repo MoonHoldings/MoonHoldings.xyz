@@ -49,5 +49,5 @@ const { nft } = props
 </template>
 
 <style lang="scss" scoped>
-@import '@/sass/nft-box.scss';
+@import '@/sass/nft-collection-box.scss';
 </style>

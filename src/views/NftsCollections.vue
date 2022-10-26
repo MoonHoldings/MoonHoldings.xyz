@@ -2,7 +2,7 @@
 import { ref, reactive, computed } from 'vue'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import Header from '@/components/partials/Header.vue'
-import NftBox from '@/components/partials/NftBox.vue'
+import NftCollectionBox from '@/components/nft/NftCollectionBox.vue'
 
 const nfts = ref([
   { id: 1, floor: 93.5, name: 'y00ts: mint t00bs', items: 10 },
@@ -28,7 +28,7 @@ const handleConnectWallet = async () => {
       </div>
 
       <div class="grid">
-        <NftBox v-for="(nft, i) in nfts" :key="i" :nft="nft" />
+        <NftCollectionBox v-for="(nft, i) in nfts" :key="i" :nft="nft" />
       </div>
     </div>
     <div class="collection__right-side">

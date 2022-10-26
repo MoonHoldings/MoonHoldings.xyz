@@ -48,6 +48,12 @@ const router = createRouter({
       beforeEnter: requireAuth,
     },
     {
+      path: '/nfts/collections/:id',
+      name: 'nftsCollection',
+      component: () => import('@/views/NftsCollection.vue'),
+      beforeEnter: requireAuth,
+    },
+    {
       path: '/calendar',
       name: 'calendar',
       beforeEnter: requireAuth,

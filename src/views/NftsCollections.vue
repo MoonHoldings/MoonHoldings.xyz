@@ -31,6 +31,7 @@ const handleConnectWallet = async () => {
         <NftCollectionBox v-for="(nft, i) in nfts" :key="i" :nft="nft" />
       </div>
     </div>
+
     <div class="collection__right-side">
       <div class="label">
         Connected Wallets

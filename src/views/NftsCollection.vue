@@ -7,7 +7,28 @@ import Header from '@/components/partials/Header.vue'
   <Header />
 
   <div class="collection">
-    <div class="collection__left-side"></div>
+    <div class="collection__left-side">
+      <div class="nft-summary">
+        <div class="route">
+          &#10094; Back to Collections
+        </div>
+        <div class="count">
+          You own <strong>10</strong> Lotus Gang NFT
+        </div>
+        <div class="floor">
+          <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+          <div class="label">Floor</div>
+          <div class="down-value">13.6</div>
+          <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" />
+        </div>
+        <div class="floor">
+          <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+          <div class="label">Floor</div>
+          <div class="up-value">16</div>
+          <img class="image" src="/svg/icon-arrow-circle-up.svg" alt="nft-image" />
+        </div>
+      </div>
+    </div>
 
     <div class="collection__right-side">
       <div class="nft-info-title">

@@ -16,127 +16,146 @@
     padding: 28px 46px 10px 46px;
     display: flex;
     justify-content: space-between;
+  }
+}
 
-    .left-side {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      .label {
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 18px;
-        img {
-          height: 28px;
-        }
-        span {
-          margin-right: 4px;
-          position: relative;
-          bottom: 8px;
-        }
-      }
-      .style {
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 18px;
-        img {
-          height: 28px;
-          margin-right: 8px;
-          cursor: pointer;
-        }
-        span {
-          margin-right: 4px;
-          position: relative;
-          bottom: 8px;
-        }
-      }
-      .logo {
-        font-size: 16px;
-        font-weight: 700;
-        margin-right: 42px;
+.left-side {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 
-        img {
-          height: 28px;
-          margin-right: 10px;
-        }
-        span {
-          position: relative;
-          bottom: 5px;
-        }
-      }
-      .crypto-btns {
-        display: flex;
-        align-items: center;
-        & > span {
-          text-transform: uppercase;
-          font-weight: 700;
-          font-size: 12px;
-          line-height: 15px;
-          color: #878787;
-          margin-right: 15px;
-        }
-        a {
-          display: flex;
-          align-items: center;
-          text-decoration: none;
-          img {
-            width: 31px;
-            margin-right: 8px;
-          }
-          & > span {
-            text-transform: uppercase;
-            font-weight: 700;
-            font-size: 16px;
-            line-height: 15px;
-            color: var(--ash);
-            margin-right: 15px;
-          }
-        }
-        .coin-btn {
-          & > span {
-            color: var(--pink) !important;
-          }
-        }
-      }
+  .label {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+
+    img {
+      height: 28px;
     }
-    .right-side {
-      display: flex;
-      gap: 32px;
-      margin-top: auto;
-      margin-bottom: auto;
-      .number {
-        margin-top: auto;
-        margin-bottom: auto;
-        font-size: 32px;
-        font-weight: bold;
-        font-family: "Inconsolata", monospace;
-        line-height: 16px;
-      }
-      .percent {
-        height: fit-content;
-        background: #09814A;
-        border-radius: 4px;
-        padding: 10px;
-        color: #fff;
-        display: flex;
-        gap: 8px;
-        .percent-number {
-          font-size: 24px;
-          font-weight: 700;
-          font-family: "Inconsolata";
-          line-height: 16px;
-        }
-        .percent-date {
-          font-size: 20px;
-          font-weight: 700;
-          line-height: 16px;
-          font-family: "Poppins";
-        }
-      }
-      .menu {
-        img {
-          height: 35px;
-        }
-      }
+
+    span {
+      margin-right: 4px;
+      position: relative;
+      bottom: 8px;
     }
+  }
+
+  .style {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+
+    img {
+      height: 28px;
+      margin-right: 8px;
+      cursor: pointer;
+    }
+
+    span {
+      margin-right: 4px;
+      position: relative;
+      bottom: 8px;
+    }
+  }
+}
+
+.logo {
+  font-size: 16px;
+  font-weight: 700;
+  margin-right: 42px;
+
+  img {
+    height: 28px;
+    margin-right: 10px;
+  }
+  span {
+    position: relative;
+    bottom: 5px;
+  }
+}
+
+.crypto-btns {
+  display: flex;
+  align-items: center;
+
+  & > span {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    color: #878787;
+    margin-right: 15px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+    img {
+      width: 31px;
+      margin-right: 8px;
+    }
+
+    & > span {
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 15px;
+      color: var(--ash);
+      margin-right: 15px;
+    }
+  }
+}
+
+.coin-btn {
+  & > span {
+    color: var(--pink) !important;
+  }
+}
+
+.right-side {
+  display: flex;
+  gap: 32px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.number {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 32px;
+  font-weight: bold;
+  font-family: "Inconsolata", monospace;
+  line-height: 16px;
+}
+
+.percent {
+  height: fit-content;
+  background: #09814A;
+  border-radius: 4px;
+  padding: 10px;
+  color: #fff;
+  display: flex;
+  gap: 8px;
+}
+
+.percent-number {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: "Inconsolata";
+  line-height: 16px;
+}
+
+.percent-date {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 16px;
+  font-family: "Poppins";
+}
+
+.menu {
+  img {
+    height: 35px;
   }
 }

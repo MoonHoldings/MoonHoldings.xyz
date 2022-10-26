@@ -41,21 +41,14 @@
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
     text-align: center;
+
     h1 {
       font-size: 4.5rem;
       font-weight: 600;
     }
+
     p {
       font-size: 2.8rem;
-    }
-    .monster-div {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      transform: translateX(100%) translateY(130%);
-      img {
-        height: 9rem;
-      }
     }
   }
 
@@ -84,7 +77,6 @@
     position: relative;
     display: flex;
     align-items: center;
-    // margin-bottom: 5.8rem;
 
     input {
       position: relative;
@@ -103,47 +95,25 @@
       font-family: 'Inter', monospace;
       z-index: 8;
     }
+
     ::placeholder {
       color: inherit;
     }
+
     .sort-text {
       font-size: 1.6rem;
       margin-right: 0.7rem;
     }
+
     .sort-btns {
       button {
         background: none;
         border: none;
         outline: none;
+
         svg {
           height: 3rem;
           width: 3rem;
-        }
-      }
-    }
-    .dropdown-list {
-      position: absolute;
-      top: 4.4rem;
-      width: 38rem;
-      min-height: 15rem;
-      background-color: #fff;
-      box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px,
-        rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px,
-        rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
-      z-index: 7;
-      ul {
-        padding: 0.7rem 0;
-        list-style: none;
-        li {
-          button {
-            width: 100%;
-            text-align: left;
-            padding: 0.8rem 1.3rem;
-            font-size: 1.6rem;
-            background: none;
-            border: none;
-            outline: none;
-          }
         }
       }
     }
@@ -152,6 +122,7 @@
   &__total-value {
     font-family: 'Inter', monospace;
     color: #000;
+
     .value {
       color: #000;
       float: right;
@@ -175,24 +146,6 @@
         }
       }
     }
-    .value-currency {
-      text-align: right;
-
-      .text {
-        font-size: 1.6rem;
-      }
-      button {
-        border: none;
-        outline: none;
-        background: none;
-        padding: 0;
-        margin: 0;
-        font-size: 1.6rem;
-      }
-      .pipe {
-        font-size: 1.7rem;
-      }
-    }
   }
 
   &__pct-bar {
@@ -203,16 +156,6 @@
     font-family: 'Inter', monospace;
     margin-bottom: 2.5rem;
 
-    // &::before {
-    //   content: '';
-    //   position: absolute;
-    //   bottom: -0.1rem;
-    //   right: -0.1rem;
-    //   width: 100%;
-    //   height: 8rem;
-    //   background: #000;
-    //   border-radius: 0.3rem;
-    // }
     .coin-pct {
       .pct-num {
         font-size: 1.6rem;
@@ -258,29 +201,6 @@
       top: -1.5rem;
       z-index: 9;
     }
-    .shadow {
-      position: absolute;
-      bottom: -0.2rem;
-      right: -0.2rem;
-      min-width: 17.5rem;
-      min-height: 5.5rem;
-      background: rgba(75, 75, 75, 0.247);
-      border-radius: 0.2rem;
-    }
-    .twitter-btn {
-      position: relative;
-      z-index: 8;
-      min-width: 17.5rem;
-      min-height: 5.5rem;
-      background-color: var(--pink);
-      border-radius: 0.2rem;
-      border: none;
-      outline: none;
-      color: #fff;
-      font-family: 'Inconsolata';
-      font-weight: 400;
-      font-size: 1.8rem;
-    }
   }
 
   // --------------portfolio coins-------------
@@ -307,4 +227,85 @@
   }
 
   // ============ Stats =============
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 4.4rem;
+  width: 38rem;
+  min-height: 15rem;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px,
+    rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px,
+    rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+  z-index: 7;
+  ul {
+    padding: 0.7rem 0;
+    list-style: none;
+    li {
+      button {
+        width: 100%;
+        text-align: left;
+        padding: 0.8rem 1.3rem;
+        font-size: 1.6rem;
+        background: none;
+        border: none;
+        outline: none;
+      }
+    }
+  }
+}
+
+.monster-div {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translateX(100%) translateY(130%);
+  img {
+    height: 9rem;
+  }
+}
+
+.value-currency {
+  text-align: right;
+
+  .text {
+    font-size: 1.6rem;
+  }
+  button {
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.6rem;
+  }
+  .pipe {
+    font-size: 1.7rem;
+  }
+}
+
+.shadow {
+  position: absolute;
+  bottom: -0.2rem;
+  right: -0.2rem;
+  min-width: 17.5rem;
+  min-height: 5.5rem;
+  background: rgba(75, 75, 75, 0.247);
+  border-radius: 0.2rem;
+}
+
+.twitter-btn {
+  position: relative;
+  z-index: 8;
+  min-width: 17.5rem;
+  min-height: 5.5rem;
+  background-color: var(--pink);
+  border-radius: 0.2rem;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: 'Inconsolata';
+  font-weight: 400;
+  font-size: 1.8rem;
 }

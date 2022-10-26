@@ -19,6 +19,7 @@
     width: 100%;
     height: 200px;
     background: #FFFFFF;
+    cursor: pointer;
   }
   .footer {
     display: flex;
@@ -35,6 +36,7 @@
     .image {
       width: 25px;
       height: 25px;
+      cursor: pointer;
     }
   }
 }

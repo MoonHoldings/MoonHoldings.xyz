@@ -1,134 +1,137 @@
 .coin-box {
   position: relative;
   font-family: "Poppins";
+}
 
-  .surface {
-    position: relative;
-    border: 1px solid #000;
-    border-radius: 2px;
-    background-color: #ffffff;
+.surface {
+  position: relative;
+  border: 1px solid #000;
+  border-radius: 2px;
+  background-color: #ffffff;
+  color: #000;
+  padding: 15px;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 6;
+  cursor: pointer;
+  & > div {
     color: #000;
-    padding: 15px;
-    width: 240px;
-    height: 240px;
+  }
+}
+
+.symbol {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .left {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    z-index: 6;
-    cursor: pointer;
-    & > div {
-      color: #000;
+    align-items: center;
+    margin-right: 1rem;
+
+    img {
+      width: 2.8rem;
+      height: 2.8rem;
+      margin-right: 0.7rem;
     }
 
-    .symbol {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      .left {
-        display: flex;
-        align-items: center;
-        margin-right: 1rem;
-        img {
-          width: 2.8rem;
-          height: 2.8rem;
-          margin-right: 0.7rem;
-        }
-        span {
-          color: #000000;
-          font-weight: 700;
-          font-size: 1.7rem;
-          font-family: 'Inter', monospace;
-        }
-      }
-      .right {
-        font-size: 1.7rem;
-        color: #000000;
-        font-family: 'Inter', monospace;
-        margin-left: 1rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-
-    .holdings {
-      font-size: 6rem;
-      line-height: 1;
-      text-align: center;
-      font-family: 'Inconsolata', monospace;
-      font-weight: 600;
-    }
-
-    .value {
-      font-size: 2.2rem;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    .label {
-      display: flex;
-      justify-content: space-between;
-      font-family: 'Inconsolata', monospace;
-      font-size: 20px;
-
-      .price-label,
-      .total-label {
-        margin-top: 4px;
-        line-height: 24px;
-      }
-
-      .price-label {
-        font-weight: 700;
-      }
-
-      .total-label {
-        font-weight: 400;
-      }
+    span {
+      color: #000000;
+      font-weight: 700;
+      font-size: 1.7rem;
+      font-family: 'Inter', monospace;
     }
   }
 
-  .tooltip {
+  .right {
+    font-size: 1.7rem;
+    color: #000000;
+    font-family: 'Inter', monospace;
+    margin-left: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.holdings {
+  font-size: 6rem;
+  line-height: 1;
+  text-align: center;
+  font-family: 'Inconsolata', monospace;
+  font-weight: 600;
+}
+
+.value {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Inconsolata', monospace;
+  font-size: 20px;
+}
+
+.price-label,
+.total-label {
+  margin-top: 4px;
+  line-height: 24px;
+}
+
+.price-label {
+  font-weight: 700;
+}
+
+.total-label {
+  font-weight: 400;
+}
+
+.tooltip {
+  position: absolute;
+  right: -1.5rem;
+  bottom: -17rem;
+  width: 85%;
+  height: 70%;
+  background: #000;
+  color: #fff;
+  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+
+  .name {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  &::after {
+    content: '';
     position: absolute;
-    right: -1.5rem;
-    bottom: -17rem;
-    width: 85%;
-    height: 70%;
-    background: #000;
-    color: #fff;
-    font-size: 1.6rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 50;
-
-    .name {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: -2.5rem;
-      left: 0.6rem;
-      width: 0;
-      height: 0;
-      border-left: 1.5rem solid #000;
-      border-top: 1.5rem solid #000;
-      border-bottom: 1.5rem solid transparent;
-      border-right: 1.5rem solid transparent;
-      transform: rotate(45deg);
-    }
-    &::before {
-      content: '';
-      position: absolute;
-      top: -1rem;
-      left: 0;
-      width: 4.2rem;
-      height: 4.2rem;
-      background-color: #000;
-    }
+    top: -2.5rem;
+    left: 0.6rem;
+    width: 0;
+    height: 0;
+    border-left: 1.5rem solid #000;
+    border-top: 1.5rem solid #000;
+    border-bottom: 1.5rem solid transparent;
+    border-right: 1.5rem solid transparent;
+    transform: rotate(45deg);
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    width: 4.2rem;
+    height: 4.2rem;
+    background-color: #000;
   }
 }

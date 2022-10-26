@@ -28,6 +28,48 @@ import Header from '@/components/partials/Header.vue'
           <img class="image" src="/svg/icon-arrow-circle-up.svg" alt="nft-image" />
         </div>
       </div>
+
+      <div class="grid">
+        <div class="element element-selected-line">
+          <div class="element-container">
+            <div class="header header-selected">
+              <div>
+                Listed: 25.42069 SQL
+              </div>
+              <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+            </div>
+            <div class="content"></div>
+            <div class="footer footer-selected">
+              <div class="label">
+                Lotus Lad #1226
+              </div>
+              <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" />
+            </div>
+          </div>
+          <div class="element-black-shadow" />
+          <div class="element-gray-shadow" />
+        </div>
+
+        <div class="element element-normal-line">
+          <div class="element-container">
+            <div class="header header-normal">
+              <div>
+                Listed: 25.42069 SQL
+              </div>
+              <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+            </div>
+            <div class="content"></div>
+            <div class="footer footer-normal">
+              <div class="label">
+                Lotus Lad #1226
+              </div>
+              <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" />
+            </div>
+          </div>
+          <div class="element-black-shadow" />
+          <div class="element-gray-shadow" />
+        </div>
+      </div>
     </div>
 
     <div class="collection__right-side">

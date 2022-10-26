@@ -18,7 +18,7 @@ const windowWidth = ref(0)
 
 const isNFTSView = computed(() => {
   return (
-    route.fullPath == '/nfts/collection' ||
+    route.fullPath == '/nfts/collections' ||
     route.fullPath == '/nfts/lend-borrow'
   )
 })

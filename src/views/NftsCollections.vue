@@ -3,12 +3,12 @@ import { ref, reactive, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import Header from '@/components/partials/Header.vue'
-import NftCollectionBox from '@/components/nft/NftCollectionBox.vue'
+import NftCollectionsBox from '@/components/nft/NftCollectionsBox.vue'
 
 const route = useRoute()
 const router = useRouter()
 
-const nfts = ref([
+const collectionsItem = ref([
   { id: 1, floor: 93.5, name: 'y00ts: mint t00bs', items: 10 },
   { id: 2, floor: 185, name: 'Solana Monkey Business', items: 5 },
   { id: 3, floor: 15, name: 'Chill Chat', items: 50 },
@@ -21,8 +21,8 @@ const handleConnectWallet = async () => {
   await console.log('Connect Wallet')
 }
 
-const selectCollection = (nft) => {
-  router.push({ name: 'nftsCollection', params: { id: nft.id }})
+const selectCollections = (collections) => {
+  router.push({ name: 'nftsCollection', params: { id: collections.id }})
 }
 </script>
 
@@ -36,7 +36,7 @@ const selectCollection = (nft) => {
       </div>
 
       <div class="grid">
-        <NftCollectionBox v-for="(nft, i) in nfts" :key="i" :nft="nft" @click="selectCollection(nft)" />
+        <NftCollectionsBox v-for="(collections, i) in collectionsItem" :key="i" :collections="collections" @click="selectCollections(collections)" />
       </div>
     </div>
 

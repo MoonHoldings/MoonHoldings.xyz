@@ -1,50 +1,29 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 
-const props = defineProps(['nft'])
-const { nft } = props
+const props = defineProps(['collection'])
+const { collection } = props
 </script>
 
 <template>
-  <div class="grid-element">
-    <div class="grid-header">
-      <div class="header-left">
-        <div class="left-label">
-          Floor
+  <div class="element element-normal-line">
+    <div class="element-container">
+      <div class="header header-normal">
+        <div>
+          Listed: {{ collection.list }} SQL
         </div>
-        <div class="left-number">
-          {{ nft?.floor }}
-        </div>
+        <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
       </div>
-      <div class="header-right">
-        <div class="image-container">
-          <img v-if="nft?.floor > 20" src="/svg/icon-arrow-circle-down.svg" alt="down value" />
-          <img v-else src="/svg/icon-arrow-circle-up.svg" alt="up value" />
+      <div class="content"></div>
+      <div class="footer footer-normal">
+        <div class="label">
+          {{ collection.name }}
         </div>
-      </div>
-    </div>
-    <div class="grid-box">
-      <div class="grid-container">
-        <div class="grid-content"></div>
-        <div class="grid-name">
-          {{ nft?.name }}
-        </div>
-        <div class="grid-footer">
-          <div class="footer-info">
-            <div class="info-label">Items</div>
-            <div class="info-value">{{ nft?.items }}</div>
-          </div>
-          <div class="footer-info">
-            <div class="info-label">Total</div>
-            <div class="info-label">939 = $29,109</div>
-          </div>
-        </div>
-      </div>
-      <div class="grid-shadow">
-        <div class="top-corner"></div>
-        <div class="bottom-corner"></div>
+        <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" />
       </div>
     </div>
+    <div class="element-black-shadow" />
+    <div class="element-gray-shadow" />
   </div>
 </template>
 

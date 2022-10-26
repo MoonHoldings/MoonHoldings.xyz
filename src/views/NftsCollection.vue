@@ -1,6 +1,20 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import Header from '@/components/partials/Header.vue'
+import NftCollectionBox from '@/components/nft/NftCollectionBox.vue'
+
+const collections = ref([
+  { id: 1, list: 25.432, name: 'Lotus Lad #1226' },
+  { id: 2, list: 25.432, name: 'Lotus Lad #420' },
+  { id: 3, list: 25.432, name: 'Lotus Lad #1740' },
+  { id: 4, list: 25.432, name: 'Lotus Lad #153' },
+  { id: 5, list: 25.432, name: 'Lotus Lad #1838' },
+  { id: 6, list: 25.432, name: 'Lotus Lad #1766' },
+])
+
+const selectCollection = (collection) => {
+  console.log('select collection id', collection.id)
+}
 </script>
 
 <template>
@@ -30,45 +44,7 @@ import Header from '@/components/partials/Header.vue'
       </div>
 
       <div class="grid">
-        <div class="element element-selected-line">
-          <div class="element-container">
-            <div class="header header-selected">
-              <div>
-                Listed: 25.42069 SQL
-              </div>
-              <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
-            </div>
-            <div class="content"></div>
-            <div class="footer footer-selected">
-              <div class="label">
-                Lotus Lad #1226
-              </div>
-              <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" />
-            </div>
-          </div>
-          <div class="element-black-shadow" />
-          <div class="element-gray-shadow" />
-        </div>
-
-        <div class="element element-normal-line">
-          <div class="element-container">
-            <div class="header header-normal">
-              <div>
-                Listed: 25.42069 SQL
-              </div>
-              <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
-            </div>
-            <div class="content"></div>
-            <div class="footer footer-normal">
-              <div class="label">
-                Lotus Lad #1226
-              </div>
-              <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" />
-            </div>
-          </div>
-          <div class="element-black-shadow" />
-          <div class="element-gray-shadow" />
-        </div>
+        <NftCollectionBox v-for="(collection, i) in collections" :key="i" :collection="collection" @click="selectCollection(collection)"  />
       </div>
     </div>
 

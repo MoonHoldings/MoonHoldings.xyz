@@ -73,5 +73,5 @@ const handleConnectWallet = async () => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/sass/nft-collection.scss';
+@import '@/sass/nft-collections.scss';
 </style>

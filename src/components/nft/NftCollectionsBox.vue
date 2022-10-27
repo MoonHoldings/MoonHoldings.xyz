@@ -1,8 +1,8 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 
-const props = defineProps(['nft'])
-const { nft } = props
+const props = defineProps(['collections'])
+const { collections } = props
 </script>
 
 <template>
@@ -13,12 +13,12 @@ const { nft } = props
           Floor
         </div>
         <div class="left-number">
-          {{ nft?.floor }}
+          {{ collections?.floor }}
         </div>
       </div>
       <div class="header-right">
         <div class="image-container">
-          <img v-if="nft?.floor > 20" src="/svg/icon-arrow-circle-down.svg" alt="down value" />
+          <img v-if="collections?.floor > 20" src="/svg/icon-arrow-circle-down.svg" alt="down value" />
           <img v-else src="/svg/icon-arrow-circle-up.svg" alt="up value" />
         </div>
       </div>
@@ -27,12 +27,12 @@ const { nft } = props
       <div class="grid-container">
         <div class="grid-content"></div>
         <div class="grid-name">
-          {{ nft?.name }}
+          {{ collections?.name }}
         </div>
         <div class="grid-footer">
           <div class="footer-info">
             <div class="info-label">Items</div>
-            <div class="info-value">{{ nft?.items }}</div>
+            <div class="info-value">{{ collections?.items }}</div>
           </div>
           <div class="footer-info">
             <div class="info-label">Total</div>
@@ -49,5 +49,5 @@ const { nft } = props
 </template>
 
 <style lang="scss" scoped>
-@import '@/sass/nft-box.scss';
+@import '@/sass/nft-collections-box.scss';
 </style>

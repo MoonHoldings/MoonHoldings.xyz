@@ -1,16 +1,27 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import Header from '@/components/partials/Header.vue'
-import NftBox from '@/components/partials/NftBox.vue'
+import NftCollectionBox from '@/components/nft/NftCollectionBox.vue'
 
-const nfts = ref([
-  { id: 1, floor: 93.5, name: 'y00ts: mint t00bs', items: 10 },
-  { id: 2, floor: 185, name: 'Solana Monkey Business', items: 5 },
-  { id: 3, floor: 15, name: 'Chill Chat', items: 50 },
-  { id: 4, floor: 14.49, name: 'Lotus Gang NFT', items: 40 },
-  { id: 5, floor: 11, name: 'Test NFT', items: 11 },
-  { id: 6, floor: 12, name: 'Chris NFT', items: 12 }
+const router = useRouter()
+
+const collections = ref([
+  { id: 1, sol: 25.42069, name: 'Lotus Lad #1226' },
+  { id: 2, sol: 25, name: 'Lotus Lad #420' },
+  { id: 3, sol: 25, name: 'Lotus Lad #1740' },
+  { id: 4, sol: 25.432, name: 'Lotus Lad #153' },
+  { id: 5, sol: 25, name: 'Lotus Lad #1838' },
+  { id: 6, sol: 15, name: 'Lotus Lad #1766' },
+  { id: 7, sol: 0, name: 'Lotus Lad #4664' },
+  { id: 8, sol: 0, name: 'Lotus Lad #913' },
+  { id: 9, sol: 0, name: 'Lotus Lad #1505' },
+  { id: 10, sol: 0, name: 'Lotus Lad #475' },
 ])
+
+const backCollections = () => {
+  router.push({ name: 'nftsCollections' })
+}
 </script>
 
 <template>
@@ -18,15 +29,51 @@ const nfts = ref([
 
   <div class="collection">
     <div class="collection__left-side">
-      <div class="label">
-        Displaying 20 out of 64 collections, scroll for more
+      <div class="nft-summary">
+        <div class="route" @click="backCollections">
+          &#10094; Back to Collections
+        </div>
+        <div class="count">
+          You own <span class="value">10</span> Lotus Gang NFT
+        </div>
+        <div class="floor">
+          <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+          <div class="label">Floor</div>
+          <div class="down-value">13.6</div>
+          <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" />
+        </div>
+        <div class="floor">
+          <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+          <div class="label">Floor</div>
+          <div class="up-value">16</div>
+          <img class="image" src="/svg/icon-arrow-circle-up.svg" alt="nft-image" />
+        </div>
       </div>
 
       <div class="grid">
-        <NftBox v-for="(nft, i) in nfts" :key="i" :nft="nft" />
+        <NftCollectionBox v-for="(collection, i) in collections" :key="i" :collection="collection" />
       </div>
     </div>
+
     <div class="collection__right-side">
+      <div class="nft-info-title">
+        Selected NFT
+      </div>
+
+      <div class="nft-info">
+        <div class="nft-info-header">
+          <img class="image" src="/svg/icon-nft-demo.svg" alt="header-image" />
+          <div class="label">
+            Lotus Lad #1226
+          </div>
+        </div>
+        <input class="nft-info-content" type="text">
+        <div class="nft-info-footer">
+          <div class="nft-info-button">Delist</div>
+          <div class="nft-info-button">Update</div>
+        </div>
+      </div>
+
       <div class="label">
         Connected Wallets
       </div>
@@ -34,6 +81,7 @@ const nfts = ref([
       <div class="button">
         Connect Wallet
       </div>
+
       <div class="button">
         Add Address
       </div>
@@ -62,6 +110,41 @@ const nfts = ref([
 
       <div class="button">
         Disconnect All
+      </div>
+
+      <div class="detail-info">
+        <div class="detail-info-header">
+          <div class="left">Lotus Gang NFT</div>
+          <div class="right">Listed:</div>
+        </div>
+        <div class="detail-info-item">
+          <div class="left">
+            <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+            <div class="label">floor:</div>
+            <div class="value">13.6</div>
+          </div>
+          <div class="right">
+            3
+          </div>
+        </div>
+        <div class="detail-info-item">
+          <div class="left">
+            <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+            <div class="label">floor:</div>
+            <div class="value">13.6</div>
+          </div>
+          <div class="right">
+            3
+          </div>
+        </div>
+        <div class="detail-info-label">
+          You own 10, estimated value:
+        </div>
+        <div class="detail-info-footer">
+          <div class="value">135</div>
+          <div class="label">SOL</div>
+          <div class="value">$3915</div>
+        </div>
       </div>
     </div>
   </div>

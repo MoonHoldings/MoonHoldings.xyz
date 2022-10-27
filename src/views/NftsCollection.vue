@@ -11,10 +11,6 @@ const collections = ref([
   { id: 5, list: 25.432, name: 'Lotus Lad #1838' },
   { id: 6, list: 25.432, name: 'Lotus Lad #1766' },
 ])
-
-const selectCollection = (collection) => {
-  console.log('select collection id', collection.id)
-}
 </script>
 
 <template>
@@ -44,7 +40,7 @@ const selectCollection = (collection) => {
       </div>
 
       <div class="grid">
-        <NftCollectionBox v-for="(collection, i) in collections" :key="i" :collection="collection" @click="selectCollection(collection)"  />
+        <NftCollectionBox v-for="(collection, i) in collections" :key="i" :collection="collection" />
       </div>
     </div>
 

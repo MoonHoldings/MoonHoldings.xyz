@@ -37,13 +37,13 @@ const backCollections = () => {
           You own <span class="value">10</span> Lotus Gang NFT
         </div>
         <div class="floor">
-          <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+          <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
           <div class="label">Floor</div>
           <div class="down-value">13.6</div>
           <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" />
         </div>
         <div class="floor">
-          <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+          <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
           <div class="label">Floor</div>
           <div class="up-value">16</div>
           <img class="image" src="/svg/icon-arrow-circle-up.svg" alt="nft-image" />
@@ -119,7 +119,7 @@ const backCollections = () => {
         </div>
         <div class="detail-info-item">
           <div class="left">
-            <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+            <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
             <div class="label">floor:</div>
             <div class="value">13.6</div>
           </div>
@@ -129,7 +129,7 @@ const backCollections = () => {
         </div>
         <div class="detail-info-item">
           <div class="left">
-            <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+            <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
             <div class="label">floor:</div>
             <div class="value">13.6</div>
           </div>

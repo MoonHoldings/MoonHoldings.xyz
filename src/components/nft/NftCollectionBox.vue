@@ -12,7 +12,7 @@ const { collection } = props
         <div>
           Listed: {{ collection.sol }} SQL
         </div>
-        <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
+        <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
       </div>
       <div class="content"></div>
       <div class="footer footer-normal">

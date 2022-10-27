@@ -34,7 +34,7 @@ const backCollections = () => {
           &#10094; Back to Collections
         </div>
         <div class="count">
-          You own <strong>10</strong> Lotus Gang NFT
+          You own <span class="value">10</span> Lotus Gang NFT
         </div>
         <div class="floor">
           <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />

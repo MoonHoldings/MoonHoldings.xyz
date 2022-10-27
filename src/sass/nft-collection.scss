@@ -7,7 +7,7 @@
   display: flex;
   gap: 8px;
   &__left-side {
-    width: 80%;
+    width: calc(100% - 330px);
     .grid {
       display: flex;
       flex-wrap: wrap;
@@ -16,7 +16,7 @@
     }
   }
   &__right-side {
-    width: 20%;
+    width: 330px;
     .label {
       font-size: 18px;
       font-weight: 400;
@@ -59,7 +59,7 @@
     line-height: 22px;
     color: #C74FF9;
     text-decoration: underline;
-    text-underline-offset: 4px;
+    text-underline-offset: 2px;
     cursor: pointer;
   }
   .count {
@@ -69,6 +69,12 @@
     color: #000000;
     margin-top: auto;
     margin-bottom: auto;
+    .value {
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+    }
   }
   .floor {
     display: flex;
@@ -86,20 +92,26 @@
       margin-bottom: auto;
     }
     .down-value {
+      margin-top: auto;
+      margin-bottom: auto;
       font-size: 18px;
       font-weight: 700;
       line-height: 22px;
       color: #E05E28;
-      margin-top: auto;
-      margin-bottom: auto;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
     }
     .up-value {
+      margin-top: auto;
+      margin-bottom: auto;
       font-size: 18px;
       font-weight: 700;
       line-height: 22px;
       color: #2C7444;
-      margin-top: auto;
-      margin-bottom: auto;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
     }
   }
 }

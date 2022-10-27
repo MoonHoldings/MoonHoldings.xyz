@@ -15,6 +15,7 @@ const searchInput = ref('')
 const searchedCoins = ref([])
 const storedCoins = ref([])
 const windowWidth = ref(0)
+const isMenuOpen = ref(false)
 
 const isNFTSView = computed(() => {
   return (
@@ -90,6 +91,26 @@ const fn = () => {
   }
 }
 
+const selectMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const selectMenuSetting = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const selectMenuFaq = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const selectMenuFeedback = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const selectMenuLogout = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
 watch([searchInput], () => {
   fn()
 })
@@ -151,8 +172,23 @@ watch([searchInput], () => {
           <span class="percent-number">+5.35%</span>
           <span class="percent-date">1D</span>
         </div> -->
-        <div class="menu">
+        <div class="menu" @click="selectMenu">
           <img src="/svg/icon-hamburger-menu.svg" alt="hamburger menu" />
+        </div>
+      </div>
+
+      <div v-if="isMenuOpen" class="dropdown-menu">
+        <div class="menu-item" @click="selectMenuSetting">
+          Settings
+        </div>
+        <div class="menu-item" @click="selectMenuFaq">
+          FAQ
+        </div>
+        <div class="menu-item" @click="selectMenuFeedback">
+          Feedback
+        </div>
+        <div class="menu-item" @click="selectMenuLogout">
+          Logout
         </div>
       </div>
     </div>

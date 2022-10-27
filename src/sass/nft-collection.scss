@@ -52,12 +52,15 @@
   gap: 16px;
   margin-bottom: 24px;
   .route {
+    margin-top: auto;
+    margin-bottom: auto;
     font-size: 18px;
     font-weight: 700;
     line-height: 22px;
     color: #C74FF9;
-    margin-top: auto;
-    margin-bottom: auto;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
   }
   .count {
     font-size: 18px;

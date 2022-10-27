@@ -6,11 +6,11 @@ const { collection } = props
 </script>
 
 <template>
-  <div class="element element-normal-line">
-    <div class="element-container">
-      <div class="header header-normal">
+  <div class="element">
+    <div class="element-container" :class="{ 'element-container-non-sol': !collection.sol ||collection.sol == 0 }">
+      <div v-if="collection.sol && collection.sol > 0" class="header header-normal">
         <div>
-          Listed: {{ collection.list }} SQL
+          Listed: {{ collection.sol }} SQL
         </div>
         <img class="image" src="/svg/icon-nft-demo-down.svg" alt="nft-image" />
       </div>
@@ -22,8 +22,8 @@ const { collection } = props
         <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" />
       </div>
     </div>
-    <div class="element-black-shadow" />
-    <div class="element-gray-shadow" />
+    <div class="element-black-shadow" :class="{ 'element-black-shadow-non-sol': !collection.sol ||collection.sol == 0 }" />
+    <div class="element-gray-shadow" :class="{ 'element-gray-shadow-non-sol': !collection.sol ||collection.sol == 0 }" />
   </div>
 </template>
 

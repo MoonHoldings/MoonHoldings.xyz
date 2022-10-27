@@ -1,11 +1,10 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import Header from '@/components/partials/Header.vue'
 import NftCollectionsBox from '@/components/nft/NftCollectionsBox.vue'
 
-const route = useRoute()
 const router = useRouter()
 
 const collectionsItem = ref([

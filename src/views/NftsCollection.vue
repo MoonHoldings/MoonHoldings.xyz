@@ -1,16 +1,27 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import Header from '@/components/partials/Header.vue'
 import NftCollectionBox from '@/components/nft/NftCollectionBox.vue'
 
+const router = useRouter()
+
 const collections = ref([
-  { id: 1, list: 25.432, name: 'Lotus Lad #1226' },
-  { id: 2, list: 25.432, name: 'Lotus Lad #420' },
-  { id: 3, list: 25.432, name: 'Lotus Lad #1740' },
-  { id: 4, list: 25.432, name: 'Lotus Lad #153' },
-  { id: 5, list: 25.432, name: 'Lotus Lad #1838' },
-  { id: 6, list: 25.432, name: 'Lotus Lad #1766' },
+  { id: 1, sol: 25.42069, name: 'Lotus Lad #1226' },
+  { id: 2, sol: 25, name: 'Lotus Lad #420' },
+  { id: 3, sol: 25, name: 'Lotus Lad #1740' },
+  { id: 4, sol: 25.432, name: 'Lotus Lad #153' },
+  { id: 5, sol: 25, name: 'Lotus Lad #1838' },
+  { id: 6, sol: 15, name: 'Lotus Lad #1766' },
+  { id: 7, sol: 0, name: 'Lotus Lad #4664' },
+  { id: 8, sol: 0, name: 'Lotus Lad #913' },
+  { id: 9, sol: 0, name: 'Lotus Lad #1505' },
+  { id: 10, sol: 0, name: 'Lotus Lad #475' },
 ])
+
+const backCollections = () => {
+  router.push({ name: 'nftsCollections' })
+}
 </script>
 
 <template>
@@ -19,7 +30,7 @@ const collections = ref([
   <div class="collection">
     <div class="collection__left-side">
       <div class="nft-summary">
-        <div class="route">
+        <div class="route" @click="backCollections">
           &#10094; Back to Collections
         </div>
         <div class="count">

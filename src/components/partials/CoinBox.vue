@@ -78,7 +78,7 @@ const clickCoinBox = () => {
       <div class="symbol">
         <div class="left">
           <img :src="coin.logo_url" alt="" />
-          <span>{{ coin?.id }}</span>
+          <span>{{ coin?.symbol }}</span>
         </div>
         <div class="right">{{ coin?.name }}</div>
       </div>

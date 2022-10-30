@@ -62,15 +62,14 @@
   background: #FFFFFF;
   position: relative;
   z-index: 6;
-  border: 1px solid #000000;
 }
 .element-container-non-sol {
   margin-top: 38px;
 }
 .element-black-shadow {
   position: absolute;
-  top: 2px;
-  left: 2px;
+  top: 1px;
+  left: 1px;
   border-right: 1px solid #000;
   border-bottom: 1px solid #000;
   width: 100%;

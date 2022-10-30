@@ -17,10 +17,18 @@ const collections = ref([
   { id: 9, sol: 0, name: 'Lotus Lad #1505' },
   { id: 10, sol: 0, name: 'Lotus Lad #475' },
 ])
+const selectedCollectionId = ref(null)
+
 
 const backCollections = () => {
   router.push({ name: 'nftsCollections' })
 }
+
+const selectDetailCollection = (collection) => {
+  selectedCollectionId.value = collection.id
+}
+
+const goDetailCollection = (collection) => {}
 </script>
 
 <template>
@@ -50,20 +58,42 @@ const backCollections = () => {
       </div>
 
       <div class="grid">
-        <div class="element" v-for="(collection, i) in collections" :key="i">
-          <div class="element-container" :class="{ 'element-container-non-sol': !collection.sol ||collection.sol == 0 }">
-            <div v-if="collection.sol && collection.sol > 0" class="header header-normal">
+        <div
+          class="element"
+          v-for="(collection, i) in collections"
+          :key="i"
+        >
+          <div
+            class="element-container"
+            :class="{
+              'element-container-non-sol': !collection.sol ||collection.sol == 0,
+              'element-container element-selected-line' : selectedCollectionId == collection.id,
+              'element-container element-normal-line' : selectedCollectionId !== collection.id,
+            }"
+          >
+            <div
+              v-if="collection.sol && collection.sol > 0"
+              :class="{
+                'header header-selected' : selectedCollectionId == collection.id,
+                'header header-normal' : selectedCollectionId !== collection.id,
+              }"
+            >
               <div>
                 Listed: {{ collection.sol }} SQL
               </div>
               <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
             </div>
-            <div class="content" @click="selectDetailCollection"></div>
-            <div class="footer footer-normal">
+            <div class="content" @click="selectDetailCollection(collection)"></div>
+            <div
+              :class="{
+                'footer footer-selected' : selectedCollectionId == collection.id,
+                'footer footer-normal' : selectedCollectionId !== collection.id,
+              }"
+            >
               <div class="label">
                 {{ collection.name }}
               </div>
-              <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" @click="goDetailCollection" />
+              <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" @click="goDetailCollection(collection)" />
             </div>
           </div>
           <div class="element-black-shadow" :class="{ 'element-black-shadow-non-sol': !collection.sol ||collection.sol == 0 }" />

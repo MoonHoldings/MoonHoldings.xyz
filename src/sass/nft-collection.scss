@@ -20,6 +20,7 @@
     .label {
       font-size: 18px;
       font-weight: 400;
+      font-family: "Poppins";
       line-height: 27px;
       color: #000000;
       margin-bottom: 16px;
@@ -33,6 +34,7 @@
       user-select: none;
       font-size: 16px;
       font-weight: 400;
+      font-family: "Poppins";
       line-height: 20px;
       text-align: center;
       color: #fff;
@@ -56,6 +58,7 @@
     margin-bottom: auto;
     font-size: 18px;
     font-weight: 700;
+    font-family: "Poppins";
     line-height: 22px;
     color: #C74FF9;
     text-decoration: underline;
@@ -65,6 +68,7 @@
   .count {
     font-size: 18px;
     font-weight: 400;
+    font-family: "Poppins";
     line-height: 22px;
     color: #000000;
     margin-top: auto;
@@ -86,6 +90,7 @@
     .label {
       font-size: 18px;
       font-weight: 700;
+      font-family: "Poppins";
       line-height: 22px;
       color: #000000;
       margin-top: auto;
@@ -96,6 +101,7 @@
       margin-bottom: auto;
       font-size: 18px;
       font-weight: 700;
+      font-family: "Poppins";
       line-height: 22px;
       color: #E05E28;
       text-decoration: underline;
@@ -107,6 +113,7 @@
       margin-bottom: auto;
       font-size: 18px;
       font-weight: 700;
+      font-family: "Poppins";
       line-height: 22px;
       color: #2C7444;
       text-decoration: underline;
@@ -126,6 +133,7 @@
 .nft-info-title {
   font-size: 18px;
   font-weight: 700;
+  font-family: "Poppins";
   line-height: 27px;
   margin-bottom: 16px;
 }
@@ -140,6 +148,7 @@
   .label {
     font-size: 16px;
     font-weight: 700;
+    font-family: "Poppins";
     line-height: 24px;
     color: #C74FF9;
     margin-top: auto;
@@ -209,12 +218,14 @@
   .left {
     font-size: 16px;
     font-weight: 700;
+    font-family: "Poppins";
     line-height: 24px;
     color: #000000;
   }
   .right {
     font-size: 16px;
     font-weight: 400;
+    font-family: "Poppins";
     line-height: 24px;
     color: #000000;
   }
@@ -260,6 +271,7 @@
 .detail-info-label {
   font-size: 16px;
   font-weight: 400;
+  font-family: "Poppins";
   line-height: 24px;
   color: #000000;
   margin-top: 16px;
@@ -279,5 +291,27 @@
     font-weight: 700;
     line-height: 24px;
     color: #5C2C3D;
+  }
+}
+
+.empty-nft-summary {
+  margin-top: 48px;
+  text-align: center;
+  .empty-title {
+    font-size: 50px;
+    font-weight: 700;
+    font-family: "Poppins";
+    line-height: 60px;
+  }
+  .empty-content {
+    margin-top: 16px;
+    font-size: 32px;
+    font-weight: 400;
+    font-family: "Poppins";
+    line-height: 60px;
+  }
+  .empty-image {
+    margin-top: 32px;
+    width: 80px;
   }
 }

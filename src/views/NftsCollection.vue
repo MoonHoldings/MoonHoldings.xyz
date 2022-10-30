@@ -17,8 +17,12 @@ const collections = ref([
   { id: 9, sol: 0, name: 'Lotus Lad #1505' },
   { id: 10, sol: 0, name: 'Lotus Lad #475' },
 ])
-const selectedCollectionId = ref(null)
 
+// const collections = ref([])
+const selectedCollectionId = ref(null)
+const isCollections = computed(() => {
+  return collections.value.length > 0
+})
 
 const backCollections = () => {
   router.push({ name: 'nftsCollections' })
@@ -38,7 +42,7 @@ const goDetailCollection = (collection) => {
 
   <div class="collection">
     <div class="collection__left-side">
-      <div class="nft-summary">
+      <div v-if="isCollections" class="nft-summary">
         <div class="route" @click="backCollections">
           &#10094; Back to Collections
         </div>
@@ -59,7 +63,7 @@ const goDetailCollection = (collection) => {
         </div>
       </div>
 
-      <div class="grid">
+      <div v-if="isCollections" class="grid">
         <div
           class="element"
           v-for="(collection, i) in collections"
@@ -102,14 +106,24 @@ const goDetailCollection = (collection) => {
           <div class="element-gray-shadow" :class="{ 'element-gray-shadow-non-sol': !collection.sol ||collection.sol == 0 }" />
         </div>
       </div>
+
+      <div v-else class="empty-nft-summary">
+        <div class="empty-title">
+          Import your NFT collection
+        </div>
+        <div class="empty-content">
+          Select Connect Wallet or Add Address to get Started
+        </div>
+        <img class="empty-image" src="/svg/icon-empty-nft.svg" alt="nft-image" />
+      </div>
     </div>
 
     <div class="collection__right-side">
-      <div class="nft-info-title">
+      <div v-if="isCollections" class="nft-info-title">
         Selected NFT
       </div>
 
-      <div class="nft-info">
+      <div v-if="isCollections" class="nft-info">
         <div class="nft-info-header">
           <img class="image" src="/svg/icon-nft-demo.svg" alt="header-image" />
           <div class="label">
@@ -161,7 +175,7 @@ const goDetailCollection = (collection) => {
         Disconnect All
       </div>
 
-      <div class="detail-info">
+      <div v-if="isCollections" class="detail-info">
         <div class="detail-info-header">
           <div class="left">Lotus Gang NFT</div>
           <div class="right">Listed:</div>

@@ -10,7 +10,49 @@ const router = useRouter()
   <Header />
 
   <div class="single-collection">
-    <div class="single-collection__left-side"></div>
+    <div class="single-collection__left-side">
+      <div class="collection-summary">
+        <div class="route">
+          &#10094; Back to Collections
+        </div>
+        <div class="slash">/</div>
+        <div class="route">
+          &#10094; Back to Lotus Gang NFT
+        </div>
+        <div class="slash">/</div>
+      </div>
+      <div class="collection-data-section">
+        <div class="collection-image">
+          <img class="image" src="/svg/icon-demo-single-collection.svg" alt="nft-image" />
+          <div class="image-info">
+            <div class="image-info-detail">
+              <div class="left">
+                Mint Address:
+              </div>
+              <div class="right">
+                9QN9Pbj83BN4DtEE5zTaP1mSeW8cEqAaAnKRukxTaHGj
+              </div>
+            </div>
+            <div class="image-info-detail">
+              <div class="left">
+                Owner:
+              </div>
+              <div class="right">
+                HEYw...ugUS
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="collection-data">
+          <div class="title">
+            Lotus Lad #1226
+          </div>
+          <div class="explanation">
+            Lotus Gang is a collection 4,000 randomly generated lads and ladies on the Solana Blockchain.
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="single-collection__right-side">
       <div class="nft-info-title">
         Selected NFT

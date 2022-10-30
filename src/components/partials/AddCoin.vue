@@ -52,7 +52,7 @@ const saveNewWalletHoldings = () => {
     holdingsInputError.value = true
     utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('All the input fields need to be fulfilled')
-  } else if (/[^0-9\.]/g.test(holdingsInput.value)) {
+  } else if (/[^0-9\.,]/g.test(holdingsInput.value)) {
     holdingsInputError.value = true
     utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage('Invalid input')
@@ -60,12 +60,22 @@ const saveNewWalletHoldings = () => {
     utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
 
+    if (holdingsInput.value.includes(','))
+      holdingsInput.value = holdingsInput.value
+        .split('')
+        .filter((el) => el !== ',')
+        .join('')
+
     coinStore.addHoldings(walletInput.value, holdingsInput.value)
 
     walletInput.value = ''
     holdingsInput.value = null
   }
 }
+
+// const eliminateComma = (num) => {
+
+// }
 
 const addWallet = () => {
   coinStore.addNewWallet()
@@ -233,11 +243,6 @@ watch(
               <div class="wallet">{{ wallet.name }}</div>
               <div class="holdings">{{ decorateNumber(wallet.holding) }}</div>
               <div class="value">${{ decorateNumber(wallet.value, true) }}</div>
-              <!-- <div class="3-dots">
-                <button @click="_3dotsOpen = !_3dotsOpen">
-                  <img src="/svg/icon-three-dots-vertical.svg" alt="" />
-                </button>
-              </div> -->
               <div class="menu-options" v-if="!_3dotsOpen">
                 <button class="edit-btn" @click="editWallet(wallet.name)">
                   <img :src="edit" alt="edit icon" />

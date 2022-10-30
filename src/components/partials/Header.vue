@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
-import { useRoute, RouterView } from 'vue-router'
+import { useRoute, useRouter, RouterView } from 'vue-router'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
 import { useCookies } from 'vue3-cookies'
@@ -9,6 +9,7 @@ import AddCoin from '@/components/partials/AddCoin.vue'
 
 const { cookies } = useCookies()
 const route = useRoute()
+const router = useRouter()
 const coinStore = useCoinStore()
 const utilStore = useUtilStore()
 const searchInput = ref('')
@@ -109,6 +110,10 @@ const selectMenuFeedback = () => {
 
 const selectMenuLogout = () => {
   isMenuOpen.value = !isMenuOpen.value
+  cookies.remove('MOON_TOKEN')
+  cookies.remove('MOON_USER')
+
+  router.push('/')
 }
 
 watch([searchInput], () => {
@@ -178,18 +183,10 @@ watch([searchInput], () => {
       </div>
 
       <div v-if="isMenuOpen" class="dropdown-menu">
-        <div class="menu-item" @click="selectMenuSetting">
-          Settings
-        </div>
-        <div class="menu-item" @click="selectMenuFaq">
-          FAQ
-        </div>
-        <div class="menu-item" @click="selectMenuFeedback">
-          Feedback
-        </div>
-        <div class="menu-item" @click="selectMenuLogout">
-          Logout
-        </div>
+        <div class="menu-item" @click="selectMenuSetting">Settings</div>
+        <div class="menu-item" @click="selectMenuFaq">FAQ</div>
+        <div class="menu-item" @click="selectMenuFeedback">Feedback</div>
+        <div class="menu-item" @click="selectMenuLogout">Logout</div>
       </div>
     </div>
   </div>

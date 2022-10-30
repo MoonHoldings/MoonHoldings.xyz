@@ -28,7 +28,9 @@ const selectDetailCollection = (collection) => {
   selectedCollectionId.value = collection.id
 }
 
-const goDetailCollection = (collection) => {}
+const goDetailCollection = (collection) => {
+  router.push({ name: 'nftSingleCollection', params: { id: collection.id }})
+}
 </script>
 
 <template>

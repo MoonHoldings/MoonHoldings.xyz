@@ -54,6 +54,12 @@ const router = createRouter({
       beforeEnter: requireAuth,
     },
     {
+      path: '/nfts/single-collection/:id',
+      name: 'nftSingleCollection',
+      component: () => import('@/views/NftSingleCollection.vue'),
+      beforeEnter: requireAuth,
+    },
+    {
       path: '/calendar',
       name: 'calendar',
       beforeEnter: requireAuth,

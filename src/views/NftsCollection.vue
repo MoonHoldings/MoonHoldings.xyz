@@ -2,7 +2,6 @@
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import Header from '@/components/partials/Header.vue'
-import NftCollectionBox from '@/components/nft/NftCollectionBox.vue'
 
 const router = useRouter()
 
@@ -51,7 +50,25 @@ const backCollections = () => {
       </div>
 
       <div class="grid">
-        <NftCollectionBox v-for="(collection, i) in collections" :key="i" :collection="collection" />
+        <div class="element" v-for="(collection, i) in collections" :key="i">
+          <div class="element-container" :class="{ 'element-container-non-sol': !collection.sol ||collection.sol == 0 }">
+            <div v-if="collection.sol && collection.sol > 0" class="header header-normal">
+              <div>
+                Listed: {{ collection.sol }} SQL
+              </div>
+              <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
+            </div>
+            <div class="content" @click="selectDetailCollection"></div>
+            <div class="footer footer-normal">
+              <div class="label">
+                {{ collection.name }}
+              </div>
+              <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" @click="goDetailCollection" />
+            </div>
+          </div>
+          <div class="element-black-shadow" :class="{ 'element-black-shadow-non-sol': !collection.sol ||collection.sol == 0 }" />
+          <div class="element-gray-shadow" :class="{ 'element-gray-shadow-non-sol': !collection.sol ||collection.sol == 0 }" />
+        </div>
       </div>
     </div>
 
@@ -152,4 +169,5 @@ const backCollections = () => {
 
 <style lang="scss" scoped>
 @import '@/sass/nft-collection.scss';
+@import '@/sass/nft-collection-box.scss';
 </style>

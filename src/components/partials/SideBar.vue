@@ -61,24 +61,24 @@ watch(route, (prev, present) => {
       </div>
 
       <div
-        :class="currentRoute.startsWith('/nfts/collections') || currentRoute.startsWith('/nfts/lend-borrow') ? 'item-logo item-logo__active' : 'item-logo'"
+        :class="currentRoute.startsWith('/nfts/single-collection') || currentRoute.startsWith('/nfts/collections') || currentRoute.startsWith('/nfts/lend-borrow') ? 'item-logo item-logo__active' : 'item-logo'"
         @click="goPage('/nfts/collections')"
       >
-        <img v-if="currentRoute.startsWith('/nfts/collections') || currentRoute.startsWith('/nfts/lend-borrow')" src="/svg/icon-circle-fill.svg" alt="nfts logo" />
+        <img v-if="currentRoute.startsWith('/nfts/single-collection') || currentRoute.startsWith('/nfts/collections') || currentRoute.startsWith('/nfts/lend-borrow')" src="/svg/icon-circle-fill.svg" alt="nfts logo" />
         <img v-else src="/svg/icon-circle-line.svg" alt="nfts logo" />
         <span>{{ NFTS }}</span>
       </div>
 
       <div
-        v-if="currentRoute.startsWith('/nfts/collections') || currentRoute.startsWith('/nfts/lend-borrow')"
-        :class="currentRoute.startsWith('/nfts/collections') ? 'item-sub-menu item-sub-menu__active' : 'item-sub-menu'"
+        v-if="currentRoute.startsWith('/nfts/single-collection') || currentRoute.startsWith('/nfts/collections') || currentRoute.startsWith('/nfts/lend-borrow')"
+        :class="currentRoute.startsWith('/nfts/single-collection') || currentRoute.startsWith('/nfts/collections') ? 'item-sub-menu item-sub-menu__active' : 'item-sub-menu'"
         @click="goPage('/nfts/collections')"
       >
         {{ COLLECTIONS }}
       </div>
 
       <div
-        v-if="currentRoute.startsWith('/nfts/collections') || currentRoute.startsWith('/nfts/lend-borrow')"
+        v-if="currentRoute.startsWith('/nfts/single-collection') || currentRoute.startsWith('/nfts/collections') || currentRoute.startsWith('/nfts/lend-borrow')"
         :class="currentRoute.startsWith('/nfts/lend-borrow') ? 'item-sub-menu item-sub-menu__active' : 'item-sub-menu'"
         @click="goPage('/nfts/lend-borrow')"
       >

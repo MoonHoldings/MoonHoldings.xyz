@@ -29,6 +29,8 @@ onMounted(() => {
 })
 
 watch(route, (prev, present) => {
+  currentRoute.value = route.fullPath
+
   isSidebar.value = route.fullPath
     !== "/" && route.fullPath
     !== "/login" && route.fullPath

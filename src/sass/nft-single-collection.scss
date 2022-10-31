@@ -294,7 +294,14 @@
   font-weight: 400;
   line-height: 16px;
   color: #000000;
-  cursor: pointer;
+
+  .close {
+    position: absolute;
+    top: -8px;
+    right: -4px;
+    background: white;
+    cursor: pointer;
+  }
 }
 
 .detail-info {

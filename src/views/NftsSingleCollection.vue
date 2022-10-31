@@ -5,12 +5,25 @@ import Header from '@/components/partials/Header.vue'
 
 const router = useRouter()
 
+const isImageModal = ref(false)
+const imageUrl = ref('')
+
 const backCollections = () => {
   router.push({ name: 'nftsCollections' })
 }
 
 const backCollection = () => {
   router.push({ name: 'nftsCollection', params: { id: 1 }})
+}
+
+const showImageModal = () => {
+  isImageModal.value = true
+  imageUrl.value = '/svg/icon-demo-single-collection.svg'
+}
+
+const closeImageModal = () => {
+  isImageModal.value = false
+  imageUrl.value = ''
 }
 </script>
 
@@ -32,7 +45,12 @@ const backCollection = () => {
 
       <div class="collection-data-section">
         <div class="collection-image">
-          <img class="image" src="/svg/icon-demo-single-collection.svg" alt="nft-image" />
+          <img
+            class="image"
+            src="/svg/icon-demo-single-collection.svg"
+            alt="nft-image"
+            @click="showImageModal"
+          />
 
           <div class="image-info">
             <div class="image-info-detail">
@@ -246,8 +264,16 @@ const backCollection = () => {
       </div>
     </div>
   </div>
+
+  <div v-if="isImageModal" class="modal">
+    <span class="close" @click="closeImageModal">&times;</span>
+    <div class="modal-content">
+      <img class="image" :src="imageUrl" alt="nft-image" />
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 @import '@/sass/nft-single-collection.scss';
+@import '@/sass/nft-single-collection-image-modal.scss';
 </style>

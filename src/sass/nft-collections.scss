@@ -13,6 +13,7 @@
     .label {
       font-size: 18px;
       font-weight: 400;
+      font-family: "Poppins";
       line-height: 22px;
       color: #000000;
     }
@@ -31,6 +32,7 @@
     .label {
       font-size: 18px;
       font-weight: 400;
+      font-family: "Inter";
       line-height: 27px;
       color: #000000;
     }
@@ -38,12 +40,13 @@
     .button {
       margin-top: 8px;
       margin-bottom: 8px;
-      padding: 6px 16px;
+      padding: 10px 16px;
       border-radius: 4px;
       background: #5B218F;
       user-select: none;
       font-size: 16px;
       font-weight: 400;
+      font-family: "Inter";
       line-height: 20px;
       text-align: center;
       color: #fff;
@@ -81,12 +84,12 @@
   font-weight: 400;
   line-height: 16px;
   color: #000000;
-  cursor: pointer;
-}
 
-.close {
-  position: absolute;
-  top: -8px;
-  right: -4px;
-  background: white;
+  .close {
+    position: absolute;
+    top: -8px;
+    right: -4px;
+    background: white;
+    cursor: pointer;
+  }
 }

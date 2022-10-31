@@ -8,7 +8,7 @@
   gap: 8px;
 
   &__left-side {
-    width: calc(100% - 330px);
+    width: calc(100% - 270px);
 
     .grid {
       display: flex;
@@ -19,7 +19,7 @@
   }
 
   &__right-side {
-    width: 330px;
+    width: 270px;
   }
 }
 

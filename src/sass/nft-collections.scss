@@ -13,6 +13,7 @@
     .label {
       font-size: 18px;
       font-weight: 400;
+      font-family: "Poppins";
       line-height: 22px;
       color: #000000;
     }
@@ -27,66 +28,5 @@
 
   &__right-side {
     width: 20%;
-
-    .label {
-      font-size: 18px;
-      font-weight: 400;
-      line-height: 27px;
-      color: #000000;
-    }
-
-    .button {
-      margin-top: 8px;
-      margin-bottom: 8px;
-      padding: 6px 16px;
-      border-radius: 4px;
-      background: #5B218F;
-      user-select: none;
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 20px;
-      text-align: center;
-      color: #fff;
-      cursor: pointer;
-
-      &:hover {
-        transition: background-color 0.25s ease;
-        background: #A13DFB;
-      }
-
-      &:active {
-        background: #481873;
-      }
-    }
   }
-}
-
-.grid-container {
-  margin-top: 16px;
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: start;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.grid-item {
-  position: relative;
-  text-align: center;
-  border: 0.5px solid #000000;
-  border-radius: 6px;
-  background: #fff;
-  padding: 4px 6px;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #000000;
-  cursor: pointer;
-}
-
-.close {
-  position: absolute;
-  top: -8px;
-  right: -4px;
-  background: white;
 }

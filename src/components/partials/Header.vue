@@ -21,6 +21,7 @@ const isMenuOpen = ref(false)
 const isNFTSView = computed(() => {
   return (
     route.fullPath.startsWith('/nfts/collections') ||
+    route.fullPath.startsWith('/nfts/single-collection') ||
     route.fullPath.startsWith('/nfts/lend-borrow')
   )
 })

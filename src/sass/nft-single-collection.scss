@@ -7,10 +7,10 @@
   display: flex;
   gap: 8px;
   &__left-side {
-    width: calc(100% - 270px);
+    width: calc(100% - 340px);
   }
   &__right-side {
-    width: 270px;
+    width: 340px;
     .label {
       font-size: 18px;
       font-weight: 400;
@@ -64,15 +64,19 @@
 }
 .collection-data-section {
   display: flex;
+
   .collection-image {
     min-width: 60%;
+
     .image {
       width: 100%;
       height: auto;
     }
+
     .image-info {
       margin-top: 20px;
     }
+
     .image-info-detail {
       display: flex;
       justify-content: space-between;
@@ -80,35 +84,78 @@
       font-family: "Poppins";
       line-height: 30px;
       color: #000000;
+
       .left {
         font-size: 18px;
       }
+
       .right {
         font-size: 12px;
       }
     }
   }
+
   .collection-data {
     min-width: 40%;
     padding-left: 20px;
     padding-right: 20px;
+    font-family: "Poppins";
+    color: #000000;
+
     .title {
       font-size: 30px;
       font-weight: 700;
-      font-family: "Poppins";
-      line-height: 22px;
-      color: #000000;
+      line-height: 30px;
     }
+
     .explanation {
       margin-top: 20px;
       font-size: 16px;
       font-weight: 400;
-      font-family: "Poppins";
       line-height: 24px;
+    }
+
+    .accept-offer {
+      margin-top: 20px;
+      width: 100%;
+      background-color: #FFFFFF;
+      border: 1px solid #C74FF9;
+      border-radius: 4px;
+      padding: 6px 8px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: "Inter";
+      color: #C74FF9;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 20px;
+      font-family: "Poppins";
       color: #000000;
+
+      .info-item {
+
+        .label {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 21px;
+        }
+
+        .value {
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 24px;
+        }
+      }
     }
   }
 }
+
 .nft-info {
   width: 100%;
   border: 0.5px solid #000000;
@@ -117,6 +164,7 @@
   margin-bottom: 16px;
   background: #FFFFFF;
 }
+
 .nft-info-title {
   font-size: 18px;
   font-weight: 700;
@@ -124,6 +172,7 @@
   line-height: 27px;
   margin-bottom: 16px;
 }
+
 .nft-info-header {
   display: flex;
   gap: 8px;
@@ -142,6 +191,7 @@
     margin-bottom: auto;
   }
 }
+
 .nft-info-content {
   width: 100%;
   padding: 12px 10px;
@@ -150,10 +200,12 @@
   text-align:right;
   margin-bottom: 16px;
 }
+
 .nft-info-footer {
   display: flex;
   justify-content: space-between;
 }
+
 .nft-info-button {
   padding: 10px 32px;
   border: 1px solid #C74FF9;
@@ -164,6 +216,7 @@
   color: #C74FF9;
   cursor: pointer;
 }
+
 .grid-container {
   margin-top: 16px;
   margin-bottom: 16px;
@@ -172,6 +225,7 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+
 .grid-item {
   position: relative;
   text-align: center;
@@ -185,6 +239,7 @@
   color: #000000;
   cursor: pointer;
 }
+
 .detail-info {
   margin-top: 16px;
   padding: 16px;
@@ -192,6 +247,7 @@
   border: 0.5px solid #000000;
   border-radius: 4px;
 }
+
 .detail-info-header {
   display: flex;
   justify-content: space-between;
@@ -211,6 +267,7 @@
     color: #000000;
   }
 }
+
 .detail-info-item {
   display: flex;
   justify-content: space-between;
@@ -249,6 +306,7 @@
     margin-bottom: auto;
   }
 }
+
 .detail-info-label {
   font-size: 16px;
   font-weight: 400;
@@ -258,6 +316,7 @@
   margin-top: 16px;
   margin-bottom: 10px;
 }
+
 .detail-info-footer {
   display: flex;
   gap: 10px;

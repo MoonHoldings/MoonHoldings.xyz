@@ -21,9 +21,11 @@ const router = useRouter()
         </div>
         <div class="slash">/</div>
       </div>
+
       <div class="collection-data-section">
         <div class="collection-image">
           <img class="image" src="/svg/icon-demo-single-collection.svg" alt="nft-image" />
+
           <div class="image-info">
             <div class="image-info-detail">
               <div class="left">
@@ -43,6 +45,7 @@ const router = useRouter()
             </div>
           </div>
         </div>
+
         <div class="collection-data">
           <div class="title">
             Lotus Lad #1226
@@ -50,9 +53,72 @@ const router = useRouter()
           <div class="explanation">
             Lotus Gang is a collection 4,000 randomly generated lads and ladies on the Solana Blockchain.
           </div>
+
+          <div class="currency-section"></div>
+
+          <div class="accept-offer">
+            Accept Hightest Offer @ 10.123
+          </div>
+
+          <div class="info">
+            <div class="info-item">
+              <div class="label">Background</div>
+              <div class="value">Blue</div>
+              <div class="label">20%</div>
+            </div>
+
+            <div class="info-item">
+              <div class="label">Type</div>
+              <div class="value">Human</div>
+              <div class="label">87%</div>
+            </div>
+
+            <div class="info-item">
+              <div class="label">Head</div>
+              <div class="value">Black Cap</div>
+              <div class="label">3.6%</div>
+            </div>
+
+            <div class="info-item">
+              <div class="label">Facial Hair</div>
+              <div class="value">Beard</div>
+              <div class="label">25%</div>
+            </div>
+
+            <div class="info-item">
+              <div class="label">Clothing</div>
+              <div class="value">Plain Black Tea</div>
+              <div class="label">87%</div>
+            </div>
+
+            <div class="info-item">
+              <div class="label">Helmet</div>
+              <div class="value">No Helmet</div>
+              <div class="label">97%</div>
+            </div>
+
+            <div class="info-item">
+              <div class="label">Accessory 1</div>
+              <div class="value">Red Scouter</div>
+              <div class="label">11%</div>
+            </div>
+
+            <div class="info-item">
+              <div class="label">Accessory 2</div>
+              <div class="value">No Accessory</div>
+              <div class="label">55%</div>
+            </div>
+
+            <div class="info-item">
+              <div class="label">Accessory 3</div>
+              <div class="value">No Accessory</div>
+              <div class="label">55%</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="single-collection__right-side">
       <div class="nft-info-title">
         Selected NFT

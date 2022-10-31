@@ -8,6 +8,8 @@ const router = useRouter()
 
 const isImageModal = ref(false)
 const imageUrl = ref('')
+const isWalletAddressModal = ref(false)
+const walletAddress = ref('')
 
 const backCollections = () => {
   router.push({ name: 'nftsCollections' })
@@ -26,6 +28,21 @@ const closeImageModal = () => {
   isImageModal.value = false
   imageUrl.value = ''
 }
+
+const showWalletAddressModal = () => {
+  isWalletAddressModal.value = true
+  walletAddress.value = ''
+}
+
+const closeWalletAddressModal = () => {
+  isWalletAddressModal.value = false
+  walletAddress.value = ''
+}
+
+const addWallet = () => {
+  console.log('wallet address to add', walletAddress.value)
+}
+
 </script>
 
 <template>
@@ -173,7 +190,7 @@ const closeImageModal = () => {
     </div>
 
     <div class="single-collection__right-side">
-      <WalletManage />
+      <WalletManage @showWalletAddress="showWalletAddressModal" />
     </div>
   </div>
 
@@ -183,9 +200,42 @@ const closeImageModal = () => {
       <img class="image" :src="imageUrl" alt="nft-image" />
     </div>
   </div>
+
+  <div v-if="isWalletAddressModal" class="wallet-modal">
+    <div class="wallet-modal-content">
+      <div class="wallet-modal-container">
+        <div class="wallet-modal-header">
+          <div class="label">
+            Add your Solana wallet address
+          </div>
+          <img
+            class="image"
+            src="/svg/icon-close.svg"
+            alt="nft-image"
+            @click="closeWalletAddressModal"
+          />
+        </div>
+
+        <div class="wallet-input-content">
+          <input type="text" v-model="walletAddress" class="input-text" />
+          <div class="input-button" @click="addWallet">
+            Add Wallet
+          </div>
+        </div>
+      </div>
+
+      <div class="wallet-modal-shadow">
+        <div class="wallet-top-corner" />
+        <div class="wallet-bottom-corner" />
+      </div>
+
+      <div class="wallet-modal-blur" />
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 @import '@/sass/nft-single-collection.scss';
 @import '@/sass/nft-single-collection-image-modal.scss';
+@import '@/sass/nft-collection-address-modal.scss';
 </style>

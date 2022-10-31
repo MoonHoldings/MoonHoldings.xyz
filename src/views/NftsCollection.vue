@@ -135,14 +135,14 @@ const addWallet = () => {
     </div>
 
     <div class="collection__right-side">
-      <WalletManage />
+      <WalletManage @showWalletAddress="showWalletAddressModal" />
     </div>
   </div>
 
-  <div v-if="isWalletAddressModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-container">
-        <div class="modal-header">
+  <div v-if="isWalletAddressModal" class="wallet-modal">
+    <div class="wallet-modal-content">
+      <div class="wallet-modal-container">
+        <div class="wallet-modal-header">
           <div class="label">
             Add your Solana wallet address
           </div>
@@ -154,7 +154,7 @@ const addWallet = () => {
           />
         </div>
 
-        <div class="input-content">
+        <div class="wallet-input-content">
           <input type="text" v-model="walletAddress" class="input-text" />
           <div class="input-button" @click="addWallet">
             Add Wallet
@@ -162,12 +162,12 @@ const addWallet = () => {
         </div>
       </div>
 
-      <div class="modal-shadow">
-        <div class="top-corner" />
-        <div class="bottom-corner" />
+      <div class="wallet-modal-shadow">
+        <div class="wallet-top-corner" />
+        <div class="wallet-bottom-corner" />
       </div>
 
-      <div class="modal-blur" />
+      <div class="wallet-modal-blur" />
     </div>
   </div>
 </template>

@@ -1,6 +1,12 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
+
+const emit = defineEmits()
+
+const showWalletAddressModal = () => {
+  emit("showWalletAddress")
+}
 </script>
 
 <template>
@@ -30,7 +36,7 @@ import { useRouter } from 'vue-router'
     Connect Wallet
   </div>
 
-  <div class="button">
+  <div class="button" @click="showWalletAddressModal">
     Add Address
   </div>
 

@@ -30,3 +30,28 @@
     width: 20%;
   }
 }
+
+.empty-nft-summary {
+  margin-top: 48px;
+  text-align: center;
+
+  .empty-title {
+    font-size: 50px;
+    font-weight: 700;
+    font-family: "Poppins";
+    line-height: 60px;
+  }
+
+  .empty-content {
+    margin-top: 16px;
+    font-size: 32px;
+    font-weight: 400;
+    font-family: "Poppins";
+    line-height: 60px;
+  }
+
+  .empty-image {
+    margin-top: 32px;
+    width: 80px;
+  }
+}

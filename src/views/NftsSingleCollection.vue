@@ -62,7 +62,33 @@ const backCollection = () => {
             Lotus Gang is a collection 4,000 randomly generated lads and ladies on the Solana Blockchain.
           </div>
 
-          <div class="currency-section"></div>
+          <div class="floor-section">
+            <div class="floor">
+              <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
+              <div class="label">Floor</div>
+              <div class="down-value">13.6</div>
+              <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" />
+            </div>
+
+            <div class="floor">
+              <img class="image" src="/svg/icon-hyperspace.svg" alt="nft-image" />
+              <div class="label">Floor</div>
+              <div class="up-value">16</div>
+              <img class="image" src="/svg/icon-arrow-circle-up.svg" alt="nft-image" />
+            </div>
+          </div>
+
+          <div class="floor-section">
+            <div class="floor">
+              <img class="image" src="/svg/icon-moonrank.svg" alt="nft-image" />
+              <div class="number">2589</div>
+            </div>
+
+            <div class="floor">
+              <img class="image" src="/svg/icon-howrare.svg" alt="nft-image" />
+              <div class="number">3280</div>
+            </div>
+          </div>
 
           <div class="accept-offer">
             Accept Hightest Offer @ 10.123

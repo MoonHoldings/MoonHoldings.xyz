@@ -17,9 +17,10 @@ const collections = ref([
   { id: 9, sol: 0, name: 'Lotus Lad #1505' },
   { id: 10, sol: 0, name: 'Lotus Lad #475' },
 ])
-
-// const collections = ref([])
+const isWalletAddressModal = ref(false)
+const walletAddress = ref('')
 const selectedCollectionId = ref(null)
+
 const isCollections = computed(() => {
   return collections.value.length > 0
 })
@@ -34,6 +35,20 @@ const selectDetailCollection = (collection) => {
 
 const goDetailCollection = (collection) => {
   router.push({ name: 'nftSingleCollection', params: { id: collection.id }})
+}
+
+const showWalletAddressModal = () => {
+  isWalletAddressModal.value = true
+  walletAddress.value = ''
+}
+
+const closeWalletAddressModal = () => {
+  isWalletAddressModal.value = false
+  walletAddress.value = ''
+}
+
+const addWallet = () => {
+  console.log('wallet address to add', walletAddress.value)
 }
 </script>
 
@@ -145,7 +160,7 @@ const goDetailCollection = (collection) => {
         Connect Wallet
       </div>
 
-      <div class="button">
+      <div class="button" @click="showWalletAddressModal">
         Add Address
       </div>
 
@@ -211,9 +226,42 @@ const goDetailCollection = (collection) => {
       </div>
     </div>
   </div>
+
+  <div v-if="isWalletAddressModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-container">
+        <div class="modal-header">
+          <div class="label">
+            Add your Solana wallet address
+          </div>
+          <img
+            class="image"
+            src="/svg/icon-close.svg"
+            alt="nft-image"
+            @click="closeWalletAddressModal"
+          />
+        </div>
+
+        <div class="input-content">
+          <input type="text" v-model="walletAddress" class="input-text" />
+          <div class="input-button" @click="addWallet">
+            Add Wallet
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-shadow">
+        <div class="top-corner" />
+        <div class="bottom-corner" />
+      </div>
+
+      <div class="modal-blur" />
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 @import '@/sass/nft-collection.scss';
 @import '@/sass/nft-collection-box.scss';
+@import '@/sass/nft-collection-address-modal.scss';
 </style>

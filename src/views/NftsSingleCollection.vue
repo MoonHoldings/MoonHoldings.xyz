@@ -4,6 +4,14 @@ import { useRouter } from 'vue-router'
 import Header from '@/components/partials/Header.vue'
 
 const router = useRouter()
+
+const backCollections = () => {
+  router.push({ name: 'nftsCollections' })
+}
+
+const backCollection = () => {
+  router.push({ name: 'nftsCollection', params: { id: 1 }})
+}
 </script>
 
 <template>
@@ -12,11 +20,11 @@ const router = useRouter()
   <div class="single-collection">
     <div class="single-collection__left-side">
       <div class="collection-summary">
-        <div class="route">
+        <div class="route" @click="backCollections">
           &#10094; Back to Collections
         </div>
         <div class="slash">/</div>
-        <div class="route">
+        <div class="route" @click="backCollection">
           &#10094; Back to Lotus Gang NFT
         </div>
         <div class="slash">/</div>

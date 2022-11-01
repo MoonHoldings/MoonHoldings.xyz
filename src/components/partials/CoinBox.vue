@@ -77,8 +77,8 @@ const clickCoinBox = () => {
     <div class="surface" @click="clickCoinBox">
       <div class="symbol">
         <div class="left">
-          <img :src="coin.logo_url" alt="" />
-          <span>{{ coin?.id }}</span>
+          <img v-if="coin.logo_url" :src="coin.logo_url" alt="" />
+          <span>{{ coin?.symbol }}</span>
         </div>
         <div class="right">{{ coin?.name }}</div>
       </div>

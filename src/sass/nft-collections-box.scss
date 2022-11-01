@@ -1,5 +1,6 @@
 .grid-element {
   min-width: 200px;
+  cursor: pointer;
 }
 
 .grid-header {
@@ -28,12 +29,14 @@
   .left-label {
     font-size: 14px;
     font-weight: 400;
+    font-family: "Poppins";
     line-height: 22px;
   }
 
   .left-number {
     font-size: 20px;
     font-weight: 700;
+    font-family: "Poppins";
     line-height: 22px;
   }
 }
@@ -67,6 +70,7 @@
   color: white;
   font-size: 14px;
   font-weight: 400;
+  font-family: "Poppins";
   line-height: 22px;
 }
 
@@ -87,18 +91,19 @@
   .info-label {
     font-size: 14px;
     font-weight: 400;
+    font-family: "Poppins";
     line-height: 22px;
   }
 
   .info-value {
     font-size: 20px;
     font-weight: 700;
+    font-family: "Poppins";
     line-height: 22px;
   }
 }
 
 .grid-shadow {
-  position: absolute;
   position: absolute;
   top: 9px;
   left: 9px;

@@ -8,14 +8,7 @@
   gap: 8px;
 
   &__left-side {
-    width: 80%;
-
-    .label {
-      font-size: 18px;
-      font-weight: 400;
-      line-height: 22px;
-      color: #000000;
-    }
+    width: calc(100% - 270px);
 
     .grid {
       display: flex;
@@ -26,67 +19,113 @@
   }
 
   &__right-side {
-    width: 20%;
+    width: 270px;
+  }
+}
+
+.nft-summary {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  .route {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: "Poppins";
+    line-height: 22px;
+    color: #C74FF9;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+
+  .count {
+    font-size: 18px;
+    font-weight: 400;
+    font-family: "Poppins";
+    line-height: 22px;
+    color: #000000;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    .value {
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+    }
+  }
+
+  .floor {
+    display: flex;
+    gap: 6px;
+
+    .image {
+      width: 32px;
+      height: 32px;
+    }
 
     .label {
       font-size: 18px;
-      font-weight: 400;
-      line-height: 27px;
+      font-weight: 700;
+      font-family: "Poppins";
+      line-height: 22px;
       color: #000000;
+      margin-top: auto;
+      margin-bottom: auto;
     }
 
-    .button {
-      margin-top: 8px;
-      margin-bottom: 8px;
-      padding: 6px 16px;
-      border-radius: 4px;
-      background: #5B218F;
-      user-select: none;
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 20px;
-      text-align: center;
-      color: #fff;
+    .down-value {
+      margin-top: auto;
+      margin-bottom: auto;
+      font-size: 18px;
+      font-weight: 700;
+      font-family: "Poppins";
+      line-height: 22px;
+      color: #E05E28;
+      text-decoration: underline;
+      text-underline-offset: 2px;
       cursor: pointer;
+    }
 
-      &:hover {
-        transition: background-color 0.25s ease;
-        background: #A13DFB;
-      }
-
-      &:active {
-        background: #481873;
-      }
+    .up-value {
+      margin-top: auto;
+      margin-bottom: auto;
+      font-size: 18px;
+      font-weight: 700;
+      font-family: "Poppins";
+      line-height: 22px;
+      color: #2C7444;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
     }
   }
 }
 
-.grid-container {
-  margin-top: 16px;
-  margin-bottom: 16px;
-  display: grid;
-  gap: 8px;
-  grid-template-columns: auto auto auto;
-}
-
-.grid-item {
-  position: relative;
-  width: 100%;
+.empty-nft-summary {
+  margin-top: 48px;
   text-align: center;
-  border: 0.5px solid #000000;
-  border-radius: 6px;
-  background: #fff;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #000000;
-  cursor: pointer;
-}
 
-.close {
-  position: absolute;
-  top: -8px;
-  right: -4px;
-  background: white;
+  .empty-title {
+    font-size: 50px;
+    font-weight: 700;
+    font-family: "Poppins";
+    line-height: 60px;
+  }
+
+  .empty-content {
+    margin-top: 16px;
+    font-size: 32px;
+    font-weight: 400;
+    font-family: "Poppins";
+    line-height: 60px;
+  }
+
+  .empty-image {
+    margin-top: 32px;
+    width: 80px;
+  }
 }

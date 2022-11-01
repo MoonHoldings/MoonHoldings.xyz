@@ -8,10 +8,11 @@
 
   &__pink-bar {
     height: 10px;
-    background-color: #6D2E46;
+    background-color: #6d2e46;
   }
 
   &__main {
+    position: relative;
     min-height: 72px;
     padding: 28px 46px 10px 46px;
     display: flex;
@@ -27,6 +28,7 @@
   .label {
     font-size: 12px;
     font-weight: 400;
+    font-family: "Poppins";
     line-height: 18px;
 
     img {
@@ -36,6 +38,7 @@
     span {
       margin-right: 4px;
       position: relative;
+      font-family: "Poppins";
       bottom: 8px;
     }
   }
@@ -43,6 +46,7 @@
   .style {
     font-size: 12px;
     font-weight: 400;
+    font-family: "Poppins";
     line-height: 18px;
 
     img {
@@ -53,6 +57,7 @@
 
     span {
       margin-right: 4px;
+      font-family: "Poppins";
       position: relative;
       bottom: 8px;
     }
@@ -126,13 +131,13 @@
   margin-bottom: auto;
   font-size: 32px;
   font-weight: bold;
-  font-family: "Inconsolata", monospace;
+  font-family: 'Inconsolata', monospace;
   line-height: 16px;
 }
 
 .percent {
   height: fit-content;
-  background: #09814A;
+  background: #09814a;
   border-radius: 4px;
   padding: 10px;
   color: #fff;
@@ -143,7 +148,7 @@
 .percent-number {
   font-size: 24px;
   font-weight: 700;
-  font-family: "Inconsolata";
+  font-family: 'Inconsolata';
   line-height: 16px;
 }
 
@@ -151,11 +156,37 @@
   font-size: 20px;
   font-weight: 700;
   line-height: 16px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
 }
 
 .menu {
+  cursor: pointer;
   img {
     height: 35px;
   }
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 8px;
+  top: 80px;
+  width: 160px;
+  padding: 8px 16px;
+  background: #f0f6f0;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  .menu-item {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 8px;
+    cursor: pointer;
+
+    &:not(:last-child) {
+      color: rgba(0, 0, 0, 0.2);
+      pointer-events: none; // this prevents triggering
+    }
+  }
+  // .menu-item:hover {
+  //   color: #000000;
+  // }
 }

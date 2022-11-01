@@ -27,6 +27,7 @@
   margin-bottom: 56px;
   font-size: 16px;
   font-weight: 700;
+  font-family: "Poppins";
   cursor: pointer;
 
   img {
@@ -44,6 +45,7 @@
   margin-bottom: 24px;
   font-size: 18px;
   font-weight: 400;
+  font-family: "Poppins";
   cursor: pointer;
 
   &__active {
@@ -65,6 +67,7 @@
 .item-sub {
   font-size: 18px;
   font-weight: 400;
+  font-family: "Poppins";
   cursor: pointer;
   &__active {
     color: #C74FF9;
@@ -85,9 +88,10 @@
 .item-sub-menu {
   margin-left: 32px;
   margin-bottom: 32px;
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 0;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: "Poppins";
+  line-height: 12px;
   cursor: pointer;
 
   &__active {
@@ -98,7 +102,7 @@
 
 .social {
   position: absolute;
-  bottom: 110px;
+  bottom: 40px;
   .item {
     display: flex;
     gap: 16px;
@@ -107,6 +111,7 @@
   .link {
     font-size: 12px;
     font-weight: 400;
+    font-family: "Poppins";
     line-height: 30px;
     color: black;
   }

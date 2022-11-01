@@ -1,0 +1,152 @@
+.wallet-modal {
+  display: block;
+  position: fixed;
+  z-index: 100;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.wallet-modal-content {
+  margin: auto;
+  width: 500px;
+  padding: 16px;
+  background-color: #FFFFFF;
+  border: 1px solid #000000;
+}
+
+.wallet-modal-container {
+  position: relative;
+}
+
+.wallet-modal-shadow {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  border-radius: 2px;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(#DA57FF 36%, #F5D3FF 100%);
+}
+
+.wallet-top-corner {
+  width: 14.5px;
+  height: 14.5px;
+  border-top: 1px solid #000;
+  border-radius: 1.5px;
+  position: absolute;
+  right: 3px;
+  top: -7px;
+  transform: rotate(45deg);
+  background: #DA57FF;
+}
+
+.wallet-bottom-corner {
+  width: 14.5px;
+  height: 14.5px;
+  border-bottom: 1px solid #000;
+  border-radius: 2px;
+  position: absolute;
+  bottom: 3px;
+  left: -6.5px;
+  transform: rotate(45deg);
+  background: #F5D3FF;
+}
+
+.wallet-modal-blur {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 9px;
+  left: 9px;
+  z-index: -1;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid #000000;
+  filter: blur(20px);
+}
+
+.wallet-modal-header {
+  display: flex;
+  justify-content: space-between;
+
+  .label {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: "Inter";
+    line-height: 40px;
+    color: #000000;
+  }
+
+  .image {
+    width: 22px;
+    height: 22px;
+    margin-top: auto;
+    margin-bottom: auto;
+    cursor: pointer;
+  }
+}
+
+.wallet-input-content {
+  margin-top: 50px;
+  margin-bottom: 62px;
+  display: flex;
+  gap: 16px;
+
+  .input-text {
+    width: 60%;
+    min-height: 4.4rem;
+    font-weight: 400;
+    line-height: 20px;
+    padding: 8px 10px;
+    background: #e9eee9;
+    border-radius: 0.2rem;
+    font-size: 1.8rem;
+    font-family: 'Inter', monospace;
+    outline: none;
+    border: 0.1rem solid var(--pink);
+    box-shadow: 0px 1px 10px 1px rgba(182, 75, 212, 0.13);
+    -webkit-box-shadow: 0px 1px 10px 1px rgba(183, 75, 212, 0.16);
+    -moz-box-shadow: 0px 1px 10px 1px rgba(183, 75, 212, 0.16);
+  }
+
+  .input-button {
+    width: 40%;
+    padding: 8px 20px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Inter";
+    background: #5B218F;
+    color: #FFFFFF;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+  }
+}
+
+.wallet-close {
+  position: absolute;
+  right: 48px;
+  top: 0px;
+  color: #FFFFFF;
+  font-size: 58px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}

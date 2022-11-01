@@ -2,11 +2,14 @@
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { WalletMultiButton } from 'solana-wallets-vue'
+import { useNftStore } from '@/stores/nft'
+
 import Header from '@/components/partials/Header.vue'
 import NftCollectionsBox from '@/components/nft/NftCollectionsBox.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
 
 const router = useRouter()
+const nftStore = useNftStore()
 
 const collections = ref([])
 const isWalletAddressModal = ref(false)
@@ -34,8 +37,8 @@ const closeWalletAddressModal = () => {
   walletAddress.value = ''
 }
 
-const addWallet = () => {
-  console.log('wallet address to add', walletAddress.value)
+const addWallet = async () => {
+  await nftStore.connectWalletWithAddress(walletAddress.value)
 }
 </script>
 

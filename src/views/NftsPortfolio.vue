@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import { useNftStore } from '@/stores/nft'

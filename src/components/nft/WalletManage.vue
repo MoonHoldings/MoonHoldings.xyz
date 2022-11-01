@@ -4,8 +4,28 @@ import { useRouter } from 'vue-router'
 
 const emit = defineEmits()
 
+const nfts = ref([
+  { id: 1, address: 'AdDL..gg9F' },
+  { id: 2, address: 'AdDL..gg9F' },
+  { id: 3, address: 'AdDL..gg9F' },
+  { id: 4, address: 'AdDL..gg9F' },
+  { id: 5, address: 'AdDL..gg9F' },
+  { id: 6, address: 'AdDL..gg9F' },
+  { id: 7, address: 'AdDL..gg9F' },
+  { id: 8, address: 'AdDL..gg9F' }
+])
+const hoverNft = ref(null)
+
 const showWalletAddressModal = () => {
   emit("showWalletAddress")
+}
+
+const showCloseButton = (nft) => {
+  hoverNft.value = nft
+}
+
+const removeNft = (nft) => {
+  console.log('remove nft', nft)
 }
 </script>
 
@@ -41,24 +61,15 @@ const showWalletAddressModal = () => {
   </div>
 
   <div class="grid-container">
-    <div class="grid-item">
-      <span>AdDL..gg9F</span>
-      <img class="close" src="/svg/icon-close-black.svg" alt="close" />
-    </div>
-    <div class="grid-item">
-      AdDL..gg9F
-    </div>
-    <div class="grid-item">
-      AdDL..gg9F
-    </div>
-    <div class="grid-item">
-      AdDL..gg9F
-    </div>
-    <div class="grid-item">
-      AdDL..gg9F
-    </div>
-    <div class="grid-item">
-      AdDL..gg9F
+    <div class="grid-item" v-for="(nft, i) in nfts" :key="i">
+      <span @mouseover="showCloseButton(nft)">AdDL..gg9F</span>
+      <img
+        v-if="hoverNft?.id == nft.id"
+        class="close"
+        src="/svg/icon-close-black.svg"
+        alt="close"
+        @click="removeNft(nft)"
+      />
     </div>
   </div>
 

@@ -24,25 +24,29 @@ export const useNftStore = defineStore('nft', {
     async connectWalletWithAddress(walletAddress) {
       const user = cookies.get('MOON_USER')
       const token = cookies.get('MOON_TOKEN')
-
+      
       try {
+        console.log('2 connectWalletWithAddress', walletAddress)
         const response = await axios.get(
-          `${this.shyft_url}/wallet/get_portfolio?network=devnet&wallet=${walletAddress}`,
+          `${this.shyft_url}/wallet/get_portfolio?network=mainnet-beta&wallet=${walletAddress}`,
           {
             headers: {
               'Content-Type': 'application/json',
-              Authorization: token,
-              'x-api-key'
+              // Authorization: token,
+              'x-api-key': `${this.shyft_key}`
             }
           }
         )
 
+        console.log('3 response', response)
+
         const result = await response.data
+        console.log('result', result)
         if (result.success) {
           console.log('get portfolio', result)
         }
       } catch (error) {
-
+        console.log('error', error)
       }
     },
     async connectWallet() {}

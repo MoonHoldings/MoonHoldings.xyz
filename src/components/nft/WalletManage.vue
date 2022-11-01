@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import WalletManage from '@/components/nft/WalletManage.vue'
+import { WalletMultiButton } from 'solana-wallets-vue'
+import "solana-wallets-vue/styles.css"
 
 const emit = defineEmits()
 
@@ -50,6 +53,8 @@ const removeNft = (nft) => {
   <div class="label">
     Connected Wallets
   </div>
+
+  <wallet-multi-button></wallet-multi-button>
 
   <div class="button">
     Connect Wallet

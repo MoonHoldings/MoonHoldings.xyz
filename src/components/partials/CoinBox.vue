@@ -5,6 +5,7 @@ import decorateNumber from '@/utils/decorateNumber'
 import digitCount from '@/utils/digitCount'
 import { useUtilStore } from '@/stores/util'
 import { useCoinStore } from '@/stores/coin'
+import dustLogo from '/coins/dust.png';
 
 const props = defineProps(['coin'])
 const { coin } = props
@@ -77,7 +78,7 @@ const clickCoinBox = () => {
     <div class="surface" @click="clickCoinBox">
       <div class="symbol">
         <div class="left">
-          <img v-if="coin.logo_url" :src="coin.logo_url" alt="" />
+          <img :src="coin?.symbol === 'DUST' ? dustLogo : coin.logo_url" alt="" />
           <span>{{ coin?.symbol }}</span>
         </div>
         <div class="right">{{ coin?.name }}</div>

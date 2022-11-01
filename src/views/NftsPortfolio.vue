@@ -18,6 +18,7 @@ const isLoading = ref(false)
 const portfolios = computed(() => {
   return nftStore.portfolios ?? []
 })
+
 const isPortfolios = computed(() => {
   if (nftStore.portfolios) {
     return nftStore.portfolios.length > 0

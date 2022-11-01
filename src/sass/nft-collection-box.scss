@@ -18,10 +18,14 @@
   }
 }
 .content {
-  width: 100%;
+  width: 200px;
   height: 200px;
   background: #FFFFFF;
   cursor: pointer;
+  .image {
+    width: 200px;
+    height: 200px;
+  }
 }
 .footer {
   display: flex;

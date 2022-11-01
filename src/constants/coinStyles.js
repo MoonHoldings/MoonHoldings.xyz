@@ -72,6 +72,14 @@ export default [
     },
   },
   {
+    id: 'DUST4',
+    name: 'Dust Protocol',
+    colors: {
+      text: '#000',
+      background: ['#000', '#fff'],
+    },
+  },
+  {
     id: 'DOGE',
     name: 'Dogecoin',
     colors: {

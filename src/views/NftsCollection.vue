@@ -26,7 +26,7 @@ const isCollections = computed(() => {
 })
 
 const backCollections = () => {
-  router.push({ name: 'nftsCollections' })
+  router.push({ name: 'nftsPortfolio' })
 }
 
 const selectDetailCollection = (collection) => {

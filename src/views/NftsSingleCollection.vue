@@ -12,7 +12,7 @@ const isWalletAddressModal = ref(false)
 const walletAddress = ref('')
 
 const backCollections = () => {
-  router.push({ name: 'nftsCollections' })
+  router.push({ name: 'nftsPortfolio' })
 }
 
 const backCollection = () => {

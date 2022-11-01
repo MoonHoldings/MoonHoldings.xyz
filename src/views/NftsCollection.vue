@@ -2,7 +2,6 @@
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import Header from '@/components/partials/Header.vue'
-import WalletManage from '@/components/nft/WalletManage.vue'
 
 const router = useRouter()
 

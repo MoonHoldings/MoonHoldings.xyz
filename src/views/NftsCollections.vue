@@ -21,7 +21,7 @@ const isCollections = computed(() => {
 })
 
 const handleConnectWallet = async () => {
-  await console.log('Connect Wallet')
+  await console.log('handleConnectWallet')
 }
 
 const selectCollections = (collections) => {

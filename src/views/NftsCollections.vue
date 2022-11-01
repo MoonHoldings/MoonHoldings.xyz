@@ -11,13 +11,17 @@ import WalletManage from '@/components/nft/WalletManage.vue'
 const router = useRouter()
 const nftStore = useNftStore()
 
-const collections = ref([])
 const isWalletAddressModal = ref(false)
 const walletAddress = ref('J8FcrKuB8ew5YU9w9AEhp68xFvKU1sFHhPo9GYk7122k')
 const isLoading = ref(false)
 
-const isCollections = computed(() => {
-  return collections.value.length > 0
+const nfts = computed(() => {
+  return nftStore.nfts ?? []
+})
+const isNfts = computed(() => {
+  if (nftStore.nfts) {
+    return nftStore.nfts.length > 0
+  }
 })
 
 const handleConnectWallet = async () => {
@@ -49,12 +53,12 @@ const addWallet = async () => {
 
   <div class="collection">
     <div class="collection__left-side">
-      <div v-if="isCollections" class="label">
-        Displaying 20 out of 64 collections, scroll for more
+      <div v-if="isNfts" class="label">
+        Displaying {{nfts?.length ?? 0}} collections
       </div>
 
-      <div v-if="isCollections" class="grid">
-        <NftCollectionsBox v-for="(collection, i) in collections" :key="i" :collections="collection" @click="selectCollections(collection)" />
+      <div v-if="isNfts" class="grid">
+        <NftCollectionsBox v-for="(collection, i) in nfts" :key="i" :collections="collection" @click="selectCollections(collection)" />
       </div>
 
       <div v-else class="empty-nft-summary">

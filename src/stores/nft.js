@@ -23,7 +23,7 @@ export const useNftStore = defineStore('nft', {
   },
   actions: {
     mutate_emptyPortfolios() {
-      this.portfolio = []
+      this.portfolios = []
     },
     mutate_emptyNfts() {
       this.nfts = []
@@ -43,7 +43,7 @@ export const useNftStore = defineStore('nft', {
         const result = await response.data
 
         if (result.success) {
-          this.portfolios.push(portfolioResult.result)
+          this.portfolios.push(result.result)
         }
       } catch (error) {
         console.log('error', error)

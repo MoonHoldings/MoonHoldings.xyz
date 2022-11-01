@@ -72,7 +72,7 @@ onMounted(async () => {
           &#10094; Back to Collections
         </div>
         <div class="count">
-          You own <span class="value">10</span> Lotus Gang NFT
+          You own <span class="value">{{ nfts.length }}</span> NFTs
         </div>
         <div class="floor">
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
@@ -111,7 +111,7 @@ onMounted(async () => {
               <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
             </div>
             <div class="content" @click="selectDetailNFT(nft)">
-              <img class="image" :src="nft.image_uri" alt="Nft Image" />
+              <img v-if="nft.image_uri" class="image" :src="nft.image_uri" alt="Nft Image" />
             </div>
             <div
               :class="{

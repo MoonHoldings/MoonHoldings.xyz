@@ -38,7 +38,6 @@ const closeWalletAddressModal = () => {
 }
 
 const addWallet = async () => {
-  console.log('walletAddress.value', walletAddress.value)
   await nftStore.connectWalletWithAddress(walletAddress.value)
 }
 </script>

@@ -29,7 +29,7 @@ const handleConnectWallet = async () => {
 }
 
 const selectPortfolio = (portfolio) => {
-  router.push({ name: 'nftsCollection', params: { address: portfolio.address }})
+  router.push({ name: 'nftsCollection', params: { address: portfolio.walletAddress }})
 }
 
 const showWalletAddressModal = () => {
@@ -54,7 +54,7 @@ const addWallet = async () => {
   <div class="collection">
     <div class="collection__left-side">
       <div v-if="isPortfolios" class="label">
-        Displaying {{nfts?.length ?? 0}} collections
+        Displaying {{portfolios?.length ?? 0}} collections
       </div>
 
       <div v-if="isPortfolios" class="grid">

@@ -43,7 +43,7 @@ export const useNftStore = defineStore('nft', {
         const result = await response.data
 
         if (result.success) {
-          this.portfolios.push(result.result)
+          this.portfolios.push({ walletAddress: walletAddress, ...result.result })
         }
       } catch (error) {
         console.log('error', error)

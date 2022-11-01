@@ -25,7 +25,9 @@ const { collections } = props
     </div>
     <div class="grid-box">
       <div class="grid-container">
-        <div class="grid-content"></div>
+        <div class="grid-content">
+          <img class="image" :src="collections.cached_image_uri" alt="collections image" />
+        </div>
         <div class="grid-name">
           {{ collections?.name }}
         </div>

@@ -71,5 +71,6 @@ export const useNftStore = defineStore('nft', {
       }
     },
     async connectWallet() {}
-  }
+  },
+  persist: true
 })

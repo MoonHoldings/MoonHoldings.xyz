@@ -1,5 +1,10 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+
 import 'animate.css'
 
 import SolanaWallets from 'solana-wallets-vue'
@@ -37,7 +42,7 @@ const walletOptions = {
 
 const app = createApp(App)
 
-app.use(createPinia())
+app.use(pinia)
 app.use(SolanaWallets, walletOptions)
 app.use(router)
 

@@ -12,7 +12,7 @@ const router = useRouter()
 const nftStore = useNftStore()
 
 const isWalletAddressModal = ref(false)
-const walletAddress = ref('J8FcrKuB8ew5YU9w9AEhp68xFvKU1sFHhPo9GYk7122k')
+const walletAddress = ref('')
 const isLoading = ref(false)
 
 const portfolios = computed(() => {

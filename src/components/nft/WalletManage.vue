@@ -1,33 +1,39 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
+import { useNftStore } from '@/stores/nft'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import "solana-wallets-vue/styles.css"
 
 const emit = defineEmits()
+const nftStore = useNftStore()
 
-const nfts = ref([
-  { id: 1, address: 'AdDL..gg9F' },
-  { id: 2, address: 'AdDL..gg9F' },
-  { id: 3, address: 'AdDL..gg9F' },
-  { id: 4, address: 'AdDL..gg9F' },
-  { id: 5, address: 'AdDL..gg9F' },
-  { id: 6, address: 'AdDL..gg9F' },
-  { id: 7, address: 'AdDL..gg9F' },
-  { id: 8, address: 'AdDL..gg9F' }
-])
-const hoverNft = ref(null)
+const portfolios = computed(() => {
+  return nftStore.portfolios ?? []
+})
+
+const hoverPortfolio = ref(null)
 
 const showWalletAddressModal = () => {
   emit("showWalletAddress")
 }
 
-const showCloseButton = (nft) => {
-  hoverNft.value = nft
+const showCloseButton = (portfolio) => {
+  hoverPortfolio.value = portfolio
 }
 
-const removeNft = (nft) => {
-  console.log('remove nft', nft)
+const removePortfolio = (portfolio) => {
+  console.log('remove portfolio', portfolio)
+}
+
+const parsingWalletAddress = (walletAddress) => {
+  const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
+  const match = walletAddress.match(truncateRegex);
+  if (!match) {
+    return walletAddress
+  }
+
+  return `${match[1]}…${match[2]}`;
 }
 </script>
 
@@ -65,14 +71,14 @@ const removeNft = (nft) => {
   </div>
 
   <div class="grid-container">
-    <div class="grid-item" v-for="(nft, i) in nfts" :key="i">
-      <span @mouseover="showCloseButton(nft)">AdDL..gg9F</span>
+    <div class="grid-item" v-for="(portfolio, i) in portfolios" :key="i">
+      <span @mouseover="showCloseButton(portfolio)">{{parsingWalletAddress(portfolio.walletAddress)}}</span>
       <img
-        v-if="hoverNft?.id == nft.id"
+        v-if="hoverPortfolio?.walletAddress == portfolio.walletAddress"
         class="close"
         src="/svg/icon-close-black.svg"
         alt="close"
-        @click="removeNft(nft)"
+        @click="removePortfolio(portfolio)"
       />
     </div>
   </div>

@@ -35,10 +35,12 @@ const selectPortfolio = (portfolio) => {
 
 const showWalletAddressModal = () => {
   isWalletAddressModal.value = true
+  walletAddress.value = ''
 }
 
 const closeWalletAddressModal = () => {
   isWalletAddressModal.value = false
+  walletAddress.value = ''
 }
 
 const addWallet = async () => {

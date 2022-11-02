@@ -13,6 +13,7 @@ const nftStore = useNftStore()
 const isWalletAddressModal = ref(false)
 const walletAddress = ref('')
 const isLoading = ref(false)
+const isFetchingNfts = ref(false)
 const selectedNft = ref(null)
 
 const nfts = computed(() => {
@@ -48,24 +49,25 @@ const closeWalletAddressModal = () => {
   walletAddress.value = ''
 }
 
-const addWallet = () => {
-  console.log('wallet address to add', walletAddress.value)
+const addWallet = async () => {
+  isLoading.value = true
+  await nftStore.connectWalletWithAddress(walletAddress.value)
+  isWalletAddressModal.value = false
+  isLoading.value = false
 }
 
 onMounted(async () => {
   nftStore.mutate_emptyNfts()
   nftStore.mutate_emptyNft()
 
-  isLoading.value = true
-
+  isFetchingNfts.value = true
   await nftStore.fetchNfts(route.params.address)
-
-  isLoading.value = false
+  isFetchingNfts.value = false
 })
 </script>
 
 <template>
-  <div class="loading-squares" v-if="isLoading">
+  <div class="loading-squares" v-if="isFetchingNfts">
     <img
       src="/gif/loading-squares.gif"
       width="200"
@@ -175,7 +177,7 @@ onMounted(async () => {
         <div class="wallet-input-content">
           <input type="text" v-model="walletAddress" class="input-text" />
           <div class="input-button" @click="addWallet">
-            Add Wallet
+            {{ isLoading ? "Connecting..." : "Add Wallet"}}
           </div>
         </div>
       </div>

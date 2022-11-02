@@ -7,7 +7,7 @@ const { portfolio } = props
 
 <template>
   <div class="grid-element">
-    <div class="grid-header">
+    <div v-if="false" class="grid-header">
       <div class="header-left">
         <div class="left-label">
           Floor

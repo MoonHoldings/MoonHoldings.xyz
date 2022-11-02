@@ -31,6 +31,7 @@
     "jwt-decode": "^3.1.2",
     "mixpanel-browser": "^2.45.0",
     "pinia": "^2.0.14",
+    "pinia-plugin-persistedstate": "^2.3.0",
     "solana-wallets-vue": "^0.5.2",
     "vue": "^3.2.36",
     "vue-router": "^4.0.15",

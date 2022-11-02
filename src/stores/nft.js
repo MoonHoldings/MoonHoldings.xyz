@@ -10,27 +10,27 @@ export const useNftStore = defineStore('nft', {
     shyft_url: `${import.meta.env.VITE_SHYFTSERVER_URL}`,
     shyft_key: `${import.meta.env.VITE_SHYFT_KEY}`,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
-    portfolio: {},
+    portfolios: [],
     nfts: []
   }),
   getters: {
-    get_portfolio(state) {
-      return state.portfolio
+    get_portfolios(state) {
+      return state.portfolios
     },
     get_nfts(state) {
       return state.nfts
     }
   },
   actions: {
-    mutate_emptyPortfolio() {
-      this.portfolio = {}
+    mutate_emptyPortfolios() {
+      this.portfolios = []
     },
     mutate_emptyNfts() {
       this.nfts = []
     },
     async connectWalletWithAddress(walletAddress) {
       try {
-        const portfolioResponse = await axios.get(
+        const response = await axios.get(
           `${this.shyft_url}/wallet/get_portfolio?network=mainnet-beta&wallet=${walletAddress}`,
           {
             headers: {
@@ -40,13 +40,18 @@ export const useNftStore = defineStore('nft', {
           }
         )
 
-        const portfolioResult = await portfolioResponse.data
+        const result = await response.data
 
-        if (portfolioResult.success) {
-          this.portfolio = portfolioResult.result
+        if (result.success) {
+          this.portfolios.push({ walletAddress: walletAddress, ...result.result })
         }
-
-        const nftsResponse = await axios.get(
+      } catch (error) {
+        console.log('error', error)
+      }
+    },
+    async fetchNfts(walletAddress) {
+      try {
+        const response = await axios.get(
           `${this.shyft_url}/nft/read_all?network=mainnet-beta&address=${walletAddress}`,
           {
             headers: {
@@ -56,15 +61,16 @@ export const useNftStore = defineStore('nft', {
           }
         )
 
-        const nftsResult = await nftsResponse.data
+        const result = await response.data
 
-        if (nftsResult.success) {
-          this.nfts = nftsResult.result
+        if (result.success) {
+          this.nfts = result.result
         }
       } catch (error) {
-        console.log('error', error)
+        console.log(error)
       }
     },
     async connectWallet() {}
-  }
+  },
+  persist: true
 })

@@ -1,8 +1,8 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 
-const props = defineProps(['collections'])
-const { collections } = props
+const props = defineProps(['portfolio'])
+const { portfolio } = props
 </script>
 
 <template>
@@ -13,28 +13,26 @@ const { collections } = props
           Floor
         </div>
         <div class="left-number">
-          {{ collections?.floor }}
+          {{ portfolio?.floor }}
         </div>
       </div>
       <div class="header-right">
         <div class="image-container">
-          <img v-if="collections?.floor > 20" src="/svg/icon-arrow-circle-down.svg" alt="down value" />
+          <img v-if="portfolio?.floor > 20" src="/svg/icon-arrow-circle-down.svg" alt="down value" />
           <img v-else src="/svg/icon-arrow-circle-up.svg" alt="up value" />
         </div>
       </div>
     </div>
     <div class="grid-box">
       <div class="grid-container">
-        <div class="grid-content">
-          <img class="image" :src="collections.cached_image_uri" alt="collections image" />
-        </div>
+        <div class="grid-content"></div>
         <div class="grid-name">
-          {{ collections?.name }}
+          {{ portfolio?.name }}
         </div>
         <div class="grid-footer">
           <div class="footer-info">
             <div class="info-label">Items</div>
-            <div class="info-value">{{ collections?.items }}</div>
+            <div class="info-value">{{ portfolio?.items }}</div>
           </div>
           <div class="footer-info">
             <div class="info-label">Total</div>
@@ -51,5 +49,5 @@ const { collections } = props
 </template>
 
 <style lang="scss" scoped>
-@import '@/sass/nft-collections-box.scss';
+@import '@/sass/portfolio-box.scss';
 </style>

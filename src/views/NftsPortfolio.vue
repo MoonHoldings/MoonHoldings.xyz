@@ -1,11 +1,11 @@
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import { useNftStore } from '@/stores/nft'
 
 import Header from '@/components/partials/Header.vue'
-import NftCollectionsBox from '@/components/nft/NftCollectionsBox.vue'
+import PortfolioBox from '@/components/nft/PortfolioBox.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
 
 const router = useRouter()
@@ -15,12 +15,13 @@ const isWalletAddressModal = ref(false)
 const walletAddress = ref('J8FcrKuB8ew5YU9w9AEhp68xFvKU1sFHhPo9GYk7122k')
 const isLoading = ref(false)
 
-const nfts = computed(() => {
-  return nftStore.nfts ?? []
+const portfolios = computed(() => {
+  return nftStore.portfolios ?? []
 })
-const isNfts = computed(() => {
-  if (nftStore.nfts) {
-    return nftStore.nfts.length > 0
+
+const isPortfolios = computed(() => {
+  if (nftStore.portfolios) {
+    return nftStore.portfolios.length > 0
   }
 })
 
@@ -28,8 +29,8 @@ const handleConnectWallet = async () => {
   await console.log('handleConnectWallet')
 }
 
-const selectCollections = (collections) => {
-  router.push({ name: 'nftsCollection', params: { id: collections.id }})
+const selectPortfolio = (portfolio) => {
+  router.push({ name: 'nftsCollection', params: { address: portfolio.walletAddress }})
 }
 
 const showWalletAddressModal = () => {
@@ -53,12 +54,12 @@ const addWallet = async () => {
 
   <div class="collection">
     <div class="collection__left-side">
-      <div v-if="isNfts" class="label">
-        Displaying {{nfts?.length ?? 0}} collections
+      <div v-if="isPortfolios" class="label">
+        Displaying {{portfolios?.length ?? 0}} collections
       </div>
 
-      <div v-if="isNfts" class="grid">
-        <NftCollectionsBox v-for="(collection, i) in nfts" :key="i" :collections="collection" @click="selectCollections(collection)" />
+      <div v-if="isPortfolios" class="grid">
+        <PortfolioBox v-for="(portfolio, i) in portfolios" :key="i" :portfolio="portfolio" @click="selectPortfolio(portfolio)" />
       </div>
 
       <div v-else class="empty-nft-summary">
@@ -111,6 +112,6 @@ const addWallet = async () => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/sass/nft-collections.scss';
+@import '@/sass/nft-portfolio.scss';
 @import '@/sass/nft-collection-address-modal.scss';
 </style>

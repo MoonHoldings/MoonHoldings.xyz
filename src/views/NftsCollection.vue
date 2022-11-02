@@ -1,40 +1,40 @@
 <script setup>
-import { ref, reactive, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useNftStore } from '@/stores/nft'
+
 import Header from '@/components/partials/Header.vue'
+import WalletManage from '@/components/nft/WalletManage.vue'
 
 const router = useRouter()
+const route = useRoute()
+const nftStore = useNftStore()
 
-const collections = ref([
-  { id: 1, sol: 25.42069, name: 'Lotus Lad #1226' },
-  { id: 2, sol: 25, name: 'Lotus Lad #420' },
-  { id: 3, sol: 25, name: 'Lotus Lad #1740' },
-  { id: 4, sol: 25.432, name: 'Lotus Lad #153' },
-  { id: 5, sol: 25, name: 'Lotus Lad #1838' },
-  { id: 6, sol: 15, name: 'Lotus Lad #1766' },
-  { id: 7, sol: 0, name: 'Lotus Lad #4664' },
-  { id: 8, sol: 0, name: 'Lotus Lad #913' },
-  { id: 9, sol: 0, name: 'Lotus Lad #1505' },
-  { id: 10, sol: 0, name: 'Lotus Lad #475' },
-])
 const isWalletAddressModal = ref(false)
 const walletAddress = ref('')
-const selectedCollectionId = ref(null)
+const isLoading = ref(false)
+const selectedNft = ref(null)
 
-const isCollections = computed(() => {
-  return collections.value.length > 0
+const nfts = computed(() => {
+  return nftStore.nfts ?? []
+})
+
+const isNfts = computed(() => {
+  if (nftStore.nfts) {
+    return nftStore.nfts.length > 0
+  }
 })
 
 const backCollections = () => {
-  router.push({ name: 'nftsCollections' })
+  router.push({ name: 'nftsPortfolio' })
 }
 
-const selectDetailCollection = (collection) => {
-  selectedCollectionId.value = collection.id
+const selectDetailNFT = (collection) => {
+  selectedNft.value = collection.mint
 }
 
-const goDetailCollection = (collection) => {
-  router.push({ name: 'nftSingleCollection', params: { id: collection.id }})
+const goDetailNFT = (collection) => {
+  router.push({ name: 'nftSingleCollection', params: { id: collection.mint }})
 }
 
 const showWalletAddressModal = () => {
@@ -50,19 +50,38 @@ const closeWalletAddressModal = () => {
 const addWallet = () => {
   console.log('wallet address to add', walletAddress.value)
 }
+
+onMounted(async () => {
+  nftStore.mutate_emptyNfts()
+
+  isLoading.value = true
+
+  await nftStore.fetchNfts(route.params.address)
+
+  isLoading.value = false
+})
 </script>
 
 <template>
+  <div class="loading-squares" v-if="isLoading">
+    <img
+      src="/gif/loading-squares.gif"
+      width="200"
+      height="200"
+      alt="loading"
+    />
+  </div>
+
   <Header />
 
   <div class="collection">
     <div class="collection__left-side">
-      <div v-if="isCollections" class="nft-summary">
+      <div v-if="isNfts" class="nft-summary">
         <div class="route" @click="backCollections">
           &#10094; Back to Collections
         </div>
         <div class="count">
-          You own <span class="value">10</span> Lotus Gang NFT
+          You own <span class="value">{{ nfts.length }}</span> NFTs
         </div>
         <div class="floor">
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
@@ -78,47 +97,45 @@ const addWallet = () => {
         </div>
       </div>
 
-      <div v-if="isCollections" class="grid">
-        <div
-          class="element"
-          v-for="(collection, i) in collections"
-          :key="i"
-        >
+      <div v-if="isNfts" class="grid">
+        <div class="element" v-for="(nft, i) in nfts" :key="i">
           <div
             class="element-container"
             :class="{
-              'element-container-non-sol': !collection.sol ||collection.sol == 0,
-              'element-container element-selected-line' : selectedCollectionId == collection.id,
-              'element-container element-normal-line' : selectedCollectionId !== collection.id,
+              'element-container-non-sol': !nft.royalty ||nft.royalty == 0,
+              'element-container element-selected-line' : selectedNft == nft.mint,
+              'element-container element-normal-line' : selectedNft !== nft.mint,
             }"
           >
             <div
-              v-if="collection.sol && collection.sol > 0"
+              v-if="nft.royalty && nft.royalty > 0"
               :class="{
-                'header header-selected' : selectedCollectionId == collection.id,
-                'header header-normal' : selectedCollectionId !== collection.id,
+                'header header-selected' : selectedNft == nft.mint,
+                'header header-normal' : selectedNft !== nft.mint,
               }"
             >
               <div>
-                Listed: {{ collection.sol }} SQL
+                Listed: {{ nft.royalty }} SQL
               </div>
               <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
             </div>
-            <div class="content" @click="selectDetailCollection(collection)"></div>
+            <div class="content" @click="selectDetailNFT(nft)">
+              <img v-if="nft.image_uri" class="image" :src="nft.image_uri" alt="Nft Image" />
+            </div>
             <div
               :class="{
-                'footer footer-selected' : selectedCollectionId == collection.id,
-                'footer footer-normal' : selectedCollectionId !== collection.id,
+                'footer footer-selected' : selectedNft == nft.mint,
+                'footer footer-normal' : selectedNft !== nft.mint,
               }"
             >
               <div class="label">
-                {{ collection.name }}
+                {{ nft.name }}
               </div>
-              <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" @click="goDetailCollection(collection)" />
+              <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" @click="goDetailNFT(nft)" />
             </div>
           </div>
-          <div class="element-black-shadow" :class="{ 'element-black-shadow-non-sol': !collection.sol ||collection.sol == 0 }" />
-          <div class="element-gray-shadow" :class="{ 'element-gray-shadow-non-sol': !collection.sol ||collection.sol == 0 }" />
+          <div class="element-black-shadow" :class="{ 'element-black-shadow-non-sol': !nft.royalty ||nft.royalty == 0 }" />
+          <div class="element-gray-shadow" :class="{ 'element-gray-shadow-non-sol': !nft.royalty ||nft.royalty == 0 }" />
         </div>
       </div>
 

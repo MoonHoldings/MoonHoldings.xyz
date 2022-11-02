@@ -12,6 +12,24 @@ const portfolios = computed(() => {
   return nftStore.portfolios ?? []
 })
 
+const isPortfolios = computed(() => {
+  if (nftStore.portfolios) {
+    return nftStore.portfolios.length > 0
+  }
+  return false
+})
+
+const selectedNft = computed(() => {
+  return nftStore.get_nft ?? {}
+})
+
+const isSelectedNft = computed(() => {
+  if (nftStore.get_nft) {
+    return Object.keys(nftStore.get_nft).length > 0
+  }
+  return false
+})
+
 const hoverPortfolio = ref(null)
 
 const showWalletAddressModal = () => {
@@ -38,21 +56,23 @@ const parsingWalletAddress = (walletAddress) => {
 </script>
 
 <template>
-  <div class="nft-info-title">
-    Selected NFT
-  </div>
-
-  <div class="nft-info">
-    <div class="nft-info-header">
-      <img class="image" src="/svg/icon-nft-demo.svg" alt="header-image" />
-      <div class="label">
-        Lotus Lad #1226
-      </div>
+  <div v-if="isSelectedNft">
+    <div class="nft-info-title">
+      Selected NFT
     </div>
-    <input class="nft-info-content" type="text">
-    <div class="nft-info-footer">
-      <div class="nft-info-button">Delist</div>
-      <div class="nft-info-button">Update</div>
+
+    <div class="nft-info">
+      <div class="nft-info-header">
+        <img class="image" src="/svg/icon-nft-demo.svg" alt="header-image" />
+        <div class="label">
+          Lotus Lad #1226
+        </div>
+      </div>
+      <input class="nft-info-content" type="text">
+      <div class="nft-info-footer">
+        <div class="nft-info-button">Delist</div>
+        <div class="nft-info-button">Update</div>
+      </div>
     </div>
   </div>
 
@@ -70,7 +90,7 @@ const parsingWalletAddress = (walletAddress) => {
     Add Address
   </div>
 
-  <div class="grid-container">
+  <div v-if="isPortfolios" class="grid-container">
     <div class="grid-item" v-for="(portfolio, i) in portfolios" :key="i">
       <span @mouseover="showCloseButton(portfolio)">{{parsingWalletAddress(portfolio.walletAddress)}}</span>
       <img
@@ -87,7 +107,7 @@ const parsingWalletAddress = (walletAddress) => {
     Disconnect All
   </div>
 
-  <div class="detail-info">
+  <div v-if="isSelectedNft" class="detail-info">
     <div class="detail-info-header">
       <div class="left">Lotus Gang NFT</div>
       <div class="right">Listed:</div>

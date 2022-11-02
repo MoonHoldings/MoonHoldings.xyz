@@ -11,7 +11,8 @@ export const useNftStore = defineStore('nft', {
     shyft_key: `${import.meta.env.VITE_SHYFT_KEY}`,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
     portfolios: [],
-    nfts: []
+    nfts: [],
+    nft: {}
   }),
   getters: {
     get_portfolios(state) {
@@ -19,6 +20,9 @@ export const useNftStore = defineStore('nft', {
     },
     get_nfts(state) {
       return state.nfts
+    },
+    get_nft(state) {
+      return state.nft
     }
   },
   actions: {
@@ -28,12 +32,18 @@ export const useNftStore = defineStore('nft', {
     mutate_emptyNfts() {
       this.nfts = []
     },
+    mutate_emptyNft() {
+      this.nft = {}
+    },
     mutate_removePortfolio(portfolio) {
       const searchPortfolio = this.portfolios.findIndex(item => {
         return item.walletAddress === portfolio.walletAddress
       })
 
       this.portfolios.splice(searchPortfolio, 1)
+    },
+    mutate_setNft(nft) {
+      this.nft = nft
     },
     async connectWalletWithAddress(walletAddress) {
       try {

@@ -65,10 +65,10 @@ const parsingWalletAddress = (walletAddress) => {
       <div class="nft-info-header">
         <img class="image" src="/svg/icon-nft-demo.svg" alt="header-image" />
         <div class="label">
-          Lotus Lad #1226
+          {{ selectedNft.name }}
         </div>
       </div>
-      <input class="nft-info-content" type="text">
+      <input class="nft-info-content" type="text" v-model="selectedNft.name">
       <div class="nft-info-footer">
         <div class="nft-info-button">Delist</div>
         <div class="nft-info-button">Update</div>

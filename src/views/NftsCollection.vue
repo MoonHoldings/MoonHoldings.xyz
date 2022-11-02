@@ -29,12 +29,13 @@ const backCollections = () => {
   router.push({ name: 'nftsPortfolio' })
 }
 
-const selectDetailNFT = (collection) => {
-  selectedNft.value = collection.mint
+const selectDetailNFT = (nft) => {
+  selectedNft.value = nft.mint
+  nftStore.mutate_setNft(nft)
 }
 
-const goDetailNFT = (collection) => {
-  router.push({ name: 'nftSingleCollection', params: { id: collection.mint }})
+const goDetailNFT = (nft) => {
+  router.push({ name: 'nftSingleCollection', params: { id: nft.mint }})
 }
 
 const showWalletAddressModal = () => {
@@ -53,6 +54,7 @@ const addWallet = () => {
 
 onMounted(async () => {
   nftStore.mutate_emptyNfts()
+  nftStore.mutate_emptyNft()
 
   isLoading.value = true
 

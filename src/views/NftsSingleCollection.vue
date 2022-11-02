@@ -1,15 +1,20 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useNftStore } from '@/stores/nft'
 import Header from '@/components/partials/Header.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
 
 const router = useRouter()
+const nftStore = useNftStore()
 
 const isImageModal = ref(false)
-const imageUrl = ref('')
 const isWalletAddressModal = ref(false)
 const walletAddress = ref('')
+
+const selectedNft = computed(() => {
+  return nftStore.get_nft ?? {}
+})
 
 const backCollections = () => {
   router.push({ name: 'nftsPortfolio' })
@@ -21,12 +26,10 @@ const backCollection = () => {
 
 const showImageModal = () => {
   isImageModal.value = true
-  imageUrl.value = '/svg/icon-demo-single-collection.svg'
 }
 
 const closeImageModal = () => {
   isImageModal.value = false
-  imageUrl.value = ''
 }
 
 const showWalletAddressModal = () => {
@@ -65,7 +68,7 @@ const addWallet = () => {
         <div class="collection-image">
           <img
             class="image"
-            src="/svg/icon-demo-single-collection.svg"
+            :src="selectedNft.cached_image_uri"
             alt="nft-image"
             @click="showImageModal"
           />
@@ -76,7 +79,7 @@ const addWallet = () => {
                 Mint Address:
               </div>
               <div class="right">
-                9QN9Pbj83BN4DtEE5zTaP1mSeW8cEqAaAnKRukxTaHGj
+                {{ selectedNft.mint }}
               </div>
             </div>
             <div class="image-info-detail">
@@ -84,7 +87,7 @@ const addWallet = () => {
                 Owner:
               </div>
               <div class="right">
-                HEYw...ugUS
+                {{ selectedNft.owner }}
               </div>
             </div>
           </div>
@@ -133,56 +136,47 @@ const addWallet = () => {
           <div class="info">
             <div class="info-item">
               <div class="label">Background</div>
-              <div class="value">Blue</div>
-              <div class="label">20%</div>
+              <div class="value">{{ selectedNft.attributes.background }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Type</div>
-              <div class="value">Human</div>
-              <div class="label">87%</div>
+              <div class="value">{{ selectedNft.attributes.type }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Head</div>
-              <div class="value">Black Cap</div>
-              <div class="label">3.6%</div>
+              <div class="value">{{ selectedNft.attributes.head }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Facial Hair</div>
-              <div class="value">Beard</div>
-              <div class="label">25%</div>
+              <div class="value">{{ selectedNft.attributes["facial hair"] }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Clothing</div>
-              <div class="value">Plain Black Tea</div>
-              <div class="label">87%</div>
+              <div class="value">{{ selectedNft.attributes.clothing }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Helmet</div>
-              <div class="value">No Helmet</div>
-              <div class="label">97%</div>
+              <div class="value">{{ selectedNft.attributes.helmet }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Accessory 1</div>
-              <div class="value">Red Scouter</div>
-              <div class="label">11%</div>
+              <div class="value">{{ selectedNft.attributes["accessory 1"] }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Accessory 2</div>
-              <div class="value">No Accessory</div>
-              <div class="label">55%</div>
+              <div class="value">{{ selectedNft.attributes["accessory 2"] }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Accessory 3</div>
-              <div class="value">No Accessory</div>
-              <div class="label">55%</div>
+              <div class="value">{{ selectedNft.attributes["accessory 3"] }}</div>
             </div>
           </div>
         </div>
@@ -197,7 +191,7 @@ const addWallet = () => {
   <div v-if="isImageModal" class="modal">
     <span class="close" @click="closeImageModal">&times;</span>
     <div class="modal-content">
-      <img class="image" :src="imageUrl" alt="nft-image" />
+      <img class="image" :src="selectedNft.cached_image_uri" alt="nft-image" />
     </div>
   </div>
 

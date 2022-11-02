@@ -1,52 +1,78 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
+import { useNftStore } from '@/stores/nft'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import "solana-wallets-vue/styles.css"
 
 const emit = defineEmits()
+const nftStore = useNftStore()
 
-const nfts = ref([
-  { id: 1, address: 'AdDL..gg9F' },
-  { id: 2, address: 'AdDL..gg9F' },
-  { id: 3, address: 'AdDL..gg9F' },
-  { id: 4, address: 'AdDL..gg9F' },
-  { id: 5, address: 'AdDL..gg9F' },
-  { id: 6, address: 'AdDL..gg9F' },
-  { id: 7, address: 'AdDL..gg9F' },
-  { id: 8, address: 'AdDL..gg9F' }
-])
-const hoverNft = ref(null)
+const portfolios = computed(() => {
+  return nftStore.portfolios ?? []
+})
+
+const isPortfolios = computed(() => {
+  if (nftStore.portfolios) {
+    return nftStore.portfolios.length > 0
+  }
+  return false
+})
+
+const selectedNft = computed(() => {
+  return nftStore.get_nft ?? {}
+})
+
+const isSelectedNft = computed(() => {
+  if (nftStore.get_nft) {
+    return Object.keys(nftStore.get_nft).length > 0
+  }
+  return false
+})
+
+const hoverPortfolio = ref(null)
 
 const showWalletAddressModal = () => {
   emit("showWalletAddress")
 }
 
-const showCloseButton = (nft) => {
-  hoverNft.value = nft
+const showCloseButton = (portfolio) => {
+  hoverPortfolio.value = portfolio
 }
 
-const removeNft = (nft) => {
-  console.log('remove nft', nft)
+const removePortfolio = (portfolio) => {
+  nftStore.mutate_removePortfolio(portfolio)
+}
+
+const parsingWalletAddress = (walletAddress) => {
+  const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
+  const match = walletAddress.match(truncateRegex);
+  if (!match) {
+    return walletAddress
+  }
+
+  return `${match[1]}…${match[2]}`;
 }
 </script>
 
 <template>
-  <div class="nft-info-title">
-    Selected NFT
-  </div>
-
-  <div class="nft-info">
-    <div class="nft-info-header">
-      <img class="image" src="/svg/icon-nft-demo.svg" alt="header-image" />
-      <div class="label">
-        Lotus Lad #1226
-      </div>
+  <div v-if="isSelectedNft">
+    <div class="nft-info-title">
+      Selected NFT
     </div>
-    <input class="nft-info-content" type="text">
-    <div class="nft-info-footer">
-      <div class="nft-info-button">Delist</div>
-      <div class="nft-info-button">Update</div>
+
+    <div class="nft-info">
+      <div class="nft-info-header">
+        <img class="image" src="/svg/icon-nft-demo.svg" alt="header-image" />
+        <div class="label">
+          {{ selectedNft.name }}
+        </div>
+      </div>
+      <input class="nft-info-content" type="text" v-model="selectedNft.name">
+      <div class="nft-info-footer">
+        <div class="nft-info-button">Delist</div>
+        <div class="nft-info-button">Update</div>
+      </div>
     </div>
   </div>
 
@@ -64,15 +90,15 @@ const removeNft = (nft) => {
     Add Address
   </div>
 
-  <div class="grid-container">
-    <div class="grid-item" v-for="(nft, i) in nfts" :key="i">
-      <span @mouseover="showCloseButton(nft)">AdDL..gg9F</span>
+  <div v-if="isPortfolios" class="grid-container">
+    <div class="grid-item" v-for="(portfolio, i) in portfolios" :key="i">
+      <span @mouseover="showCloseButton(portfolio)">{{parsingWalletAddress(portfolio.walletAddress)}}</span>
       <img
-        v-if="hoverNft?.id == nft.id"
+        v-if="hoverPortfolio?.walletAddress == portfolio.walletAddress"
         class="close"
         src="/svg/icon-close-black.svg"
         alt="close"
-        @click="removeNft(nft)"
+        @click="removePortfolio(portfolio)"
       />
     </div>
   </div>
@@ -81,7 +107,7 @@ const removeNft = (nft) => {
     Disconnect All
   </div>
 
-  <div class="detail-info">
+  <div v-if="isSelectedNft" class="detail-info">
     <div class="detail-info-header">
       <div class="left">Lotus Gang NFT</div>
       <div class="right">Listed:</div>

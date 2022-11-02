@@ -63,6 +63,15 @@ onMounted(async () => {
 </script>
 
 <template>
+  <div class="loading-squares" v-if="isLoading">
+    <img
+      src="/gif/loading-squares.gif"
+      width="200"
+      height="200"
+      alt="loading"
+    />
+  </div>
+
   <Header />
 
   <div class="collection">

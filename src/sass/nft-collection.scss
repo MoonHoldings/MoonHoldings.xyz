@@ -1,3 +1,16 @@
+.loading-squares {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(240, 246, 240, 0.8);
+  z-index: 101;
+}
+
 .collection {
   color: var(--ash);
   min-height: 100vh;

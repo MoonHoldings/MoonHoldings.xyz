@@ -28,6 +28,13 @@ export const useNftStore = defineStore('nft', {
     mutate_emptyNfts() {
       this.nfts = []
     },
+    mutate_removePortfolio(portfolio) {
+      const searchPortfolio = this.portfolios.findIndex(item => {
+        return item.walletAddress === portfolio.walletAddress
+      })
+
+      this.portfolios.splice(searchPortfolio, 1)
+    },
     async connectWalletWithAddress(walletAddress) {
       try {
         const response = await axios.get(

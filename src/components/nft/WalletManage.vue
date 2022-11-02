@@ -23,7 +23,7 @@ const showCloseButton = (portfolio) => {
 }
 
 const removePortfolio = (portfolio) => {
-  console.log('remove portfolio', portfolio)
+  nftStore.mutate_removePortfolio(portfolio)
 }
 
 const parsingWalletAddress = (walletAddress) => {

@@ -64,6 +64,20 @@ export const useNftStore = defineStore('nft', {
           let image = ""
 
           // grouping collection to check if any nft item contains collection address
+          let collections = {}
+
+          if (result.result.nfts && result.result.nfts.length > 0) {
+            result.result.nfts.forEach(nft => {
+              const collectionAddress = nft?.collection?.address ?? 'unknown'
+
+              if (collections[collectionAddress]) {
+                collections[collectionAddress].push(nft.mintAddress)
+              } else {
+                collections[collectionAddress] = []
+                collections[collectionAddress].push(nft.mintAddress)
+              }
+            });
+          }
 
           let isGrouped = false
 

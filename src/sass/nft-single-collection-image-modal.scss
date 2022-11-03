@@ -13,12 +13,18 @@
 }
 
 .modal-content {
-  margin: auto;
-  width: fit-content;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.4s;
   animation-name: animatetop;
-  animation-duration: 0.4s
+  animation-duration: 0.4s;
+
+  .image {
+    width: fit-content;
+    height: 400px;
+  }
 }
 
 .close {

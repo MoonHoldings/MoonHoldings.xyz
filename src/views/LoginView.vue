@@ -133,7 +133,7 @@ onMounted(() => {
         </RouterLink>
         <h2>{{ LOGIN }}</h2>
 
-        <form action="">
+        <div>
           <div class="email-input">
             <input
               class="e-box"
@@ -142,6 +142,7 @@ onMounted(() => {
               type="email"
               placeholder="Email"
               v-model="email"
+              @keyup.enter="continueBtn"
             />
 
             <input
@@ -152,6 +153,7 @@ onMounted(() => {
               placeholder="Password"
               tabindex="0"
               v-model="password"
+              @keyup.enter="continueBtn"
             />
             <transition
               mode="out-in"
@@ -226,7 +228,7 @@ onMounted(() => {
               text="Log In With Discord"
             />
           </div> -->
-        </form>
+        </div>
       </div>
     </div>
     <div />

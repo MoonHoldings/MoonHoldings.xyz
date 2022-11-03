@@ -10,6 +10,7 @@ import {
   TAG_LINE,
   SEARCH_TO_START,
 } from '@/constants/copy'
+import { useUserStore } from '@/stores/user'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
 import { useCookies } from 'vue3-cookies'
@@ -17,6 +18,7 @@ import coinStyles from '@/constants/coinStyles'
 import refreshCryptoCoins from '@/utils/refreshCryptoCoins'
 
 const { cookies } = useCookies()
+const userStore = useUserStore()
 const coinStore = useCoinStore()
 const utilStore = useUtilStore()
 const storedCoins = ref([])
@@ -113,6 +115,13 @@ onMounted(async () => {
   )
   coinStore.mutate_cryptoCoins(refreshedCoins)
   isLoading.value = false
+
+  // save historical data
+  await userStore.getHistory()
+  const userCoinsHistory = userStore.historicalData?.find(
+    (data) => data.email === user.email
+  )
+  coinStore.mutate_user_coins_history(userCoinsHistory.coins_history)
 
   window.addEventListener('resize', () => {
     const width = window.innerWidth

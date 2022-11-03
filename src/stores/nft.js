@@ -59,8 +59,29 @@ export const useNftStore = defineStore('nft', {
 
         const result = await response.data
 
-        if (result.success) {
-          this.portfolios.push({ walletAddress: walletAddress, ...result.result })
+        if (result.success && result.result.nfts.length > 0) {
+          let name = ""
+          let image = ""
+
+          // grouping collection to check if any nft item contains collection address
+
+          let isGrouped = false
+
+          if (isGrouped) {
+
+          } else {
+            await axios.get(result.result.nfts[0].uri).then((res) => {
+              name = res?.data?.collection?.name
+              image = res?.data?.image
+            })
+          }
+
+          this.portfolios.push({
+            walletAddress,
+            name,
+            image,
+            ...result.result
+          })
         }
       } catch (error) {
         console.log('error', error)

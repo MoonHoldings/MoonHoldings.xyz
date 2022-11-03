@@ -13,6 +13,7 @@ export const useCoinStore = defineStore('coin', {
     modalCoin: {},
     cryptoCoins: [],
     coins: [],
+    user_coins_history: [],
   }),
   getters: {
     get_cryptoCoins(state) {
@@ -67,6 +68,9 @@ export const useCoinStore = defineStore('coin', {
     mutate_modalCoin(payload) {
       this.modalCoin = payload
     },
+    mutate_user_coins_history(payload) {
+      this.user_coins_history = payload
+    },
     addNewWallet() {
       const emptyWallet = this.modalCoin.wallets.find(
         (wallet) => wallet.saved === false
@@ -85,7 +89,10 @@ export const useCoinStore = defineStore('coin', {
         (wallet) => wallet.saved === false
       )
 
-      if (this.modalCoin.wallets[cancelNewWallet].name !== '' && this.modalCoin.wallets[cancelNewWallet].holding) {
+      if (
+        this.modalCoin.wallets[cancelNewWallet].name !== '' &&
+        this.modalCoin.wallets[cancelNewWallet].holding
+      ) {
         this.modalCoin.wallets[cancelNewWallet].saved = true
       } else {
         this.modalCoin.wallets.splice(cancelNewWallet, 1)

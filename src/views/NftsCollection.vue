@@ -36,6 +36,7 @@ const selectDetailNFT = (nft) => {
 }
 
 const goDetailNFT = (nft) => {
+  nftStore.mutate_setNft(nft)
   router.push({ name: 'nftSingleCollection', params: { id: nft.mint }})
 }
 

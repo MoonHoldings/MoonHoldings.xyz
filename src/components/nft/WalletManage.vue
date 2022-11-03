@@ -63,7 +63,7 @@ const parsingWalletAddress = (walletAddress) => {
 
     <div class="nft-info">
       <div class="nft-info-header">
-        <img class="image" :src="selectedNft.cached_image_uri" alt="header-image" />
+        <img v-if="selectedNft.cached_image_uri" class="image" :src="selectedNft.cached_image_uri" alt="header-image" />
         <div class="label">
           {{ selectedNft.name }}
         </div>

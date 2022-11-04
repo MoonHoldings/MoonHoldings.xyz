@@ -49,10 +49,6 @@ const addWallet = async () => {
   isWalletAddressModal.value = false
   isLoading.value = false
 }
-
-const disconnectAllAddress = async () => {
-  await console.log('disconnect all address')
-}
 </script>
 
 <template>
@@ -191,7 +187,7 @@ const disconnectAllAddress = async () => {
     </div>
 
     <div class="single-collection__right-side">
-      <WalletManage @showWalletAddress="showWalletAddressModal" @disconnectAllAddress="disconnectAllAddress" />
+      <WalletManage @showWalletAddress="showWalletAddressModal" />
     </div>
   </div>
 

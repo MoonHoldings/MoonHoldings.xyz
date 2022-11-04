@@ -1,11 +1,13 @@
 <script setup>
 import { ref, computed } from 'vue'
-import WalletManage from '@/components/nft/WalletManage.vue'
+import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import "solana-wallets-vue/styles.css"
+import WalletManage from '@/components/nft/WalletManage.vue'
 
 const emit = defineEmits()
+const router = useRouter()
 const nftStore = useNftStore()
 
 const portfolios = computed(() => {
@@ -55,7 +57,11 @@ const parsingWalletAddress = (walletAddress) => {
 }
 
 const disconnectAllAddress = () => {
-  emit("disconnectAllAddress")
+  nftStore.mutate_emptyPortfolios()
+  nftStore.mutate_emptyNfts()
+  nftStore.mutate_emptyNft()
+
+  router.push({ name: 'nftsPortfolio' })
 }
 </script>
 

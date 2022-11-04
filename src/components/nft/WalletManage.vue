@@ -1,10 +1,9 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import "solana-wallets-vue/styles.css"
-import WalletManage from '@/components/nft/WalletManage.vue'
 
 const emit = defineEmits()
 const router = useRouter()
@@ -63,22 +62,6 @@ const disconnectAllAddress = () => {
 
   router.push({ name: 'nftsPortfolio' })
 }
-
-onMounted(() => {
-  let walletButton = document.getElementsByClassName("swv-button swv-button-trigger")
-
-  walletButton[0].style["width"] = "100%"
-  walletButton[0].style["height"] = "fit-content"
-  walletButton[0].style["display"] = "flex"
-  walletButton[0].style["justify-content"] = "center"
-  walletButton[0].style["background"] = "#5B218F"
-  walletButton[0].style["border-radius"] = "4px"
-  walletButton[0].style["font-size"] = "16px"
-  walletButton[0].style["font-weight"] = "400"
-  walletButton[0].style["font-family"] = "Inter"
-  walletButton[0].style["line-height"] = "20px"
-  walletButton[0].style["padding"] = "10px 16px"
-})
 </script>
 
 <template>
@@ -106,7 +89,7 @@ onMounted(() => {
     Connected Wallets
   </div>
 
-  <wallet-multi-button></wallet-multi-button>
+  <wallet-multi-button dark></wallet-multi-button>
 
   <div class="button">
     Connect Wallet

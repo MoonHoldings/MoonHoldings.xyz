@@ -49,6 +49,10 @@ const addWallet = async () => {
   isWalletAddressModal.value = false
   isLoading.value = false
 }
+
+onMounted(async () => {
+  nftStore.mutate_emptyNft()
+})
 </script>
 
 <template>

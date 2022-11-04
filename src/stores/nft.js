@@ -57,17 +57,20 @@ export const useNftStore = defineStore('nft', {
           }
         )
 
-        const result = await response.data
+        const res = await response.data
+        const nfts = res.result.nfts
+        // console.log('res.result', res.result) // ? res.result.sol_balance = SOL balance
+        console.log('nfts', nfts)
 
-        if (result.success && result.result.nfts.length > 0) {
+        if (res.success && nfts.length > 0) {
           let name = ""
           let image = ""
 
           // grouping collection to check if any nft item contains collection address
           let collections = {}
 
-          if (result.result.nfts && result.result.nfts.length > 0) {
-            result.result.nfts.forEach(nft => {
+          if (nfts && nfts.length > 0) {
+            nfts.forEach(nft => {
               const collectionAddress = nft?.collection?.address ?? 'unknown'
 
               if (collections[collectionAddress]) {
@@ -79,22 +82,24 @@ export const useNftStore = defineStore('nft', {
             });
           }
 
-          let isGrouped = false
+          console.log('collections', collections)
 
-          if (isGrouped) {
+          // let isGrouped = false
 
-          } else {
-            await axios.get(result.result.nfts[0].uri).then((res) => {
-              name = res?.data?.collection?.name
-              image = res?.data?.image
-            })
-          }
+          // if (isGrouped) {
+
+          // } else {
+          //   await axios.get(nfts[0].uri).then((res) => {
+          //     name = res?.data?.collection?.name
+          //     image = res?.data?.image
+          //   })
+          // }
 
           this.portfolios.push({
             walletAddress,
             name,
             image,
-            ...result.result
+            // ...result.result
           })
         }
       } catch (error) {

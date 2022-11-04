@@ -45,13 +45,17 @@ const removePortfolio = (portfolio) => {
 }
 
 const parsingWalletAddress = (walletAddress) => {
-  const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
-  const match = walletAddress.match(truncateRegex);
+  const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
+  const match = walletAddress.match(truncateRegex)
   if (!match) {
     return walletAddress
   }
 
-  return `${match[1]}…${match[2]}`;
+  return `${match[1]}…${match[2]}`
+}
+
+const disconnectAllAddress = () => {
+  emit("disconnectAllAddress")
 }
 </script>
 
@@ -103,7 +107,7 @@ const parsingWalletAddress = (walletAddress) => {
     </div>
   </div>
 
-  <div class="button">
+  <div class="button" @click="disconnectAllAddress">
     Disconnect All
   </div>
 

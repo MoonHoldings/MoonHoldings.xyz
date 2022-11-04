@@ -57,6 +57,10 @@ const addWallet = async () => {
   isLoading.value = false
 }
 
+const disconnectAllAddress = async () => {
+  await console.log('disconnect all address')
+}
+
 onMounted(async () => {
   nftStore.mutate_emptyNfts()
   nftStore.mutate_emptyNft()
@@ -156,7 +160,7 @@ onMounted(async () => {
     </div>
 
     <div class="collection__right-side">
-      <WalletManage @showWalletAddress="showWalletAddressModal" />
+      <WalletManage @showWalletAddress="showWalletAddressModal" @disconnectAllAddress="disconnectAllAddress" />
     </div>
   </div>
 

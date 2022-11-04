@@ -25,7 +25,9 @@ const { portfolio } = props
     </div>
     <div class="grid-box">
       <div class="grid-container">
-        <div class="grid-content"></div>
+        <div class="grid-content">
+          <img v-if="portfolio.image" class="image" :src="portfolio?.image" alt="Collection Main Image" />
+        </div>
         <div class="grid-name">
           {{ portfolio?.name }}
         </div>

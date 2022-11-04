@@ -98,10 +98,10 @@ const addWallet = async () => {
 
         <div class="collection-data">
           <div class="title">
-            Lotus Lad #1226
+            {{ selectedNft.name }}
           </div>
           <div class="explanation">
-            Lotus Gang is a collection 4,000 randomly generated lads and ladies on the Solana Blockchain.
+            {{ selectedNft.description }}
           </div>
 
           <div class="floor-section">
@@ -139,47 +139,47 @@ const addWallet = async () => {
           <div class="info">
             <div class="info-item">
               <div class="label">Background</div>
-              <div class="value">{{ selectedNft.attributes.background }}</div>
+              <div class="value">{{ selectedNft.attributes.background ?? "N/A" }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Type</div>
-              <div class="value">{{ selectedNft.attributes.type }}</div>
+              <div class="value">{{ selectedNft.attributes.type ?? "N/A" }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Head</div>
-              <div class="value">{{ selectedNft.attributes.head }}</div>
+              <div class="value">{{ selectedNft.attributes.head ?? "N/A" }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Facial Hair</div>
-              <div class="value">{{ selectedNft.attributes["facial hair"] }}</div>
+              <div class="value">{{ selectedNft.attributes["facial hair"] ?? "N/A" }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Clothing</div>
-              <div class="value">{{ selectedNft.attributes.clothing }}</div>
+              <div class="value">{{ selectedNft.attributes.clothing ?? "N/A" }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Helmet</div>
-              <div class="value">{{ selectedNft.attributes.helmet }}</div>
+              <div class="value">{{ selectedNft.attributes.helmet ?? "N/A" }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Accessory 1</div>
-              <div class="value">{{ selectedNft.attributes["accessory 1"] }}</div>
+              <div class="value">{{ selectedNft.attributes["accessory 1"] ?? "N/A" }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Accessory 2</div>
-              <div class="value">{{ selectedNft.attributes["accessory 2"] }}</div>
+              <div class="value">{{ selectedNft.attributes["accessory 2"] ?? "N/A" }}</div>
             </div>
 
             <div class="info-item">
               <div class="label">Accessory 3</div>
-              <div class="value">{{ selectedNft.attributes["accessory 3"] }}</div>
+              <div class="value">{{ selectedNft.attributes["accessory 3"] ?? "N/A" }}</div>
             </div>
           </div>
         </div>

@@ -3,12 +3,14 @@ import { computed, onMounted, reactive, ref, watch } from 'vue'
 import Header from '@/components/partials/Header.vue'
 import CoinBox from '@/components/partials/CoinBox.vue'
 import WatchCoin from '@/components/partials/WatchCoin.vue'
+import Chart from '@/components/partials/Chart.vue'
 import {
   PORTFOLIO_GET_STARTED,
   PORTFOLIO_WELCOME_HEADER,
   TAG_LINE,
   SEARCH_TO_START,
 } from '@/constants/copy'
+import { useUserStore } from '@/stores/user'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
 import { useCookies } from 'vue3-cookies'
@@ -16,6 +18,7 @@ import coinStyles from '@/constants/coinStyles'
 import refreshCryptoCoins from '@/utils/refreshCryptoCoins'
 
 const { cookies } = useCookies()
+const userStore = useUserStore()
 const coinStore = useCoinStore()
 const utilStore = useUtilStore()
 const storedCoins = ref([])
@@ -113,6 +116,13 @@ onMounted(async () => {
   coinStore.mutate_cryptoCoins(refreshedCoins)
   isLoading.value = false
 
+  // save historical data
+  await userStore.getHistory()
+  const userCoinsHistory = userStore.historicalData?.find(
+    (data) => data.email === user.email
+  )
+  coinStore.mutate_user_coins_history(userCoinsHistory.coins_history)
+
   window.addEventListener('resize', () => {
     const width = window.innerWidth
     windowWidth.value = width
@@ -190,6 +200,26 @@ onMounted(async () => {
               <WatchCoin v-for="(e, i) in 2" :key="i" />
             </div>
           </div>
+        </div>
+
+        <div class="crypto__chart">
+          <div class="chart">
+            <div class="header">
+              <div class="left">
+                <div class="you">You</div>
+                <div class="everyone">Everyone</div>
+              </div>
+              <div class="right">
+                <button class="week">Week</button>
+                <button class="month">Month</button>
+                <button class="year">Year</button>
+              </div>
+            </div>
+
+            <!-- The Chart -->
+            <Chart />
+          </div>
+          <!-- <Chart /> -->
         </div>
       </div>
     </div>

@@ -63,7 +63,7 @@ const parsingWalletAddress = (walletAddress) => {
 
     <div class="nft-info">
       <div class="nft-info-header">
-        <img class="image" src="/svg/icon-nft-demo.svg" alt="header-image" />
+        <img v-if="selectedNft.cached_image_uri" class="image" :src="selectedNft.cached_image_uri" alt="header-image" />
         <div class="label">
           {{ selectedNft.name }}
         </div>
@@ -109,7 +109,7 @@ const parsingWalletAddress = (walletAddress) => {
 
   <div v-if="isSelectedNft" class="detail-info">
     <div class="detail-info-header">
-      <div class="left">Lotus Gang NFT</div>
+      <div class="left">{{ selectedNft.name }} NFT</div>
       <div class="right">Listed:</div>
     </div>
     <div class="detail-info-item">

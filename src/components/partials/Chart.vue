@@ -94,9 +94,3 @@ const chartData = reactive({
     chart-id="line-chart"
   />
 </template>
-
-<style lang="scss" scoped>
-.line-chart {
-  // border: 1px solid magenta;
-}
-</style>

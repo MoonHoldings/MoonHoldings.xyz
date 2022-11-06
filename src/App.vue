@@ -108,4 +108,10 @@ strong {
 :global(.swv-dropdown) {
   width: 100%;
 }
+:global(.swv-modal-wrapper) {
+  border-radius: 0;
+}
+:global(.swv-modal-collapse-button) {
+  border-radius: 0;
+}
 </style>

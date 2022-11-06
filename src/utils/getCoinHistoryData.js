@@ -29,7 +29,7 @@ export default async (historicalData, email) => {
   for (let i = 0; i < weekInMS.length; i++) {
     const labelDate = dateForming(weekInMS[i])
 
-    const foundHistory = userHistoriesObj.coins_history?.find(
+    const foundHistory = userHistoriesObj?.coins_history?.find(
       (history) => history.date === labelDate
     )
     if (foundHistory) {
@@ -45,7 +45,7 @@ export default async (historicalData, email) => {
 
     while (!historyValues[0]) {
       let oldDate = dateForming(oldDateMS)
-      const matched = userHistoriesObj.coins_history.find(
+      const matched = userHistoriesObj?.coins_history.find(
         (history) => history.date === oldDate
       )
 

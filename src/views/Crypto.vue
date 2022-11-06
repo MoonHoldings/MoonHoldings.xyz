@@ -16,6 +16,7 @@ import { useUtilStore } from '@/stores/util'
 import { useCookies } from 'vue3-cookies'
 import coinStyles from '@/constants/coinStyles'
 import refreshCryptoCoins from '@/utils/refreshCryptoCoins'
+import getCoinHistoryData from '@/utils/getCoinHistoryData'
 
 const { cookies } = useCookies()
 const userStore = useUserStore()
@@ -98,6 +99,7 @@ const disappearPct = (pct) => {
 }
 
 onMounted(async () => {
+  isLoading.value = true
   const moonCoins = localStorage.getItem('MoonCoins')
   const parsedCoins = JSON.parse(moonCoins).coins
   storedCoins.value = [...parsedCoins]
@@ -106,8 +108,17 @@ onMounted(async () => {
 
   const user = cookies.get('MOON_USER')
   const token = cookies.get('MOON_TOKEN')
+
+  // save historical data
+  await userStore.getHistory()
+  const historyData = await getCoinHistoryData(
+    userStore.historicalData,
+    user.email
+  )
+  coinStore.mutate_chartValues(historyData.historyValues)
+  coinStore.mutate_chartLabels(historyData.dateLabels)
+
   const server_url = coinStore.server_url
-  isLoading.value = true
   const refreshedCoins = await refreshCryptoCoins(
     server_url,
     user.portfolio.coins,
@@ -115,13 +126,6 @@ onMounted(async () => {
   )
   coinStore.mutate_cryptoCoins(refreshedCoins)
   isLoading.value = false
-
-  // save historical data
-  await userStore.getHistory()
-  const userCoinsHistory = userStore.historicalData?.find(
-    (data) => data.email === user.email
-  )
-  coinStore.mutate_user_coins_history(userCoinsHistory.coins_history)
 
   window.addEventListener('resize', () => {
     const width = window.innerWidth

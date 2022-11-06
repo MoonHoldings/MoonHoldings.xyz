@@ -1,7 +1,7 @@
 <script setup>
 import { Line } from 'vue-chartjs'
-import { reactive } from 'vue'
-
+import { computed, reactive } from 'vue'
+import { useCoinStore } from '@/stores/coin'
 import {
   Chart as ChartJS,
   Title,
@@ -12,6 +12,7 @@ import {
   CategoryScale,
   PointElement,
 } from 'chart.js'
+import decorateNumber from '@/utils/decorateNumber'
 
 ChartJS.register(
   Title,
@@ -22,6 +23,18 @@ ChartJS.register(
   CategoryScale,
   PointElement
 )
+
+const coinStore = useCoinStore()
+
+const willBeginAtZero = computed(() => {
+  const maxValue = Math.max(...coinStore.chartValues)
+
+  if (maxValue >= 10000) {
+    return false
+  } else {
+    return true
+  }
+})
 
 const chartOptions = reactive({
   responsive: true,
@@ -45,17 +58,20 @@ const chartOptions = reactive({
       },
     },
     y: {
-      beginAtZero: true,
+      beginAtZero: willBeginAtZero,
       grid: {
         display: false,
         drawBorder: false,
       },
       ticks: {
-        color: '#000',
-        stepSize: 10,
-        font: {
-          size: 14,
+        callback: function (value, index, ticks) {
+          return `$${decorateNumber(value)}`
         },
+        color: '#000',
+        font: {
+          size: 15,
+        },
+        count: 5,
       },
     },
   },
@@ -66,13 +82,13 @@ const chartOptions = reactive({
   },
 })
 const chartData = reactive({
-  labels: ['January', 'February', 'March'],
+  labels: coinStore.chartLabels,
   datasets: [
     {
-      data: [40, 20, 12],
+      data: coinStore.chartValues,
       borderColor: '#da57ff',
       cubicInterpolationMode: 'monotone',
-      tension: 0.5,
+      // tension: 0.5,
       borderWidth: 4,
     },
   ],

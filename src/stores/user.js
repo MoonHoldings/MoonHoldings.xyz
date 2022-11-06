@@ -110,9 +110,9 @@ export const useUserStore = defineStore('user', {
             Authorization: token,
           },
         })
-        const historicalData = await response.data
+        const data = await response.data
 
-        this.historicalData = historicalData.historicalData
+        this.historicalData = data.historicalData
       } catch (error) {
         console.log(error)
       }

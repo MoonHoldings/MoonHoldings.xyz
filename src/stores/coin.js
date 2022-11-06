@@ -13,7 +13,8 @@ export const useCoinStore = defineStore('coin', {
     modalCoin: {},
     cryptoCoins: [],
     coins: [],
-    user_coins_history: [],
+    chartValues: [],
+    chartLabels: [],
   }),
   getters: {
     get_cryptoCoins(state) {
@@ -68,8 +69,11 @@ export const useCoinStore = defineStore('coin', {
     mutate_modalCoin(payload) {
       this.modalCoin = payload
     },
-    mutate_user_coins_history(payload) {
-      this.user_coins_history = payload
+    mutate_chartValues(payload) {
+      this.chartValues = payload
+    },
+    mutate_chartLabels(payload) {
+      this.chartLabels = payload
     },
     addNewWallet() {
       const emptyWallet = this.modalCoin.wallets.find(

@@ -69,18 +69,33 @@ export const useNftStore = defineStore('nft', {
           // grouping collection to check if any nft item contains collection address
           let collections = {}
 
+          // ! steps to try
+          // ? Filter NFTs together into Arrays based on update_authority
+          // ? New collections will have collection.address (query to get collection info)
+          // ? Old collections will have collection null (query first one to get collection info)
+
           if (nfts && nfts.length > 0) {
             nfts.forEach(nft => {
               const collectionAddress = nft?.collection?.address ?? 'unknown'
 
+              // ? Known Collections
               if (collections[collectionAddress]) {
+                collections[collectionAddress] = []
                 collections[collectionAddress].push(nft.mintAddress)
+              // ? Unknown Collections (Lotus Gang & randoms) should be 2 collections
+              // ? Lotus Gang & Unknown
               } else {
                 collections[collectionAddress] = []
                 collections[collectionAddress].push(nft.mintAddress)
               }
             });
           }
+
+          // ! Goals:
+          // Connect wallet: 5wwb8L8FQyH3MRfQa6GpcP6xNt3XQqSC1wHiVTiLhQA6
+          // ? Lotus Gang collection with 10 NFTs
+          // ? Critters Cult collection with 8 NFTs
+          // ? Unknown Mixed collection with 3 random NFTs
 
           console.log('collections', collections)
 

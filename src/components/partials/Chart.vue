@@ -26,6 +26,16 @@ ChartJS.register(
 
 const coinStore = useCoinStore()
 
+const willBeginAtZero = computed(() => {
+  const maxValue = Math.max(...coinStore.chartValues)
+
+  if (maxValue >= 10000) {
+    return false
+  } else {
+    return true
+  }
+})
+
 const chartOptions = reactive({
   responsive: true,
   maintainAspectRatio: true,
@@ -48,7 +58,7 @@ const chartOptions = reactive({
       },
     },
     y: {
-      beginAtZero: true,
+      beginAtZero: willBeginAtZero,
       grid: {
         display: false,
         drawBorder: false,
@@ -59,8 +69,9 @@ const chartOptions = reactive({
         },
         color: '#000',
         font: {
-          size: 14,
+          size: 15,
         },
+        count: 5,
       },
     },
   },

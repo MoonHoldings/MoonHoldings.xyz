@@ -49,6 +49,16 @@ const addWallet = async () => {
   isWalletAddressModal.value = false
   isLoading.value = false
 }
+
+const parsingWalletAddress = (walletAddress) => {
+  const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
+  const match = walletAddress.match(truncateRegex)
+  if (!match) {
+    return walletAddress
+  }
+
+  return `${match[1]}…${match[2]}`
+}
 </script>
 
 <template>
@@ -82,7 +92,7 @@ const addWallet = async () => {
                 Mint Address:
               </div>
               <div class="right">
-                {{ selectedNft.mint }}
+                {{ parsingWalletAddress(selectedNft.mint) }}
               </div>
             </div>
             <div class="image-info-detail">
@@ -90,7 +100,7 @@ const addWallet = async () => {
                 Owner:
               </div>
               <div class="right">
-                {{ selectedNft.owner }}
+                {{ parsingWalletAddress(selectedNft.owner) }}
               </div>
             </div>
           </div>

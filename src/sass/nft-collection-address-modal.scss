@@ -13,6 +13,10 @@
 }
 
 .wallet-modal-content {
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+
   margin: auto;
   width: 500px;
   padding: 16px;
@@ -100,8 +104,19 @@
   display: flex;
   gap: 16px;
 
+  @media (max-width: 767px) {
+    flex-direction: column;
+    margin-top: 24px;
+    margin-bottom: 0;
+  }
+
   .input-text {
     width: 60%;
+
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+
     min-height: 4.4rem;
     font-weight: 400;
     line-height: 20px;
@@ -119,6 +134,11 @@
 
   .input-button {
     width: 40%;
+
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+
     padding: 8px 20px;
     font-size: 16px;
     font-weight: 400;

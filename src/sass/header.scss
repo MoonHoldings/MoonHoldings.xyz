@@ -1,8 +1,14 @@
 .header {
-  position: absolute;
+  position: inherit;
+  left: 0;
+
+  @media (min-width: 1024px) {
+    position: absolute;
+    left: 200px;
+  }
+
   top: 0;
   right: 0;
-  left: 200px;
   z-index: 90;
   font-family: 'Inter', monospace;
 
@@ -14,7 +20,12 @@
   &__main {
     position: relative;
     min-height: 72px;
-    padding: 28px 46px 10px 46px;
+    padding: 24px;
+
+    @media (min-width: 1024px) {
+      padding: 28px 46px 10px 46px;
+    }
+
     display: flex;
     justify-content: space-between;
   }

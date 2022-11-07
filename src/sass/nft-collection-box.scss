@@ -71,6 +71,10 @@
 }
 .element-container-non-sol {
   margin-top: 38px;
+
+  @media (max-width: 767px) {
+    margin-top: 0;
+  }
 }
 .element-black-shadow {
   position: absolute;

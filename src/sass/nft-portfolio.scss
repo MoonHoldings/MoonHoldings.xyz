@@ -1,14 +1,28 @@
 .collection {
   color: var(--ash);
-  min-height: 100vh;
-  min-width: calc(100% - 200px);
-  padding: 11rem 46px 46px calc(46px + 200px);
+  min-height: 100%;
+  min-width: 100%;
+  padding: 16px 16px 100px;
+  flex-direction: column-reverse;
+  gap: 48px;
+
+  @media (min-width: 1024px) {
+    min-height: 100vh;
+    min-width: calc(100% - 200px);
+    padding: 11rem 46px 46px calc(46px + 200px);
+    flex-direction: row;
+    gap: 8px;
+  }
+
   background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
   display: flex;
-  gap: 8px;
 
   &__left-side {
-    width: calc(100% - 270px);
+    width: 100%;
+
+    @media (min-width: 1024px) {
+      width: calc(100% - 270px);
+    }
 
     .label {
       font-size: 18px;
@@ -27,7 +41,11 @@
   }
 
   &__right-side {
-    width: 270px;
+    width: 100%;
+
+    @media (min-width: 1024px) {
+      width: 270px;
+    }
   }
 }
 

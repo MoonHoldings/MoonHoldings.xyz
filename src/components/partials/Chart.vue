@@ -48,7 +48,7 @@ const chartOptions = reactive({
       },
     },
     y: {
-      beginAtZero: true,
+      beginAtZero: willBeginAtZero,
       grid: {
         display: false,
         drawBorder: false,
@@ -59,8 +59,9 @@ const chartOptions = reactive({
         },
         color: '#000',
         font: {
-          size: 14,
+          size: 15,
         },
+        count: 5,
       },
     },
   },

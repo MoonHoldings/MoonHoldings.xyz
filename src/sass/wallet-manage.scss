@@ -89,7 +89,12 @@
 
 .nft-info-footer {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+
+  @media (min-width: 1024px) {
+    flex-wrap: wrap;
+  }
+
   gap: 8px;
 }
 

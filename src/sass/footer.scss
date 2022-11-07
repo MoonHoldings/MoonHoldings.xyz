@@ -1,8 +1,12 @@
 .footer {
   position: fixed;
-  display: flex;
   bottom: 0;
   width: 100%;
+  display: flex;
+
+  @media (min-width: 1024px) {
+    display: none;
+  }
 }
 
 .element {

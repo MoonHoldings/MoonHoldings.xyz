@@ -118,12 +118,7 @@ onMounted(async () => {
   coinStore.mutate_chartValues(historyData.historyValues)
   coinStore.mutate_chartLabels(historyData.dateLabels)
 
-  const server_url = coinStore.server_url
-  const refreshedCoins = await refreshCryptoCoins(
-    server_url,
-    user.portfolio.coins,
-    token
-  )
+  const refreshedCoins = await refreshCryptoCoins(user.portfolio.coins)
   coinStore.mutate_cryptoCoins(refreshedCoins)
   isLoading.value = false
 

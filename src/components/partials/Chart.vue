@@ -39,6 +39,7 @@ const willBeginAtZero = computed(() => {
 const chartOptions = reactive({
   responsive: true,
   maintainAspectRatio: false,
+  tension: 0.4,
   elements: {
     point: {
       radius: 0,
@@ -87,9 +88,8 @@ const chartData = reactive({
     {
       data: coinStore.chartValues,
       borderColor: '#da57ff',
-      cubicInterpolationMode: 'monotone',
-      // tension: 0.5,
-      borderWidth: 4,
+      borderWidth: 5,
+      tension: 0.4,
     },
   ],
 })

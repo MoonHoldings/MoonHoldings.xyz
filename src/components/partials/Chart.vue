@@ -38,7 +38,8 @@ const willBeginAtZero = computed(() => {
 
 const chartOptions = reactive({
   responsive: true,
-  maintainAspectRatio: true,
+  maintainAspectRatio: false,
+  tension: 0.4,
   elements: {
     point: {
       radius: 0,
@@ -87,9 +88,8 @@ const chartData = reactive({
     {
       data: coinStore.chartValues,
       borderColor: '#da57ff',
-      cubicInterpolationMode: 'monotone',
-      // tension: 0.5,
-      borderWidth: 4,
+      borderWidth: 5,
+      tension: 0.4,
     },
   ],
 })
@@ -100,8 +100,7 @@ const chartData = reactive({
     class="line-chart"
     :chart-options="chartOptions"
     :chart-data="chartData"
-    width="490"
-    height="270"
+    height="250"
     chart-id="line-chart"
   />
 </template>

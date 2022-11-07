@@ -231,22 +231,25 @@ export const useCoinStore = defineStore('coin', {
       this.modalCoin = {}
     },
     async getSingleCoin(coinId) {
-      const token = cookies.get('MOON_TOKEN')
+      const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY
       try {
-        const response = await axios.post(
-          `${this.server_url}/get-coin`,
-          { coinId },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: token,
-            },
-          }
+        const response = await axios.get(
+          `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${coinId}&intervals=1d,30d`
         )
 
-        const result = await response.data
+        const coin = response.data[0]
 
-        this.modalCoin = result.coin
+        const _24hr = coin['1d'] ? coin['1d']['price_change_pct'] : ''
+
+        this.modalCoin = {
+          id: coin?.id,
+          symbol: coin?.symbol,
+          name: coin?.name,
+          price: coin?.price,
+          logo_url: coin?.logo_url,
+          _24hr,
+          wallets: [],
+        }
       } catch (error) {
         mixpanel.track('Error: coin.js > getSingleCoin', {
           error: error,

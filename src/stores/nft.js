@@ -59,62 +59,49 @@ export const useNftStore = defineStore('nft', {
 
         const res = await response.data
         const nfts = res.result.nfts
-        // console.log('res.result', res.result) // ? res.result.sol_balance = SOL balance
-        console.log('nfts', nfts)
 
         if (res.success && nfts.length > 0) {
           let name = ""
           let image = ""
 
           // grouping collection to check if any nft item contains collection address
-          let collections = {}
-
-          // ! steps to try
-          // ? Filter NFTs together into Arrays based on update_authority
-          // ? New collections will have collection.address (query to get collection info)
-          // ? Old collections will have collection null (query first one to get collection info)
+          let groupCollections = {}
+          let unknowCollections = {}
 
           if (nfts && nfts.length > 0) {
             nfts.forEach(nft => {
               const collectionAddress = nft?.collection?.address ?? 'unknown'
 
-              // ? Known Collections
-              if (collections[collectionAddress]) {
-                collections[collectionAddress] = []
-                collections[collectionAddress].push(nft.mintAddress)
-              // ? Unknown Collections (Lotus Gang & randoms) should be 2 collections
-              // ? Lotus Gang & Unknown
+              if (groupCollections[collectionAddress]) {
+                groupCollections[collectionAddress].push(nft)
               } else {
-                collections[collectionAddress] = []
-                collections[collectionAddress].push(nft.mintAddress)
+                groupCollections[collectionAddress] = []
+                groupCollections[collectionAddress].push(nft)
               }
             });
           }
 
-          // ! Goals:
-          // Connect wallet: 5wwb8L8FQyH3MRfQa6GpcP6xNt3XQqSC1wHiVTiLhQA6
-          // ? Lotus Gang collection with 10 NFTs
-          // ? Critters Cult collection with 8 NFTs
-          // ? Unknown Mixed collection with 3 random NFTs
+          console.log('GROUPED COLLECTIONS', groupCollections)
 
-          console.log('collections', collections)
+          if (groupCollections['unknown'] && groupCollections['unknown'].length > 0) {
+            groupCollections['unknown'].forEach((nft) => {
+              const colName = nft?.name ?? 'unknown'
 
-          // let isGrouped = false
+              if (unknowCollections[colName]) {
+                unknowCollections[colName].push(nft)
+              } else {
+                unknowCollections[colName] = []
+                unknowCollections[colName].push(nft)
+              }
+            })
+          }
 
-          // if (isGrouped) {
-
-          // } else {
-          //   await axios.get(nfts[0].uri).then((res) => {
-          //     name = res?.data?.collection?.name
-          //     image = res?.data?.image
-          //   })
-          // }
+          console.log('UNKNOWN COLLECTIONS', unknowCollections)
 
           this.portfolios.push({
             walletAddress,
             name,
-            image,
-            // ...result.result
+            image
           })
         }
       } catch (error) {

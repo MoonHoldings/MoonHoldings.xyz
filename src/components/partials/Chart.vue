@@ -38,7 +38,7 @@ const willBeginAtZero = computed(() => {
 
 const chartOptions = reactive({
   responsive: true,
-  maintainAspectRatio: true,
+  maintainAspectRatio: false,
   elements: {
     point: {
       radius: 0,
@@ -100,8 +100,7 @@ const chartData = reactive({
     class="line-chart"
     :chart-options="chartOptions"
     :chart-data="chartData"
-    width="490"
-    height="270"
+    height="250"
     chart-id="line-chart"
   />
 </template>

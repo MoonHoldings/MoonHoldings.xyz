@@ -1,3 +1,5 @@
+@import '@/sass/mixins/breakpoints.scss';
+
 .active-currency {
   position: relative;
   color: var(--pink);
@@ -57,14 +59,25 @@
   &__coins-stats {
     display: grid;
     grid-template-columns: auto 49rem;
+    @include bp-down(large) {
+      display: flex;
+      flex-direction: column;
+      row-gap: 2rem;
+    }
   }
 
   &__all-coins {
-    // padding-right: 2rem;
+    @include bp-down(large) {
+      order: 2;
+    }
   }
 
   &__chart {
     padding-left: 1rem;
+    @include bp-down(large) {
+      order: 1;
+      padding: 0;
+    }
 
     .chart {
       border: 0.15rem solid #000;

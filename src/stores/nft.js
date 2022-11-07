@@ -11,12 +11,16 @@ export const useNftStore = defineStore('nft', {
     shyft_key: `${import.meta.env.VITE_SHYFT_KEY}`,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
     portfolios: [],
+    collections: [],
     nfts: [],
     nft: {}
   }),
   getters: {
     get_portfolios(state) {
       return state.portfolios
+    },
+    get_collections(state) {
+      return state.collections
     },
     get_nfts(state) {
       return state.nfts
@@ -28,6 +32,9 @@ export const useNftStore = defineStore('nft', {
   actions: {
     mutate_emptyPortfolios() {
       this.portfolios = []
+    },
+    mutate_emptyCollections() {
+      this.collections = []
     },
     mutate_emptyNfts() {
       this.nfts = []

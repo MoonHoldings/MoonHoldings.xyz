@@ -91,10 +91,6 @@ const disconnectAllAddress = () => {
 
   <wallet-multi-button dark></wallet-multi-button>
 
-  <div class="button">
-    Connect Wallet
-  </div>
-
   <div class="button" @click="showWalletAddressModal">
     Add Address
   </div>
@@ -112,7 +108,7 @@ const disconnectAllAddress = () => {
     </div>
   </div>
 
-  <div class="button" @click="disconnectAllAddress">
+  <div v-if="isPortfolios" class="button" @click="disconnectAllAddress">
     Disconnect All
   </div>
 

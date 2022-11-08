@@ -26,6 +26,15 @@ export default async (historicalData, email) => {
     weekInMS[i] = dateMS
   }
 
+  if (!userHistoriesObj) {
+    let noValues = [0, 0, 0, 0, 0, 0, 0]
+
+    return {
+      historyValues: noValues,
+      dateLabels,
+    }
+  }
+
   for (let i = 0; i < weekInMS.length; i++) {
     const labelDate = dateForming(weekInMS[i])
 

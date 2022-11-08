@@ -4,6 +4,7 @@ import { useRoute, RouterView } from 'vue-router'
 import SuccessAlert from '@/components/partials/SuccessAlert.vue'
 import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 import SideBar from '@/components/partials/SideBar.vue'
+import Footer from '@/components/partials/Footer.vue'
 import { useUtilStore } from '@/stores/util'
 import { useCoinStore } from '@/stores/coin'
 
@@ -43,6 +44,7 @@ onMounted(async () => {
   </transition>
   <SideBar />
   <RouterView />
+  <Footer />
 </template>
 
 <style lang="scss">
@@ -88,5 +90,30 @@ html {
 
 strong {
   font-weight: 800;
+}
+</style>
+
+<style scoped>
+:global(.swv-button) {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 4px;
+  background: #5B218F;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Inter";
+  line-height: 20px;
+}
+:global(.swv-dropdown) {
+  width: 100%;
+}
+:global(.swv-modal-wrapper) {
+  border-radius: 0;
+}
+:global(.swv-modal-collapse-button) {
+  border-radius: 0;
 }
 </style>

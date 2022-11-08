@@ -11,12 +11,16 @@ export const useNftStore = defineStore('nft', {
     shyft_key: `${import.meta.env.VITE_SHYFT_KEY}`,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
     portfolios: [],
+    collections: [],
     nfts: [],
     nft: {}
   }),
   getters: {
     get_portfolios(state) {
       return state.portfolios
+    },
+    get_collections(state) {
+      return state.collections
     },
     get_nfts(state) {
       return state.nfts
@@ -28,6 +32,9 @@ export const useNftStore = defineStore('nft', {
   actions: {
     mutate_emptyPortfolios() {
       this.portfolios = []
+    },
+    mutate_emptyCollections() {
+      this.collections = []
     },
     mutate_emptyNfts() {
       this.nfts = []
@@ -57,44 +64,51 @@ export const useNftStore = defineStore('nft', {
           }
         )
 
-        const result = await response.data
+        const res = await response.data
+        const nfts = res.result.nfts
 
-        if (result.success && result.result.nfts.length > 0) {
+        if (res.success && nfts.length > 0) {
           let name = ""
           let image = ""
 
           // grouping collection to check if any nft item contains collection address
-          let collections = {}
+          let groupCollections = {}
+          let unknowCollections = {}
 
-          if (result.result.nfts && result.result.nfts.length > 0) {
-            result.result.nfts.forEach(nft => {
+          if (nfts && nfts.length > 0) {
+            nfts.forEach(nft => {
               const collectionAddress = nft?.collection?.address ?? 'unknown'
 
-              if (collections[collectionAddress]) {
-                collections[collectionAddress].push(nft.mintAddress)
+              if (groupCollections[collectionAddress]) {
+                groupCollections[collectionAddress].push(nft)
               } else {
-                collections[collectionAddress] = []
-                collections[collectionAddress].push(nft.mintAddress)
+                groupCollections[collectionAddress] = []
+                groupCollections[collectionAddress].push(nft)
               }
             });
           }
 
-          let isGrouped = false
+          console.log('GROUPED COLLECTIONS', groupCollections)
 
-          if (isGrouped) {
+          if (groupCollections['unknown'] && groupCollections['unknown'].length > 0) {
+            groupCollections['unknown'].forEach((nft) => {
+              const colName = nft?.name ?? 'unknown'
 
-          } else {
-            await axios.get(result.result.nfts[0].uri).then((res) => {
-              name = res?.data?.collection?.name
-              image = res?.data?.image
+              if (unknowCollections[colName]) {
+                unknowCollections[colName].push(nft)
+              } else {
+                unknowCollections[colName] = []
+                unknowCollections[colName].push(nft)
+              }
             })
           }
+
+          console.log('UNKNOWN COLLECTIONS', unknowCollections)
 
           this.portfolios.push({
             walletAddress,
             name,
-            image,
-            ...result.result
+            image
           })
         }
       } catch (error) {

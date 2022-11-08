@@ -1,11 +1,12 @@
 <script setup>
 import { ref, computed } from 'vue'
-import WalletManage from '@/components/nft/WalletManage.vue'
+import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import "solana-wallets-vue/styles.css"
 
 const emit = defineEmits()
+const router = useRouter()
 const nftStore = useNftStore()
 
 const portfolios = computed(() => {
@@ -45,13 +46,21 @@ const removePortfolio = (portfolio) => {
 }
 
 const parsingWalletAddress = (walletAddress) => {
-  const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
-  const match = walletAddress.match(truncateRegex);
+  const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
+  const match = walletAddress.match(truncateRegex)
   if (!match) {
     return walletAddress
   }
 
-  return `${match[1]}…${match[2]}`;
+  return `${match[1]}…${match[2]}`
+}
+
+const disconnectAllAddress = () => {
+  nftStore.mutate_emptyPortfolios()
+  nftStore.mutate_emptyNfts()
+  nftStore.mutate_emptyNft()
+
+  router.push({ name: 'nftsPortfolio' })
 }
 </script>
 
@@ -80,11 +89,7 @@ const parsingWalletAddress = (walletAddress) => {
     Connected Wallets
   </div>
 
-  <wallet-multi-button></wallet-multi-button>
-
-  <div class="button">
-    Connect Wallet
-  </div>
+  <wallet-multi-button dark></wallet-multi-button>
 
   <div class="button" @click="showWalletAddressModal">
     Add Address
@@ -103,7 +108,7 @@ const parsingWalletAddress = (walletAddress) => {
     </div>
   </div>
 
-  <div class="button">
+  <div v-if="isPortfolios" class="button" @click="disconnectAllAddress">
     Disconnect All
   </div>
 

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import Header from '@/components/partials/Header.vue'
 import CoinBox from '@/components/partials/CoinBox.vue'
 import WatchCoin from '@/components/partials/WatchCoin.vue'

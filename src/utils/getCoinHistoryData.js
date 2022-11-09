@@ -26,15 +26,6 @@ export default async (historicalData, email) => {
     weekInMS[i] = dateMS
   }
 
-  if (!userHistoriesObj) {
-    let noValues = [0, 0, 0, 0, 0, 0, 0]
-
-    return {
-      historyValues: noValues,
-      dateLabels,
-    }
-  }
-
   for (let i = 0; i < weekInMS.length; i++) {
     const labelDate = dateForming(weekInMS[i])
 
@@ -50,20 +41,19 @@ export default async (historicalData, email) => {
 
   // if historyValues[0] doesn't exist, go backward by subtracting dateInMS
   if (historyValues[0] === undefined) {
-    let oldDateMS = weekInMS[0] - dateInMS
+    for (let i = 0; i < userHistoriesObj.coins_history.length; i++) {
+      const singleHistory = userHistoriesObj.coins_history[i]
 
-    while (!historyValues[0]) {
-      let oldDate = dateForming(oldDateMS)
-      const matched = userHistoriesObj?.coins_history.find(
-        (history) => history.date === oldDate
-      )
+      const singleHistoryDateMS = new Date(singleHistory.date).getTime()
 
-      if (matched) {
-        historyValues[0] = await getTotalHistoryValue(matched.coins)
-      } else {
-        historyValues[0] = 0
+      if (singleHistoryDateMS < weekInMS[0]) {
+        historyValues[0] = await getTotalHistoryValue(singleHistory.coins)
+
+        break
       }
     }
+
+    if (historyValues[0] === undefined) historyValues[0] = 0
   }
 
   // if any index is undefined then populate with the previous value
@@ -90,7 +80,6 @@ const dateForming = (toBeFormedMS) => {
 
 const getTotalHistoryValue = async (historyCoins) => {
   let valueSum = 0
-  // const ll = []
 
   for (let i = 0; i < historyCoins.length; i++) {
     const response = await axios.get(
@@ -100,10 +89,7 @@ const getTotalHistoryValue = async (historyCoins) => {
     const coin = response.data[0]
     const totalValue = coin.price * historyCoins[i].holdings
     valueSum += totalValue
-
-    // ll.push({ id: historyCoins[i].id, holdings: historyCoins[i].holdings })
   }
 
-  // console.log(ll)
   return valueSum
 }

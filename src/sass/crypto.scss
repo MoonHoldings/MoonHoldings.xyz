@@ -320,6 +320,11 @@
   position: absolute;
   top: 4.4rem;
   width: 38rem;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+
   min-height: 15rem;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px,

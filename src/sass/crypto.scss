@@ -290,11 +290,9 @@
     display: flex;
     gap: 2.5rem;
     flex-wrap: wrap;
-    margin-bottom: 6rem;
 
     @media (max-width: 767px) {
       justify-content: center;
-      margin-bottom: 0;
     }
   }
 

@@ -1,11 +1,14 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
-import { useRoute, useRouter, RouterView } from 'vue-router'
-import { useUserStore } from '@/stores/user'
+import { onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
 const currentRoute = ref('')
+
+onMounted(() => {
+  currentRoute.value = location.pathname;
+})
 
 const goPage = (routePage) => {
   mixpanel.track('Footer goPage', {

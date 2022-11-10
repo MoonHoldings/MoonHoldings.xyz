@@ -90,6 +90,12 @@ const chartData = reactive({
       borderColor: '#da57ff',
       borderWidth: 5,
       tension: 0.4,
+      pointRadius: 13,
+      pointBackgroundColor: '	rgba(255, 64, 0, 0)',
+      pointBorderWidth: 0,
+      pointHoverBackgroundColor: '#da57ff',
+      pointHoverBorderColor: '#da57ff',
+      pointHoverBorderWidth: 5,
     },
   ],
 })

@@ -89,7 +89,7 @@ const disconnectAllAddress = () => {
     Connected Wallets
   </div>
 
-  <wallet-multi-button dark></wallet-multi-button>
+  <!-- <wallet-multi-button dark></wallet-multi-button> -->
 
   <div class="button" @click="showWalletAddressModal">
     Add Address

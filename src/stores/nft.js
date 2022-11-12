@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useCookies } from 'vue3-cookies'
+import * as R from 'ramda'
 
 const { cookies } = useCookies()
 
@@ -73,7 +74,8 @@ export const useNftStore = defineStore('nft', {
 
           // grouping collection to check if any nft item contains collection address
           let groupCollections = {}
-          let unknowCollections = {}
+          let unknownCollections = {}
+          let mixedCollections = {}
 
           if (nfts && nfts.length > 0) {
             nfts.forEach(nft => {
@@ -85,7 +87,7 @@ export const useNftStore = defineStore('nft', {
                 groupCollections[collectionAddress] = []
                 groupCollections[collectionAddress].push(nft)
               }
-            });
+            })
           }
 
           console.log('GROUPED COLLECTIONS', groupCollections)
@@ -94,16 +96,70 @@ export const useNftStore = defineStore('nft', {
             groupCollections['unknown'].forEach((nft) => {
               const colName = nft?.name ?? 'unknown'
 
-              if (unknowCollections[colName]) {
-                unknowCollections[colName].push(nft)
+              if (unknownCollections[colName]) {
+                unknownCollections[colName].push(nft)
               } else {
-                unknowCollections[colName] = []
-                unknowCollections[colName].push(nft)
+                unknownCollections[colName] = []
+                unknownCollections[colName].push(nft)
               }
             })
           }
 
-          console.log('UNKNOWN COLLECTIONS', unknowCollections)
+          console.log('groupCollections.unknown', groupCollections.unknown)
+
+          // ? Create unique unknown collections
+          if (groupCollections['unknown'] && groupCollections['unknown'].length > 0) {
+            groupCollections['unknown'].forEach((nft) => {
+              const updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority' // 3n1mz8MyqpQwgX9E8CNPPZtAdJa3aLpuCSMbPumM9wzZ
+              // mixedCollections[updateAuthority] = []
+
+              Object.assign(mixedCollections, {
+                [updateAuthority]: []
+              })
+
+              // ? Create placeholder object to be matched in the next forEach
+              // mixedCollections[updateAuthority].push({
+              //   name: 'placeholder',
+              //   updateAuthorityAddress: nft.updateAuthorityAddress
+              // })
+
+              // if (updateAuthority === mixedCollections[updateAuthority]) {
+              //   mixedCollections[updateAuthority].push(nft)
+              // }
+            })
+
+            // ? Organize all NFTs into each unknown collection
+            groupCollections['unknown'].forEach((nft) => {
+              const updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority'
+              
+              console.log('mixedCollections', mixedCollections)
+              // console.log('updateAuthority', updateAuthority)
+              // console.log('mixedCollections[updateAuthority][0].updateAuthorityAddress', mixedCollections[updateAuthority][0].updateAuthorityAddress)
+
+              // if (updateAuthority === window[mixedCollections[updateAuthority]]) {
+              //   mixedCollections[updateAuthority].push(nft)
+              // }
+
+              for (const [key, value] of Object.entries(mixedCollections)) {
+                console.log(`${key}: ${value}`);
+                if (updateAuthority === key) {
+                  mixedCollections[key].push(nft)
+                }
+              }    
+
+              // ? Working logic, however after this if, we need to remove the placeholder objects from each array
+              // if (updateAuthority === mixedCollections[updateAuthority][0].updateAuthorityAddress) {
+              //   mixedCollections[updateAuthority].push(nft)
+              // }
+            })
+          }
+
+          console.log('UNKNOWN COLLECTIONS', unknownCollections)
+          // ? Filter by updateAuthorityAddress
+
+          // const unknownKeys = R.keys(unknownCollections)
+          // console.log('unknownKeys', unknownKeys)
+          // console.log('MIXED COLLECTIONS', mixedCollections)
 
           this.portfolios.push({
             walletAddress,

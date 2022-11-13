@@ -198,7 +198,7 @@ onMounted(() => {
                 </svg>
               </button>
             </transition>
-            <a href="/reset-password">{{ FORGOT_PASSWORD }}</a>
+            <a href="/forgot-password">{{ FORGOT_PASSWORD }}</a>
             <button class="continue-btn" @click.prevent="continueBtn">
               {{ clicks === 1 ? SUBMIT : CONTINUE }}
             </button>

@@ -1,37 +1,37 @@
 <script setup>
-import { MOONHOLDINGS, RESET_PASSWORD } from '../constants/copy'
+import { MOONHOLDINGS, PASSWORD_RECOVERY, SUBMIT } from '../constants/copy'
 import { ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import { useUtilStore } from '@/stores/util'
 import { useUserStore } from '@/stores/user'
 
-const route = useRoute()
-const router = useRouter()
 const utilStore = useUtilStore()
-const newPasswordInput = ref('')
+const emailInput = ref('')
 const userStore = useUserStore()
-const errorPassword = ref(false)
+const errorEmail = ref(false)
 const disableButton = ref(false)
 
-const submitPassword = async () => {
-  if (!newPasswordInput.value) {
-    errorPassword.value = true
+const submitEmail = async () => {
+  const isValidEmail = emailInput.value.includes('@')
+
+  if (!emailInput.value) {
+    errorEmail.value = true
     utilStore.mutate_errorToggle(true)
-    utilStore.mutate_errorMessage("Password field can't be empty")
+    utilStore.mutate_errorMessage("Email field can't be empty")
+  } else if (!isValidEmail) {
+    errorEmail.value = true
+    utilStore.mutate_errorToggle(true)
+    utilStore.mutate_errorMessage('Email is not valid')
   } else {
     utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
-    errorPassword.value = false
+    errorEmail.value = false
 
     disableButton.value = true
-
-    const response = await userStore.saveNewPassword(
-      newPasswordInput.value,
-      route.query.token
-    )
+    const response = await userStore.forgotPassword(emailInput.value)
 
     if (response.success) {
-      router.push('/login')
+      utilStore.mutate_showSuccessAlert(true)
+      utilStore.mutate_successMessage(response.message)
     }
     disableButton.value = false
   }
@@ -44,25 +44,28 @@ const submitPassword = async () => {
     <div class="forgot-section">
       <div class="forgot-window">
         <h1>{{ MOONHOLDINGS }}</h1>
-        <h2>{{ RESET_PASSWORD }}</h2>
+        <h2>{{ PASSWORD_RECOVERY }}</h2>
 
         <div class="form">
           <input
-            type="password"
-            :class="{ error: errorPassword, 'input-default': !errorPassword }"
-            placeholder="New Password"
-            v-model="newPasswordInput"
+            type="email"
+            :class="{ error: errorEmail, 'input-default': !errorEmail }"
+            placeholder="Email"
+            v-model="emailInput"
           />
           <button
-            @click="submitPassword"
             :disabled="disableButton"
             :class="{ disabled_button_style: disableButton }"
+            @click="submitEmail"
           >
-            Save
+            {{ SUBMIT }}
           </button>
         </div>
 
-        <div class="guide-text">Enter a new password and save it.</div>
+        <div class="guide-text">
+          Submit the email you used to sign up with. If you used Twitter or
+          Discord, this will be the email you signed up with on those accounts.
+        </div>
       </div>
     </div>
     <div />
@@ -70,11 +73,6 @@ const submitPassword = async () => {
 </template>
 
 <style lang="scss" scoped>
-.disabled_button_style {
-  background: rgb(110, 110, 110) !important;
-  border: 1px solid rgb(110, 110, 110) !important;
-  color: #fff !important;
-}
 .input-default {
   background: #eee;
   border: 0.2rem solid var(--pink);
@@ -82,6 +80,12 @@ const submitPassword = async () => {
 .error {
   background: rgba(255, 111, 111, 0.5);
   border: 0.2rem solid #ff6f6f;
+}
+
+.disabled_button_style {
+  background: rgb(110, 110, 110) !important;
+  border: 1px solid rgb(110, 110, 110) !important;
+  color: #fff !important;
 }
 .forgotPassword-container {
   display: grid;

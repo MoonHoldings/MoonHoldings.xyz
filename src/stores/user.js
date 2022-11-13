@@ -117,6 +117,38 @@ export const useUserStore = defineStore('user', {
         console.log(error)
       }
     },
+    async forgotPassword(email) {
+      try {
+        const response = await axios.post(
+          `${this.server_url}/password/forgot-password`,
+          { email },
+          this.axios_config
+        )
+        const result = await response.data
+        return result
+      } catch (error) {
+        return {
+          success: false,
+          message: error.message,
+        }
+      }
+    },
+    async saveNewPassword(newPassword, resetToken) {
+      try {
+        const response = await axios.put(
+          `${this.server_url}/password/reset/new-password`,
+          { password: newPassword, token: resetToken },
+          this.axios_config
+        )
+        const result = await response.data
+        return result
+      } catch (error) {
+        return {
+          success: false,
+          message: error.message,
+        }
+      }
+    },
     async sendNewsletter(payload) {
       try {
         const response = await axios.post(

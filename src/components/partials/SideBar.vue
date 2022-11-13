@@ -11,7 +11,7 @@ import {
   CALENDAR,
   COIN_SWAP,
   RANKS,
-  INSIGHTS
+  INSIGHTS,
 } from '@/constants/copy'
 
 const route = useRoute()
@@ -21,30 +21,31 @@ const isSidebar = ref(false)
 
 const goPage = (routePage) => {
   mixpanel.track('SideBar goPage', {
-    'route': routePage
+    route: routePage,
   })
   currentRoute.value = routePage
   router.push(routePage)
 }
 
 onMounted(() => {
-  currentRoute.value = location.pathname;
+  currentRoute.value = location.pathname
 })
 
 watch(route, (prev, present) => {
   currentRoute.value = route.fullPath
 
-  isSidebar.value = route.fullPath
-    !== "/" && route.fullPath
-    !== "/login" && route.fullPath
-    !== "/sign-up" && route.fullPath
-    !== "/reset-password" && route.fullPath
-    !== "/privacy-policy" && route.fullPath
-    !== "/terms-of-service" && route.fullPath
-    !== "/newsletter-mail" && route.fullPath
-    && !useUserStore.gotten_user
+  isSidebar.value =
+    route.fullPath !== '/' &&
+    route.fullPath !== '/login' &&
+    route.fullPath !== '/sign-up' &&
+    route.fullPath !== '/forgot-password' &&
+    route.name !== 'resetPassword' &&
+    route.fullPath !== '/privacy-policy' &&
+    route.fullPath !== '/terms-of-service' &&
+    route.fullPath !== '/newsletter-mail' &&
+    route.fullPath &&
+    !useUserStore.gotten_user
 })
-
 </script>
 
 <template>
@@ -57,71 +58,140 @@ watch(route, (prev, present) => {
       </div>
 
       <div
-        :class="currentRoute == '/crypto' ? 'item-logo item-logo__active' : 'item-logo'"
+        :class="
+          currentRoute == '/crypto'
+            ? 'item-logo item-logo__active'
+            : 'item-logo'
+        "
         @click="goPage('/crypto')"
       >
-        <img v-if="currentRoute == '/crypto'" src="/svg/icon-circle-fill.svg" alt="crypto logo" />
+        <img
+          v-if="currentRoute == '/crypto'"
+          src="/svg/icon-circle-fill.svg"
+          alt="crypto logo"
+        />
         <img v-else src="/svg/icon-circle-line.svg" alt="crypto logo" />
         <span>{{ CRYPTO }}</span>
       </div>
 
       <div
-        :class="currentRoute.startsWith('/nfts/single-collection') || currentRoute.startsWith('/nfts/portfolio') || currentRoute.startsWith('/nfts/lend-borrow') ? 'item-logo item-logo__active' : 'item-logo'"
+        :class="
+          currentRoute.startsWith('/nfts/single-collection') ||
+          currentRoute.startsWith('/nfts/portfolio') ||
+          currentRoute.startsWith('/nfts/lend-borrow')
+            ? 'item-logo item-logo__active'
+            : 'item-logo'
+        "
         @click="goPage('/nfts/portfolio')"
       >
-        <img v-if="currentRoute.startsWith('/nfts/single-collection') || currentRoute.startsWith('/nfts/portfolio') || currentRoute.startsWith('/nfts/lend-borrow')" src="/svg/icon-circle-fill.svg" alt="nfts logo" />
+        <img
+          v-if="
+            currentRoute.startsWith('/nfts/single-collection') ||
+            currentRoute.startsWith('/nfts/portfolio') ||
+            currentRoute.startsWith('/nfts/lend-borrow')
+          "
+          src="/svg/icon-circle-fill.svg"
+          alt="nfts logo"
+        />
         <img v-else src="/svg/icon-circle-line.svg" alt="nfts logo" />
         <span>{{ NFTS }}</span>
       </div>
 
       <div
-        v-if="currentRoute.startsWith('/nfts/single-collection') || currentRoute.startsWith('/nfts/portfolio') || currentRoute.startsWith('/nfts/lend-borrow')"
-        :class="currentRoute.startsWith('/nfts/single-collection') || currentRoute.startsWith('/nfts/portfolio') ? 'item-sub-menu item-sub-menu__active' : 'item-sub-menu'"
+        v-if="
+          currentRoute.startsWith('/nfts/single-collection') ||
+          currentRoute.startsWith('/nfts/portfolio') ||
+          currentRoute.startsWith('/nfts/lend-borrow')
+        "
+        :class="
+          currentRoute.startsWith('/nfts/single-collection') ||
+          currentRoute.startsWith('/nfts/portfolio')
+            ? 'item-sub-menu item-sub-menu__active'
+            : 'item-sub-menu'
+        "
         @click="goPage('/nfts/portfolio')"
       >
         {{ COLLECTIONS }}
       </div>
 
       <div
-        v-if="currentRoute.startsWith('/nfts/single-collection') || currentRoute.startsWith('/nfts/portfolio') || currentRoute.startsWith('/nfts/lend-borrow')"
-        :class="currentRoute.startsWith('/nfts/lend-borrow') ? 'item-sub-menu item-sub-menu__active' : 'item-sub-menu'"
+        v-if="
+          currentRoute.startsWith('/nfts/single-collection') ||
+          currentRoute.startsWith('/nfts/portfolio') ||
+          currentRoute.startsWith('/nfts/lend-borrow')
+        "
+        :class="
+          currentRoute.startsWith('/nfts/lend-borrow')
+            ? 'item-sub-menu item-sub-menu__active'
+            : 'item-sub-menu'
+        "
         @click="goPage('/nfts/lend-borrow')"
       >
         {{ LEND_BORROW }}
       </div>
 
       <div
-        :class="currentRoute == '/calendar' ? 'item-logo item-logo__active' : 'item-logo'"
+        :class="
+          currentRoute == '/calendar'
+            ? 'item-logo item-logo__active'
+            : 'item-logo'
+        "
         @click="goPage('/calendar')"
       >
-        <img v-if="currentRoute == '/calendar'" src="/svg/icon-circle-fill.svg" alt="calendar logo" />
+        <img
+          v-if="currentRoute == '/calendar'"
+          src="/svg/icon-circle-fill.svg"
+          alt="calendar logo"
+        />
         <img v-else src="/svg/icon-circle-line.svg" alt="calendar logo" />
         <span>{{ CALENDAR }}</span>
       </div>
 
       <div
-        :class="currentRoute == '/coin-swap' ? 'item-logo item-logo__active' : 'item-logo'"
+        :class="
+          currentRoute == '/coin-swap'
+            ? 'item-logo item-logo__active'
+            : 'item-logo'
+        "
         @click="goPage('/coin-swap')"
       >
-        <img v-if="currentRoute == '/coin-swap'" src="/svg/icon-circle-fill.svg" alt="coin-swap logo" />
+        <img
+          v-if="currentRoute == '/coin-swap'"
+          src="/svg/icon-circle-fill.svg"
+          alt="coin-swap logo"
+        />
         <img v-else src="/svg/icon-circle-line.svg" alt="coin-swap logo" />
         <span>{{ COIN_SWAP }}</span>
       </div>
 
       <div
-        :class="currentRoute == '/ranks' ? 'item-logo item-logo__active' : 'item-logo'"
+        :class="
+          currentRoute == '/ranks' ? 'item-logo item-logo__active' : 'item-logo'
+        "
         @click="goPage('/ranks')"
       >
-        <img v-if="currentRoute == '/ranks'" src="/svg/icon-circle-fill.svg" alt="ranks logo" />
+        <img
+          v-if="currentRoute == '/ranks'"
+          src="/svg/icon-circle-fill.svg"
+          alt="ranks logo"
+        />
         <img v-else src="/svg/icon-circle-line.svg" alt="ranks logo" />
         <span>{{ RANKS }}</span>
       </div>
 
       <div
-        :class="currentRoute == '/insights' ? 'item-logo item-logo__active' : 'item-logo'"
+        :class="
+          currentRoute == '/insights'
+            ? 'item-logo item-logo__active'
+            : 'item-logo'
+        "
         @click="goPage('/insights')"
       >
-        <img v-if="currentRoute == '/insights'" src="/svg/icon-circle-fill.svg" alt="insights logo" />
+        <img
+          v-if="currentRoute == '/insights'"
+          src="/svg/icon-circle-fill.svg"
+          alt="insights logo"
+        />
         <img v-else src="/svg/icon-circle-line.svg" alt="insights logo" />
         <span>{{ INSIGHTS }}</span>
       </div>
@@ -129,7 +199,11 @@ watch(route, (prev, present) => {
       <div class="social">
         <div class="item">
           <img src="/svg/icon-twitter.svg" alt="twitter logo" />
-          <a class="link" href="https://twitter.com/moonholdingsxyz" target="_blank">
+          <a
+            class="link"
+            href="https://twitter.com/moonholdingsxyz"
+            target="_blank"
+          >
             Follow us
           </a>
         </div>
@@ -143,7 +217,6 @@ watch(route, (prev, present) => {
     </div>
   </div>
 </template>
-
 
 <style lang="scss" scoped>
 @import '@/sass/side-bar.scss';

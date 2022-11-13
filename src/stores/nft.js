@@ -92,6 +92,7 @@ export const useNftStore = defineStore('nft', {
 
           console.log('GROUPED COLLECTIONS', groupCollections)
 
+          // ? Group Unknown collections
           if (groupCollections['unknown'] && groupCollections['unknown'].length > 0) {
             groupCollections['unknown'].forEach((nft) => {
               const colName = nft?.name ?? 'unknown'
@@ -107,7 +108,7 @@ export const useNftStore = defineStore('nft', {
 
           console.log('GROUPED.unknown', groupCollections.unknown)
 
-          // ? Create unique unknown collections
+          // ? Filter and group unique unknown collections
           if (groupCollections['unknown'] && groupCollections['unknown'].length > 0) {
             groupCollections['unknown'].forEach((nft) => {
               const updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority' // 3n1mz8MyqpQwgX9E8CNPPZtAdJa3aLpuCSMbPumM9wzZ

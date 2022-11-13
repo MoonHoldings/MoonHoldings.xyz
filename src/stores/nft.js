@@ -13,6 +13,8 @@ export const useNftStore = defineStore('nft', {
     axios_config: { headers: { 'Content-Type': 'application/json' } },
     portfolios: [],
     collections: [],
+    raw_collections: {},
+    filtered_collections: {},
     nfts: [],
     nft: {}
   }),
@@ -22,6 +24,9 @@ export const useNftStore = defineStore('nft', {
     },
     get_collections(state) {
       return state.collections
+    },
+    get_raw_collections(state) {
+      return state.raw_collections
     },
     get_nfts(state) {
       return state.nfts
@@ -36,6 +41,9 @@ export const useNftStore = defineStore('nft', {
     },
     mutate_emptyCollections() {
       this.collections = []
+    },
+    mutate_emptyRawCollections() {
+      this.raw_collections = {}
     },
     mutate_emptyNfts() {
       this.nfts = []
@@ -73,29 +81,34 @@ export const useNftStore = defineStore('nft', {
           let image = ""
 
           // grouping collection to check if any nft item contains collection address
-          let groupCollections = {}
+          let raw_collections = {}
           let unknownCollections = {}
-          let mixedCollections = {}
+          let filteredCollections = {}
 
           if (nfts && nfts.length > 0) {
             nfts.forEach(nft => {
               const collectionAddress = nft?.collection?.address ?? 'unknown'
 
-              if (groupCollections[collectionAddress]) {
-                groupCollections[collectionAddress].push(nft)
+              if (raw_collections[collectionAddress]) {
+                raw_collections[collectionAddress].push(nft)
               } else {
-                groupCollections[collectionAddress] = []
-                groupCollections[collectionAddress].push(nft)
+                raw_collections[collectionAddress] = []
+                raw_collections[collectionAddress].push(nft)
               }
             })
           }
 
-          console.log('GROUPED COLLECTIONS', groupCollections)
+          console.log('GROUPED RAW COLLECTIONS', raw_collections)
+          console.log('this.collections', this.collections)
+          this.raw_collections = raw_collections
+          console.log('this.raw_collections', this.raw_collections)
 
           // ? Group Unknown collections
-          if (groupCollections['unknown'] && groupCollections['unknown'].length > 0) {
-            groupCollections['unknown'].forEach((nft) => {
+          if (raw_collections['unknown'] && raw_collections['unknown'].length > 0) {
+            raw_collections['unknown'].forEach((nft) => {
               const colName = nft?.name ?? 'unknown'
+
+              // ? GET the uri to obtain collection name and image
 
               if (unknownCollections[colName]) {
                 unknownCollections[colName].push(nft)
@@ -106,32 +119,47 @@ export const useNftStore = defineStore('nft', {
             })
           }
 
-          console.log('GROUPED.unknown', groupCollections.unknown)
+          // console.log('GROUPED.unknown', raw_collections.unknown)
 
           // ? Filter and group unique unknown collections
-          if (groupCollections['unknown'] && groupCollections['unknown'].length > 0) {
-            groupCollections['unknown'].forEach((nft) => {
+          if (raw_collections['unknown'] && raw_collections['unknown'].length > 0) {
+            raw_collections['unknown'].forEach((nft) => {
               const updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority' // 3n1mz8MyqpQwgX9E8CNPPZtAdJa3aLpuCSMbPumM9wzZ
 
-              Object.assign(mixedCollections, {
-                [updateAuthority]: []
+              Object.assign(filteredCollections, {
+                [updateAuthority]: [{
+                  uri: nft.uri
+                }]
               })
             })
 
+            this.filtered_collections = filteredCollections
+            
+            const getURI = (collection, updateAddress) => {
+              this.fetchURI(collection[0].uri)
+              // console.log(collection)
+              // console.log(updateAddress)
+            }
+
+            R.forEachObjIndexed(getURI, filteredCollections);
+
             // ? Organize all NFTs into each unknown collection
-            groupCollections['unknown'].forEach((nft) => {
+            raw_collections['unknown'].forEach((nft) => {
               const updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority'
               
-              for (const [key, value] of Object.entries(mixedCollections)) {
+              for (const [key, value] of Object.entries(filteredCollections)) {
                 if (updateAuthority === key) {
-                  mixedCollections[key].push(nft)
+                  filteredCollections[key].push(nft)
                 }
               }
             })
+
+            // ? GET the uri to obtain collection name and image
           }
 
-          console.log('UNKNOWN COLLECTIONS', unknownCollections)
-          console.log('MIXED COLLECTIONS', mixedCollections)
+          console.log('UNKNOWN COLLECTIONS:', unknownCollections)
+          console.log('MIXED COLLECTIONS:', filteredCollections)
+          console.log('FILTERED COLLECTIONS:', this.filtered_collections)
 
           // ? Organize all collections into collection objects to render in UI:
           this.portfolios.push({
@@ -160,6 +188,37 @@ export const useNftStore = defineStore('nft', {
 
         if (result.success) {
           this.nfts = result.result
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async fetchURI(uriAddress) {
+      // console.log('fetchURI called with:', uriAddress)
+      try {
+        const response = await axios.get(
+          `${uriAddress}`,
+          { headers: { 'Content-Type': 'application/json', } }
+        )
+
+        const result = await response.data
+        // console.log('fetchURI result', result)
+
+        if (result) {
+          // return result // result.name result.image
+          for (const [key, value] of Object.entries(this.filtered_collections)) {
+            console.log('key', key)
+            console.log('value', value)
+            // collection[0].name = result.name
+            // collection[0].image = result.image
+          }
+
+          // this.filtered_collections.forEach((collection) => {
+          //   if (uriAddress === collection[0].uri) {
+          //     collection[0].name = result.name
+          //     collection[0].image = result.image
+          //   }
+          // })
         }
       } catch (error) {
         console.log(error)

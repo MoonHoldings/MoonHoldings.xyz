@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useCookies } from 'vue3-cookies'
 import * as R from 'ramda'
 
-const { cookies } = useCookies()
+const { cookies } = useCookies() // TODO need this?
 
 export const useNftStore = defineStore('nft', {
   state: () => ({
@@ -105,62 +105,34 @@ export const useNftStore = defineStore('nft', {
             })
           }
 
-          console.log('groupCollections.unknown', groupCollections.unknown)
+          console.log('GROUPED.unknown', groupCollections.unknown)
 
           // ? Create unique unknown collections
           if (groupCollections['unknown'] && groupCollections['unknown'].length > 0) {
             groupCollections['unknown'].forEach((nft) => {
               const updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority' // 3n1mz8MyqpQwgX9E8CNPPZtAdJa3aLpuCSMbPumM9wzZ
-              // mixedCollections[updateAuthority] = []
 
               Object.assign(mixedCollections, {
                 [updateAuthority]: []
               })
-
-              // ? Create placeholder object to be matched in the next forEach
-              // mixedCollections[updateAuthority].push({
-              //   name: 'placeholder',
-              //   updateAuthorityAddress: nft.updateAuthorityAddress
-              // })
-
-              // if (updateAuthority === mixedCollections[updateAuthority]) {
-              //   mixedCollections[updateAuthority].push(nft)
-              // }
             })
 
             // ? Organize all NFTs into each unknown collection
             groupCollections['unknown'].forEach((nft) => {
               const updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority'
               
-              console.log('mixedCollections', mixedCollections)
-              // console.log('updateAuthority', updateAuthority)
-              // console.log('mixedCollections[updateAuthority][0].updateAuthorityAddress', mixedCollections[updateAuthority][0].updateAuthorityAddress)
-
-              // if (updateAuthority === window[mixedCollections[updateAuthority]]) {
-              //   mixedCollections[updateAuthority].push(nft)
-              // }
-
               for (const [key, value] of Object.entries(mixedCollections)) {
-                console.log(`${key}: ${value}`);
                 if (updateAuthority === key) {
                   mixedCollections[key].push(nft)
                 }
-              }    
-
-              // ? Working logic, however after this if, we need to remove the placeholder objects from each array
-              // if (updateAuthority === mixedCollections[updateAuthority][0].updateAuthorityAddress) {
-              //   mixedCollections[updateAuthority].push(nft)
-              // }
+              }
             })
           }
 
           console.log('UNKNOWN COLLECTIONS', unknownCollections)
-          // ? Filter by updateAuthorityAddress
+          console.log('MIXED COLLECTIONS', mixedCollections)
 
-          // const unknownKeys = R.keys(unknownCollections)
-          // console.log('unknownKeys', unknownKeys)
-          // console.log('MIXED COLLECTIONS', mixedCollections)
-
+          // ? Organize all collections into collection objects to render in UI:
           this.portfolios.push({
             walletAddress,
             name,

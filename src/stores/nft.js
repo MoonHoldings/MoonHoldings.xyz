@@ -65,12 +65,7 @@ export const useNftStore = defineStore('nft', {
       try {
         const response = await axios.get(
           `${this.shyft_url}/wallet/get_portfolio?network=mainnet-beta&wallet=${walletAddress}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'x-api-key': `${this.shyft_key}`
-            }
-          }
+          { headers: { 'Content-Type': 'application/json', 'x-api-key': `${this.shyft_key}` } }
         )
 
         const res = await response.data
@@ -185,12 +180,7 @@ export const useNftStore = defineStore('nft', {
       try {
         const response = await axios.get(
           `${this.shyft_url}/nft/read_all?network=mainnet-beta&address=${walletAddress}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'x-api-key': `${this.shyft_key}`
-            }
-          }
+          { headers: { 'Content-Type': 'application/json', 'x-api-key': `${this.shyft_key}` } }
         )
 
         const result = await response.data
@@ -203,37 +193,22 @@ export const useNftStore = defineStore('nft', {
       }
     },
     async fetchNFT(uriAddress) {
-      console.log('fetchNFT uriAddress:', uriAddress)
+      // console.log('fetchNFT uriAddress:', uriAddress)
       try {
         const response = await axios.get(
           `${this.shyft_url}/nft/read?network=mainnet-beta&token_address=${uriAddress}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'x-api-key': `${this.shyft_key}`
-            }
-          }
+          { headers: { 'Content-Type': 'application/json', 'x-api-key': `${this.shyft_key}` } }
         )
         const res = await response.data
-        console.log('res', res) // result.name result.cached_image_uri
 
         if (res.success) {
           for (const [key, value] of Object.entries(this.collections)) {
-
-            // console.log('key', key)
-            // console.log('value', value)
             value.forEach(nft => {
               if (nft.collection.address === uriAddress) {
                 nft.collection.collection_name = res.result.name
                 nft.collection.collection_image = res.result.cached_image_uri
               }
             })
-
-            // if (value[0].collection.address === uriAddress) {
-            //   value[0].collection.collection_name = res.result.name
-            //   value[0].collection.collection_image = res.result.cached_image_uri
-            //   // console.log('2 this.filtered_collections', this.filtered_collections)
-            // }
           }
         }
 

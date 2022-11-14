@@ -12,9 +12,9 @@ export const useNftStore = defineStore('nft', {
     shyft_key: `${import.meta.env.VITE_SHYFT_KEY}`,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
     portfolios: [],
-    collections: [],
+    collections: [], // ? Known Collections <- render in UI
     raw_collections: {},
-    filtered_collections: {},
+    filtered_collections: {}, // ? Unknown Collections
     nfts: [],
     nft: {}
   }),
@@ -82,9 +82,9 @@ export const useNftStore = defineStore('nft', {
 
           // grouping collection to check if any nft item contains collection address
           let raw_collections = {}
-          let unknownCollections = {}
           let filteredCollections = {}
 
+          // ? Group Known & Unknown collections (creates 2 arrays)
           if (nfts && nfts.length > 0) {
             nfts.forEach(nft => {
               const collectionAddress = nft?.collection?.address ?? 'unknown'
@@ -103,22 +103,6 @@ export const useNftStore = defineStore('nft', {
           this.raw_collections = raw_collections
           console.log('this.raw_collections', this.raw_collections)
 
-          // ? Group Unknown collections
-          if (raw_collections['unknown'] && raw_collections['unknown'].length > 0) {
-            raw_collections['unknown'].forEach((nft) => {
-              const colName = nft?.name ?? 'unknown'
-
-              // ? GET the uri to obtain collection name and image
-
-              if (unknownCollections[colName]) {
-                unknownCollections[colName].push(nft)
-              } else {
-                unknownCollections[colName] = []
-                unknownCollections[colName].push(nft)
-              }
-            })
-          }
-
           // console.log('GROUPED.unknown', raw_collections.unknown)
 
           // ? Filter and group unique unknown collections
@@ -135,6 +119,7 @@ export const useNftStore = defineStore('nft', {
 
             this.filtered_collections = filteredCollections
             
+            // ? Call URI to get collection name & image
             const getURI = (collection, updateAddress) => {
               this.fetchURI(collection[0].uri)
               // console.log(collection)
@@ -157,7 +142,6 @@ export const useNftStore = defineStore('nft', {
             // ? GET the uri to obtain collection name and image
           }
 
-          console.log('UNKNOWN COLLECTIONS:', unknownCollections)
           console.log('MIXED COLLECTIONS:', filteredCollections)
           console.log('FILTERED COLLECTIONS:', this.filtered_collections)
 
@@ -207,10 +191,12 @@ export const useNftStore = defineStore('nft', {
         if (result) {
           // return result // result.name result.image
           for (const [key, value] of Object.entries(this.filtered_collections)) {
-            console.log('key', key)
-            console.log('value', value)
+            // console.log('key', key)
+            // console.log('value', value)
+            console.log('result.collection.name', result.collection.name)
             // collection[0].name = result.name
             // collection[0].image = result.image
+            console.log('this.filtered_collections', this.filtered_collections)
           }
 
           // this.filtered_collections.forEach((collection) => {

@@ -232,24 +232,18 @@ export const useNftStore = defineStore('nft', {
 
         if (res) {
           for (const [key, value] of Object.entries(this.filtered_collections)) {
-            // console.log('key', key)
-            // console.log('res', res)
-            // console.log('firstNFT', firstNFT)
             if (key === firstNFT.updateAuthorityAddress) {
-              for (const [key, value] of Object.entries(this.filtered_collections)) {
-                value.forEach(nft => {
-                  console.log('nft', nft)
-                  if (nft.updateAuthorityAddress === firstNFT.updateAuthorityAddress) {
-                    const name = (res.collection && res.collection.name) ? res.collection.name : res.name
-                    const image = res.image
+              value.forEach(nft => {
+                if (nft.updateAuthorityAddress === firstNFT.updateAuthorityAddress) {
+                  const name = (res.collection && res.collection.name) ? res.collection.name : res.name
+                  const image = res.image
 
-                    nft.collection = {
-                      collection_name: name,
-                      collection_image: image
-                    }
+                  nft.collection = {
+                    collection_name: name,
+                    collection_image: image
                   }
-                })
-              }
+                }
+              })
             }
           }
         }

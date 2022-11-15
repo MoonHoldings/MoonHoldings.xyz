@@ -13,9 +13,9 @@ export const useNftStore = defineStore('nft', {
     shyft_key: `${import.meta.env.VITE_SHYFT_KEY}`,
     axios_config: { headers: { 'Content-Type': 'application/json' } },
     portfolios: [],
-    collections: [], // ? Known Collections <- render in UI
-    raw_collections: {},
-    filtered_collections: {}, // ? Unknown Collections
+    collections: [], // All filtered Collections <- render in UI
+    raw_collections: {}, // All newly imported Collections
+    filtered_collections: {}, // Unknown Collections
     nfts: [],
     nft: {}
   }),
@@ -53,10 +53,7 @@ export const useNftStore = defineStore('nft', {
       this.nft = {}
     },
     mutate_removePortfolio(portfolio) {
-      const searchPortfolio = this.portfolios.findIndex(item => {
-        return item.walletAddress === portfolio.walletAddress
-      })
-
+      const searchPortfolio = this.portfolios.findIndex(item => item.walletAddress === portfolio.walletAddress)
       this.portfolios.splice(searchPortfolio, 1)
     },
     mutate_setNft(nft) {
@@ -86,8 +83,8 @@ export const useNftStore = defineStore('nft', {
           // ? Group Known & Unknown collections (creates 2 arrays)
           if (nfts && nfts.length > 0) {
             nfts.forEach(nft => {
-              nft.wallet = walletAddress
               deleteNFTkeys(nft)
+              nft.wallet = walletAddress
               collectionAddress = nft?.collection?.address ?? 'unknown'
 
               if (raw_collections[collectionAddress]) {
@@ -103,7 +100,7 @@ export const useNftStore = defineStore('nft', {
 
           // ? Filter and group unique unknown collections
           if (raw_collections['unknown'] && raw_collections['unknown'].length > 0) {
-            raw_collections['unknown'].forEach((nft) => {
+            raw_collections['unknown'].forEach(nft => {
               updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority' // 3n1mz8MyqpQwgX9E8CNPPZtAdJa3aLpuCSMbPumM9wzZ
 
               Object.assign(filteredCollections, {
@@ -112,7 +109,7 @@ export const useNftStore = defineStore('nft', {
             })
 
             // ? Organize all NFTs into each unknown collection
-            raw_collections['unknown'].forEach((nft) => {
+            raw_collections['unknown'].forEach(nft => {
               updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority'
               
               for (const [key, value] of Object.entries(filteredCollections)) {
@@ -124,7 +121,7 @@ export const useNftStore = defineStore('nft', {
           }
 
           // ? GET Collection {name} & {image} by calling URI
-          const getCollectionNameImage = (collection) => {
+          const getCollectionNameImage = collection => {
             // If Known collection use NFT.read(collection.address) otherwise GET(collection[0].uri)
             const uri = (collection[0].collection) ? collection[0].collection.address : collection[0].uri
             const knownCollection = (collection[0].collection)
@@ -177,6 +174,7 @@ export const useNftStore = defineStore('nft', {
         }
       } catch (error) {
         console.log('error', error)
+        mixpanel.track('Error: nft.js > connectWalletWithAddress', { error: error, message: error.message })
       }
     },
     async fetchNfts(walletAddress) {
@@ -193,6 +191,7 @@ export const useNftStore = defineStore('nft', {
         }
       } catch (error) {
         console.log(error)
+        mixpanel.track('Error: nft.js > fetchNfts', { error: error, message: error.message })
       }
     },
     // ? For known NFT collections
@@ -217,6 +216,7 @@ export const useNftStore = defineStore('nft', {
 
       } catch (error) {
         console.log(error)
+        mixpanel.track('Error: nft.js > fetchNFT', { error: error, message: error.message })
       }
     },
     // ? For unknown NFT collections
@@ -247,6 +247,7 @@ export const useNftStore = defineStore('nft', {
         }
       } catch (error) {
         console.log(error)
+        mixpanel.track('Error: nft.js > fetchURI', { error: error, message: error.message })
       }
     },
     async connectWallet() {}

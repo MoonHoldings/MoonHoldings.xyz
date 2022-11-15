@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useCookies } from 'vue3-cookies'
 import * as R from 'ramda'
+import deleteNFTkeys from '../utils/deleteNFTkeys'
 
 const { cookies } = useCookies() // TODO need this?
 
@@ -72,10 +73,9 @@ export const useNftStore = defineStore('nft', {
         const nfts = res.result.nfts
 
         if (res.success && nfts.length > 0) {
-          let name = ""
-          let image = ""
+          let name = '' // TODO update to support new collection logic
+          let image = '' // TODO update to support new collection logic
 
-          // grouping collection to check if any nft item contains collection address
           this.collections = [] // TODO temp
           this.raw_collections = {} // TODO temp
           let raw_collections = {}
@@ -86,6 +86,8 @@ export const useNftStore = defineStore('nft', {
           // ? Group Known & Unknown collections (creates 2 arrays)
           if (nfts && nfts.length > 0) {
             nfts.forEach(nft => {
+              nft.wallet = walletAddress
+              deleteNFTkeys(nft)
               collectionAddress = nft?.collection?.address ?? 'unknown'
 
               if (raw_collections[collectionAddress]) {
@@ -97,11 +99,7 @@ export const useNftStore = defineStore('nft', {
             })
           }
 
-          // console.log('RAW COLLECTIONS', raw_collections)
           Object.assign(this.raw_collections, raw_collections)
-          // console.log('this.raw_collections', this.raw_collections)
-
-          // console.log('GROUPED.unknown', raw_collections.unknown)
 
           // ? Filter and group unique unknown collections
           if (raw_collections['unknown'] && raw_collections['unknown'].length > 0) {
@@ -126,11 +124,8 @@ export const useNftStore = defineStore('nft', {
           }
 
           // ? GET Collection {name} & {image} by calling URI
-          const getURI = (collection) => {
-            // ? If Known collection use NFT.read(collection.address) otherwise GET(collection[0].uri)
-            console.log('getURL collection', collection)
-
-            // console.log(collection)
+          const getCollectionNameImage = (collection) => {
+            // If Known collection use NFT.read(collection.address) otherwise GET(collection[0].uri)
             const uri = (collection[0].collection) ? collection[0].collection.address : collection[0].uri
             const knownCollection = (collection[0].collection)
 
@@ -144,32 +139,32 @@ export const useNftStore = defineStore('nft', {
           // ? Reset this.collections
           this.collections = [] // TODO need to fix logic so we don't reset & duplicate everytime
           
-          // ? map known collections from raw_collections into this.collections
+          // map known collections from raw_collections into this.collections
           for (const [key, value] of Object.entries(this.raw_collections)) {
             if (key != 'unknown') {
               this.collections.push(value)
             }
           }
 
-          // https://ramdajs.com/docs/#forEachObjIndexed (Iterate over object)
-          R.forEachObjIndexed(getURI, this.collections);
-
-          // Set this.filtered_collections
+          // ? Set this.filtered_collections state with filteredCollections object
           this.filtered_collections = filteredCollections
+
+          // ? Add unknown collections to this.collections
+          const existingCollections = this.collections
+
+          this.collections = {
+            ...existingCollections, // First added known collections
+            ...this.filtered_collections // Last added unknown collections
+          }
+
+          // https://ramdajs.com/docs/#forEachObjIndexed (Iterate over object)
+          R.forEachObjIndexed(getCollectionNameImage, this.collections)
+          R.forEachObjIndexed(getCollectionNameImage, filteredCollections)
 
           console.log('Raw collections', raw_collections)
           console.log('Known collections (this.collections)', this.collections) // TODO <- why does this grow
           console.log('Unknown collections (this.filtered_collections)', this.filtered_collections)
-
-          R.forEachObjIndexed(getURI, filteredCollections);
           
-          // TODO Add filteredCollections into this.collection
-          // ? map unknown collections from this.filtered_collections into this.collections
-          // for (const [key, value] of Object.entries(this.raw_collections)) {
-          //   console.log('this value', value)
-          //   this.collections.push(value)
-          // }
-
           // ? Organize all collections into collection objects to render in UI:
           this.portfolios.push({
             walletAddress,
@@ -197,8 +192,8 @@ export const useNftStore = defineStore('nft', {
         console.log(error)
       }
     },
+    // ? For known NFT collections
     async fetchNFT(uriAddress) {
-      // console.log('fetchNFT uriAddress:', uriAddress)
       try {
         const response = await axios.get(
           `${this.shyft_url}/nft/read?network=mainnet-beta&token_address=${uriAddress}`,
@@ -221,8 +216,8 @@ export const useNftStore = defineStore('nft', {
         console.log(error)
       }
     },
+    // ? For unknown NFT collections
     async fetchURI(uriAddress, firstNFT) {
-      // console.log('fetchURI uriAddress:', uriAddress)
       try {
         const response = await axios.get(
           `${uriAddress}`,

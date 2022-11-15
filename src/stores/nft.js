@@ -76,7 +76,7 @@ export const useNftStore = defineStore('nft', {
           let name = '' // TODO update to support new collection logic
           let image = '' // TODO update to support new collection logic
 
-          this.collections = [] // TODO temp
+          this.collections = [] // TODO temp <- we don't want to reset here
           this.raw_collections = {} // TODO temp
           let raw_collections = {}
           let filteredCollections = {}
@@ -140,6 +140,9 @@ export const useNftStore = defineStore('nft', {
           this.collections = [] // TODO need to fix logic so we don't reset & duplicate everytime
           
           // map known collections from raw_collections into this.collections
+          // TODO we need logic that will not add the same NFTs
+          // TODO there should never be duplicate collections or NFTs
+          // TODO if there is a new NFT added to an existing collection, that NFT should be added
           for (const [key, value] of Object.entries(this.raw_collections)) {
             if (key != 'unknown') {
               this.collections.push(value)
@@ -153,8 +156,8 @@ export const useNftStore = defineStore('nft', {
           const existingCollections = this.collections
 
           this.collections = {
-            ...existingCollections, // First added known collections
-            ...this.filtered_collections // Last added unknown collections
+            ...existingCollections, // Keep all known collections
+            ...this.filtered_collections // Add all unknown collections
           }
 
           // https://ramdajs.com/docs/#forEachObjIndexed (Iterate over object)

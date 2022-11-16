@@ -205,13 +205,13 @@ onMounted(async () => {
           <div class="chart">
             <div class="header">
               <div class="left">
-                <div class="you">You</div>
-                <div class="everyone">Everyone</div>
+                <!-- <div class="you">You</div> -->
+                <!-- <div class="everyone">Everyone</div> -->
               </div>
               <div class="right">
                 <button class="week">Week</button>
-                <button class="month">Month</button>
-                <button class="year">Year</button>
+                <!-- <button class="month">Month</button>
+                <button class="year">Year</button> -->
               </div>
             </div>
 

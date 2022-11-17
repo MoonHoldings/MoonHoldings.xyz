@@ -66,6 +66,8 @@ export const useNftStore = defineStore('nft', {
           { headers: { 'Content-Type': 'application/json', 'x-api-key': `${this.shyft_key}` } }
         )
 
+        // console.log('this.collections', this.collections)
+
         const res = await response.data
         const nfts = res.result.nfts
 
@@ -123,18 +125,23 @@ export const useNftStore = defineStore('nft', {
           // ? GET Collection {name} & {image} by calling URI
           const getCollectionNameImage = collection => {
             // If Known collection use NFT.read(collection.address) otherwise GET(collection[0].uri)
-            const uri = (collection[0].collection) ? collection[0].collection.address : collection[0].uri
-            const knownCollection = (collection[0].collection)
+            const knownCollection = (collection[0].collection?.address)
+
+            if (collection[0].collection?.collection_name && collection[0].collection?.collection_image) {
+              return
+            }
 
             if (knownCollection) {
-              this.fetchNFT(uri)  
+              // console.log('collection[0].collection?.address', collection[0].collection?.address)
+              this.fetchNFT(collection[0].collection?.address, collection[0])  
             } else {
-              this.fetchURI(uri, collection[0])
+              // console.log('collection[0].uri', collection[0].uri)
+              this.fetchURI(collection[0].uri, collection[0])
             }
           }
 
           // ? Reset this.collections
-          this.collections = [] // TODO need to fix logic so we don't reset & duplicate everytime
+          // this.collections = [] // TODO need to fix logic so we don't reset & duplicate everytime
           
           // map known collections from raw_collections into this.collections
           // TODO we need logic that will not add the same NFTs
@@ -142,28 +149,32 @@ export const useNftStore = defineStore('nft', {
           // TODO if there is a new NFT added to an existing collection, that NFT should be added
           for (const [key, value] of Object.entries(this.raw_collections)) {
             if (key != 'unknown') {
-              this.collections.push(value)
+              this.collections?.push(value)
             }
           }
 
           // ? Set this.filtered_collections state with filteredCollections object
           this.filtered_collections = filteredCollections
 
-          // ? Add unknown collections to this.collections
-          const existingCollections = this.collections
+          // const existingCollections = this.collections
 
-          this.collections = {
-            ...existingCollections, // Keep all known collections
-            ...this.filtered_collections // Add all unknown collections
+          // Add all known collections
+          this.collections = [
+            ...this.collections,
+          ]
+
+          // Add all unknown collections
+          for (const [key, value] of Object.entries(this.filtered_collections)) {
+            this.collections?.push(value)
           }
 
           // https://ramdajs.com/docs/#forEachObjIndexed (Iterate over object)
           R.forEachObjIndexed(getCollectionNameImage, this.collections)
           R.forEachObjIndexed(getCollectionNameImage, filteredCollections)
 
-          console.log('Raw collections', raw_collections)
-          console.log('Known collections (this.collections)', this.collections) // TODO <- why does this grow
-          console.log('Unknown collections (this.filtered_collections)', this.filtered_collections)
+          // console.log('Raw collections', raw_collections)
+          console.log('THIS.COLLECTIONS', this.collections) // TODO <- why does this grow
+          // console.log('Unknown collections (this.filtered_collections)', this.filtered_collections)
           
           // ? Organize all collections into collection objects to render in UI:
           this.portfolios.push({
@@ -195,7 +206,7 @@ export const useNftStore = defineStore('nft', {
       }
     },
     // ? For known NFT collections
-    async fetchNFT(uriAddress) {
+    async fetchNFT(uriAddress, nftZero) {
       try {
         const response = await axios.get(
           `${this.shyft_url}/nft/read?network=mainnet-beta&token_address=${uriAddress}`,

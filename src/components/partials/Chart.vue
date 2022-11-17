@@ -99,6 +99,7 @@ const chartData = reactive({
     },
   ],
 })
+
 </script>
 
 <template>
@@ -106,7 +107,7 @@ const chartData = reactive({
     class="line-chart"
     :chart-options="chartOptions"
     :chart-data="chartData"
-    height="250"
+    :height="250"
     chart-id="line-chart"
   />
 </template>

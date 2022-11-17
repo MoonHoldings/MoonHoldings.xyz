@@ -26,6 +26,7 @@ export default async (historicalData, email) => {
     weekInMS[i] = dateMS
   }
 
+  const _7dHistories = []
   // populate indexes where weekInMS[i] matches
   for (let i = 0; i < weekInMS.length; i++) {
     const labelDate = dateForming(weekInMS[i])
@@ -34,19 +35,19 @@ export default async (historicalData, email) => {
       (history) => history.date === labelDate
     )
     if (foundHistory) {
-      historyValues[i] = {
+      _7dHistories[i] = {
         coins: foundHistory.coins,
         date: foundHistory.date,
       }
     } else {
-      historyValues[i] = undefined
+      _7dHistories[i] = undefined
     }
   }
 
-  // if historyValues[0] doesn't exist, go backward by subtracting dateInMS
+  // if _7dHistories[0] doesn't exist, go backward by subtracting dateInMS
   let leastGap0 = 0
   let the0History
-  if (historyValues[0] === undefined) {
+  if (_7dHistories[0] === undefined) {
     for (let i = 0; i < userHistoriesObj.coins_history.length; i++) {
       const singleHistory = userHistoriesObj.coins_history[i]
 
@@ -67,30 +68,73 @@ export default async (historicalData, email) => {
         the0History = singleHistory
       }
     }
-    if (leastGap0 === 0) historyValues[0] = 0
+    if (leastGap0 === 0) _7dHistories[0] = 0
 
-    historyValues[0] = the0History
+    _7dHistories[0] = the0History
   }
 
   // if any index is undefined then populate with the previous value
-  for (let i = 0; i < historyValues.length; i++) {
-    if (i !== 0 && historyValues[i] === undefined) {
-      historyValues[i] = historyValues[i - 1]
+  for (let i = 0; i < _7dHistories.length; i++) {
+    if (i !== 0 && _7dHistories[i] === undefined) {
+      _7dHistories[i] = _7dHistories[i - 1]
     }
   }
 
-  const finalHValues = []
-  for (let i = 0; i < historyValues.length; i++) {
-    if (historyValues[i] === 0) finalHValues[i] = 0
+  // get coins from 7dHistories
+  const allCoins = []
+  _7dHistories.forEach((d) => {
+    for (let i = 0; i < d.coins.length; i++) {
+      const record = allCoins.find((coin) => coin.id === d.coins[i].id)
 
-    const val = await getTotalHistoryValue(historyValues[i].coins, weekInMS[i])
-    finalHValues[i] = val
+      if (!record) allCoins.push(d.coins[i])
+    }
+  })
+
+  const coinsPrices = []
+  for (let i = 0; i < allCoins.length; i++) {
+    const response = await axios.get(
+      `https://api.nomics.com/v1/candles?key=${NOMICS_KEY}&interval=1d&currency=${
+        allCoins[i].id
+      }&start=${getISOFormat(weekInMS[0])}&end=${getISOFormat(
+        weekInMS[weekInMS.length - 1]
+      )}`
+    )
+
+    const candles = response.data.map((c) => c.close)
+    coinsPrices.push({
+      id: allCoins[i].id,
+      _7dPrices: candles,
+    })
   }
+
+  _7dHistories.forEach((day, dayIndex) => {
+    let valueSum = 0
+    for (let i = 0; i < day.coins.length; i++) {
+      const candleCoin = coinsPrices.find((c) => c.id === day.coins[i].id)
+
+      const totalValue = day.coins[i].holdings * candleCoin._7dPrices[dayIndex]
+
+      valueSum += totalValue
+    }
+
+    historyValues.push(valueSum)
+  })
 
   return {
-    historyValues: finalHValues,
     dateLabels,
+    historyValues,
   }
+}
+
+const getISOFormat = (cMS) => {
+  const c_iso_date = new Date(cMS)
+  const c_year = c_iso_date.getFullYear()
+  const c_month = c_iso_date.getMonth()
+  const c_date = c_iso_date.getDate()
+
+  return `${c_year}-${c_month + 1 > 9 ? c_month + 1 : '0' + (c_month + 1)}-${
+    c_date > 9 ? c_date : '0' + c_date
+  }T00:00:00Z`
 }
 
 const dateForming = (toBeFormedMS) => {
@@ -100,38 +144,4 @@ const dateForming = (toBeFormedMS) => {
   const df_year = df_dateJS.getFullYear()
 
   return `${df_month + 1}-${df_date}-${df_year}`
-}
-
-const getTotalHistoryValue = async (historyCoins, candleDayMS) => {
-  let valueSum = 0
-
-  const c_iso_date = new Date(candleDayMS)
-  const c_year = c_iso_date.getFullYear()
-  const c_month = c_iso_date.getMonth()
-  const c_date = c_iso_date.getDate()
-  const candleDate = `${c_year}-${
-    c_month + 1 > 9 ? c_month + 1 : '0' + (c_month + 1)
-  }-${c_date > 9 ? c_date : '0' + c_date}T00:00:00Z`
-
-  for (let i = 0; i < historyCoins.length; i++) {
-    const response = await axios.get(
-      `https://api.nomics.com/v1/candles?key=${NOMICS_KEY}&interval=1d&currency=${historyCoins[i].id}&start=${candleDate}&end=${candleDate}`
-    )
-
-    if (response.data.length === 0) {
-      const unchangedCoinRes = await axios.get(
-        `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${historyCoins[i].id}&intervals=1d,30d`
-      )
-      const unchangedCoin = unchangedCoinRes.data[0]
-
-      const totalValue = unchangedCoin?.price * historyCoins[i].holdings
-      valueSum += totalValue
-    } else {
-      const coinPrice = await response.data[0]
-      const totalValue = coinPrice?.close * historyCoins[i].holdings
-      valueSum += totalValue
-    }
-  }
-
-  return valueSum
 }

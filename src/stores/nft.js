@@ -59,7 +59,10 @@ export const useNftStore = defineStore('nft', {
     mutate_setNft(nft) {
       this.nft = nft
     },
+    // TODO rename to addAddress
     async connectWalletWithAddress(walletAddress) {
+      console.log('import.meta.env.VITE_SHYFTSERVER_URL', import.meta.env.VITE_SHYFTSERVER_URL)
+      console.log('this.shyft_url', this.shyft_url)
       try {
         const response = await axios.get(
           `${this.shyft_url}/wallet/get_portfolio?network=mainnet-beta&wallet=${walletAddress}`,

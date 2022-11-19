@@ -71,8 +71,7 @@ export const useNftStore = defineStore('nft', {
           let name = '' // TODO update to support new collection logic
           let image = '' // TODO update to support new collection logic
 
-          this.collections = [] // TODO temp <- we don't want to reset here
-          this.raw_collections = {} // TODO temp
+          this.raw_collections = {} // TODO temp resets raw collections
           let raw_collections = {}
           let filteredCollections = {}
           let collectionAddress = ''
@@ -82,7 +81,7 @@ export const useNftStore = defineStore('nft', {
           if (nfts && nfts.length > 0) {
             nfts.forEach(nft => {
               deleteNFTkeys(nft)
-              nft.wallet = walletAddress
+              nft.wallet = walletAddress // create new key wallet
               collectionAddress = nft?.collection?.address ?? 'unknown'
 
               if (raw_collections[collectionAddress]) {
@@ -128,19 +127,21 @@ export const useNftStore = defineStore('nft', {
             }
 
             if (knownCollection) {
-              this.fetchNFT(collection[0].collection?.address, collection[0])  
+              this.fetchNFT(collection[0].collection?.address)  
             } else {
               this.fetchURI(collection[0].uri, collection[0])
             }
           }
 
           // ? Reset this.collections
-          // this.collections = [] // TODO need to fix logic so we don't reset & duplicate everytime
+          this.collections = [] // TODO need to fix logic so we don't reset & duplicate everytime
           
           // map known collections from raw_collections into this.collections
           // TODO we need logic that will not add the same NFTs
           // TODO there should never be duplicate collections or NFTs
           // TODO if there is a new NFT added to an existing collection, that NFT should be added
+
+          // ? Fill this.collections
           for (const [key, value] of Object.entries(this.raw_collections)) {
             if (key != 'unknown') {
               this.collections?.push(value)
@@ -164,9 +165,9 @@ export const useNftStore = defineStore('nft', {
           R.forEachObjIndexed(getCollectionNameImage, this.collections)
           R.forEachObjIndexed(getCollectionNameImage, filteredCollections)
 
-          // console.log('Raw collections', raw_collections)
+          console.log('Raw collections', raw_collections)
           console.log('THIS.COLLECTIONS', this.collections) // TODO <- why does this grow
-          // console.log('Unknown collections (this.filtered_collections)', this.filtered_collections)
+          console.log('Unknown collections (this.filtered_collections)', this.filtered_collections)
           
           // ? Organize all collections into collection objects to render in UI:
           this.portfolios.push({
@@ -198,7 +199,7 @@ export const useNftStore = defineStore('nft', {
       }
     },
     // ? For known NFT collections
-    async fetchNFT(uriAddress, nftZero) {
+    async fetchNFT(uriAddress) {
       try {
         const response = await axios.get(
           `${this.shyft_url}/nft/read?network=mainnet-beta&token_address=${uriAddress}`,

@@ -6,13 +6,13 @@
     width: 200px;
     display: block;
   }
-  border-right: 1px solid #6D2E46;
+  // border-right: 1px solid #6D2E46;
   height: 100%;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
+  background: linear-gradient(180deg, #e3e9e3 0%, #e3e9e3 100%);
 
   &__pink-bar {
     height: 10px;

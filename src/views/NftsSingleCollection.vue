@@ -218,7 +218,7 @@ const parsingWalletAddress = (walletAddress) => {
           <img
             class="image"
             src="/svg/icon-close.svg"
-            alt="nft-image"
+            alt="Close Modal"
             @click="closeWalletAddressModal"
           />
         </div>

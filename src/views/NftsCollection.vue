@@ -92,14 +92,15 @@ onMounted(async () => {
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
           <div class="label">Floor</div>
           <div class="down-value">13.6</div>
-          <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" />
+          <!-- <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" /> -->
         </div>
-        <div class="floor">
+        <!-- ? HyperSpace -->
+        <!-- <div class="floor">
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
           <div class="label">Floor</div>
           <div class="up-value">16</div>
           <img class="image" src="/svg/icon-arrow-circle-up.svg" alt="nft-image" />
-        </div>
+        </div> -->
       </div>
 
       <div v-if="isNfts" class="grid">
@@ -170,7 +171,7 @@ onMounted(async () => {
           <img
             class="image"
             src="/svg/icon-close.svg"
-            alt="nft-image"
+            alt="Close Modal"
             @click="closeWalletAddressModal"
           />
         </div>

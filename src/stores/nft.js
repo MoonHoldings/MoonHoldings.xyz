@@ -1,10 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { useCookies } from 'vue3-cookies'
 import * as R from 'ramda'
 import deleteNFTkeys from '../utils/deleteNFTkeys'
-
-const { cookies } = useCookies() // TODO need this?
 
 export const useNftStore = defineStore('nft', {
   state: () => ({
@@ -61,15 +58,11 @@ export const useNftStore = defineStore('nft', {
     },
     // TODO rename to addAddress
     async connectWalletWithAddress(walletAddress) {
-      console.log('import.meta.env.VITE_SHYFTSERVER_URL', import.meta.env.VITE_SHYFTSERVER_URL)
-      console.log('this.shyft_url', this.shyft_url)
       try {
         const response = await axios.get(
           `${this.shyft_url}/wallet/get_portfolio?network=mainnet-beta&wallet=${walletAddress}`,
           { headers: { 'Content-Type': 'application/json', 'x-api-key': `${this.shyft_key}` } }
         )
-
-        // console.log('this.collections', this.collections)
 
         const res = await response.data
         const nfts = res.result.nfts
@@ -106,7 +99,7 @@ export const useNftStore = defineStore('nft', {
           // ? Filter and group unique unknown collections
           if (raw_collections['unknown'] && raw_collections['unknown'].length > 0) {
             raw_collections['unknown'].forEach(nft => {
-              updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority' // 3n1mz8MyqpQwgX9E8CNPPZtAdJa3aLpuCSMbPumM9wzZ
+              updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority'
 
               Object.assign(filteredCollections, {
                 [updateAuthority]: []
@@ -135,10 +128,8 @@ export const useNftStore = defineStore('nft', {
             }
 
             if (knownCollection) {
-              // console.log('collection[0].collection?.address', collection[0].collection?.address)
               this.fetchNFT(collection[0].collection?.address, collection[0])  
             } else {
-              // console.log('collection[0].uri', collection[0].uri)
               this.fetchURI(collection[0].uri, collection[0])
             }
           }
@@ -158,8 +149,6 @@ export const useNftStore = defineStore('nft', {
 
           // ? Set this.filtered_collections state with filteredCollections object
           this.filtered_collections = filteredCollections
-
-          // const existingCollections = this.collections
 
           // Add all known collections
           this.collections = [

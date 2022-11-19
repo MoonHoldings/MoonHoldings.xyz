@@ -109,6 +109,13 @@ onMounted(async () => {
   const user = cookies.get('MOON_USER')
   const token = cookies.get('MOON_TOKEN')
 
+  if (!user || !token) {
+    cookies.remove('MOON_USER')
+    cookies.remove('MOON_TOKEN')
+
+    return
+  }
+
   // save historical data
   await userStore.getHistory()
   const historyData = await getCoinHistoryData(

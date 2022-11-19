@@ -147,7 +147,7 @@ watch(route, (prev, present) => {
         <span>{{ CALENDAR }}</span>
       </div>
 
-      <div
+      <!-- <div
         :class="
           currentRoute == '/coin-swap'
             ? 'item-logo item-logo__active'
@@ -162,7 +162,7 @@ watch(route, (prev, present) => {
         />
         <img v-else src="/svg/icon-circle-line.svg" alt="coin-swap logo" />
         <span>{{ COIN_SWAP }}</span>
-      </div>
+      </div> -->
 
       <div
         :class="

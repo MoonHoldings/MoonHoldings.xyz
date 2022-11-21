@@ -126,6 +126,7 @@ export const useNftStore = defineStore('nft', {
               return
             }
 
+            // TODO just use fetchURI to get collection info
             if (knownCollection) {
               this.fetchNFT(collection[0].collection?.address)  
             } else {
@@ -134,7 +135,7 @@ export const useNftStore = defineStore('nft', {
           }
 
           // ? Reset this.collections
-          this.collections = [] // TODO need to fix logic so we don't reset & duplicate everytime
+          // this.collections = [] // TODO need to fix logic so we don't reset & duplicate everytime
           
           // map known collections from raw_collections into this.collections
           // TODO we need logic that will not add the same NFTs
@@ -142,8 +143,17 @@ export const useNftStore = defineStore('nft', {
           // TODO if there is a new NFT added to an existing collection, that NFT should be added
 
           // ? Fill this.collections
+          // TODO group by updateAuthorityAddress
           for (const [key, value] of Object.entries(this.raw_collections)) {
             if (key != 'unknown') {
+              // for (let i = 0; i < this.collections.length; i++) {
+              //   for (let e = 0; e < this.collections[i].length; e++) {
+              //     if (this.collections[i].updateAuthorityAddress === value[0].updateAuthorityAddress) {
+              //       this.collections[i].push(value[e])
+              //     }
+              //   }
+              // }
+
               this.collections?.push(value)
             }
           }

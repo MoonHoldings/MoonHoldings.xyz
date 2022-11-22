@@ -20,6 +20,7 @@ const portfolios = computed(() => {
 })
 
 const isPortfolios = computed(() => {
+  console.log('nftStore.portfolios', nftStore.portfolios)
   if (nftStore.portfolios) {
     return nftStore.portfolios.length > 0
   }

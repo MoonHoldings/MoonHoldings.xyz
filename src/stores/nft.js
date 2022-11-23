@@ -41,9 +41,9 @@ export const useNftStore = defineStore('nft', {
     mutate_emptyNft() {
       this.nft = {}
     },
-    mutate_removePortfolio(portfolio) {
-      const searchPortfolio = this.portfolios.findIndex(item => item.walletAddress === portfolio.walletAddress)
-      this.portfolios.splice(searchPortfolio, 1)
+    mutate_removeCollection(collection) {
+      const searchPortfolio = this.collections.findIndex(item => item.walletAddress === collection.walletAddress)
+      this.collections.splice(searchPortfolio, 1)
     },
     mutate_setNfts(nfts) {
       this.nfts = nfts
@@ -62,13 +62,15 @@ export const useNftStore = defineStore('nft', {
         console.log('res', res)
 
         if (res.success && res.result.collections) {
-          this.collections = [
-            ...res.result.collections
-          ]
+          if (this.collections.length > 0) {
+            console.log('filter')
+          } else {
+            // ? First wallet and collections added
+            this.collections = res.result.collections
+          }
         }
 
         this.collections.forEach((collection) => {
-          console.log('forEach collection', collection)
           this.fetchURI(collection.nfts[0].metadata_uri, collection)
         })
 

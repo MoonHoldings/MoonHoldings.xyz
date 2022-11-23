@@ -16,6 +16,8 @@ const isLoading = ref(false)
 const isFetchingNfts = ref(false)
 const selectedNft = ref(null)
 
+console.log('NftsCollection.vue')
+
 const nfts = computed(() => {
   return nftStore.nfts ?? []
 })
@@ -52,7 +54,7 @@ const closeWalletAddressModal = () => {
 
 const addWallet = async () => {
   isLoading.value = true
-  await nftStore.connectWalletWithAddress(walletAddress.value)
+  await nftStore.addAddress(walletAddress.value)
   isWalletAddressModal.value = false
   isLoading.value = false
 }
@@ -62,7 +64,17 @@ onMounted(async () => {
   nftStore.mutate_emptyNft()
 
   isFetchingNfts.value = true
-  await nftStore.fetchNfts(route.params.address)
+  const selectedCollection = nftStore.collections.filter(collection => route.params.name === collection.name)[0]
+  console.log('selectedCollection.nfts', selectedCollection.nfts)
+
+  nftStore.mutate_setNfts(selectedCollection.nfts)
+
+  await selectedCollection.nfts.forEach(nft => {
+    nftStore.fetchURI(nft.metadata_uri, nft)
+  })
+
+  console.log('after await nftStore.collections', nftStore.collections)
+
   isFetchingNfts.value = false
 })
 </script>
@@ -113,7 +125,7 @@ onMounted(async () => {
               'element-container element-normal-line' : selectedNft !== nft.mint,
             }"
           >
-            <div
+            <!-- <div
               v-if="nft.royalty && nft.royalty > 0"
               :class="{
                 'header header-selected' : selectedNft == nft.mint,
@@ -121,12 +133,12 @@ onMounted(async () => {
               }"
             >
               <div>
-                Listed: {{ nft.royalty }} SQL
+                Listed: {{ nft.royalty }} SOL
               </div>
               <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
-            </div>
+            </div> -->
             <div class="content" @click="selectDetailNFT(nft)">
-              <img v-if="nft.image_uri" class="image" :src="nft.image_uri" alt="Nft Image" />
+              <img v-if="nft.image" class="image" :src="nft.image" alt="Nft Image" />
             </div>
             <div
               :class="{

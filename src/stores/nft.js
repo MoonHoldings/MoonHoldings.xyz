@@ -45,6 +45,9 @@ export const useNftStore = defineStore('nft', {
       const searchPortfolio = this.portfolios.findIndex(item => item.walletAddress === portfolio.walletAddress)
       this.portfolios.splice(searchPortfolio, 1)
     },
+    mutate_setNfts(nfts) {
+      this.nfts = nfts
+    },
     mutate_setNft(nft) {
       this.nft = nft
     },
@@ -63,6 +66,11 @@ export const useNftStore = defineStore('nft', {
             ...res.result.collections
           ]
         }
+
+        this.collections.forEach((collection) => {
+          console.log('forEach collection', collection)
+          this.fetchURI(collection.nfts[0].metadata_uri, collection)
+        })
 
         console.log('this.collections', this.collections)
 
@@ -112,7 +120,7 @@ export const useNftStore = defineStore('nft', {
             //   return
             // }
 
-            this.fetchURI(collection[0].uri, collection[0])
+            this.fetchURI(collection[0].metadata_uri, collection[0])
           }
           
           // TODO we need logic that will not add the same NFTs
@@ -152,33 +160,24 @@ export const useNftStore = defineStore('nft', {
       }
     },
     // ? For unknown NFT collections
-    async fetchURI(uriAddress, firstNFT) {
-      try {
-        const response = await axios.get(
-          `${uriAddress}`,
-          { headers: { 'Content-Type': 'application/json', } }
-        )
-        const res = await response.data
+    async fetchURI(uriAddress, item) {
+      if (!item.image) {
+        try {
+          const response = await axios.get(
+            `${uriAddress}`,
+            { headers: { 'Content-Type': 'application/json', } }
+          )
+          const res = await response.data
 
-        if (res) {
-          for (const [key, value] of Object.entries(this.filtered_collections)) {
-            if (key === firstNFT.updateAuthorityAddress) {
-              value.forEach(nft => {
-                if (nft.updateAuthorityAddress === firstNFT.updateAuthorityAddress) {
-                  const name = (res.collection && res.collection.name) ? res.collection.name : res.name
-                  const image = res.image
-
-                  nft.collection = {
-                    collection_name: name,
-                    collection_image: image
-                  }
-                }
-              })
-            }
-          }
+          item.image = res.image
+          item.description = res.description
+          item.collection = res.collection
+  
+        } catch (error) {
+          mixpanel.track('Error: nft.js > fetchURI', { error: error, message: error.message })
         }
-      } catch (error) {
-        mixpanel.track('Error: nft.js > fetchURI', { error: error, message: error.message })
+      } else {
+        return item
       }
     },
     async connectWallet() {}

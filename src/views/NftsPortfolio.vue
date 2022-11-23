@@ -30,8 +30,8 @@ const handleConnectWallet = async () => {
   await console.log('handleConnectWallet')
 }
 
-const selectPortfolio = (portfolio) => {
-  router.push({ name: 'nftsCollection', params: { address: portfolio.walletAddress }})
+const selectCollection = collection => {
+  router.push({ name: 'nftsCollection', params: { name: collection.name }})
 }
 
 const showWalletAddressModal = () => {
@@ -67,7 +67,7 @@ onMounted(async () => {
       </div>
 
       <div v-if="isCollections" class="grid">
-        <CollectionBox v-for="(collection, i) in collections" :key="i" :collection="collection" @click="selectPortfolio(collection)" />
+        <CollectionBox v-for="(collection, i) in collections" :key="i" :collection="collection" @click="selectCollection(collection)" />
       </div>
 
       <div v-else class="empty-nft-summary">

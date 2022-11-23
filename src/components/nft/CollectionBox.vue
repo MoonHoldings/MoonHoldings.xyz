@@ -37,10 +37,10 @@ console.log('CollectionBox collection:', collection)
             <div class="info-label">Items</div>
             <div class="info-value">{{ collection?.nft_count }}</div>
           </div>
-          <div class="footer-info">
+          <!-- <div class="footer-info">
             <div class="info-label">Total</div>
             <div class="info-label">939 = $29,109</div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="grid-shadow">
@@ -52,5 +52,5 @@ console.log('CollectionBox collection:', collection)
 </template>
 
 <style lang="scss" scoped>
-@import '@/sass/portfolio-box.scss';
+@import '@/sass/collections-box.scss';
 </style>

@@ -65,7 +65,7 @@ const disconnectAllAddress = () => {
 </script>
 
 <template>
-  <div v-if="isSelectedNft">
+  <!-- <div v-if="isSelectedNft">
     <div class="nft-info-title">
       Selected NFT
     </div>
@@ -83,7 +83,7 @@ const disconnectAllAddress = () => {
         <div class="nft-info-button">Update</div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="label">
     Connected Wallets
@@ -112,7 +112,7 @@ const disconnectAllAddress = () => {
     Disconnect All
   </div>
 
-  <div v-if="isSelectedNft" class="detail-info">
+  <!-- <div v-if="isSelectedNft" class="detail-info">
     <div class="detail-info-header">
       <div class="left">{{ selectedNft.name }} NFT</div>
       <div class="right">Listed:</div>
@@ -145,7 +145,7 @@ const disconnectAllAddress = () => {
       <div class="label">SOL</div>
       <div class="value">$3915</div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style lang="scss" scoped>

@@ -53,7 +53,7 @@ const router = createRouter({
       beforeEnter: requireAuth,
     },
     {
-      path: '/nfts/portfolio/:address',
+      path: '/nfts/portfolio/:name',
       name: 'nftsCollection',
       component: () => import('@/views/NftsCollection.vue'),
       beforeEnter: requireAuth,

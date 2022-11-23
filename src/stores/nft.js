@@ -180,6 +180,24 @@ export const useNftStore = defineStore('nft', {
         return item
       }
     },
+    async fetchAttributes() {
+      try {
+        const response = await axios.get(
+          this.nft.metadata_uri,
+          { headers: { 'Content-Type': 'application/json', } }
+        )
+        const res = await response.data
+        console.log('res', res)
+        this.nft.attributes = res.attributes
+        this.nft.symbol = res.symbol
+        // item.image = res.image
+        // item.description = res.description
+        // item.collection = res.collection
+
+      } catch (error) {
+        mixpanel.track('Error: nft.js > fetchURI', { error: error, message: error.message })
+      }
+    },
     async connectWallet() {}
   },
   persist: true

@@ -16,8 +16,6 @@ const isLoading = ref(false)
 const isFetchingNfts = ref(false)
 const selectedNft = ref(null)
 
-console.log('NftsCollection.vue')
-
 const nfts = computed(() => {
   return nftStore.nfts ?? []
 })
@@ -39,7 +37,7 @@ const selectDetailNFT = (nft) => {
 
 const goDetailNFT = (nft) => {
   nftStore.mutate_setNft(nft)
-  router.push({ name: 'nftSingleCollection', params: { id: nft.mint }})
+  router.push({ name: 'nftSingleItem'})
 }
 
 const showWalletAddressModal = () => {
@@ -65,15 +63,12 @@ onMounted(async () => {
 
   isFetchingNfts.value = true
   const selectedCollection = nftStore.collections.filter(collection => route.params.name === collection.name)[0]
-  console.log('selectedCollection.nfts', selectedCollection.nfts)
 
   nftStore.mutate_setNfts(selectedCollection.nfts)
 
   await selectedCollection.nfts.forEach(nft => {
     nftStore.fetchURI(nft.metadata_uri, nft)
   })
-
-  console.log('after await nftStore.collections', nftStore.collections)
 
   isFetchingNfts.value = false
 })

@@ -3,7 +3,6 @@ import { ref, reactive, computed } from 'vue'
 
 const props = defineProps(['collection'])
 const { collection } = props
-console.log('CollectionBox collection:', collection)
 </script>
 
 <template>

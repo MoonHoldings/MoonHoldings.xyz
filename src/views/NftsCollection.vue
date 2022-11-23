@@ -166,7 +166,7 @@ onMounted(async () => {
       <div class="wallet-modal-container">
         <div class="wallet-modal-header">
           <div class="label">
-            Add your Solana wallet address
+            Add your Solana wallet address 1
           </div>
           <img
             class="image"

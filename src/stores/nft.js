@@ -48,6 +48,28 @@ export const useNftStore = defineStore('nft', {
     mutate_setNft(nft) {
       this.nft = nft
     },
+    async addAddress(walletAddress) {
+      try {
+        const response = await axios.get(
+          `${this.shyft_url}/wallet/collections?network=mainnet-beta&wallet_address=${walletAddress}`,
+          { headers: { 'Content-Type': 'application/json', 'x-api-key': `${this.shyft_key}` } }
+        )
+
+        const res = await response.data
+        console.log('res', res)
+
+        if (res.success && res.result.collections) {
+          this.collections = [
+            ...res.result.collections
+          ]
+        }
+
+        console.log('this.collections', this.collections)
+
+      } catch (error) {
+        mixpanel.track('Error: nft.js > addAddress', { error: error, message: error.message })
+      }
+    },
     // TODO rename to addAddress
     async connectWalletWithAddress(walletAddress) {
       try {
@@ -73,18 +95,16 @@ export const useNftStore = defineStore('nft', {
             nfts.forEach(nft => {
               deleteNFTkeys(nft)
               nft.wallet = walletAddress // create new key wallet
-              updateAuthorityAddress = nft?.updateAuthorityAddress ?? null
+              // updateAuthorityAddress = nft?.updateAuthorityAddress ?? null
 
-              if (filteredCollections[updateAuthorityAddress]) {
-                filteredCollections[updateAuthorityAddress].push(nft)
-              } else {
-                filteredCollections[updateAuthorityAddress] = []
-                filteredCollections[updateAuthorityAddress].push(nft)
-              }
+              // if (filteredCollections[updateAuthorityAddress]) {
+              //   filteredCollections[updateAuthorityAddress].push(nft)
+              // } else {
+              //   filteredCollections[updateAuthorityAddress] = []
+              //   filteredCollections[updateAuthorityAddress].push(nft)
+              // }
             })
           }
-
-          console.log('1 filteredCollections', filteredCollections)
 
           // ? GET Collection {name} & {image} by calling URI
           const getCollectionNameImage = collection => {
@@ -94,48 +114,24 @@ export const useNftStore = defineStore('nft', {
 
             this.fetchURI(collection[0].uri, collection[0])
           }
-
-          // ? Reset this.collections
-          // this.collections = [] // TODO need to fix logic so we don't reset & duplicate everytime
           
           // TODO we need logic that will not add the same NFTs
           // TODO there should never be duplicate collections or NFTs
           // TODO if there is a new NFT added to an existing collection, that NFT should be added
 
-          // ? Set this.filtered_collections state with filteredCollections object
-          // this.filtered_collections = filteredCollections
-
-          // Add all unknown collections
-          for (const [key, nft] of Object.entries(filteredCollections)) {
-            console.log('nft', nft)
-            let nftObject = nft[0]
-
-            // If collections is empty add first nft
-            if (this.collections.length === 0) {
-              this.collections.push(nftObject)
-            }
-
-            for (let i = 0; i<this.collections.length; i++) {
-              if (this.collections[i][0].updateAuthorityAddress === nftObject.updateAuthorityAddress) {
-                this.collections[i].push(nft)
-              }
-            }
-          }
 
           // https://ramdajs.com/docs/#forEachObjIndexed (Iterate over object)
           R.forEachObjIndexed(getCollectionNameImage, this.collections)
-
-          console.log('2 THIS.COLLECTIONS', this.collections) // TODO <- why does this grow
           
           // ? Organize all collections into collection objects to render in UI:
-          this.portfolios.push({
-            walletAddress,
-            name,
-            image
-          })
+          // TODO remove this old code
+          // this.portfolios.push({
+          //   walletAddress,
+          //   name,
+          //   image
+          // })
         }
       } catch (error) {
-        console.log('error', error)
         mixpanel.track('Error: nft.js > connectWalletWithAddress', { error: error, message: error.message })
       }
     },
@@ -152,7 +148,6 @@ export const useNftStore = defineStore('nft', {
           this.nfts = result.result
         }
       } catch (error) {
-        console.log(error)
         mixpanel.track('Error: nft.js > fetchNfts', { error: error, message: error.message })
       }
     },
@@ -183,7 +178,6 @@ export const useNftStore = defineStore('nft', {
           }
         }
       } catch (error) {
-        console.log(error)
         mixpanel.track('Error: nft.js > fetchURI', { error: error, message: error.message })
       }
     },

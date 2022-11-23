@@ -2,13 +2,12 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import * as R from 'ramda'
 import deleteNFTkeys from '../utils/deleteNFTkeys'
+import { AXIOS_CONFIG, SHYFT_URL, SHYFT_KEY } from '../constants/api'
+
+const AXIOS_CONFIG_SHYFT_KEY = R.assoc('x-api-key', SHYFT_KEY, AXIOS_CONFIG)
 
 export const useNftStore = defineStore('nft', {
   state: () => ({
-    server_url: `${import.meta.env.VITE_MOONSERVER_URL}`,
-    shyft_url: `${import.meta.env.VITE_SHYFTSERVER_URL}`,
-    shyft_key: `${import.meta.env.VITE_SHYFT_KEY}`,
-    axios_config: { headers: { 'Content-Type': 'application/json' } },
     portfolios: [],
     collections: [], // All filtered Collections <- render in UI
     nfts: [],
@@ -54,8 +53,8 @@ export const useNftStore = defineStore('nft', {
     async addAddress(walletAddress) {
       try {
         const response = await axios.get(
-          `${this.shyft_url}/wallet/collections?network=mainnet-beta&wallet_address=${walletAddress}`,
-          { headers: { 'Content-Type': 'application/json', 'x-api-key': `${this.shyft_key}` } }
+          `${SHYFT_URL}/wallet/collections?network=mainnet-beta&wallet_address=${walletAddress}`,
+          AXIOS_CONFIG_SHYFT_KEY
         )
 
         const res = await response.data
@@ -101,10 +100,9 @@ export const useNftStore = defineStore('nft', {
     async fetchNfts(walletAddress) {
       try {
         const response = await axios.get(
-          `${this.shyft_url}/nft/read_all?network=mainnet-beta&address=${walletAddress}`,
-          { headers: { 'Content-Type': 'application/json', 'x-api-key': `${this.shyft_key}` } }
+          `${SHYFT_URL}/nft/read_all?network=mainnet-beta&address=${walletAddress}`,
+          AXIOS_CONFIG_SHYFT_KEY
         )
-
         const result = await response.data
 
         if (result.success) {
@@ -119,7 +117,7 @@ export const useNftStore = defineStore('nft', {
     async fetchURI(uriAddress, item) {
       if (!item.image) {
         try {
-          const response = await axios.get(`${uriAddress}`, { headers: { 'Content-Type': 'application/json', } })
+          const response = await axios.get(`${uriAddress}`, AXIOS_CONFIG)
           const res = await response.data
 
           item.image = res.image
@@ -136,7 +134,7 @@ export const useNftStore = defineStore('nft', {
     },
     async fetchAttributes() {
       try {
-        const response = await axios.get(this.nft.metadata_uri, { headers: { 'Content-Type': 'application/json', } })
+        const response = await axios.get(this.nft.metadata_uri, AXIOS_CONFIG)
         const res = await response.data
         this.nft.attributes = res.attributes
         this.nft.symbol = res.symbol

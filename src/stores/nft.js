@@ -11,6 +11,7 @@ export const useNftStore = defineStore('nft', {
     axios_config: { headers: { 'Content-Type': 'application/json' } },
     portfolios: [],
     collections: {}, // All filtered Collections <- render in UI
+    bundles: {},
     raw_collections: {}, // All newly imported Collections
     filtered_collections: {}, // Unknown Collections
     nfts: [],
@@ -97,8 +98,28 @@ export const useNftStore = defineStore('nft', {
             }
           })
 
-          this.collections = filteredCollections
-          console.log(this.collections)
+          if (this.bundles !== {}) {
+            // if this.bundles has previous collections with the same updateAuthorityAddress of incoming collections
+            for (const [key, value] of Object.entries(filteredCollections)) {
+              for (const [key_, value_] of Object.entries(this.bundles)) {
+                if (key === key_) {
+                  filteredCollections[key]?.forEach((nft) => {
+                    const record = this.bundles[key_]?.find(
+                      (el) =>
+                        el.updateAuthorityAddress === nft.updateAuthorityAddress
+                    )
+
+                    if (!record) this.bundles[key_].push(nft)
+                  })
+                }
+              }
+
+              this.bundles[key] = filteredCollections[key]
+            }
+          } else {
+            this.bundles = filteredCollections
+          }
+          console.log(this.bundles)
         }
       } catch (error) {
         console.log('error', error)

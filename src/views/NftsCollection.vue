@@ -37,7 +37,7 @@ const selectDetailNFT = (nft) => {
 
 const goDetailNFT = (nft) => {
   nftStore.mutate_setNft(nft)
-  router.push({ name: 'nftSingleCollection', params: { id: nft.mint }})
+  router.push({ name: 'nftSingleItem'})
 }
 
 const showWalletAddressModal = () => {
@@ -52,7 +52,7 @@ const closeWalletAddressModal = () => {
 
 const addWallet = async () => {
   isLoading.value = true
-  await nftStore.connectWalletWithAddress(walletAddress.value)
+  await nftStore.addAddress(walletAddress.value)
   isWalletAddressModal.value = false
   isLoading.value = false
 }
@@ -62,7 +62,14 @@ onMounted(async () => {
   nftStore.mutate_emptyNft()
 
   isFetchingNfts.value = true
-  await nftStore.fetchNfts(route.params.address)
+  const selectedCollection = nftStore.collections.filter(collection => route.params.name === collection.name)[0]
+
+  nftStore.mutate_setNfts(selectedCollection.nfts)
+
+  await selectedCollection.nfts.forEach(nft => {
+    nftStore.fetchURI(nft.metadata_uri, nft)
+  })
+
   isFetchingNfts.value = false
 })
 </script>
@@ -113,7 +120,7 @@ onMounted(async () => {
               'element-container element-normal-line' : selectedNft !== nft.mint,
             }"
           >
-            <div
+            <!-- <div
               v-if="nft.royalty && nft.royalty > 0"
               :class="{
                 'header header-selected' : selectedNft == nft.mint,
@@ -121,12 +128,12 @@ onMounted(async () => {
               }"
             >
               <div>
-                Listed: {{ nft.royalty }} SQL
+                Listed: {{ nft.royalty }} SOL
               </div>
               <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
-            </div>
+            </div> -->
             <div class="content" @click="selectDetailNFT(nft)">
-              <img v-if="nft.image_uri" class="image" :src="nft.image_uri" alt="Nft Image" />
+              <img v-if="nft.image" class="image" :src="nft.image" alt="Nft Image" />
             </div>
             <div
               :class="{
@@ -166,7 +173,7 @@ onMounted(async () => {
       <div class="wallet-modal-container">
         <div class="wallet-modal-header">
           <div class="label">
-            Add your Solana wallet address
+            Add your Solana wallet address 1
           </div>
           <img
             class="image"

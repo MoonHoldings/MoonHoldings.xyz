@@ -98,6 +98,8 @@ export const useNftStore = defineStore('nft', {
           }
         }
 
+        console.log('this.collections', this.collections)
+
         this.collections.forEach((collection) => {
           this.fetchURI(collection.nfts[0].metadata_uri, collection)
         })

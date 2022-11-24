@@ -20,7 +20,6 @@ const collections = computed(() => {
 })
 
 const isCollections = computed(() => {
-  console.log('nftStore.collections', nftStore.collections)
   if (nftStore.collections) {
     return nftStore.collections.length > 0
   }

@@ -2,12 +2,18 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
+import * as solanaWeb3 from '@solana/web3.js'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import "solana-wallets-vue/styles.css"
+
+// console.log('solanaWeb3', solanaWeb3)
+// console.log('solanaWeb3.publicKey', solanaWeb3.publicKey)
 
 const emit = defineEmits()
 const router = useRouter()
 const nftStore = useNftStore()
+
+console.log('nftStore.collections', nftStore.collections)
 
 const collections = computed(() => {
   return nftStore.collections ?? []
@@ -46,7 +52,7 @@ const removeCollection = collection => {
 }
 
 const parsingWalletAddress = walletAddress => {
-  // console.log('parsingWalletAddress walletAddress:', walletAddress)
+  console.log('parsingWalletAddress walletAddress:', walletAddress)
   if (!walletAddress) return
   const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
   const match = walletAddress.match(truncateRegex)

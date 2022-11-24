@@ -20,7 +20,6 @@ const collections = computed(() => {
 })
 
 const isCollections = computed(() => {
-  console.log('nftStore.collections', nftStore.collections)
   if (nftStore.collections) {
     return nftStore.collections.length > 0
   }
@@ -46,7 +45,6 @@ const closeWalletAddressModal = () => {
 
 const addWallet = async () => {
   isLoading.value = true
-  // await nftStore.connectWalletWithAddress(walletAddress.value)
   await nftStore.addAddress(walletAddress.value)
   isWalletAddressModal.value = false
   isLoading.value = false

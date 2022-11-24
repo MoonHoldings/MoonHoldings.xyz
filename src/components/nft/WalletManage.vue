@@ -3,11 +3,11 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
 import * as solanaWeb3 from '@solana/web3.js'
-import { WalletMultiButton } from 'solana-wallets-vue'
+import { WalletMultiButton, useWallet } from 'solana-wallets-vue'
 import "solana-wallets-vue/styles.css"
 
-// console.log('solanaWeb3', solanaWeb3)
-// console.log('solanaWeb3.publicKey', solanaWeb3.publicKey)
+console.log('solanaWeb3', solanaWeb3)
+console.log('solanaWeb3.publicKey', solanaWeb3.publicKey)
 
 const emit = defineEmits()
 const router = useRouter()
@@ -52,7 +52,7 @@ const removeCollection = collection => {
 }
 
 const parsingWalletAddress = walletAddress => {
-  console.log('parsingWalletAddress walletAddress:', walletAddress)
+  // console.log('parsingWalletAddress walletAddress:', walletAddress)
   if (!walletAddress) return
   const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
   const match = walletAddress.match(truncateRegex)
@@ -69,6 +69,12 @@ const disconnectAllAddress = () => {
   nftStore.mutate_emptyNft()
 
   router.push({ name: 'nftsPortfolio' })
+}
+
+// ? Get publicKey from wallet connect
+const { publicKey, sendTransaction } = useWallet()
+if (publicKey && publicKey.value) {
+  console.log('publicKey', publicKey.value.toBase58())
 }
 </script>
 
@@ -97,6 +103,7 @@ const disconnectAllAddress = () => {
     Connected Wallets
   </div>
 
+  <!-- ? Wallet Connect -->
   <wallet-multi-button dark></wallet-multi-button>
 
   <div class="button" @click="showWalletAddressModal">

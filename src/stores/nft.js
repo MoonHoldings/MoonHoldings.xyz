@@ -12,6 +12,7 @@ export const useNftStore = defineStore('nft', {
   state: () => ({
     portfolios: [], // User can have multiple portfolios
     collections: [], // Collection of NFT collections
+    wallets: [],
     nfts: [],
     nft: {}, // Rendered in Single Item view
   }),
@@ -21,6 +22,9 @@ export const useNftStore = defineStore('nft', {
     },
     get_collections(state) {
       return state.collections
+    },
+    get_wallets(state) {
+      return state.wallets
     },
     get_nfts(state) {
       return state.nfts
@@ -35,6 +39,9 @@ export const useNftStore = defineStore('nft', {
     },
     mutate_emptyCollections() {
       this.collections = []
+    },
+    mutate_emptyWallets() {
+      this.wallets = []
     },
     mutate_emptyNfts() {
       this.nfts = []
@@ -63,7 +70,8 @@ export const useNftStore = defineStore('nft', {
         const res = await response.data
         const resCollections = res.result.collections
 
-        // console.log('this.collections', this.collections)
+        console.log('this.collections', this.collections)
+
         // ? Add associate collections with walletAddress
 
         resCollections.forEach((collection) => {
@@ -98,6 +106,17 @@ export const useNftStore = defineStore('nft', {
             this.collections = [...resCollections]
           }
         }
+
+        // ? Get collection image & update wallets
+        this.collections.forEach((collection) => {
+          this.fetchURI(collection.nfts[0].metadata_uri, collection)
+          this.wallets.push(collection.wallet)
+        })
+        
+        this.wallets = [...new Set(this.wallets)]
+
+        console.log('this.wallets', this.wallets)
+
       } catch (error) {
         console.error('Error: nft.js > addAddress', error)
         mixpanel.track('Error: nft.js > addAddress', {

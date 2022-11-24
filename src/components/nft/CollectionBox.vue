@@ -34,7 +34,7 @@ const { collection } = props
         <div class="grid-footer">
           <div class="footer-info">
             <div class="info-label">Items</div>
-            <div class="info-value">{{ collection?.nft_count }}</div>
+            <div class="info-value">{{ collection?.nfts.length }}</div>
           </div>
           <!-- <div class="footer-info">
             <div class="info-label">Total</div>

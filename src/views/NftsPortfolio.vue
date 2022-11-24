@@ -46,7 +46,6 @@ const closeWalletAddressModal = () => {
 
 const addWallet = async () => {
   isLoading.value = true
-  // await nftStore.connectWalletWithAddress(walletAddress.value)
   await nftStore.addAddress(walletAddress.value)
   isWalletAddressModal.value = false
   isLoading.value = false

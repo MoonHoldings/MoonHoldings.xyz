@@ -2,16 +2,14 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import * as R from 'ramda'
 import deleteNFTkeys from '../utils/deleteNFTkeys'
-import { AXIOS_CONFIG, SHYFT_URL, SHYFT_KEY } from '../constants/api'
-
-const AXIOS_CONFIG_SHYFT_KEY = R.assoc('x-api-key', SHYFT_KEY, AXIOS_CONFIG)
+import { AXIOS_CONFIG, AXIOS_CONFIG_SHYFT_KEY, SHYFT_URL } from '../constants/api'
 
 export const useNftStore = defineStore('nft', {
   state: () => ({
-    portfolios: [],
-    collections: [], // All filtered Collections <- render in UI
+    portfolios: [], // User can have multiple portfolios
+    collections: [], // Collection of NFT collections
     nfts: [],
-    nft: {}
+    nft: {} // Rendered in Single Item view
   }),
   getters: {
     get_portfolios(state) {
@@ -61,7 +59,6 @@ export const useNftStore = defineStore('nft', {
         const resCollections = res.result.collections
 
         console.log('this.collections', this.collections)
-        console.log('resCollections', resCollections)
 
         // ? Add associate collections with walletAddress
         resCollections.forEach(collection => {
@@ -70,16 +67,28 @@ export const useNftStore = defineStore('nft', {
 
         if (res.success && resCollections) {
           if (this.collections.length > 0) {
-            // TODO New collection found, add to this.collections
+
+            // ? Add any new incoming collections into collections
+            for (let i=0; i < resCollections.length; i++) {
+              for (let x=0; x < this.collections.length; x++) {
+                const index = this.collections.findIndex(nft => nft.name === resCollections[i].name)
+                if (index === -1) {
+                  this.collections.push(resCollections[i])
+                }
+              }
+            }
             
             // ? Match with existing collections
             for (let i=0; i < resCollections.length; i++) {              
               for (let x=0; x < this.collections.length; x++) {
                 if (resCollections[i].name === this.collections[x].name) {
                   this.collections[x].nfts.push(...resCollections[i].nfts)
+
+                  // ? prevent duplicates
+                  let uniqNfts = [...new Set(this.collections[x].nfts)]
+                  this.collections[x].nfts = uniqNfts
                 }
               }
-              
             }
             
           } else {

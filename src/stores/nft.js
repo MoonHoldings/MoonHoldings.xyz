@@ -59,11 +59,10 @@ export const useNftStore = defineStore('nft', {
 
       // Remove all NFTs from Collections associated with wallet
       for (let i = 0; i < this.collections.length; i++) {
-        console.log('loop 1', i)
         for (let x = 0; x < this.collections[i].nfts.length; x++) {
-          console.log('loop 2 nfts', x)
           if (this.collections[i]?.nfts[x]?.wallet === wallet) {
               this.collections[i].nfts.splice(x, 1);
+              x--;
           }
         }
       }
@@ -71,8 +70,6 @@ export const useNftStore = defineStore('nft', {
       // If collection has no NFTS remove it
       const dropEmptyCollections = collection => collection.nfts.length === 0
       this.collections = R.dropWhile(dropEmptyCollections, this.collections)
-
-      console.log('this.collections', this.collections)
 
       // Remove wallet
       const walletToRemove = this.wallets.findIndex(item => item === wallet)
@@ -92,7 +89,7 @@ export const useNftStore = defineStore('nft', {
         )
         const res = await response.data
         const resCollections = res.result.collections
-
+        console.log('resCollections', resCollections)
         console.log('this.collections', this.collections)
 
         // ? Add NFT update_authority to collection & Associate NFTs with wallet

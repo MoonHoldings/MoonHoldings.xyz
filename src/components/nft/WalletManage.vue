@@ -10,7 +10,7 @@ const emit = defineEmits()
 const router = useRouter()
 const nftStore = useNftStore()
 
-console.log('nftStore.collections', nftStore.collections)
+// console.log('WalletManage collections:', nftStore.collections)
 
 // const collections = computed(() => {
 //   return nftStore.collections ?? []

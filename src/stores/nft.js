@@ -49,10 +49,14 @@ export const useNftStore = defineStore('nft', {
     mutate_emptyNft() {
       this.nft = {}
     },
-    mutate_removeCollection(collection) {
-      const searchCollections = this.collections.findIndex(
-        (item) => item.wallet === collection.wallet
-      )
+    // mutate_removeCollection(collection) {
+    //   const searchCollections = this.collections.findIndex(
+    //     (item) => item.wallet === collection.wallet
+    //   )
+    // },
+    mutate_removeWallet(wallet) {
+      console.log('store removeWallet', wallet)
+      const searchCollections = this.collections.findIndex(item => item.wallet === wallet)
       this.collections.splice(searchCollections, 1)
     },
     mutate_setNfts(nfts) {

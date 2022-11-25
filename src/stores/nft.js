@@ -55,9 +55,28 @@ export const useNftStore = defineStore('nft', {
     //   )
     // },
     mutate_removeWallet(wallet) {
-      console.log('store removeWallet', wallet)
-      const searchCollections = this.collections.findIndex(item => item.wallet === wallet)
-      this.collections.splice(searchCollections, 1)
+      console.log('removeWallet', wallet)
+
+      // Remove all NFTs from Collections associated with wallet
+      for (let i = 0; i < this.collections.length; i++) {
+        console.log('loop 1', i)
+        for (let x = 0; x < this.collections[i].nfts.length; x++) {
+          console.log('loop 2 nfts', x)
+          if (this.collections[i]?.nfts[x]?.wallet === wallet) {
+              this.collections[i].nfts.splice(x, 1);
+          }
+        }
+      }
+
+      // If collection has no NFTS remove it
+      const dropEmptyCollections = collection => collection.nfts.length === 0
+      this.collections = R.dropWhile(dropEmptyCollections, this.collections)
+
+      console.log('this.collections', this.collections)
+
+      // Remove wallet
+      const walletToRemove = this.wallets.findIndex(item => item === wallet)
+      this.wallets.splice(walletToRemove, 1)
     },
     mutate_setNfts(nfts) {
       this.nfts = nfts
@@ -76,10 +95,11 @@ export const useNftStore = defineStore('nft', {
 
         console.log('this.collections', this.collections)
 
-        // ? Add associate collections with walletAddress
-
+        // ? Add NFT update_authority to collection & Associate NFTs with wallet
         resCollections.forEach((collection) => {
           collection.wallet = walletAddress
+          collection.update_authority = collection.nfts[0].update_authority
+          collection.nfts.forEach(nft => nft.wallet = walletAddress)
         })
 
         if (res.success && resCollections) {
@@ -114,12 +134,10 @@ export const useNftStore = defineStore('nft', {
         // ? Get collection image & update wallets
         this.collections.forEach((collection) => {
           this.fetchURI(collection.nfts[0].metadata_uri, collection)
-          this.wallets.push(collection.wallet)
+          this.wallets.push(collection.nfts[0].wallet)
         })
         
         this.wallets = [...new Set(this.wallets)]
-
-        console.log('this.wallets', this.wallets)
 
       } catch (error) {
         console.error('Error: nft.js > addAddress', error)

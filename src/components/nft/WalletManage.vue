@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
-import * as solanaWeb3 from '@solana/web3.js'
+// import * as solanaWeb3 from '@solana/web3.js'
 import { WalletMultiButton, useWallet } from 'solana-wallets-vue'
 import "solana-wallets-vue/styles.css"
 
@@ -53,9 +53,9 @@ const showWalletAddressModal = () => {
 
 const showCloseButton = wallet => {
   hoverWallet.value = wallet
-  console.log('hoverWallet', hoverWallet)
-  console.log(hoverWallet?.value === wallet)
-  emit("showCloseButton")
+  console.log('hoverWallet:', hoverWallet)
+  console.log('showCloseButton if true:', hoverWallet?.value === wallet)
+  // emit("showCloseButton")
 }
 
 const removeCollection = wallet => {
@@ -125,8 +125,9 @@ if (publicKey && publicKey.value) {
   <div v-if="isWallets" class="grid-container">
     <div class="grid-item" v-for="(wallet, i) in wallets" :key="i">
       <span @mouseover="showCloseButton(wallet)">{{parsingWalletAddress(wallet)}}</span>
+      {{hoverWallet?.value == wallet}}
       <img
-        v-if="hoverWallet?.value == wallet"
+        
         class="close"
         src="/svg/icon-close-black.svg"
         alt="close"

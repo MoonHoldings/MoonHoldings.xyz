@@ -35,14 +35,14 @@ watch(route, (prev, present) => {
   currentRoute.value = route.fullPath
 
   isSidebar.value =
-    route.fullPath !== '/' &&
-    route.fullPath !== '/login' &&
-    route.fullPath !== '/sign-up' &&
-    route.fullPath !== '/forgot-password' &&
+    route.name !== 'home' &&
+    route.name !== 'login' &&
+    route.name !== 'signup' &&
+    route.name !== 'forgotPassword' &&
     route.name !== 'resetPassword' &&
-    route.fullPath !== '/privacy-policy' &&
-    route.fullPath !== '/terms-of-service' &&
-    route.fullPath !== '/newsletter-mail' &&
+    route.name !== 'privacy-policy' &&
+    route.name !== 'terms-of-service' &&
+    route.name !== 'newsletter-mail' &&
     route.fullPath &&
     !useUserStore.gotten_user
 })

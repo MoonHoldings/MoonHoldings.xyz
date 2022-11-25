@@ -1,3 +1,5 @@
+@import '@/sass/mixins/breakpoints.scss';
+
 .active-currency {
   position: relative;
   color: var(--pink);
@@ -29,10 +31,17 @@
 
 .crypto {
   color: var(--ash);
-  min-height: 100vh;
-  min-width: calc(100% - 200px);
-  padding: 11rem 4.1rem 4.1rem calc(4.1rem + 200px);
-  background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
+  min-height: 100%;
+  min-width: 100%;
+  padding: 16px 16px 100px;
+  background: #f0f6f0;
+  // background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
+
+  @media (min-width: 1024px) {
+    min-height: 100vh;
+    min-width: calc(100% - 200px);
+    padding: 11rem 4.1rem 4.1rem calc(4.1rem + 200px);
+  }
 
   // ========== Welcome ===========
   &__welcome-msg {
@@ -41,21 +50,14 @@
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
     text-align: center;
+
     h1 {
       font-size: 4.5rem;
       font-weight: 600;
     }
+
     p {
       font-size: 2.8rem;
-    }
-    .monster-div {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      transform: translateX(100%) translateY(130%);
-      img {
-        height: 9rem;
-      }
     }
   }
 
@@ -63,11 +65,78 @@
 
   &__coins-stats {
     display: grid;
-    // grid-template-columns: 60% 40%;
+    grid-template-columns: auto 49rem;
+    @include bp-down(large) {
+      display: flex;
+      flex-direction: column;
+      row-gap: 2rem;
+    }
   }
 
   &__all-coins {
-    padding-right: 2rem;
+    @include bp-down(large) {
+      order: 2;
+    }
+  }
+
+  &__chart {
+    padding-left: 1rem;
+    @include bp-down(large) {
+      order: 1;
+      padding: 0;
+    }
+
+    .chart {
+      border: 0.15rem solid #000;
+      width: 100%;
+      height: 32rem;
+      border-radius: 0.5rem;
+      background-color: #fff;
+      padding: 1rem;
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+
+        .left {
+          display: flex;
+          gap: 1rem;
+
+          div {
+            width: 9rem;
+            height: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.7rem;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 1.2rem;
+          }
+          .you {
+            background-color: var(--pink);
+          }
+          .everyone {
+            background-color: #000;
+          }
+        }
+
+        .right {
+          button {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: none;
+            border: none;
+            outline: none;
+          }
+          .week {
+            color: var(--pink);
+          }
+        }
+      }
+    }
   }
 
   // ============== Entries ===============
@@ -84,12 +153,18 @@
     position: relative;
     display: flex;
     align-items: center;
-    // margin-bottom: 5.8rem;
 
     input {
       position: relative;
       min-height: 4.4rem;
       min-width: 24rem;
+
+      @media (max-width: 767px) {
+        width: 100%;
+        margin-right: 0;
+        margin-top: 12px;
+      }
+
       background: #e9eee9;
       border: 0.1rem solid var(--pink);
       box-shadow: 0px 1px 10px 1px rgba(182, 75, 212, 0.13);
@@ -103,47 +178,25 @@
       font-family: 'Inter', monospace;
       z-index: 8;
     }
+
     ::placeholder {
       color: inherit;
     }
+
     .sort-text {
       font-size: 1.6rem;
       margin-right: 0.7rem;
     }
+
     .sort-btns {
       button {
         background: none;
         border: none;
         outline: none;
+
         svg {
           height: 3rem;
           width: 3rem;
-        }
-      }
-    }
-    .dropdown-list {
-      position: absolute;
-      top: 4.4rem;
-      width: 38rem;
-      min-height: 15rem;
-      background-color: #fff;
-      box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px,
-        rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px,
-        rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
-      z-index: 7;
-      ul {
-        padding: 0.7rem 0;
-        list-style: none;
-        li {
-          button {
-            width: 100%;
-            text-align: left;
-            padding: 0.8rem 1.3rem;
-            font-size: 1.6rem;
-            background: none;
-            border: none;
-            outline: none;
-          }
         }
       }
     }
@@ -152,6 +205,7 @@
   &__total-value {
     font-family: 'Inter', monospace;
     color: #000;
+
     .value {
       color: #000;
       float: right;
@@ -175,24 +229,6 @@
         }
       }
     }
-    .value-currency {
-      text-align: right;
-
-      .text {
-        font-size: 1.6rem;
-      }
-      button {
-        border: none;
-        outline: none;
-        background: none;
-        padding: 0;
-        margin: 0;
-        font-size: 1.6rem;
-      }
-      .pipe {
-        font-size: 1.7rem;
-      }
-    }
   }
 
   &__pct-bar {
@@ -203,16 +239,6 @@
     font-family: 'Inter', monospace;
     margin-bottom: 2.5rem;
 
-    // &::before {
-    //   content: '';
-    //   position: absolute;
-    //   bottom: -0.1rem;
-    //   right: -0.1rem;
-    //   width: 100%;
-    //   height: 8rem;
-    //   background: #000;
-    //   border-radius: 0.3rem;
-    // }
     .coin-pct {
       .pct-num {
         font-size: 1.6rem;
@@ -258,29 +284,6 @@
       top: -1.5rem;
       z-index: 9;
     }
-    .shadow {
-      position: absolute;
-      bottom: -0.2rem;
-      right: -0.2rem;
-      min-width: 17.5rem;
-      min-height: 5.5rem;
-      background: rgba(75, 75, 75, 0.247);
-      border-radius: 0.2rem;
-    }
-    .twitter-btn {
-      position: relative;
-      z-index: 8;
-      min-width: 17.5rem;
-      min-height: 5.5rem;
-      background-color: var(--pink);
-      border-radius: 0.2rem;
-      border: none;
-      outline: none;
-      color: #fff;
-      font-family: 'Inconsolata';
-      font-weight: 400;
-      font-size: 1.8rem;
-    }
   }
 
   // --------------portfolio coins-------------
@@ -288,7 +291,10 @@
     display: flex;
     gap: 2.5rem;
     flex-wrap: wrap;
-    margin-bottom: 6rem;
+
+    @media (max-width: 767px) {
+      justify-content: center;
+    }
   }
 
   //-------------watch list--------------
@@ -307,4 +313,90 @@
   }
 
   // ============ Stats =============
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 4.4rem;
+  width: 38rem;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+
+  min-height: 15rem;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px,
+    rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px,
+    rgba(0, 0, 0, 0.07) 0px 16px 16px;
+  z-index: 7;
+  ul {
+    padding: 0.7rem 0;
+    list-style: none;
+    li {
+      button {
+        width: 100%;
+        text-align: left;
+        padding: 0.8rem 1.3rem;
+        font-size: 1.6rem;
+        background: none;
+        border: none;
+        outline: none;
+      }
+    }
+  }
+}
+
+.monster-div {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translateX(100%) translateY(130%);
+  img {
+    height: 9rem;
+  }
+}
+
+.value-currency {
+  text-align: right;
+
+  .text {
+    font-size: 1.6rem;
+  }
+  button {
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.6rem;
+  }
+  .pipe {
+    font-size: 1.7rem;
+  }
+}
+
+.shadow {
+  position: absolute;
+  bottom: -0.2rem;
+  right: -0.2rem;
+  min-width: 17.5rem;
+  min-height: 5.5rem;
+  background: rgba(75, 75, 75, 0.247);
+  border-radius: 0.2rem;
+}
+
+.twitter-btn {
+  position: relative;
+  z-index: 8;
+  min-width: 17.5rem;
+  min-height: 5.5rem;
+  background-color: var(--pink);
+  border-radius: 0.2rem;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: 'Inconsolata';
+  font-weight: 400;
+  font-size: 1.8rem;
 }

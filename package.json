@@ -23,14 +23,19 @@
     "test-watch": "NODE_ENV=test jest --watch --no-cache"
   },
   "dependencies": {
+    "@solana/wallet-adapter-wallets": "^0.19.5",
     "@vueup/vue-quill": "^1.0.0-beta.10",
     "animate.css": "^4.1.1",
     "axios": "^0.27.2",
+    "chart.js": "^3.9.1",
     "firebase": "^9.9.4",
     "jwt-decode": "^3.1.2",
     "mixpanel-browser": "^2.45.0",
     "pinia": "^2.0.14",
+    "pinia-plugin-persistedstate": "^2.3.0",
+    "solana-wallets-vue": "^0.5.2",
     "vue": "^3.2.36",
+    "vue-chartjs": "^4.1.2",
     "vue-router": "^4.0.15",
     "vue3-cookies": "^1.0.6"
   },

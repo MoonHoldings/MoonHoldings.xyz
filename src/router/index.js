@@ -31,8 +31,13 @@ const router = createRouter({
       component: SignUpView,
     },
     {
+      path: '/forgot-password',
+      name: 'forgotPassword',
+      component: () => import('@/views/ForgotPassword.vue'),
+    },
+    {
       path: '/reset-password',
-      name: 'reset-password',
+      name: 'resetPassword',
       component: () => import('@/views/ResetPassword.vue'),
     },
     {
@@ -42,9 +47,21 @@ const router = createRouter({
       beforeEnter: requireAuth,
     },
     {
-      path: '/nfts/collection',
+      path: '/nfts/portfolio',
+      name: 'nftsPortfolio',
+      component: () => import('@/views/NftsPortfolio.vue'),
+      beforeEnter: requireAuth,
+    },
+    {
+      path: '/nfts/portfolio/:address',
       name: 'nftsCollection',
       component: () => import('@/views/NftsCollection.vue'),
+      beforeEnter: requireAuth,
+    },
+    {
+      path: '/nfts/single-collection/:address',
+      name: 'nftSingleCollection',
+      component: () => import('@/views/NftsSingleCollection.vue'),
       beforeEnter: requireAuth,
     },
     {

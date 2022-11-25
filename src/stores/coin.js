@@ -13,6 +13,8 @@ export const useCoinStore = defineStore('coin', {
     modalCoin: {},
     cryptoCoins: [],
     coins: [],
+    chartValues: [],
+    chartLabels: [],
   }),
   getters: {
     get_cryptoCoins(state) {
@@ -67,6 +69,12 @@ export const useCoinStore = defineStore('coin', {
     mutate_modalCoin(payload) {
       this.modalCoin = payload
     },
+    mutate_chartValues(payload) {
+      this.chartValues = payload
+    },
+    mutate_chartLabels(payload) {
+      this.chartLabels = payload
+    },
     addNewWallet() {
       const emptyWallet = this.modalCoin.wallets.find(
         (wallet) => wallet.saved === false
@@ -80,19 +88,25 @@ export const useCoinStore = defineStore('coin', {
         })
       }
     },
-    removeNewWallet() {
-      const unsavedWalletIndex = this.modalCoin.wallets.findIndex(
+    cancelNewWallet() {
+      const cancelNewWallet = this.modalCoin.wallets.findIndex(
         (wallet) => wallet.saved === false
       )
-      this.modalCoin.wallets.splice(unsavedWalletIndex, 1)
+
+      if (
+        this.modalCoin.wallets[cancelNewWallet].name !== '' &&
+        this.modalCoin.wallets[cancelNewWallet].holding
+      ) {
+        this.modalCoin.wallets[cancelNewWallet].saved = true
+      } else {
+        this.modalCoin.wallets.splice(cancelNewWallet, 1)
+      }
     },
     unsaveWallet(walletName) {
       const walletIndex = this.modalCoin.wallets.findIndex(
         (wallet) => wallet.name === walletName
       )
       this.modalCoin.wallets[walletIndex].saved = false
-      this.modalCoin.wallets[walletIndex].holding = 0
-      this.modalCoin.wallets[walletIndex].value = 0
     },
     removeWallet(walletName) {
       const walletIndex = this.modalCoin.wallets.findIndex(
@@ -217,22 +231,25 @@ export const useCoinStore = defineStore('coin', {
       this.modalCoin = {}
     },
     async getSingleCoin(coinId) {
-      const token = cookies.get('MOON_TOKEN')
+      const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY
       try {
-        const response = await axios.post(
-          `${this.server_url}/get-coin`,
-          { coinId },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: token,
-            },
-          }
+        const response = await axios.get(
+          `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${coinId}&intervals=1d,30d`
         )
 
-        const result = await response.data
+        const coin = response.data[0]
 
-        this.modalCoin = result.coin
+        const _24hr = coin['1d'] ? coin['1d']['price_change_pct'] : ''
+
+        this.modalCoin = {
+          id: coin?.id,
+          symbol: coin?.symbol,
+          name: coin?.name,
+          price: coin?.price,
+          logo_url: coin?.logo_url,
+          _24hr,
+          wallets: [],
+        }
       } catch (error) {
         mixpanel.track('Error: coin.js > getSingleCoin', {
           error: error,

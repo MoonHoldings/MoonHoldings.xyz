@@ -1,21 +1,25 @@
 <script setup>
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import Header from '@/components/partials/Header.vue'
 import CoinBox from '@/components/partials/CoinBox.vue'
 import WatchCoin from '@/components/partials/WatchCoin.vue'
+import Chart from '@/components/partials/Chart.vue'
 import {
   PORTFOLIO_GET_STARTED,
   PORTFOLIO_WELCOME_HEADER,
   TAG_LINE,
   SEARCH_TO_START,
 } from '@/constants/copy'
+import { useUserStore } from '@/stores/user'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
 import { useCookies } from 'vue3-cookies'
 import coinStyles from '@/constants/coinStyles'
 import refreshCryptoCoins from '@/utils/refreshCryptoCoins'
+import getCoinHistoryData from '@/utils/getCoinHistoryData'
 
 const { cookies } = useCookies()
+const userStore = useUserStore()
 const coinStore = useCoinStore()
 const utilStore = useUtilStore()
 const storedCoins = ref([])
@@ -95,6 +99,7 @@ const disappearPct = (pct) => {
 }
 
 onMounted(async () => {
+  isLoading.value = true
   const moonCoins = localStorage.getItem('MoonCoins')
   const parsedCoins = JSON.parse(moonCoins).coins
   storedCoins.value = [...parsedCoins]
@@ -103,13 +108,24 @@ onMounted(async () => {
 
   const user = cookies.get('MOON_USER')
   const token = cookies.get('MOON_TOKEN')
-  const server_url = coinStore.server_url
-  isLoading.value = true
-  const refreshedCoins = await refreshCryptoCoins(
-    server_url,
-    user.portfolio.coins,
-    token
+
+  if (!user || !token) {
+    cookies.remove('MOON_USER')
+    cookies.remove('MOON_TOKEN')
+
+    return
+  }
+
+  // save historical data
+  await userStore.getHistory()
+  const historyData = await getCoinHistoryData(
+    userStore.historicalData,
+    user.email
   )
+  coinStore.mutate_chartValues(historyData.historyValues)
+  coinStore.mutate_chartLabels(historyData.dateLabels)
+
+  const refreshedCoins = await refreshCryptoCoins(user.portfolio.coins)
   coinStore.mutate_cryptoCoins(refreshedCoins)
   isLoading.value = false
 
@@ -190,6 +206,26 @@ onMounted(async () => {
               <WatchCoin v-for="(e, i) in 2" :key="i" />
             </div>
           </div>
+        </div>
+
+        <div class="crypto__chart">
+          <div class="chart">
+            <div class="header">
+              <div class="left">
+                <!-- <div class="you">You</div> -->
+                <!-- <div class="everyone">Everyone</div> -->
+              </div>
+              <div class="right">
+                <button class="week">Week</button>
+                <!-- <button class="month">Month</button>
+                <button class="year">Year</button> -->
+              </div>
+            </div>
+
+            <!-- The Chart -->
+            <Chart />
+          </div>
+          <!-- <Chart /> -->
         </div>
       </div>
     </div>

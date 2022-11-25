@@ -43,7 +43,7 @@ const sendBtnClick = async () => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/sass/rootCSS.scss';
+@import '@/sass/root-css.scss';
 @import '@/sass/mixins/primary-btn.scss';
 
 .newsletter {

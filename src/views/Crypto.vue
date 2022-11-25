@@ -118,13 +118,13 @@ onMounted(async () => {
 
   // save historical data
   await userStore.getHistory()
-  // TODO commenting out so no CORS bug
-  // const historyData = await getCoinHistoryData(
-  //   userStore.historicalData,
-  //   user.email
-  // )
-  // coinStore.mutate_chartValues(historyData.historyValues)
-  // coinStore.mutate_chartLabels(historyData.dateLabels)
+
+  const historyData = await getCoinHistoryData(
+    userStore.historicalData,
+    user.email
+  )
+  coinStore.mutate_chartValues(historyData.historyValues)
+  coinStore.mutate_chartLabels(historyData.dateLabels)
 
   const refreshedCoins = await refreshCryptoCoins(user.portfolio.coins)
   coinStore.mutate_cryptoCoins(refreshedCoins)

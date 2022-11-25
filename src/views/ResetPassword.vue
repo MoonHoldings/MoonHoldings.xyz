@@ -1,24 +1,68 @@
 <script setup>
-import { MOONHOLDINGS, RESET_PASSWORD, SUBMIT } from '../constants/copy'
+import { MOONHOLDINGS, RESET_PASSWORD } from '../constants/copy'
+import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useUtilStore } from '@/stores/util'
+import { useUserStore } from '@/stores/user'
+
+const route = useRoute()
+const router = useRouter()
+const utilStore = useUtilStore()
+const newPasswordInput = ref('')
+const userStore = useUserStore()
+const errorPassword = ref(false)
+const disableButton = ref(false)
+
+const submitPassword = async () => {
+  if (!newPasswordInput.value) {
+    errorPassword.value = true
+    utilStore.mutate_errorToggle(true)
+    utilStore.mutate_errorMessage("Password field can't be empty")
+  } else {
+    utilStore.mutate_errorToggle(false)
+    utilStore.mutate_errorMessage('')
+    errorPassword.value = false
+
+    disableButton.value = true
+
+    const response = await userStore.saveNewPassword(
+      newPasswordInput.value,
+      route.query.token
+    )
+
+    if (response.success) {
+      router.push('/login')
+    }
+    disableButton.value = false
+  }
+}
 </script>
 
 <template>
-  <main class="resetPassword-container">
+  <main class="forgotPassword-container">
     <div />
-    <div class="reset-section">
-      <div class="reset-window">
+    <div class="forgot-section">
+      <div class="forgot-window">
         <h1>{{ MOONHOLDINGS }}</h1>
         <h2>{{ RESET_PASSWORD }}</h2>
 
-        <form>
-          <input type="email" placeholder="Email" />
-          <button>{{ SUBMIT }}</button>
-        </form>
-
-        <div class="guide-text">
-          Submit the email you used to sign up with. If you used Twitter or
-          Discord, this will be the email you signed up with on those accounts.
+        <div class="form">
+          <input
+            type="password"
+            :class="{ error: errorPassword, 'input-default': !errorPassword }"
+            placeholder="New Password"
+            v-model="newPasswordInput"
+          />
+          <button
+            @click="submitPassword"
+            :disabled="disableButton"
+            :class="{ disabled_button_style: disableButton }"
+          >
+            Save
+          </button>
         </div>
+
+        <div class="guide-text">Enter a new password and save it.</div>
       </div>
     </div>
     <div />
@@ -26,13 +70,26 @@ import { MOONHOLDINGS, RESET_PASSWORD, SUBMIT } from '../constants/copy'
 </template>
 
 <style lang="scss" scoped>
-.resetPassword-container {
+.disabled_button_style {
+  background: rgb(110, 110, 110) !important;
+  border: 1px solid rgb(110, 110, 110) !important;
+  color: #fff !important;
+}
+.input-default {
+  background: #eee;
+  border: 0.2rem solid var(--pink);
+}
+.error {
+  background: rgba(255, 111, 111, 0.5);
+  border: 0.2rem solid #ff6f6f;
+}
+.forgotPassword-container {
   display: grid;
   grid-template-columns: 2fr 1fr 2fr;
   min-height: 100vh;
   background-image: linear-gradient(to bottom, var(--pink), var(--purple));
 
-  .reset-section {
+  .forgot-section {
     height: 100%;
     min-width: 40rem;
     min-height: 100%;
@@ -42,7 +99,7 @@ import { MOONHOLDINGS, RESET_PASSWORD, SUBMIT } from '../constants/copy'
     align-items: center;
   }
 
-  .reset-window {
+  .forgot-window {
     width: 40rem;
     background: #ffffff;
     border: 1px solid #979797;
@@ -64,7 +121,7 @@ import { MOONHOLDINGS, RESET_PASSWORD, SUBMIT } from '../constants/copy'
       margin-bottom: 2rem;
     }
 
-    form {
+    .form {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -77,8 +134,7 @@ import { MOONHOLDINGS, RESET_PASSWORD, SUBMIT } from '../constants/copy'
       min-height: 5.3rem;
       padding-left: 1.9rem;
       font-size: 2rem;
-      border: 0.2rem solid var(--pink);
-      background: #eee;
+      border-radius: 0.5rem;
     }
 
     button {

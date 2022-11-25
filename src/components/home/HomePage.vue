@@ -10,7 +10,8 @@ import HomeCTA from './HomeCTA.vue'
     <HomeBanner />
     <HomeCTA />
     <footer>
-      <a href="https://twitter.com/moonholdingsxyz" target="_blank">Twitter</a> | <a href="https://discord.gg/JPPvAf5BMW" target="_blank">Discord</a>
+      <a href="https://twitter.com/moonholdingsxyz" target="_blank">Twitter</a>
+      | <a href="https://discord.gg/JPPvAf5BMW" target="_blank">Discord</a>
     </footer>
   </div>
 </template>
@@ -20,6 +21,7 @@ import HomeCTA from './HomeCTA.vue'
   display: grid;
   height: 100vh;
   background-image: linear-gradient(to bottom, var(--pink), var(--purple));
+  overflow: hidden;
 }
 
 footer {
@@ -36,7 +38,7 @@ footer {
 }
 
 /* for screens that are at least 320 pixels wide but less than or equal to 640 pixels wide */
-@media screen and (min-width:320px) and (max-width:640px) {
+@media screen and (min-width: 320px) and (max-width: 640px) {
   .homepage {
     width: auto;
     max-width: 640px;

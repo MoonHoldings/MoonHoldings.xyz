@@ -1,0 +1,171 @@
+.loading-squares {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(240, 246, 240, 0.8);
+  z-index: 101;
+}
+
+.collection {
+  color: var(--ash);
+  min-height: 100%;
+  min-width: 100%;
+  padding: 16px 16px 100px;
+  flex-direction: column-reverse;
+  gap: 16px;
+
+  @media (min-width: 1024px) {
+    min-height: 100vh;
+    min-width: calc(100% - 200px);
+    padding: 11rem 46px 46px calc(46px + 200px);
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  background: linear-gradient(180deg, #f0f6f0 0%, #cecece 100%);
+  display: flex;
+
+  &__left-side {
+    width: 100%;
+
+    @media (min-width: 1024px) {
+      width: calc(100% - 270px);
+    }
+
+    .grid {
+      display: flex;
+      margin: 32px 32px 0 0;
+
+      @media (max-width: 1023px) {
+        justify-content: center;
+        margin: 0;
+      }
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+  }
+
+  &__right-side {
+    width: 100%;
+
+    @media (min-width: 1024px) {
+      width: 270px;
+    }
+  }
+}
+
+.nft-summary {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  @media (max-width: 767px) {
+    flex-wrap: wrap;
+  }
+
+  .route {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: "Poppins";
+    line-height: 22px;
+    color: #C74FF9;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+
+  .count {
+    font-size: 18px;
+    font-weight: 400;
+    font-family: "Poppins";
+    line-height: 22px;
+    color: #000000;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    .value {
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+    }
+  }
+
+  .floor {
+    display: flex;
+    gap: 6px;
+
+    .image {
+      width: 32px;
+      height: 32px;
+    }
+
+    .label {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: "Poppins";
+      line-height: 22px;
+      color: #000000;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    .down-value {
+      margin-top: auto;
+      margin-bottom: auto;
+      font-size: 18px;
+      font-weight: 700;
+      font-family: "Poppins";
+      line-height: 22px;
+      color: #E05E28;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+    }
+
+    .up-value {
+      margin-top: auto;
+      margin-bottom: auto;
+      font-size: 18px;
+      font-weight: 700;
+      font-family: "Poppins";
+      line-height: 22px;
+      color: #2C7444;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+    }
+  }
+}
+
+.empty-nft-summary {
+  margin-top: 48px;
+  text-align: center;
+
+  .empty-title {
+    font-size: 50px;
+    font-weight: 700;
+    font-family: "Poppins";
+    line-height: 60px;
+  }
+
+  .empty-content {
+    margin-top: 16px;
+    font-size: 32px;
+    font-weight: 400;
+    font-family: "Poppins";
+    line-height: 60px;
+  }
+
+  .empty-image {
+    margin-top: 32px;
+    width: 80px;
+  }
+}

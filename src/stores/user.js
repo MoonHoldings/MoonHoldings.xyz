@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+// import { useCoinStore } from './coin'
+import { useCookies } from 'vue3-cookies'
+
+const { cookies } = useCookies()
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -8,6 +12,7 @@ export const useUserStore = defineStore('user', {
       headers: { 'Content-Type': 'application/json' },
     },
     gotten_user: null,
+    historicalData: [],
   }),
   getters: {
     twitter_url: (state) => `${state.server_url}/auth/twitter`,
@@ -94,6 +99,53 @@ export const useUserStore = defineStore('user', {
         return {
           success: false,
           message: error,
+        }
+      }
+    },
+    async getHistory() {
+      const token = cookies.get('MOON_TOKEN')
+      try {
+        const response = await axios.get(`${this.server_url}/get-history`, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        const data = await response.data
+
+        this.historicalData = data.historicalData
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async forgotPassword(email) {
+      try {
+        const response = await axios.post(
+          `${this.server_url}/password/forgot-password`,
+          { email },
+          this.axios_config
+        )
+        const result = await response.data
+        return result
+      } catch (error) {
+        return {
+          success: false,
+          message: error.message,
+        }
+      }
+    },
+    async saveNewPassword(newPassword, resetToken) {
+      try {
+        const response = await axios.put(
+          `${this.server_url}/password/reset/new-password`,
+          { password: newPassword, token: resetToken },
+          this.axios_config
+        )
+        const result = await response.data
+        return result
+      } catch (error) {
+        return {
+          success: false,
+          message: error.message,
         }
       }
     },

@@ -2,14 +2,18 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import * as R from 'ramda'
 import deleteNFTkeys from '../utils/deleteNFTkeys'
-import { AXIOS_CONFIG, AXIOS_CONFIG_SHYFT_KEY, SHYFT_URL } from '../constants/api'
+import {
+  AXIOS_CONFIG,
+  AXIOS_CONFIG_SHYFT_KEY,
+  SHYFT_URL,
+} from '../constants/api'
 
 export const useNftStore = defineStore('nft', {
   state: () => ({
     portfolios: [], // User can have multiple portfolios
     collections: [], // Collection of NFT collections
     nfts: [],
-    nft: {} // Rendered in Single Item view
+    nft: {}, // Rendered in Single Item view
   }),
   getters: {
     get_portfolios(state) {
@@ -23,7 +27,7 @@ export const useNftStore = defineStore('nft', {
     },
     get_nft(state) {
       return state.nft
-    }
+    },
   },
   actions: {
     mutate_emptyPortfolios() {
@@ -39,7 +43,9 @@ export const useNftStore = defineStore('nft', {
       this.nft = {}
     },
     mutate_removeCollection(collection) {
-      const searchCollections = this.collections.findIndex(item => item.wallet === collection.wallet)
+      const searchCollections = this.collections.findIndex(
+        (item) => item.wallet === collection.wallet
+      )
       this.collections.splice(searchCollections, 1)
     },
     mutate_setNfts(nfts) {
@@ -54,59 +60,50 @@ export const useNftStore = defineStore('nft', {
           `${SHYFT_URL}/wallet/collections?network=mainnet-beta&wallet_address=${walletAddress}`,
           AXIOS_CONFIG_SHYFT_KEY
         )
-
         const res = await response.data
         const resCollections = res.result.collections
 
         // console.log('this.collections', this.collections)
-
         // ? Add associate collections with walletAddress
-        resCollections.forEach(collection => {
+
+        resCollections.forEach((collection) => {
           collection.wallet = walletAddress
         })
 
         if (res.success && resCollections) {
           if (this.collections.length > 0) {
-
             // ? Add any new incoming collections into collections
-            for (let i=0; i < resCollections.length; i++) {
-              for (let x=0; x < this.collections.length; x++) {
-                const index = this.collections.findIndex(nft => nft.name === resCollections[i].name)
-                if (index === -1) {
-                  this.collections.push(resCollections[i])
-                }
-              }
-            }
-            
-            // ? Match with existing collections
-            for (let i=0; i < resCollections.length; i++) {              
-              for (let x=0; x < this.collections.length; x++) {
-                if (resCollections[i].name === this.collections[x].name) {
-                  this.collections[x].nfts.push(...resCollections[i].nfts)
+            for (let i = 0; i < resCollections.length; i++) {
+              const record = this.collections.find(
+                (el) => el.name === resCollections[i].name
+              )
+              if (record) {
+                for (let x = 0; x < this.collections.length; x++) {
+                  if (resCollections[i].name === this.collections[x].name) {
+                    resCollections[i].nfts.forEach((nft) => {
+                      const index = this.collections[x].nfts.findIndex(
+                        (el) => el.name === nft.name
+                      )
 
-                  // ? prevent duplicates
-                  let uniqNfts = [...new Set(this.collections[x].nfts)]
-                  console.log('uniqNfts', uniqNfts)
-                  this.collections[x].nfts = uniqNfts
+                      if (index === -1) this.collections[x].nfts.push(nft)
+                    })
+                  }
                 }
+              } else {
+                this.collections.push(resCollections[i])
               }
             }
-            
           } else {
             // ? First wallet and collections added
-            this.collections.push(...resCollections)
+            this.collections = [...resCollections]
           }
         }
-
-        console.log('this.collections', this.collections)
-
-        this.collections.forEach((collection) => {
-          this.fetchURI(collection.nfts[0].metadata_uri, collection)
-        })
-
       } catch (error) {
         console.error('Error: nft.js > addAddress', error)
-        mixpanel.track('Error: nft.js > addAddress', { error: error, message: error.message })
+        mixpanel.track('Error: nft.js > addAddress', {
+          error: error,
+          message: error.message,
+        })
       }
     },
     async fetchNfts(walletAddress) {
@@ -122,7 +119,10 @@ export const useNftStore = defineStore('nft', {
         }
       } catch (error) {
         console.error('Error: nft.js > fetchNfts', error)
-        mixpanel.track('Error: nft.js > fetchNfts', { error: error, message: error.message })
+        mixpanel.track('Error: nft.js > fetchNfts', {
+          error: error,
+          message: error.message,
+        })
       }
     },
     // ? For unknown NFT collections
@@ -135,10 +135,12 @@ export const useNftStore = defineStore('nft', {
           item.image = res.image
           item.description = res.description
           item.collection = res.collection
-  
         } catch (error) {
           console.error('Error: nft.js > fetchURI', error)
-          mixpanel.track('Error: nft.js > fetchURI', { error: error, message: error.message })
+          mixpanel.track('Error: nft.js > fetchURI', {
+            error: error,
+            message: error.message,
+          })
         }
       } else {
         return item
@@ -150,13 +152,15 @@ export const useNftStore = defineStore('nft', {
         const res = await response.data
         this.nft.attributes = res.attributes
         this.nft.symbol = res.symbol
-
       } catch (error) {
         console.error('Error: nft.js > fetchAttributes', error)
-        mixpanel.track('Error: nft.js > fetchAttributes', { error: error, message: error.message })
+        mixpanel.track('Error: nft.js > fetchAttributes', {
+          error: error,
+          message: error.message,
+        })
       }
     },
-    async connectWallet() {}
+    async connectWallet() {},
   },
-  persist: true
+  persist: true,
 })

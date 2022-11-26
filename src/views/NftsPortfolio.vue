@@ -29,8 +29,8 @@ const handleConnectWallet = async () => {
   await console.log('handleConnectWallet')
 }
 
-const selectCollection = collection => {
-  router.push({ name: 'nftsCollection', params: { name: collection.name }})
+const selectCollection = (collection) => {
+  router.push({ name: 'nftsCollection', params: { name: collection.name } })
 }
 
 const showWalletAddressModal = () => {
@@ -65,18 +65,25 @@ onMounted(async () => {
       </div>
 
       <div v-if="isCollections" class="grid">
-        <CollectionBox v-for="(collection, i) in collections" :key="i" :collection="collection" @click="selectCollection(collection)" />
+        <CollectionBox
+          v-for="(collection, i) in collections"
+          :key="i"
+          :collection="collection"
+          @click="selectCollection(collection)"
+        />
       </div>
 
       <div v-else class="empty-nft-summary">
-        <div class="empty-title">
-          Import your NFT collections
-        </div>
+        <div class="empty-title">Import your NFT collections</div>
         <div class="empty-content">
           <!-- Select Connect Wallet or  -->
           Add Address to get Started
         </div>
-        <img class="empty-image" src="/svg/icon-empty-nft.svg" alt="nft-image" />
+        <img
+          class="empty-image"
+          src="/svg/icon-empty-nft.svg"
+          alt="nft-image"
+        />
       </div>
     </div>
 
@@ -89,9 +96,7 @@ onMounted(async () => {
     <div class="wallet-modal-content">
       <div class="wallet-modal-container">
         <div class="wallet-modal-header">
-          <div class="label">
-            Add your Solana wallet address
-          </div>
+          <div class="label">Add your Solana wallet address</div>
           <img
             class="image"
             src="/svg/icon-close.svg"
@@ -103,7 +108,7 @@ onMounted(async () => {
         <div class="wallet-input-content">
           <input type="text" v-model="walletAddress" class="input-text" />
           <div class="input-button" @click="addWallet">
-            {{ isLoading ? "Connecting..." : "Add Wallet"}}
+            {{ isLoading ? 'Connecting...' : 'Add Wallet' }}
           </div>
         </div>
       </div>

@@ -9,16 +9,18 @@ const { collection } = props
   <div class="grid-element">
     <div v-if="false" class="grid-header">
       <div class="header-left">
-        <div class="left-label">
-          Floor
-        </div>
+        <div class="left-label">Floor</div>
         <div class="left-number">
           {{ collection?.floor }}
         </div>
       </div>
       <div class="header-right">
         <div class="image-container">
-          <img v-if="collection?.floor > 20" src="/svg/icon-arrow-circle-down.svg" alt="down value" />
+          <img
+            v-if="collection?.floor > 20"
+            src="/svg/icon-arrow-circle-down.svg"
+            alt="down value"
+          />
           <img v-else src="/svg/icon-arrow-circle-up.svg" alt="up value" />
         </div>
       </div>
@@ -26,7 +28,12 @@ const { collection } = props
     <div class="grid-box">
       <div class="grid-container">
         <div class="grid-content">
-          <img v-if="collection.image" class="image" :src="collection?.image" alt="Collection Main Image" />
+          <img
+            v-if="collection.image"
+            class="image"
+            :src="collection?.image"
+            alt="Collection Main Image"
+          />
         </div>
         <div class="grid-name">
           {{ collection?.name }}
@@ -34,7 +41,7 @@ const { collection } = props
         <div class="grid-footer">
           <div class="footer-info">
             <div class="info-label">Items</div>
-            <div class="info-value">{{ collection?.nfts.length }}</div>
+            <div class="info-value">{{ collection?.nfts?.length }}</div>
           </div>
           <!-- <div class="footer-info">
             <div class="info-label">Total</div>

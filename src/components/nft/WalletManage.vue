@@ -2,20 +2,26 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
+import * as solanaWeb3 from '@solana/web3.js'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import "solana-wallets-vue/styles.css"
+
+// console.log('solanaWeb3', solanaWeb3)
+// console.log('solanaWeb3.publicKey', solanaWeb3.publicKey)
 
 const emit = defineEmits()
 const router = useRouter()
 const nftStore = useNftStore()
 
-const portfolios = computed(() => {
-  return nftStore.portfolios ?? []
+console.log('nftStore.collections', nftStore.collections)
+
+const collections = computed(() => {
+  return nftStore.collections ?? []
 })
 
-const isPortfolios = computed(() => {
-  if (nftStore.portfolios) {
-    return nftStore.portfolios.length > 0
+const isCollections = computed(() => {
+  if (nftStore.collections) {
+    return nftStore.collections.length > 0
   }
   return false
 })
@@ -31,21 +37,23 @@ const isSelectedNft = computed(() => {
   return false
 })
 
-const hoverPortfolio = ref(null)
+const hoverWallet = ref(null)
 
 const showWalletAddressModal = () => {
   emit("showWalletAddress")
 }
 
-const showCloseButton = (portfolio) => {
-  hoverPortfolio.value = portfolio
+const showCloseButton = collection => {
+  hoverWallet.value = collection.wallet
 }
 
-const removePortfolio = (portfolio) => {
-  nftStore.mutate_removePortfolio(portfolio)
+const removeCollection = collection => {
+  nftStore.mutate_removeCollection(collection)
 }
 
-const parsingWalletAddress = (walletAddress) => {
+const parsingWalletAddress = walletAddress => {
+  console.log('parsingWalletAddress walletAddress:', walletAddress)
+  if (!walletAddress) return
   const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
   const match = walletAddress.match(truncateRegex)
   if (!match) {
@@ -56,7 +64,7 @@ const parsingWalletAddress = (walletAddress) => {
 }
 
 const disconnectAllAddress = () => {
-  nftStore.mutate_emptyPortfolios()
+  nftStore.mutate_emptyCollections()
   nftStore.mutate_emptyNfts()
   nftStore.mutate_emptyNft()
 
@@ -65,7 +73,7 @@ const disconnectAllAddress = () => {
 </script>
 
 <template>
-  <div v-if="isSelectedNft">
+  <!-- <div v-if="isSelectedNft">
     <div class="nft-info-title">
       Selected NFT
     </div>
@@ -83,7 +91,7 @@ const disconnectAllAddress = () => {
         <div class="nft-info-button">Update</div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="label">
     Connected Wallets
@@ -95,24 +103,24 @@ const disconnectAllAddress = () => {
     Add Address
   </div>
 
-  <div v-if="isPortfolios" class="grid-container">
-    <div class="grid-item" v-for="(portfolio, i) in portfolios" :key="i">
-      <span @mouseover="showCloseButton(portfolio)">{{parsingWalletAddress(portfolio.walletAddress)}}</span>
+  <div v-if="isCollections" class="grid-container">
+    <div class="grid-item" v-for="(collection, i) in collections" :key="i">
+      <span @mouseover="showCloseButton(collection)">{{parsingWalletAddress(collection.wallet)}}</span>
       <img
-        v-if="hoverPortfolio?.walletAddress == portfolio.walletAddress"
+        v-if="hoverWallet?.walletAddress == collection.walletAddress"
         class="close"
         src="/svg/icon-close-black.svg"
         alt="close"
-        @click="removePortfolio(portfolio)"
+        @click="removeCollection(collection)"
       />
     </div>
   </div>
 
-  <div v-if="isPortfolios" class="button" @click="disconnectAllAddress">
+  <div v-if="isCollections" class="button" @click="disconnectAllAddress">
     Disconnect All
   </div>
 
-  <div v-if="isSelectedNft" class="detail-info">
+  <!-- <div v-if="isSelectedNft" class="detail-info">
     <div class="detail-info-header">
       <div class="left">{{ selectedNft.name }} NFT</div>
       <div class="right">Listed:</div>
@@ -145,7 +153,7 @@ const disconnectAllAddress = () => {
       <div class="label">SOL</div>
       <div class="value">$3915</div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style lang="scss" scoped>

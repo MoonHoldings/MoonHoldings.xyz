@@ -2,19 +2,18 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import * as R from 'ramda'
 import deleteNFTkeys from '../utils/deleteNFTkeys'
+import {
+  AXIOS_CONFIG,
+  AXIOS_CONFIG_SHYFT_KEY,
+  SHYFT_URL,
+} from '../constants/api'
 
 export const useNftStore = defineStore('nft', {
   state: () => ({
-    server_url: `${import.meta.env.VITE_MOONSERVER_URL}`,
-    shyft_url: `${import.meta.env.VITE_SHYFTSERVER_URL}`,
-    shyft_key: `${import.meta.env.VITE_SHYFT_KEY}`,
-    axios_config: { headers: { 'Content-Type': 'application/json' } },
-    portfolios: [],
-    collections: [], // All filtered Collections <- render in UI
-    raw_collections: {}, // All newly imported Collections
-    filtered_collections: {}, // Unknown Collections
+    portfolios: [], // User can have multiple portfolios
+    collections: [], // Collection of NFT collections
     nfts: [],
-    nft: {}
+    nft: {}, // Rendered in Single Item view
   }),
   getters: {
     get_portfolios(state) {
@@ -23,15 +22,12 @@ export const useNftStore = defineStore('nft', {
     get_collections(state) {
       return state.collections
     },
-    get_raw_collections(state) {
-      return state.raw_collections
-    },
     get_nfts(state) {
       return state.nfts
     },
     get_nft(state) {
       return state.nft
-    }
+    },
   },
   actions: {
     mutate_emptyPortfolios() {
@@ -40,221 +36,131 @@ export const useNftStore = defineStore('nft', {
     mutate_emptyCollections() {
       this.collections = []
     },
-    mutate_emptyRawCollections() {
-      this.raw_collections = {}
-    },
     mutate_emptyNfts() {
       this.nfts = []
     },
     mutate_emptyNft() {
       this.nft = {}
     },
-    mutate_removePortfolio(portfolio) {
-      const searchPortfolio = this.portfolios.findIndex(item => item.walletAddress === portfolio.walletAddress)
-      this.portfolios.splice(searchPortfolio, 1)
+    mutate_removeCollection(collection) {
+      const searchCollections = this.collections.findIndex(
+        (item) => item.wallet === collection.wallet
+      )
+      this.collections.splice(searchCollections, 1)
+    },
+    mutate_setNfts(nfts) {
+      this.nfts = nfts
     },
     mutate_setNft(nft) {
       this.nft = nft
     },
-    // TODO rename to addAddress
-    async connectWalletWithAddress(walletAddress) {
+    async addAddress(walletAddress) {
       try {
         const response = await axios.get(
-          `${this.shyft_url}/wallet/get_portfolio?network=mainnet-beta&wallet=${walletAddress}`,
-          { headers: { 'Content-Type': 'application/json', 'x-api-key': `${this.shyft_key}` } }
+          `${SHYFT_URL}/wallet/collections?network=mainnet-beta&wallet_address=${walletAddress}`,
+          AXIOS_CONFIG_SHYFT_KEY
         )
-
         const res = await response.data
-        const nfts = res.result.nfts
+        const resCollections = res.result.collections
 
-        if (res.success && nfts.length > 0) {
-          let name = '' // TODO update to support new collection logic
-          let image = '' // TODO update to support new collection logic
+        // console.log('this.collections', this.collections)
+        // ? Add associate collections with walletAddress
 
-          this.raw_collections = {} // TODO temp resets raw collections
-          let raw_collections = {}
-          let filteredCollections = {}
-          let collectionAddress = ''
-          let updateAuthority = ''
+        resCollections.forEach((collection) => {
+          collection.wallet = walletAddress
+        })
 
-          // ? Group Known & Unknown collections (creates 2 arrays)
-          if (nfts && nfts.length > 0) {
-            nfts.forEach(nft => {
-              deleteNFTkeys(nft)
-              nft.wallet = walletAddress // create new key wallet
-              collectionAddress = nft?.collection?.address ?? 'unknown'
+        if (res.success && resCollections) {
+          if (this.collections.length > 0) {
+            // ? Add any new incoming collections into collections
+            for (let i = 0; i < resCollections.length; i++) {
+              const record = this.collections.find(
+                (el) => el.name === resCollections[i].name
+              )
+              if (record) {
+                for (let x = 0; x < this.collections.length; x++) {
+                  if (resCollections[i].name === this.collections[x].name) {
+                    resCollections[i].nfts.forEach((nft) => {
+                      const index = this.collections[x].nfts.findIndex(
+                        (el) => el.name === nft.name
+                      )
 
-              if (raw_collections[collectionAddress]) {
-                raw_collections[collectionAddress].push(nft)
-              } else {
-                raw_collections[collectionAddress] = []
-                raw_collections[collectionAddress].push(nft)
-              }
-            })
-          }
-
-          Object.assign(this.raw_collections, raw_collections)
-
-          // ? Filter and group unique unknown collections
-          if (raw_collections['unknown'] && raw_collections['unknown'].length > 0) {
-            raw_collections['unknown'].forEach(nft => {
-              updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority'
-
-              Object.assign(filteredCollections, {
-                [updateAuthority]: []
-              })
-            })
-
-            // ? Organize all NFTs into each unknown collection
-            raw_collections['unknown'].forEach(nft => {
-              updateAuthority = nft?.updateAuthorityAddress ?? 'missingUpdateAuthority'
-              
-              for (const [key, value] of Object.entries(filteredCollections)) {
-                if (updateAuthority === key) {
-                  filteredCollections[key].push(nft)
+                      if (index === -1) this.collections[x].nfts.push(nft)
+                    })
+                  }
                 }
+              } else {
+                this.collections.push(resCollections[i])
               }
-            })
-          }
-
-          // ? GET Collection {name} & {image} by calling URI
-          const getCollectionNameImage = collection => {
-            // If Known collection use NFT.read(collection.address) otherwise GET(collection[0].uri)
-            const knownCollection = (collection[0].collection?.address)
-
-            if (collection[0].collection?.collection_name && collection[0].collection?.collection_image) {
-              return
             }
-
-            if (knownCollection) {
-              this.fetchNFT(collection[0].collection?.address)  
-            } else {
-              this.fetchURI(collection[0].uri, collection[0])
-            }
+          } else {
+            // ? First wallet and collections added
+            this.collections = [...resCollections]
           }
-
-          // ? Reset this.collections
-          this.collections = [] // TODO need to fix logic so we don't reset & duplicate everytime
-          
-          // map known collections from raw_collections into this.collections
-          // TODO we need logic that will not add the same NFTs
-          // TODO there should never be duplicate collections or NFTs
-          // TODO if there is a new NFT added to an existing collection, that NFT should be added
-
-          // ? Fill this.collections
-          for (const [key, value] of Object.entries(this.raw_collections)) {
-            if (key != 'unknown') {
-              this.collections?.push(value)
-            }
-          }
-
-          // ? Set this.filtered_collections state with filteredCollections object
-          this.filtered_collections = filteredCollections
-
-          // Add all known collections
-          this.collections = [
-            ...this.collections,
-          ]
-
-          // Add all unknown collections
-          for (const [key, value] of Object.entries(this.filtered_collections)) {
-            this.collections?.push(value)
-          }
-
-          // https://ramdajs.com/docs/#forEachObjIndexed (Iterate over object)
-          R.forEachObjIndexed(getCollectionNameImage, this.collections)
-          R.forEachObjIndexed(getCollectionNameImage, filteredCollections)
-
-          console.log('Raw collections', raw_collections)
-          console.log('THIS.COLLECTIONS', this.collections) // TODO <- why does this grow
-          console.log('Unknown collections (this.filtered_collections)', this.filtered_collections)
-          
-          // ? Organize all collections into collection objects to render in UI:
-          this.portfolios.push({
-            walletAddress,
-            name,
-            image
-          })
         }
       } catch (error) {
-        console.log('error', error)
-        mixpanel.track('Error: nft.js > connectWalletWithAddress', { error: error, message: error.message })
+        console.error('Error: nft.js > addAddress', error)
+        mixpanel.track('Error: nft.js > addAddress', {
+          error: error,
+          message: error.message,
+        })
       }
     },
     async fetchNfts(walletAddress) {
       try {
         const response = await axios.get(
-          `${this.shyft_url}/nft/read_all?network=mainnet-beta&address=${walletAddress}`,
-          { headers: { 'Content-Type': 'application/json', 'x-api-key': `${this.shyft_key}` } }
+          `${SHYFT_URL}/nft/read_all?network=mainnet-beta&address=${walletAddress}`,
+          AXIOS_CONFIG_SHYFT_KEY
         )
-
         const result = await response.data
 
         if (result.success) {
           this.nfts = result.result
         }
       } catch (error) {
-        console.log(error)
-        mixpanel.track('Error: nft.js > fetchNfts', { error: error, message: error.message })
-      }
-    },
-    // ? For known NFT collections
-    async fetchNFT(uriAddress) {
-      try {
-        const response = await axios.get(
-          `${this.shyft_url}/nft/read?network=mainnet-beta&token_address=${uriAddress}`,
-          { headers: { 'Content-Type': 'application/json', 'x-api-key': `${this.shyft_key}` } }
-        )
-        const res = await response.data
-
-        if (res.success) {
-          for (const [key, value] of Object.entries(this.collections)) {
-            value.forEach(nft => {
-              if (nft.collection.address === uriAddress) {
-                nft.collection.collection_name = res.result.name
-                nft.collection.collection_image = res.result.cached_image_uri
-              }
-            })
-          }
-        }
-
-      } catch (error) {
-        console.log(error)
-        mixpanel.track('Error: nft.js > fetchNFT', { error: error, message: error.message })
+        console.error('Error: nft.js > fetchNfts', error)
+        mixpanel.track('Error: nft.js > fetchNfts', {
+          error: error,
+          message: error.message,
+        })
       }
     },
     // ? For unknown NFT collections
-    async fetchURI(uriAddress, firstNFT) {
-      try {
-        const response = await axios.get(
-          `${uriAddress}`,
-          { headers: { 'Content-Type': 'application/json', } }
-        )
-        const res = await response.data
+    async fetchURI(uriAddress, item) {
+      if (!item.image) {
+        try {
+          const response = await axios.get(`${uriAddress}`, AXIOS_CONFIG)
+          const res = await response.data
 
-        if (res) {
-          for (const [key, value] of Object.entries(this.filtered_collections)) {
-            if (key === firstNFT.updateAuthorityAddress) {
-              value.forEach(nft => {
-                if (nft.updateAuthorityAddress === firstNFT.updateAuthorityAddress) {
-                  const name = (res.collection && res.collection.name) ? res.collection.name : res.name
-                  const image = res.image
-
-                  nft.collection = {
-                    collection_name: name,
-                    collection_image: image
-                  }
-                }
-              })
-            }
-          }
+          item.image = res.image
+          item.description = res.description
+          item.collection = res.collection
+        } catch (error) {
+          console.error('Error: nft.js > fetchURI', error)
+          mixpanel.track('Error: nft.js > fetchURI', {
+            error: error,
+            message: error.message,
+          })
         }
-      } catch (error) {
-        console.log(error)
-        mixpanel.track('Error: nft.js > fetchURI', { error: error, message: error.message })
+      } else {
+        return item
       }
     },
-    async connectWallet() {}
+    async fetchAttributes() {
+      try {
+        const response = await axios.get(this.nft.metadata_uri, AXIOS_CONFIG)
+        const res = await response.data
+        this.nft.attributes = res.attributes
+        this.nft.symbol = res.symbol
+      } catch (error) {
+        console.error('Error: nft.js > fetchAttributes', error)
+        mixpanel.track('Error: nft.js > fetchAttributes', {
+          error: error,
+          message: error.message,
+        })
+      }
+    },
+    async connectWallet() {},
   },
-  persist: true
+  persist: true,
 })

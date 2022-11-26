@@ -98,7 +98,6 @@ const login = async () => {
       message: error.message,
     })
     utilStore.mutate_errorToggle(true)
-    console.log('error', error)
     utilStore.mutate_errorMessage(error.message)
   }
 }

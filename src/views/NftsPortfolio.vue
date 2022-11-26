@@ -5,7 +5,7 @@ import { WalletMultiButton } from 'solana-wallets-vue'
 import { useNftStore } from '@/stores/nft'
 
 import Header from '@/components/partials/Header.vue'
-import PortfolioBox from '@/components/nft/PortfolioBox.vue'
+import CollectionBox from '@/components/nft/CollectionBox.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
 
 const router = useRouter()
@@ -15,13 +15,13 @@ const isWalletAddressModal = ref(false)
 const walletAddress = ref('')
 const isLoading = ref(false)
 
-const portfolios = computed(() => {
-  return nftStore.portfolios ?? []
+const collections = computed(() => {
+  return nftStore.collections ?? []
 })
 
-const isPortfolios = computed(() => {
-  if (nftStore.portfolios) {
-    return nftStore.portfolios.length > 0
+const isCollections = computed(() => {
+  if (nftStore.collections) {
+    return nftStore.collections.length > 0
   }
 })
 
@@ -29,8 +29,8 @@ const handleConnectWallet = async () => {
   await console.log('handleConnectWallet')
 }
 
-const selectPortfolio = (portfolio) => {
-  router.push({ name: 'nftsCollection', params: { address: portfolio.walletAddress }})
+const selectCollection = (collection) => {
+  router.push({ name: 'nftsCollection', params: { name: collection.name } })
 }
 
 const showWalletAddressModal = () => {
@@ -45,7 +45,7 @@ const closeWalletAddressModal = () => {
 
 const addWallet = async () => {
   isLoading.value = true
-  await nftStore.connectWalletWithAddress(walletAddress.value)
+  await nftStore.addAddress(walletAddress.value)
   isWalletAddressModal.value = false
   isLoading.value = false
 }
@@ -60,22 +60,30 @@ onMounted(async () => {
 
   <div class="collection">
     <div class="collection__left-side">
-      <div v-if="isPortfolios" class="label">
-        Displaying {{portfolios?.length ?? 0}} collections
+      <div v-if="isCollections" class="label">
+        Displaying {{ collections?.length ?? 0 }} collections
       </div>
 
-      <div v-if="isPortfolios" class="grid">
-        <PortfolioBox v-for="(portfolio, i) in portfolios" :key="i" :portfolio="portfolio" @click="selectPortfolio(portfolio)" />
+      <div v-if="isCollections" class="grid">
+        <CollectionBox
+          v-for="(collection, i) in collections"
+          :key="i"
+          :collection="collection"
+          @click="selectCollection(collection)"
+        />
       </div>
 
       <div v-else class="empty-nft-summary">
-        <div class="empty-title">
-          Import your NFT collection
-        </div>
+        <div class="empty-title">Import your NFT collections</div>
         <div class="empty-content">
-          Select Connect Wallet or Add Address to get Started
+          <!-- Select Connect Wallet or  -->
+          Add Address to get Started
         </div>
-        <img class="empty-image" src="/svg/icon-empty-nft.svg" alt="nft-image" />
+        <img
+          class="empty-image"
+          src="/svg/icon-empty-nft.svg"
+          alt="nft-image"
+        />
       </div>
     </div>
 
@@ -88,9 +96,7 @@ onMounted(async () => {
     <div class="wallet-modal-content">
       <div class="wallet-modal-container">
         <div class="wallet-modal-header">
-          <div class="label">
-            Add your Solana wallet address
-          </div>
+          <div class="label">Add your Solana wallet address</div>
           <img
             class="image"
             src="/svg/icon-close.svg"
@@ -102,7 +108,7 @@ onMounted(async () => {
         <div class="wallet-input-content">
           <input type="text" v-model="walletAddress" class="input-text" />
           <div class="input-button" @click="addWallet">
-            {{ isLoading ? "Connecting..." : "Add Wallet"}}
+            {{ isLoading ? 'Connecting...' : 'Add Wallet' }}
           </div>
         </div>
       </div>

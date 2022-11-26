@@ -3,13 +3,12 @@ import axios from 'axios'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { useCookies } from 'vue3-cookies'
+import { AXIOS_CONFIG, SERVER_URL } from '../constants/api'
 
 const { cookies } = useCookies()
 
 export const useCoinStore = defineStore('coin', {
   state: () => ({
-    server_url: `${import.meta.env.VITE_MOONSERVER_URL}/api`,
-    axios_config: { headers: { 'Content-Type': 'application/json' } },
     modalCoin: {},
     cryptoCoins: [],
     coins: [],
@@ -138,7 +137,7 @@ export const useCoinStore = defineStore('coin', {
 
         if (recordCoin) {
           response = await axios.put(
-            `${this.server_url}/update-coin`,
+            `${SERVER_URL}/update-coin`,
             {
               coin: this.modalCoin,
               email: user.email,
@@ -165,7 +164,7 @@ export const useCoinStore = defineStore('coin', {
           }
         } else {
           response = await axios.put(
-            `${this.server_url}/save-coin`,
+            `${SERVER_URL}/save-coin`,
             {
               coin: this.modalCoin,
               email: user.email,
@@ -195,7 +194,7 @@ export const useCoinStore = defineStore('coin', {
       const token = cookies.get('MOON_TOKEN')
       try {
         const response = await axios.put(
-          `${this.server_url}/remove-coin`,
+          `${SERVER_URL}/remove-coin`,
           {
             coinId: this.modalCoin.id,
             email: user.email,
@@ -285,8 +284,8 @@ export const useCoinStore = defineStore('coin', {
     async fetchCoins() {
       try {
         const response = await axios.get(
-          `${this.server_url}/coins`,
-          this.axios_config
+          `${SERVER_URL}/coins`,
+          AXIOS_CONFIG
         )
         const result = await response.data
         const coinsArr = result.coins.map((coin) => coin)

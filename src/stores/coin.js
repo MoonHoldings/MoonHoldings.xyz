@@ -230,24 +230,37 @@ export const useCoinStore = defineStore('coin', {
       this.modalCoin = {}
     },
     async getSingleCoin(coinId) {
-      const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY
       try {
-        const response = await axios.get(
-          `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${coinId}&intervals=1d,30d`
+        let coin
+        const token = cookies.get('MOON_TOKEN')
+        const response = await axios.post(
+          `${SERVER_URL}/get-coin`,
+          {
+            coinId,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token,
+            },
+          }
         )
 
-        const coin = response.data[0]
+        const result = response.data
 
-        const _24hr = coin['1d'] ? coin['1d']['price_change_pct'] : ''
+        if (result.success) {
+          coin = result.coin
+          const _24hr = coin['1d'] ? coin['1d']['price_change_pct'] : ''
 
-        this.modalCoin = {
-          id: coin?.id,
-          symbol: coin?.symbol,
-          name: coin?.name,
-          price: coin?.price,
-          logo_url: coin?.logo_url,
-          _24hr,
-          wallets: [],
+          this.modalCoin = {
+            id: coin?.id,
+            symbol: coin?.symbol,
+            name: coin?.name,
+            price: coin?.price,
+            logo_url: coin?.logo_url,
+            _24hr,
+            wallets: [],
+          }
         }
       } catch (error) {
         mixpanel.track('Error: coin.js > getSingleCoin', {
@@ -283,10 +296,7 @@ export const useCoinStore = defineStore('coin', {
     },
     async fetchCoins() {
       try {
-        const response = await axios.get(
-          `${SERVER_URL}/coins`,
-          AXIOS_CONFIG
-        )
+        const response = await axios.get(`${SERVER_URL}/coins`, AXIOS_CONFIG)
         const result = await response.data
         const coinsArr = result.coins.map((coin) => coin)
         localStorage.setItem('coins', JSON.stringify(coinsArr))

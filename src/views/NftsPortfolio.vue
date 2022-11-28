@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, onBeforeUpdate, onUpdated } from 'vue'
 import { useRouter } from 'vue-router'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import { useNftStore } from '@/stores/nft'
@@ -15,9 +15,13 @@ const isWalletAddressModal = ref(false)
 const walletAddress = ref('')
 const isLoading = ref(false)
 
-const collections = computed(() => {
+let collections
+
+collections = computed(() => {
   return nftStore.collections ?? []
 })
+
+console.log('NftsPortfolio collections:', collections)
 
 const isCollections = computed(() => {
   if (nftStore.collections) {
@@ -51,8 +55,22 @@ const addWallet = async () => {
 }
 
 onMounted(async () => {
+  // console.log('onMounted')
   nftStore.mutate_emptyNft()
 })
+
+// onBeforeUpdate(async () => {
+//   console.log('onBeforeUpdate')
+// })
+
+// onUpdated(async () => {
+//   console.log('onUpdated')
+//   collections = computed(() => {
+//     return nftStore.collections ?? []
+//   })
+
+//   console.log(' collections', collections)
+// })
 </script>
 
 <template>

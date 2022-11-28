@@ -2,26 +2,34 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
-import * as solanaWeb3 from '@solana/web3.js'
-import { WalletMultiButton } from 'solana-wallets-vue'
+// import * as solanaWeb3 from '@solana/web3.js'
+import { WalletMultiButton, useWallet } from 'solana-wallets-vue'
 import "solana-wallets-vue/styles.css"
-
-// console.log('solanaWeb3', solanaWeb3)
-// console.log('solanaWeb3.publicKey', solanaWeb3.publicKey)
 
 const emit = defineEmits()
 const router = useRouter()
 const nftStore = useNftStore()
 
-console.log('nftStore.collections', nftStore.collections)
+// console.log('WalletManage collections:', nftStore.collections)
 
-const collections = computed(() => {
-  return nftStore.collections ?? []
+// const collections = computed(() => {
+//   return nftStore.collections ?? []
+// })
+
+const wallets = computed(() => {
+  return nftStore.wallets ?? []
 })
 
 const isCollections = computed(() => {
   if (nftStore.collections) {
     return nftStore.collections.length > 0
+  }
+  return false
+})
+
+const isWallets = computed(() => {
+  if (nftStore.wallets) {
+    return nftStore.wallets.length > 0
   }
   return false
 })
@@ -43,16 +51,19 @@ const showWalletAddressModal = () => {
   emit("showWalletAddress")
 }
 
-const showCloseButton = collection => {
-  hoverWallet.value = collection.wallet
+const showCloseButton = wallet => {
+  hoverWallet.value = wallet
+  console.log('hoverWallet:', hoverWallet)
+  console.log('showCloseButton if true:', hoverWallet?.value === wallet)
+  // emit("showCloseButton")
 }
 
-const removeCollection = collection => {
-  nftStore.mutate_removeCollection(collection)
+const removeCollection = wallet => {
+  nftStore.mutate_removeWallet(wallet)
 }
 
 const parsingWalletAddress = walletAddress => {
-  console.log('parsingWalletAddress walletAddress:', walletAddress)
+  // console.log('parsingWalletAddress walletAddress:', walletAddress)
   if (!walletAddress) return
   const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
   const match = walletAddress.match(truncateRegex)
@@ -65,10 +76,17 @@ const parsingWalletAddress = walletAddress => {
 
 const disconnectAllAddress = () => {
   nftStore.mutate_emptyCollections()
+  nftStore.mutate_emptyWallets()
   nftStore.mutate_emptyNfts()
   nftStore.mutate_emptyNft()
 
   router.push({ name: 'nftsPortfolio' })
+}
+
+// ? Get publicKey from wallet connect
+const { publicKey, sendTransaction } = useWallet()
+if (publicKey && publicKey.value) {
+  console.log('publicKey', publicKey.value.toBase58())
 }
 </script>
 
@@ -97,26 +115,28 @@ const disconnectAllAddress = () => {
     Connected Wallets
   </div>
 
+  <!-- ? Wallet Connect -->
   <wallet-multi-button dark></wallet-multi-button>
 
   <div class="button" @click="showWalletAddressModal">
     Add Address
   </div>
 
-  <div v-if="isCollections" class="grid-container">
-    <div class="grid-item" v-for="(collection, i) in collections" :key="i">
-      <span @mouseover="showCloseButton(collection)">{{parsingWalletAddress(collection.wallet)}}</span>
+  <div v-if="isWallets" class="grid-container">
+    <div class="grid-item" v-for="(wallet, i) in wallets" :key="i">
+      <span @mouseover="showCloseButton(wallet)">{{parsingWalletAddress(wallet)}}</span>
+      {{hoverWallet?.value == wallet}}
       <img
-        v-if="hoverWallet?.walletAddress == collection.walletAddress"
+        
         class="close"
         src="/svg/icon-close-black.svg"
         alt="close"
-        @click="removeCollection(collection)"
+        @click="removeCollection(wallet)"
       />
     </div>
   </div>
 
-  <div v-if="isCollections" class="button" @click="disconnectAllAddress">
+  <div v-if="isWallets" class="button" @click="disconnectAllAddress">
     Disconnect All
   </div>
 

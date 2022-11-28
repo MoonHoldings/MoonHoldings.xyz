@@ -2,8 +2,12 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
-// import * as solanaWeb3 from '@solana/web3.js'
 import { WalletMultiButton, useWallet } from 'solana-wallets-vue'
+import {
+  ADD_ADDRESS,
+  CONNECTED_WALLETS,
+  DISCONNECT_ALL
+} from '../../constants/copy'
 import "solana-wallets-vue/styles.css"
 
 const emit = defineEmits()
@@ -12,19 +16,8 @@ const nftStore = useNftStore()
 
 // console.log('WalletManage collections:', nftStore.collections)
 
-// const collections = computed(() => {
-//   return nftStore.collections ?? []
-// })
-
 const wallets = computed(() => {
   return nftStore.wallets ?? []
-})
-
-const isCollections = computed(() => {
-  if (nftStore.collections) {
-    return nftStore.collections.length > 0
-  }
-  return false
 })
 
 const isWallets = computed(() => {
@@ -91,6 +84,7 @@ if (publicKey && publicKey.value) {
 </script>
 
 <template>
+  <!-- TODO Hidden for now till MagicEden sprints -->
   <!-- <div v-if="isSelectedNft">
     <div class="nft-info-title">
       Selected NFT
@@ -112,14 +106,14 @@ if (publicKey && publicKey.value) {
   </div> -->
 
   <div class="label">
-    Connected Wallets
+    {{ CONNECTED_WALLETS }}
   </div>
 
   <!-- ? Wallet Connect -->
   <wallet-multi-button dark></wallet-multi-button>
 
   <div class="button" @click="showWalletAddressModal">
-    Add Address
+    {{ ADD_ADDRESS }}
   </div>
 
   <div v-if="isWallets" class="grid-container">
@@ -137,9 +131,10 @@ if (publicKey && publicKey.value) {
   </div>
 
   <div v-if="isWallets" class="button" @click="disconnectAllAddress">
-    Disconnect All
+    {{ DISCONNECT_ALL }}
   </div>
 
+  <!-- TODO Hidden for now till MagicEden sprints -->
   <!-- <div v-if="isSelectedNft" class="detail-info">
     <div class="detail-info-header">
       <div class="left">{{ selectedNft.name }} NFT</div>

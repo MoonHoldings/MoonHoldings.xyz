@@ -59,18 +59,6 @@ onMounted(async () => {
   nftStore.mutate_emptyNft()
 })
 
-// onBeforeUpdate(async () => {
-//   console.log('onBeforeUpdate')
-// })
-
-// onUpdated(async () => {
-//   console.log('onUpdated')
-//   collections = computed(() => {
-//     return nftStore.collections ?? []
-//   })
-
-//   console.log(' collections', collections)
-// })
 </script>
 
 <template>

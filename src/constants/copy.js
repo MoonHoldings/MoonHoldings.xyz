@@ -32,3 +32,8 @@ export const CALENDAR = 'CALENDAR'
 export const COIN_SWAP = 'COIN SWAP'
 export const RANKS = 'RANKS'
 export const INSIGHTS = 'INSIGHTS'
+
+// Wallets
+export const CONNECTED_WALLETS = 'Connected Wallets'
+export const ADD_ADDRESS = 'Add Address'
+export const DISCONNECT_ALL = 'Disconnect All'

@@ -86,7 +86,7 @@ onMounted(async () => {
         <div class="collection-image">
           <img
             class="image"
-            :src="selectedNft.image"
+            :src="selectedNft.image_uri"
             alt="nft-image"
             @click="showImageModal"
           />
@@ -216,7 +216,7 @@ onMounted(async () => {
   <div v-if="isImageModal" class="modal">
     <span class="close" @click="closeImageModal">&times;</span>
     <div class="modal-content">
-      <img class="image" :src="selectedNft.image" alt="nft-image" />
+      <img class="image" :src="selectedNft.image_uri" alt="nft-image" />
     </div>
   </div>
 

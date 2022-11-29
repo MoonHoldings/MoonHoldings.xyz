@@ -63,13 +63,13 @@ onMounted(async () => {
 
   isFetchingNfts.value = true
   const selectedCollection = nftStore.collections.filter(
-    (collection) => route.params.name === collection.name
+    (collection) => route.params.name === collection.update_authority
   )[0]
 
   nftStore.mutate_setNfts(selectedCollection.nfts)
 
   await selectedCollection.nfts.forEach((nft) => {
-    nftStore.fetchURI(nft.metadata_uri, nft)
+    nftStore.fetchNfts(nft.wallet)
   })
 
   isFetchingNfts.value = false
@@ -137,9 +137,9 @@ onMounted(async () => {
             </div> -->
             <div class="content" @click="selectDetailNFT(nft)">
               <img
-                v-if="nft.image"
+                v-if="nft.image_uri"
                 class="image"
-                :src="nft.image"
+                :src="nft.image_uri"
                 alt="Nft Image"
               />
             </div>

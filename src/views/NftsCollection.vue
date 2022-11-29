@@ -37,7 +37,7 @@ const selectDetailNFT = (nft) => {
 
 const goDetailNFT = (nft) => {
   nftStore.mutate_setNft(nft)
-  router.push({ name: 'nftSingleItem' })
+  router.push({ name: 'nftSingleItem', params: { name: route.params.name } })
 }
 
 const showWalletAddressModal = () => {

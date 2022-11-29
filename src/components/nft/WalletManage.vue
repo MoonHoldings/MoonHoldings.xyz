@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
-import { useWallet } from 'solana-wallets-vue'
+import { WalletMultiButton, useWallet } from 'solana-wallets-vue'
 import {
   ADD_ADDRESS,
   CONNECTED_WALLETS,

@@ -3,6 +3,7 @@ import axios from 'axios'
 import * as R from 'ramda'
 import deleteNFTkeys from '../utils/deleteNFTkeys'
 import {
+  SERVER_URL,
   AXIOS_CONFIG,
   AXIOS_CONFIG_SHYFT_KEY,
   SHYFT_URL,
@@ -56,38 +57,42 @@ export const useNftStore = defineStore('nft', {
     },
     async addAddress(walletAddress) {
       try {
-        const response = await axios.get(
-          `${SHYFT_URL}/wallet/collections?network=mainnet-beta&wallet_address=${walletAddress}`,
-          AXIOS_CONFIG_SHYFT_KEY
+        const response = await axios.post(
+          `${SERVER_URL}/nft-collections`,
+          {
+            walletAddress,
+          },
+          AXIOS_CONFIG
         )
         const res = await response.data
-        const resCollections = res.result.collections
+        const resCollections = res.collections
 
-        // console.log('this.collections', this.collections)
         // ? Add associate collections with walletAddress
 
         resCollections.forEach((collection) => {
           collection.wallet = walletAddress
         })
+        console.log(resCollections)
 
         if (res.success && resCollections) {
           if (this.collections.length > 0) {
             // ? Add any new incoming collections into collections
             for (let i = 0; i < resCollections.length; i++) {
-              const record = this.collections.find(
+              const recordIndex = this.collections.findIndex(
                 (el) => el.name === resCollections[i].name
               )
-              if (record) {
-                for (let x = 0; x < this.collections.length; x++) {
-                  if (resCollections[i].name === this.collections[x].name) {
-                    resCollections[i].nfts.forEach((nft) => {
-                      const index = this.collections[x].nfts.findIndex(
-                        (el) => el.name === nft.name
-                      )
+              if (recordIndex !== -1) {
+                for (let x = 0; x < resCollections[i].nfts.length; x++) {
+                  const matchedNftIndex = this.collections[
+                    recordIndex
+                  ].nfts.findIndex(
+                    (nft) => nft.name === resCollections[i].nfts[x].name
+                  )
 
-                      if (index === -1) this.collections[x].nfts.push(nft)
-                    })
-                  }
+                  if (matchedNftIndex === -1)
+                    this.collections[recordIndex].nfts.push(
+                      resCollections[i].nfts[x]
+                    )
                 }
               } else {
                 this.collections.push(resCollections[i])

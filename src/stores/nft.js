@@ -50,8 +50,6 @@ export const useNftStore = defineStore('nft', {
       this.nft = {}
     },
     mutate_removeWallet(wallet) {
-      console.log('removeWallet', wallet)
-
       // Remove all NFTs from Collections associated with wallet
       for (let i = 0; i < this.collections.length; i++) {
         for (let x = 0; x < this.collections[i].nfts.length; x++) {

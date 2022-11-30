@@ -6,7 +6,6 @@ const props = defineProps(['copy', 'url'])
 
 const handleClick = () => {
   router.push(props.url)
-  console.log(`Goto url: ${props.url}`)
 }
 </script>
 

@@ -7,6 +7,12 @@ import { useNftStore } from '@/stores/nft'
 import Header from '@/components/partials/Header.vue'
 import CollectionBox from '@/components/nft/CollectionBox.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
+import {
+  ADD_ADDRESS_TO_START,
+  ADD_SOLANA_ADDRESS,
+  CONNECT_WALLET_OR,
+  IMPORT_YOUR_NFTS
+} from '../constants/copy'
 
 const router = useRouter()
 const nftStore = useNftStore()
@@ -21,7 +27,7 @@ collections = computed(() => {
   return nftStore.collections ?? []
 })
 
-console.log('NftsPortfolio collections:', collections)
+// console.log('NftsPortfolio collections:', collections)
 
 const isCollections = computed(() => {
   if (nftStore.collections) {
@@ -55,7 +61,6 @@ const addWallet = async () => {
 }
 
 onMounted(async () => {
-  // console.log('onMounted')
   nftStore.mutate_emptyNft()
 })
 
@@ -80,10 +85,10 @@ onMounted(async () => {
       </div>
 
       <div v-else class="empty-nft-summary">
-        <div class="empty-title">Import your NFT collections</div>
+        <div class="empty-title">{{ IMPORT_YOUR_NFTS }}</div>
         <div class="empty-content">
-          <!-- Select Connect Wallet or  -->
-          Add Address to get Started
+          {{ CONNECT_WALLET_OR }}
+          {{ ADD_ADDRESS_TO_START }}
         </div>
         <img
           class="empty-image"
@@ -102,7 +107,7 @@ onMounted(async () => {
     <div class="wallet-modal-content">
       <div class="wallet-modal-container">
         <div class="wallet-modal-header">
-          <div class="label">Add your Solana wallet address</div>
+          <div class="label">{{ ADD_SOLANA_ADDRESS }}</div>
           <img
             class="image"
             src="/svg/icon-close.svg"

@@ -37,3 +37,9 @@ export const INSIGHTS = 'INSIGHTS'
 export const CONNECTED_WALLETS = 'Connected Wallets'
 export const ADD_ADDRESS = 'Add Address'
 export const DISCONNECT_ALL = 'Disconnect All'
+
+// NFTs
+export const IMPORT_YOUR_NFTS = 'Import your NFT collections'
+export const ADD_ADDRESS_TO_START = 'Add Address to get Started'
+export const ADD_SOLANA_ADDRESS = 'Add your Solana wallet address'
+export const CONNECT_WALLET_OR = 'Connect Wallet or '

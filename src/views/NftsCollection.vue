@@ -26,6 +26,16 @@ const isNfts = computed(() => {
   }
 })
 
+const collectionName = computed(() => {
+  console.log('route', route)
+  console.log('nfts', nfts)
+  const collectionNFT = nftStore.nfts.find(
+    (el) => el.update_authority === route.params.name
+  )
+  console.log('collectionNFT', collectionNFT)
+  return collectionNFT.collection?.name ?? 'this collection'
+})
+
 const backCollections = () => {
   router.push({ name: 'nftsPortfolio' })
 }
@@ -95,14 +105,15 @@ onMounted(async () => {
           &#10094; Back to Collections
         </div>
         <div class="count">
-          You own <span class="value">{{ nfts.length }}</span> NFTs
+          You own <span class="value">{{ nfts.length }}</span> NFTs in {{ collectionName }}
         </div>
-        <div class="floor">
+        <!-- ? MagicEden -->
+        <!-- <div class="floor">
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
           <div class="label">Floor</div>
           <div class="down-value">13.6</div>
-          <!-- <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" /> -->
-        </div>
+          <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" />
+        </div> -->
         <!-- ? HyperSpace -->
         <!-- <div class="floor">
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />

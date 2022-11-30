@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import * as R from 'ramda'
-import deleteNFTkeys from '../utils/deleteNFTkeys'
+import deleteNFTkeys from '../utils/deleteNFTkeys' // TODO use
 import {
   AXIOS_CONFIG,
   AXIOS_CONFIG_SHYFT_KEY,
@@ -11,9 +11,9 @@ import {
 export const useNftStore = defineStore('nft', {
   state: () => ({
     portfolios: [], // User can have multiple portfolios
-    collections: [], // Collection of NFT collections
-    wallets: [],
-    nfts: [],
+    collections: [], // Collection of NFT in Portfolio view
+    wallets: [], // List of added wallets
+    nfts: [], // NFTs in Collection view
     nft: {}, // Rendered in Single Item view
   }),
   getters: {
@@ -49,11 +49,6 @@ export const useNftStore = defineStore('nft', {
     mutate_emptyNft() {
       this.nft = {}
     },
-    // mutate_removeCollection(collection) {
-    //   const searchCollections = this.collections.findIndex(
-    //     (item) => item.wallet === collection.wallet
-    //   )
-    // },
     mutate_removeWallet(wallet) {
       console.log('removeWallet', wallet)
 
@@ -99,8 +94,6 @@ export const useNftStore = defineStore('nft', {
         )
         const res = await response.data
         const resCollections = res.result.collections
-        console.log('resCollections', resCollections)
-        console.log('this.collections', this.collections)
 
         // ? Add NFT update_authority to collection & Associate NFTs with wallet
         resCollections.forEach((collection) => {

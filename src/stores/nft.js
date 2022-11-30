@@ -71,6 +71,16 @@ export const useNftStore = defineStore('nft', {
       const dropEmptyCollections = collection => collection.nfts.length === 0
       this.collections = R.dropWhile(dropEmptyCollections, this.collections)
 
+      let tempCollections = []
+
+      this.collections.forEach(item => {
+        if (item.nfts.length > 0) {
+          tempCollections.push(item)
+        }
+      })
+
+      this.collections = tempCollections
+
       // Remove wallet
       const walletToRemove = this.wallets.findIndex(item => item === wallet)
       this.wallets.splice(walletToRemove, 1)
@@ -133,7 +143,7 @@ export const useNftStore = defineStore('nft', {
           this.fetchURI(collection.nfts[0].metadata_uri, collection)
           this.wallets.push(collection.nfts[0].wallet)
         })
-        
+
         this.wallets = [...new Set(this.wallets)]
 
       } catch (error) {

@@ -14,8 +14,6 @@ const emit = defineEmits()
 const router = useRouter()
 const nftStore = useNftStore()
 
-// console.log('WalletManage collections:', nftStore.collections)
-
 const wallets = computed(() => {
   return nftStore.wallets ?? []
 })
@@ -46,9 +44,10 @@ const showWalletAddressModal = () => {
 
 const showCloseButton = wallet => {
   hoverWallet.value = wallet
-  console.log('hoverWallet:', hoverWallet)
-  console.log('showCloseButton if true:', hoverWallet?.value === wallet)
-  // emit("showCloseButton")
+}
+
+const hiddenCloseButton = wallet => {
+  hoverWallet.value = null
 }
 
 const removeCollection = wallet => {
@@ -56,10 +55,13 @@ const removeCollection = wallet => {
 }
 
 const parsingWalletAddress = walletAddress => {
-  // console.log('parsingWalletAddress walletAddress:', walletAddress)
-  if (!walletAddress) return
+  if (!walletAddress) {
+    return
+  }
+
   const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
   const match = walletAddress.match(truncateRegex)
+
   if (!match) {
     return walletAddress
   }
@@ -78,6 +80,7 @@ const disconnectAllAddress = () => {
 
 // ? Get publicKey from wallet connect
 const { publicKey, sendTransaction } = useWallet()
+
 if (publicKey && publicKey.value) {
   console.log('publicKey', publicKey.value.toBase58())
 }
@@ -117,11 +120,18 @@ if (publicKey && publicKey.value) {
   </div>
 
   <div v-if="isWallets" class="grid-container">
-    <div class="grid-item" v-for="(wallet, i) in wallets" :key="i">
-      <span @mouseover="showCloseButton(wallet)">{{parsingWalletAddress(wallet)}}</span>
-      {{hoverWallet?.value == wallet}}
+    <div
+      class="grid-item"
+      v-for="(wallet, i) in wallets"
+      :key="i"
+      @mouseenter="showCloseButton(wallet)"
+      @mouseleave="hiddenCloseButton(wallet)"
+    >
+      <span>
+        {{ parsingWalletAddress(wallet) }}
+      </span>
       <img
-        
+        v-if="hoverWallet == wallet"
         class="close"
         src="/svg/icon-close-black.svg"
         alt="close"

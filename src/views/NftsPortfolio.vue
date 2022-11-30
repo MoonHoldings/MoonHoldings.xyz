@@ -34,7 +34,7 @@ const handleConnectWallet = async () => {
 }
 
 const selectCollection = (collection) => {
-  router.push({ name: 'nftsCollection', params: { name: collection.name } })
+  router.push({ name: 'nftsCollection', params: { name: collection.update_authority } })
 }
 
 const showWalletAddressModal = () => {

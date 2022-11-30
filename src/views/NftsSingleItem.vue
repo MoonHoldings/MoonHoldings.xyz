@@ -1,11 +1,12 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
 import Header from '@/components/partials/Header.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
 
 const router = useRouter()
+const route = useRoute()
 const nftStore = useNftStore()
 
 const isImageModal = ref(false)
@@ -22,8 +23,7 @@ const backCollections = () => {
 }
 
 const backCollection = () => {
-  // TODO fix this
-  router.push({ name: 'nftsCollection', params: { id: 1 }})
+  router.push({ name: 'nftsCollection', params: { name: route.params.name }})
 }
 
 const showImageModal = () => {
@@ -86,7 +86,7 @@ onMounted(async () => {
         <div class="collection-image">
           <img
             class="image"
-            :src="selectedNft.image"
+            :src="selectedNft.image_uri"
             alt="nft-image"
             @click="showImageModal"
           />
@@ -216,7 +216,7 @@ onMounted(async () => {
   <div v-if="isImageModal" class="modal">
     <span class="close" @click="closeImageModal">&times;</span>
     <div class="modal-content">
-      <img class="image" :src="selectedNft.image" alt="nft-image" />
+      <img class="image" :src="selectedNft.image_uri" alt="nft-image" />
     </div>
   </div>
 

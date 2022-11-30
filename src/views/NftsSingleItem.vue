@@ -18,6 +18,10 @@ const selectedNft = computed(() => {
   return nftStore.get_nft ?? {}
 })
 
+const collectionName = computed(() => {
+  return selectedNft.collection?.name ?? selectedNft.name
+})
+
 const backCollections = () => {
   router.push({ name: 'nftsPortfolio' })
 }
@@ -61,6 +65,8 @@ const parsingWalletAddress = (walletAddress) => {
   return `${match[1]}…${match[2]}`
 }
 
+console.log('selectedNft', selectedNft)
+
 onMounted(async () => {
   nftStore.fetchAttributes()
 })
@@ -77,7 +83,7 @@ onMounted(async () => {
         </div>
         <div class="slash">/</div>
         <div class="route" @click="backCollection">
-          &#10094; Back to Lotus Gang NFT
+          &#10094; {{ collectionName }}
         </div>
         <div class="slash">/</div>
       </div>

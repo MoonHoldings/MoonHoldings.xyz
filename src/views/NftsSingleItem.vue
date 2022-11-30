@@ -19,8 +19,12 @@ const selectedNft = computed(() => {
 })
 
 const collectionName = computed(() => {
-  return selectedNft.collection?.name ?? selectedNft.name
+  console.log('nftStore.get_nft.collection.name', nftStore.get_nft.collection.name)
+  console.log('nftStore.get_nft.name', nftStore.get_nft.name)
+  return nftStore.get_nft.collection.name ?? nftStore.get_nft.name
 })
+
+console.log('collectionName', collectionName)
 
 const backCollections = () => {
   router.push({ name: 'nftsPortfolio' })
@@ -65,7 +69,7 @@ const parsingWalletAddress = (walletAddress) => {
   return `${match[1]}…${match[2]}`
 }
 
-console.log('selectedNft', selectedNft)
+// console.log('selectedNft', selectedNft)
 
 onMounted(async () => {
   nftStore.fetchAttributes()

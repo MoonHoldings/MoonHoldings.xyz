@@ -27,7 +27,7 @@ collections = computed(() => {
   return nftStore.collections ?? []
 })
 
-// console.log('NftsPortfolio collections:', collections)
+console.log('NftsPortfolio collections:', collections)
 
 const isCollections = computed(() => {
   if (nftStore.collections) {
@@ -63,6 +63,8 @@ const addWallet = async () => {
 onMounted(async () => {
   nftStore.mutate_emptyNft()
 })
+
+console.log('collections', collections)
 
 </script>
 

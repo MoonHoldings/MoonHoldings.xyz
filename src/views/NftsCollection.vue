@@ -27,12 +27,7 @@ const isNfts = computed(() => {
 })
 
 const collectionName = computed(() => {
-  console.log('route', route)
-  console.log('nfts', nfts)
-  const collectionNFT = nftStore.nfts.find(
-    (el) => el.update_authority === route.params.name
-  )
-  console.log('collectionNFT', collectionNFT)
+  const collectionNFT = nftStore.nfts.find((el) => el.update_authority === route.params.name)
   return collectionNFT.collection?.name ?? 'this collection'
 })
 
@@ -83,6 +78,8 @@ onMounted(async () => {
   })
 
   isFetchingNfts.value = false
+
+  console.log('nfts', nfts)
 })
 </script>
 

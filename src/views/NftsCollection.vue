@@ -26,6 +26,11 @@ const isNfts = computed(() => {
   }
 })
 
+const collectionName = computed(() => {
+  const collectionNFT = nftStore.nfts.find((el) => el.update_authority === route.params.name)
+  return collectionNFT.collection?.name ?? 'this collection'
+})
+
 const backCollections = () => {
   router.push({ name: 'nftsPortfolio' })
 }
@@ -37,7 +42,7 @@ const selectDetailNFT = (nft) => {
 
 const goDetailNFT = (nft) => {
   nftStore.mutate_setNft(nft)
-  router.push({ name: 'nftSingleCollection', params: { id: nft.mint }})
+  router.push({ name: 'nftSingleItem', params: { name: route.params.name } })
 }
 
 const showWalletAddressModal = () => {
@@ -52,7 +57,7 @@ const closeWalletAddressModal = () => {
 
 const addWallet = async () => {
   isLoading.value = true
-  await nftStore.connectWalletWithAddress(walletAddress.value)
+  await nftStore.addAddress(walletAddress.value)
   isWalletAddressModal.value = false
   isLoading.value = false
 }
@@ -62,8 +67,19 @@ onMounted(async () => {
   nftStore.mutate_emptyNft()
 
   isFetchingNfts.value = true
-  await nftStore.fetchNfts(route.params.address)
+  const selectedCollection = nftStore.collections.filter(
+    (collection) => route.params.name === collection.update_authority
+  )[0]
+
+  nftStore.mutate_setNfts(selectedCollection.nfts)
+
+  await selectedCollection.nfts.forEach((nft) => {
+    nftStore.fetchNfts(nft.wallet)
+  })
+
   isFetchingNfts.value = false
+
+  console.log('nfts', nfts)
 })
 </script>
 
@@ -86,14 +102,15 @@ onMounted(async () => {
           &#10094; Back to Collections
         </div>
         <div class="count">
-          You own <span class="value">{{ nfts.length }}</span> NFTs
+          You own <span class="value">{{ nfts.length }}</span> NFTs in {{ collectionName }}
         </div>
-        <div class="floor">
+        <!-- ? MagicEden -->
+        <!-- <div class="floor">
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
           <div class="label">Floor</div>
           <div class="down-value">13.6</div>
-          <!-- <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" /> -->
-        </div>
+          <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" />
+        </div> -->
         <!-- ? HyperSpace -->
         <!-- <div class="floor">
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
@@ -108,12 +125,13 @@ onMounted(async () => {
           <div
             class="element-container"
             :class="{
-              'element-container-non-sol': !nft.royalty ||nft.royalty == 0,
-              'element-container element-selected-line' : selectedNft == nft.mint,
-              'element-container element-normal-line' : selectedNft !== nft.mint,
+              'element-container-non-sol': !nft.royalty || nft.royalty == 0,
+              'element-container element-selected-line':
+                selectedNft == nft.mint,
+              'element-container element-normal-line': selectedNft !== nft.mint,
             }"
           >
-            <div
+            <!-- <div
               v-if="nft.royalty && nft.royalty > 0"
               :class="{
                 'header header-selected' : selectedNft == nft.mint,
@@ -121,38 +139,60 @@ onMounted(async () => {
               }"
             >
               <div>
-                Listed: {{ nft.royalty }} SQL
+                Listed: {{ nft.royalty }} SOL
               </div>
               <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
-            </div>
+            </div> -->
             <div class="content" @click="selectDetailNFT(nft)">
-              <img v-if="nft.image_uri" class="image" :src="nft.image_uri" alt="Nft Image" />
+              <img
+                v-if="nft.image_uri"
+                class="image"
+                :src="nft.image_uri"
+                alt="Nft Image"
+              />
             </div>
             <div
               :class="{
-                'footer footer-selected' : selectedNft == nft.mint,
-                'footer footer-normal' : selectedNft !== nft.mint,
+                'footer footer-selected': selectedNft == nft.mint,
+                'footer footer-normal': selectedNft !== nft.mint,
               }"
             >
               <div class="label">
                 {{ nft.name }}
               </div>
-              <img class="image" src="/svg/icon-nft-expand.svg" alt="expand" @click="goDetailNFT(nft)" />
+              <img
+                class="image"
+                src="/svg/icon-nft-expand.svg"
+                alt="expand"
+                @click="goDetailNFT(nft)"
+              />
             </div>
           </div>
-          <div class="element-black-shadow" :class="{ 'element-black-shadow-non-sol': !nft.royalty ||nft.royalty == 0 }" />
-          <div class="element-gray-shadow" :class="{ 'element-gray-shadow-non-sol': !nft.royalty ||nft.royalty == 0 }" />
+          <div
+            class="element-black-shadow"
+            :class="{
+              'element-black-shadow-non-sol': !nft.royalty || nft.royalty == 0,
+            }"
+          />
+          <div
+            class="element-gray-shadow"
+            :class="{
+              'element-gray-shadow-non-sol': !nft.royalty || nft.royalty == 0,
+            }"
+          />
         </div>
       </div>
 
       <div v-else class="empty-nft-summary">
-        <div class="empty-title">
-          Import your NFT collection
-        </div>
+        <div class="empty-title">Import your NFT collection</div>
         <div class="empty-content">
           Select Connect Wallet or Add Address to get Started
         </div>
-        <img class="empty-image" src="/svg/icon-empty-nft.svg" alt="nft-image" />
+        <img
+          class="empty-image"
+          src="/svg/icon-empty-nft.svg"
+          alt="nft-image"
+        />
       </div>
     </div>
 
@@ -165,9 +205,7 @@ onMounted(async () => {
     <div class="wallet-modal-content">
       <div class="wallet-modal-container">
         <div class="wallet-modal-header">
-          <div class="label">
-            Add your Solana wallet address
-          </div>
+          <div class="label">Add your Solana wallet address 1</div>
           <img
             class="image"
             src="/svg/icon-close.svg"
@@ -179,7 +217,7 @@ onMounted(async () => {
         <div class="wallet-input-content">
           <input type="text" v-model="walletAddress" class="input-text" />
           <div class="input-button" @click="addWallet">
-            {{ isLoading ? "Connecting..." : "Add Wallet"}}
+            {{ isLoading ? 'Connecting...' : 'Add Wallet' }}
           </div>
         </div>
       </div>

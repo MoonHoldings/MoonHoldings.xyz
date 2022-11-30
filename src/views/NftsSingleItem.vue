@@ -1,11 +1,12 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
 import Header from '@/components/partials/Header.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
 
 const router = useRouter()
+const route = useRoute()
 const nftStore = useNftStore()
 
 const isImageModal = ref(false)
@@ -17,13 +18,20 @@ const selectedNft = computed(() => {
   return nftStore.get_nft ?? {}
 })
 
+const collectionName = computed(() => {
+  console.log('nftStore.get_nft.collection.name', nftStore.get_nft.collection.name)
+  console.log('nftStore.get_nft.name', nftStore.get_nft.name)
+  return nftStore.get_nft.collection.name ?? nftStore.get_nft.name
+})
+
+console.log('collectionName', collectionName)
+
 const backCollections = () => {
   router.push({ name: 'nftsPortfolio' })
 }
 
 const backCollection = () => {
-  // TODO fix this
-  router.push({ name: 'nftsCollection', params: { id: 1 }})
+  router.push({ name: 'nftsCollection', params: { name: route.params.name }})
 }
 
 const showImageModal = () => {
@@ -61,6 +69,8 @@ const parsingWalletAddress = (walletAddress) => {
   return `${match[1]}…${match[2]}`
 }
 
+// console.log('selectedNft', selectedNft)
+
 onMounted(async () => {
   nftStore.fetchAttributes()
 })
@@ -77,7 +87,7 @@ onMounted(async () => {
         </div>
         <div class="slash">/</div>
         <div class="route" @click="backCollection">
-          &#10094; Back to Lotus Gang NFT
+          &#10094; {{ collectionName }}
         </div>
         <div class="slash">/</div>
       </div>
@@ -86,7 +96,7 @@ onMounted(async () => {
         <div class="collection-image">
           <img
             class="image"
-            :src="selectedNft.image"
+            :src="selectedNft.image_uri"
             alt="nft-image"
             @click="showImageModal"
           />
@@ -216,7 +226,7 @@ onMounted(async () => {
   <div v-if="isImageModal" class="modal">
     <span class="close" @click="closeImageModal">&times;</span>
     <div class="modal-content">
-      <img class="image" :src="selectedNft.image" alt="nft-image" />
+      <img class="image" :src="selectedNft.image_uri" alt="nft-image" />
     </div>
   </div>
 

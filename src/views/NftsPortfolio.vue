@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, onBeforeUpdate, onUpdated } from 'vue'
 import { useRouter } from 'vue-router'
 import { WalletMultiButton } from 'solana-wallets-vue'
 import { useNftStore } from '@/stores/nft'
@@ -7,6 +7,12 @@ import { useNftStore } from '@/stores/nft'
 import Header from '@/components/partials/Header.vue'
 import CollectionBox from '@/components/nft/CollectionBox.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
+import {
+  ADD_ADDRESS_TO_START,
+  ADD_SOLANA_ADDRESS,
+  CONNECT_WALLET_OR,
+  IMPORT_YOUR_NFTS
+} from '../constants/copy'
 
 const router = useRouter()
 const nftStore = useNftStore()
@@ -15,9 +21,13 @@ const isWalletAddressModal = ref(false)
 const walletAddress = ref('')
 const isLoading = ref(false)
 
-const collections = computed(() => {
+let collections
+
+collections = computed(() => {
   return nftStore.collections ?? []
 })
+
+console.log('NftsPortfolio collections:', collections)
 
 const isCollections = computed(() => {
   if (nftStore.collections) {
@@ -30,7 +40,7 @@ const handleConnectWallet = async () => {
 }
 
 const selectCollection = (collection) => {
-  router.push({ name: 'nftsCollection', params: { name: collection.name } })
+  router.push({ name: 'nftsCollection', params: { name: collection.update_authority } })
 }
 
 const showWalletAddressModal = () => {
@@ -53,6 +63,9 @@ const addWallet = async () => {
 onMounted(async () => {
   nftStore.mutate_emptyNft()
 })
+
+console.log('collections', collections)
+
 </script>
 
 <template>
@@ -74,10 +87,10 @@ onMounted(async () => {
       </div>
 
       <div v-else class="empty-nft-summary">
-        <div class="empty-title">Import your NFT collections</div>
+        <div class="empty-title">{{ IMPORT_YOUR_NFTS }}</div>
         <div class="empty-content">
-          <!-- Select Connect Wallet or  -->
-          Add Address to get Started
+          {{ CONNECT_WALLET_OR }}
+          {{ ADD_ADDRESS_TO_START }}
         </div>
         <img
           class="empty-image"
@@ -96,7 +109,7 @@ onMounted(async () => {
     <div class="wallet-modal-content">
       <div class="wallet-modal-container">
         <div class="wallet-modal-header">
-          <div class="label">Add your Solana wallet address</div>
+          <div class="label">{{ ADD_SOLANA_ADDRESS }}</div>
           <img
             class="image"
             src="/svg/icon-close.svg"

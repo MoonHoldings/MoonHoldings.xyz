@@ -26,6 +26,11 @@ const isNfts = computed(() => {
   }
 })
 
+const collectionName = computed(() => {
+  const collectionNFT = nftStore.nfts.find((el) => el.update_authority === route.params.name)
+  return collectionNFT.collection?.name ?? 'this collection'
+})
+
 const backCollections = () => {
   router.push({ name: 'nftsPortfolio' })
 }
@@ -37,7 +42,7 @@ const selectDetailNFT = (nft) => {
 
 const goDetailNFT = (nft) => {
   nftStore.mutate_setNft(nft)
-  router.push({ name: 'nftSingleItem' })
+  router.push({ name: 'nftSingleItem', params: { name: route.params.name } })
 }
 
 const showWalletAddressModal = () => {
@@ -63,16 +68,18 @@ onMounted(async () => {
 
   isFetchingNfts.value = true
   const selectedCollection = nftStore.collections.filter(
-    (collection) => route.params.name === collection.name
+    (collection) => route.params.name === collection.update_authority
   )[0]
 
   nftStore.mutate_setNfts(selectedCollection.nfts)
 
   await selectedCollection.nfts.forEach((nft) => {
-    nftStore.fetchURI(nft.metadata_uri, nft)
+    nftStore.fetchNfts(nft.wallet)
   })
 
   isFetchingNfts.value = false
+
+  console.log('nfts', nfts)
 })
 </script>
 
@@ -95,14 +102,15 @@ onMounted(async () => {
           &#10094; Back to Collections
         </div>
         <div class="count">
-          You own <span class="value">{{ nfts.length }}</span> NFTs
+          You own <span class="value">{{ nfts.length }}</span> NFTs in {{ collectionName }}
         </div>
-        <div class="floor">
+        <!-- ? MagicEden -->
+        <!-- <div class="floor">
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
           <div class="label">Floor</div>
           <div class="down-value">13.6</div>
-          <!-- <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" /> -->
-        </div>
+          <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" />
+        </div> -->
         <!-- ? HyperSpace -->
         <!-- <div class="floor">
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
@@ -137,9 +145,9 @@ onMounted(async () => {
             </div> -->
             <div class="content" @click="selectDetailNFT(nft)">
               <img
-                v-if="nft.image"
+                v-if="nft.image_uri"
                 class="image"
-                :src="nft.image"
+                :src="nft.image_uri"
                 alt="Nft Image"
               />
             </div>

@@ -2,7 +2,10 @@
 import { ref, reactive, computed } from 'vue'
 
 const props = defineProps(['collection'])
-const { collection } = props
+
+const collection = computed(() => {
+  return props.collection
+})
 </script>
 
 <template>

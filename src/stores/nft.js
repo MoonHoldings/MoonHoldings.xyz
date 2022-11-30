@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import * as R from 'ramda'
-import deleteNFTkeys from '../utils/deleteNFTkeys'
+import deleteNFTkeys from '../utils/deleteNFTkeys' // TODO use
 import {
   SERVER_URL,
   AXIOS_CONFIG,
@@ -12,8 +12,9 @@ import {
 export const useNftStore = defineStore('nft', {
   state: () => ({
     portfolios: [], // User can have multiple portfolios
-    collections: [], // Collection of NFT collections
-    nfts: [],
+    collections: [], // Collection of NFT in Portfolio view
+    wallets: [], // List of added wallets
+    nfts: [], // NFTs in Collection view
     nft: {}, // Rendered in Single Item view
   }),
   getters: {
@@ -22,6 +23,9 @@ export const useNftStore = defineStore('nft', {
     },
     get_collections(state) {
       return state.collections
+    },
+    get_wallets(state) {
+      return state.wallets
     },
     get_nfts(state) {
       return state.nfts
@@ -37,17 +41,43 @@ export const useNftStore = defineStore('nft', {
     mutate_emptyCollections() {
       this.collections = []
     },
+    mutate_emptyWallets() {
+      this.wallets = []
+    },
     mutate_emptyNfts() {
       this.nfts = []
     },
     mutate_emptyNft() {
       this.nft = {}
     },
-    mutate_removeCollection(collection) {
-      const searchCollections = this.collections.findIndex(
-        (item) => item.wallet === collection.wallet
-      )
-      this.collections.splice(searchCollections, 1)
+    mutate_removeWallet(wallet) {
+      // Remove all NFTs from Collections associated with wallet
+      for (let i = 0; i < this.collections.length; i++) {
+        for (let x = 0; x < this.collections[i].nfts.length; x++) {
+          if (this.collections[i]?.nfts[x]?.wallet === wallet) {
+            this.collections[i].nfts.splice(x, 1)
+            x--
+          }
+        }
+      }
+
+      // If collection has no NFTS remove it
+      const dropEmptyCollections = (collection) => collection.nfts.length === 0
+      this.collections = R.dropWhile(dropEmptyCollections, this.collections)
+
+      let tempCollections = []
+
+      this.collections.forEach((item) => {
+        if (item.nfts.length > 0) {
+          tempCollections.push(item)
+        }
+      })
+
+      this.collections = tempCollections
+
+      // Remove wallet
+      const walletToRemove = this.wallets.findIndex((item) => item === wallet)
+      this.wallets.splice(walletToRemove, 1)
     },
     mutate_setNfts(nfts) {
       this.nfts = nfts
@@ -67,10 +97,11 @@ export const useNftStore = defineStore('nft', {
         const res = await response.data
         const resCollections = res.collections
 
-        // ? Add associate collections with walletAddress
-
+        // ? Add NFT update_authority to collection & Associate NFTs with wallet
         resCollections.forEach((collection) => {
           collection.wallet = walletAddress
+          collection.update_authority = collection.nfts[0].update_authority
+          collection.nfts.forEach((nft) => (nft.wallet = walletAddress))
         })
         console.log(resCollections)
 
@@ -103,6 +134,14 @@ export const useNftStore = defineStore('nft', {
             this.collections = [...resCollections]
           }
         }
+
+        // ? Get collection image & update wallets
+        this.collections.forEach((collection) => {
+          this.fetchURI(collection.nfts[0].metadata_uri, collection)
+          this.wallets.push(collection.nfts[0].wallet)
+        })
+
+        this.wallets = [...new Set(this.wallets)]
       } catch (error) {
         console.error('Error: nft.js > addAddress', error)
         mixpanel.track('Error: nft.js > addAddress', {

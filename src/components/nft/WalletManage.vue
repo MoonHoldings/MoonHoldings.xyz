@@ -2,26 +2,25 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
-import * as solanaWeb3 from '@solana/web3.js'
-import { WalletMultiButton } from 'solana-wallets-vue'
+import { WalletMultiButton, useWallet } from 'solana-wallets-vue'
+import {
+  ADD_ADDRESS,
+  CONNECTED_WALLETS,
+  DISCONNECT_ALL
+} from '../../constants/copy'
 import "solana-wallets-vue/styles.css"
-
-// console.log('solanaWeb3', solanaWeb3)
-// console.log('solanaWeb3.publicKey', solanaWeb3.publicKey)
 
 const emit = defineEmits()
 const router = useRouter()
 const nftStore = useNftStore()
 
-console.log('nftStore.collections', nftStore.collections)
-
-const collections = computed(() => {
-  return nftStore.collections ?? []
+const wallets = computed(() => {
+  return nftStore.wallets ?? []
 })
 
-const isCollections = computed(() => {
-  if (nftStore.collections) {
-    return nftStore.collections.length > 0
+const isWallets = computed(() => {
+  if (nftStore.wallets) {
+    return nftStore.wallets.length > 0
   }
   return false
 })
@@ -43,19 +42,26 @@ const showWalletAddressModal = () => {
   emit("showWalletAddress")
 }
 
-const showCloseButton = collection => {
-  hoverWallet.value = collection.wallet
+const showCloseButton = wallet => {
+  hoverWallet.value = wallet
 }
 
-const removeCollection = collection => {
-  nftStore.mutate_removeCollection(collection)
+const hiddenCloseButton = wallet => {
+  hoverWallet.value = null
+}
+
+const removeCollection = wallet => {
+  nftStore.mutate_removeWallet(wallet)
 }
 
 const parsingWalletAddress = walletAddress => {
-  console.log('parsingWalletAddress walletAddress:', walletAddress)
-  if (!walletAddress) return
+  if (!walletAddress) {
+    return
+  }
+
   const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
   const match = walletAddress.match(truncateRegex)
+
   if (!match) {
     return walletAddress
   }
@@ -65,14 +71,23 @@ const parsingWalletAddress = walletAddress => {
 
 const disconnectAllAddress = () => {
   nftStore.mutate_emptyCollections()
+  nftStore.mutate_emptyWallets()
   nftStore.mutate_emptyNfts()
   nftStore.mutate_emptyNft()
 
   router.push({ name: 'nftsPortfolio' })
 }
+
+// ? Get publicKey from wallet connect
+const { publicKey, sendTransaction } = useWallet()
+
+if (publicKey && publicKey.value) {
+  console.log('publicKey', publicKey.value.toBase58())
+}
 </script>
 
 <template>
+  <!-- TODO Hidden for now till MagicEden sprints -->
   <!-- <div v-if="isSelectedNft">
     <div class="nft-info-title">
       Selected NFT
@@ -94,32 +109,42 @@ const disconnectAllAddress = () => {
   </div> -->
 
   <div class="label">
-    Connected Wallets
+    {{ CONNECTED_WALLETS }}
   </div>
 
+  <!-- ? Wallet Connect -->
   <wallet-multi-button dark></wallet-multi-button>
 
   <div class="button" @click="showWalletAddressModal">
-    Add Address
+    {{ ADD_ADDRESS }}
   </div>
 
-  <div v-if="isCollections" class="grid-container">
-    <div class="grid-item" v-for="(collection, i) in collections" :key="i">
-      <span @mouseover="showCloseButton(collection)">{{parsingWalletAddress(collection.wallet)}}</span>
+  <div v-if="isWallets" class="grid-container">
+    <div
+      class="grid-item"
+      v-for="(wallet, i) in wallets"
+      :key="i"
+      @mouseenter="showCloseButton(wallet)"
+      @mouseleave="hiddenCloseButton(wallet)"
+    >
+      <span>
+        {{ parsingWalletAddress(wallet) }}
+      </span>
       <img
-        v-if="hoverWallet?.walletAddress == collection.walletAddress"
+        v-if="hoverWallet == wallet"
         class="close"
         src="/svg/icon-close-black.svg"
         alt="close"
-        @click="removeCollection(collection)"
+        @click="removeCollection(wallet)"
       />
     </div>
   </div>
 
-  <div v-if="isCollections" class="button" @click="disconnectAllAddress">
-    Disconnect All
+  <div v-if="isWallets" class="button" @click="disconnectAllAddress">
+    {{ DISCONNECT_ALL }}
   </div>
 
+  <!-- TODO Hidden for now till MagicEden sprints -->
   <!-- <div v-if="isSelectedNft" class="detail-info">
     <div class="detail-info-header">
       <div class="left">{{ selectedNft.name }} NFT</div>

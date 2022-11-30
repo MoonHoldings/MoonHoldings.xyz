@@ -118,6 +118,7 @@ onMounted(async () => {
 
   // save historical data
   await userStore.getHistory()
+
   const historyData = await getCoinHistoryData(
     userStore.historicalData,
     user.email

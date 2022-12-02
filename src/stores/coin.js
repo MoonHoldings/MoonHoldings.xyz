@@ -3,13 +3,12 @@ import axios from 'axios'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { useCookies } from 'vue3-cookies'
+import { AXIOS_CONFIG, SERVER_URL } from '../constants/api'
 
 const { cookies } = useCookies()
 
 export const useCoinStore = defineStore('coin', {
   state: () => ({
-    server_url: `${import.meta.env.VITE_MOONSERVER_URL}/api`,
-    axios_config: { headers: { 'Content-Type': 'application/json' } },
     modalCoin: {},
     cryptoCoins: [],
     coins: [],
@@ -138,7 +137,7 @@ export const useCoinStore = defineStore('coin', {
 
         if (recordCoin) {
           response = await axios.put(
-            `${this.server_url}/update-coin`,
+            `${SERVER_URL}/update-coin`,
             {
               coin: this.modalCoin,
               email: user.email,
@@ -165,7 +164,7 @@ export const useCoinStore = defineStore('coin', {
           }
         } else {
           response = await axios.put(
-            `${this.server_url}/save-coin`,
+            `${SERVER_URL}/save-coin`,
             {
               coin: this.modalCoin,
               email: user.email,
@@ -195,7 +194,7 @@ export const useCoinStore = defineStore('coin', {
       const token = cookies.get('MOON_TOKEN')
       try {
         const response = await axios.put(
-          `${this.server_url}/remove-coin`,
+          `${SERVER_URL}/remove-coin`,
           {
             coinId: this.modalCoin.id,
             email: user.email,
@@ -231,24 +230,37 @@ export const useCoinStore = defineStore('coin', {
       this.modalCoin = {}
     },
     async getSingleCoin(coinId) {
-      const NOMICS_KEY = import.meta.env.VITE_NOMICS_KEY
       try {
-        const response = await axios.get(
-          `https://api.nomics.com/v1/currencies/ticker?key=${NOMICS_KEY}&ids=${coinId}&intervals=1d,30d`
+        let coin
+        const token = cookies.get('MOON_TOKEN')
+        const response = await axios.post(
+          `${SERVER_URL}/get-coin`,
+          {
+            coinId,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token,
+            },
+          }
         )
 
-        const coin = response.data[0]
+        const result = response.data
 
-        const _24hr = coin['1d'] ? coin['1d']['price_change_pct'] : ''
+        if (result.success) {
+          coin = result.coin
+          const _24hr = coin['1d'] ? coin['1d']['price_change_pct'] : ''
 
-        this.modalCoin = {
-          id: coin?.id,
-          symbol: coin?.symbol,
-          name: coin?.name,
-          price: coin?.price,
-          logo_url: coin?.logo_url,
-          _24hr,
-          wallets: [],
+          this.modalCoin = {
+            id: coin?.id,
+            symbol: coin?.symbol,
+            name: coin?.name,
+            price: coin?.price,
+            logo_url: coin?.logo_url,
+            _24hr,
+            wallets: [],
+          }
         }
       } catch (error) {
         mixpanel.track('Error: coin.js > getSingleCoin', {
@@ -284,10 +296,7 @@ export const useCoinStore = defineStore('coin', {
     },
     async fetchCoins() {
       try {
-        const response = await axios.get(
-          `${this.server_url}/coins`,
-          this.axios_config
-        )
+        const response = await axios.get(`${SERVER_URL}/coins`, AXIOS_CONFIG)
         const result = await response.data
         const coinsArr = result.coins.map((coin) => coin)
         localStorage.setItem('coins', JSON.stringify(coinsArr))

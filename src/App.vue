@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, watch } from 'vue'
 import { useRoute, RouterView } from 'vue-router'
+
 import SuccessAlert from '@/components/partials/SuccessAlert.vue'
 import ErrorAlert from '@/components/partials/ErrorAlert.vue'
 import SideBar from '@/components/partials/SideBar.vue'

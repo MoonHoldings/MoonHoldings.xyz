@@ -1,11 +1,12 @@
 <script setup>
-import { ref, reactive, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
 import Header from '@/components/partials/Header.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
 
 const router = useRouter()
+const route = useRoute()
 const nftStore = useNftStore()
 
 const isImageModal = ref(false)
@@ -17,12 +18,20 @@ const selectedNft = computed(() => {
   return nftStore.get_nft ?? {}
 })
 
+const collectionName = computed(() => {
+  console.log('nftStore.get_nft.collection.name', nftStore.get_nft.collection.name)
+  console.log('nftStore.get_nft.name', nftStore.get_nft.name)
+  return nftStore.get_nft.collection.name ?? nftStore.get_nft.name
+})
+
+console.log('collectionName', collectionName)
+
 const backCollections = () => {
   router.push({ name: 'nftsPortfolio' })
 }
 
 const backCollection = () => {
-  router.push({ name: 'nftsCollection', params: { id: 1 }})
+  router.push({ name: 'nftsCollection', params: { name: route.params.name }})
 }
 
 const showImageModal = () => {
@@ -45,7 +54,7 @@ const closeWalletAddressModal = () => {
 
 const addWallet = async () => {
   isLoading.value = true
-  await nftStore.connectWalletWithAddress(walletAddress.value)
+  await nftStore.addAddress(walletAddress.value)
   isWalletAddressModal.value = false
   isLoading.value = false
 }
@@ -59,6 +68,12 @@ const parsingWalletAddress = (walletAddress) => {
 
   return `${match[1]}…${match[2]}`
 }
+
+// console.log('selectedNft', selectedNft)
+
+onMounted(async () => {
+  nftStore.fetchAttributes()
+})
 </script>
 
 <template>
@@ -72,7 +87,7 @@ const parsingWalletAddress = (walletAddress) => {
         </div>
         <div class="slash">/</div>
         <div class="route" @click="backCollection">
-          &#10094; Back to Lotus Gang NFT
+          &#10094; {{ collectionName }}
         </div>
         <div class="slash">/</div>
       </div>
@@ -81,12 +96,12 @@ const parsingWalletAddress = (walletAddress) => {
         <div class="collection-image">
           <img
             class="image"
-            :src="selectedNft.cached_image_uri"
+            :src="selectedNft.image_uri"
             alt="nft-image"
             @click="showImageModal"
           />
 
-          <div class="image-info">
+          <!-- <div class="image-info">
             <div class="image-info-detail">
               <div class="left">
                 Mint Address:
@@ -103,7 +118,7 @@ const parsingWalletAddress = (walletAddress) => {
                 {{ parsingWalletAddress(selectedNft.owner) }}
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <div class="collection-data">
@@ -114,7 +129,13 @@ const parsingWalletAddress = (walletAddress) => {
             {{ selectedNft.description }}
           </div>
 
-          <div class="floor-section">
+          <div class="info">
+            <div class="info-item" v-for="(attribute, index) in selectedNft.attributes" :key="index">
+              <div class="label">{{ attribute.trait_type }}</div>
+              <div class="value">{{ attribute.value }}</div>
+            </div>
+          </div>
+          <!-- <div class="floor-section">
             <div class="floor">
               <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
               <div class="label">Floor</div>
@@ -140,13 +161,13 @@ const parsingWalletAddress = (walletAddress) => {
               <img class="image" src="/svg/icon-howrare.svg" alt="nft-image" />
               <div class="number">3280</div>
             </div>
-          </div>
+          </div> -->
 
-          <div class="accept-offer">
+          <!-- <div class="accept-offer">
             Accept Hightest Offer @ 10.123
-          </div>
+          </div> -->
 
-          <div class="info">
+          <!-- <div class="info">
             <div class="info-item">
               <div class="label">Background</div>
               <div class="value">{{ selectedNft.attributes.background ?? "N/A" }}</div>
@@ -191,7 +212,8 @@ const parsingWalletAddress = (walletAddress) => {
               <div class="label">Accessory 3</div>
               <div class="value">{{ selectedNft.attributes["accessory 3"] ?? "N/A" }}</div>
             </div>
-          </div>
+          </div> -->
+
         </div>
       </div>
     </div>
@@ -204,7 +226,7 @@ const parsingWalletAddress = (walletAddress) => {
   <div v-if="isImageModal" class="modal">
     <span class="close" @click="closeImageModal">&times;</span>
     <div class="modal-content">
-      <img class="image" :src="selectedNft.cached_image_uri" alt="nft-image" />
+      <img class="image" :src="selectedNft.image_uri" alt="nft-image" />
     </div>
   </div>
 

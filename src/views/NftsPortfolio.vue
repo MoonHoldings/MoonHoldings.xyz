@@ -21,9 +21,7 @@ const isWalletAddressModal = ref(false)
 const walletAddress = ref('')
 const isLoading = ref(false)
 
-let collections
-
-collections = computed(() => {
+const collections = computed(() => {
   return nftStore.collections ?? []
 })
 
@@ -54,6 +52,18 @@ const addWallet = async () => {
   isLoading.value = false
 }
 
+const collectionLengthLabel = computed(() => {
+  if (nftStore.collections) {
+    if (nftStore.collections.length > 0 && nftStore.collections.length == 1) {
+      return "Displaying 1 Collection"
+    } else {
+      return "Displaying " + nftStore.collections.length + " Collections"
+    }
+  } else {
+    return "Displaying 0 Collection"
+  }
+})
+
 onMounted(async () => {
   nftStore.mutate_emptyNft()
 })
@@ -66,7 +76,7 @@ onMounted(async () => {
   <div class="collection">
     <div class="collection__left-side">
       <div v-if="isCollections" class="label">
-        Displaying {{ collections?.length ?? 0 }} collections
+        {{ collectionLengthLabel }}
       </div>
 
       <div v-if="isCollections" class="grid">

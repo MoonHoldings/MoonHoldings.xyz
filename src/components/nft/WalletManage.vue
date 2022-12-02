@@ -52,6 +52,7 @@ const hiddenCloseButton = wallet => {
 
 const removeCollection = wallet => {
   nftStore.mutate_removeWallet(wallet)
+  router.push({ name: 'nftsPortfolio' })
 }
 
 const parsingWalletAddress = walletAddress => {

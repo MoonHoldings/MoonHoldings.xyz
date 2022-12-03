@@ -16,7 +16,7 @@ import { useUtilStore } from '@/stores/util'
 import { useCookies } from 'vue3-cookies'
 import coinStyles from '@/constants/coinStyles'
 import refreshCryptoCoins from '@/utils/refreshCryptoCoins'
-import getCoinHistoryData from '@/utils/getCoinHistoryData'
+// import getCoinHistoryData from '@/utils/getCoinHistoryData'
 
 const { cookies } = useCookies()
 const userStore = useUserStore()
@@ -116,15 +116,16 @@ onMounted(async () => {
     return
   }
 
+  // TODO commenting out for now
   // save historical data
-  await userStore.getHistory()
+  // await userStore.getHistory()
 
-  const historyData = await getCoinHistoryData(
-    userStore.historicalData,
-    user.email
-  )
-  coinStore.mutate_chartValues(historyData.historyValues)
-  coinStore.mutate_chartLabels(historyData.dateLabels)
+  // const historyData = await getCoinHistoryData(
+  //   userStore.historicalData,
+  //   user.email
+  // )
+  // coinStore.mutate_chartValues(historyData.historyValues)
+  // coinStore.mutate_chartLabels(historyData.dateLabels)
 
   const refreshedCoins = await refreshCryptoCoins(user.portfolio.coins)
   coinStore.mutate_cryptoCoins(refreshedCoins)
@@ -162,7 +163,7 @@ onMounted(async () => {
 
     <div v-else class="crypto__main">
       <div class="crypto__stats">
-        <!-- percent bar -->
+        <!-- ?percent bar -->
         <div
           class="crypto__pct-bar"
           :style="{ width: barWidth + '%' + ' !important' }"
@@ -209,25 +210,24 @@ onMounted(async () => {
           </div>
         </div>
 
-        <div class="crypto__chart">
+        <!-- <Chart /> -->
+        <!-- <div class="crypto__chart">
           <div class="chart">
             <div class="header">
               <div class="left">
-                <!-- <div class="you">You</div> -->
-                <!-- <div class="everyone">Everyone</div> -->
+                <div class="you">You</div>
+                <div class="everyone">Everyone</div>
               </div>
               <div class="right">
                 <button class="week">Week</button>
-                <!-- <button class="month">Month</button>
-                <button class="year">Year</button> -->
+                <button class="month">Month</button>
+                <button class="year">Year</button>
               </div>
             </div>
-
-            <!-- The Chart -->
             <Chart />
           </div>
-          <!-- <Chart /> -->
-        </div>
+        </div> -->
+        <!-- <Chart /> -->
       </div>
     </div>
   </div>

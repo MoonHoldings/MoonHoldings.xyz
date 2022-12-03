@@ -113,7 +113,7 @@ if (publicKey && publicKey.value) {
   </div>
 
   <!-- ? Wallet Connect -->
-  <wallet-multi-button dark></wallet-multi-button>
+  <!-- <wallet-multi-button dark></wallet-multi-button> -->
 
   <div class="button" @click="showWalletAddressModal">
     {{ ADD_ADDRESS }}

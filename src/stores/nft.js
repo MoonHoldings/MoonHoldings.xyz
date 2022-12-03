@@ -136,6 +136,7 @@ export const useNftStore = defineStore('nft', {
         }
 
         // ? Get collection image & update wallets
+        // TODO refactor fetchURI to Promise.all
         this.collections.forEach((collection) => {
           this.fetchURI(collection.nfts[0].metadata_uri, collection)
           this.wallets.push(collection.nfts[0].wallet)

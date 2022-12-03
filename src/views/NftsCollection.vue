@@ -28,7 +28,7 @@ const isNfts = computed(() => {
 
 const collectionName = computed(() => {
   const collectionNFT = nftStore.nfts.find((el) => el.update_authority === route.params.name)
-  return collectionNFT.collection?.name ?? 'this collection'
+  return collectionNFT?.collection?.name ?? 'this collection'
 })
 
 const backCollections = () => {

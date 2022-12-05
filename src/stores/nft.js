@@ -169,7 +169,12 @@ export const useNftStore = defineStore('nft', {
         })
       }
     },
-    // ? For unknown NFT collections
+    async fetchAllURIs(nfts) {
+      Promise.all(nfts.map(nft => {
+        return this.fetchURI(nft.metadata_uri, nft)
+      }))
+    },
+    // ? Get NFT image and description
     async fetchURI(uriAddress, item) {
       if (!item.image) {
         try {

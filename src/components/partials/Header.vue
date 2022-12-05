@@ -43,11 +43,7 @@ const searchCoinClick = async (coin) => {
       }
     }) ?? {}
 
-  if (
-    coinExist &&
-    Object.keys(coinExist).length > 0 &&
-    coinExist.constructor !== Object
-  ) {
+  if (coinExist && Object.keys(coinExist).length > 0) {
     utilStore.mutate_addCoinModalsToggle(true)
     coinStore.mutate_modalCoin(coinExist)
   } else {

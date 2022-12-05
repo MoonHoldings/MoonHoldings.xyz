@@ -43,7 +43,6 @@ const selectDetailNFT = (nft) => {
 }
 
 const goDetailNFT = (nft) => {
-  console.log('goDetailNFT', nft)
   nftStore.mutate_setNft(nft)
   router.push({ name: 'nftSingleItem', params: { name: route.params.name } })
 }
@@ -81,6 +80,7 @@ onMounted(async () => {
   if (!selectedCollection) {
     returnToPortfolio()
   } else {
+    nftStore.fetchAllURIs(selectedCollection.nfts)
     nftStore.mutate_setNfts(selectedCollection.nfts)
   }
 
@@ -156,9 +156,9 @@ onUpdated(() => {
             </div> -->
             <div class="content" @click="selectDetailNFT(nft)">
               <img
-                v-if="nft.image_uri"
+                v-if="nft.image"
                 class="image"
-                :src="nft.image_uri"
+                :src="nft.image"
                 alt="Nft Image"
               />
             </div>

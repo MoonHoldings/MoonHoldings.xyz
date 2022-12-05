@@ -282,7 +282,11 @@ export const useCoinStore = defineStore('coin', {
         if (docSnap.exists()) {
           allCoins = docSnap.data()
         } else {
-          console.log('Firestore error')
+          mixpanel.track('Error: coin.js > getAllCoinsBrowser (docSnap.exists)', {
+            message: 'Not able to get docSnap.data()',
+            allCoins: allCoins
+          })
+          console.log('Firestore error (getAllCoinsBrowser)')
         }
 
         localStorage.setItem('MoonCoins', JSON.stringify(allCoins))
@@ -310,7 +314,6 @@ export const useCoinStore = defineStore('coin', {
     },
     getCoins() {
       this.coins = JSON.parse(localStorage.getItem('coins'))
-      console.log(this.coins)
     },
   },
 })

@@ -27,17 +27,11 @@ collections = computed(() => {
   return nftStore.collections ?? []
 })
 
-console.log('NftsPortfolio collections:', collections)
-
 const isCollections = computed(() => {
   if (nftStore.collections) {
     return nftStore.collections.length > 0
   }
 })
-
-const handleConnectWallet = async () => {
-  await console.log('handleConnectWallet')
-}
 
 const selectCollection = (collection) => {
   router.push({ name: 'nftsCollection', params: { name: collection.update_authority } })
@@ -63,8 +57,6 @@ const addWallet = async () => {
 onMounted(async () => {
   nftStore.mutate_emptyNft()
 })
-
-console.log('collections', collections)
 
 </script>
 

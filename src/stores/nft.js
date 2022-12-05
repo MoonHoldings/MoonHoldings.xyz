@@ -103,7 +103,6 @@ export const useNftStore = defineStore('nft', {
           collection.update_authority = collection.nfts[0].update_authority
           collection.nfts.forEach((nft) => (nft.wallet = walletAddress))
         })
-        console.log(resCollections)
 
         if (res.success && resCollections) {
           if (this.collections.length > 0) {

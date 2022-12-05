@@ -78,8 +78,6 @@ onMounted(async () => {
   })
 
   isFetchingNfts.value = false
-
-  console.log('nfts', nfts)
 })
 </script>
 

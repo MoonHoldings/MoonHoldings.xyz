@@ -19,12 +19,8 @@ const selectedNft = computed(() => {
 })
 
 const collectionName = computed(() => {
-  console.log('nftStore.get_nft.collection.name', nftStore.get_nft.collection.name)
-  console.log('nftStore.get_nft.name', nftStore.get_nft.name)
   return nftStore.get_nft.collection.name ?? nftStore.get_nft.name
 })
-
-console.log('collectionName', collectionName)
 
 const backCollections = () => {
   router.push({ name: 'nftsPortfolio' })

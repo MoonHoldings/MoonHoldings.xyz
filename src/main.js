@@ -10,8 +10,6 @@ import 'solana-wallets-vue/styles.css'
 import 'animate.css'
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base"
 
-console.log('import.meta.env', import.meta.env)
-
 import {
   PhantomWalletAdapter,
   BackpackWalletAdapter,

@@ -19,7 +19,6 @@ const selectedNft = computed(() => {
 })
 
 const collectionName = computed(() => {
-  console.log('selectedNft', selectedNft)
   return nftStore.get_nft.collection?.name ?? nftStore.get_nft.name
 })
 
@@ -65,8 +64,6 @@ const parsingWalletAddress = (walletAddress) => {
 
   return `${match[1]}…${match[2]}`
 }
-
-// console.log('selectedNft', selectedNft)
 
 onMounted(async () => {
   nftStore.fetchAttributes()

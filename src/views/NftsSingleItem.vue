@@ -19,7 +19,7 @@ const selectedNft = computed(() => {
 })
 
 const collectionName = computed(() => {
-  return nftStore.get_nft.collection.name ?? nftStore.get_nft.name
+  return nftStore.get_nft.collection?.name ?? nftStore.get_nft.name
 })
 
 const backCollections = () => {
@@ -65,8 +65,6 @@ const parsingWalletAddress = (walletAddress) => {
   return `${match[1]}…${match[2]}`
 }
 
-// console.log('selectedNft', selectedNft)
-
 onMounted(async () => {
   nftStore.fetchAttributes()
 })
@@ -92,7 +90,7 @@ onMounted(async () => {
         <div class="collection-image">
           <img
             class="image"
-            :src="selectedNft.image_uri"
+            :src="selectedNft.cached_image_uri"
             alt="nft-image"
             @click="showImageModal"
           />

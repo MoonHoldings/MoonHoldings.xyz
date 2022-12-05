@@ -1,10 +1,12 @@
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, onUpdated } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
 
 import Header from '@/components/partials/Header.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
+
+import { BACK_TO_COLLECTIONS } from '../constants/copy'
 
 const router = useRouter()
 const route = useRoute()
@@ -62,22 +64,33 @@ const addWallet = async () => {
   isLoading.value = false
 }
 
+const pluckSelectedCollection = () => nftStore.collections.filter(
+  (collection) => route.params.name === collection.update_authority
+)[0]
+
+const returnToPortfolio = () => router.push({ name: 'nftsPortfolio', path: '/nfts/portfolio' })
+
 onMounted(async () => {
   nftStore.mutate_emptyNfts()
   nftStore.mutate_emptyNft()
-
   isFetchingNfts.value = true
-  const selectedCollection = nftStore.collections.filter(
-    (collection) => route.params.name === collection.update_authority
-  )[0]
 
-  nftStore.mutate_setNfts(selectedCollection.nfts)
+  const selectedCollection = pluckSelectedCollection()
 
-  await selectedCollection.nfts.forEach((nft) => {
-    nftStore.fetchNfts(nft.wallet)
-  })
+  if (!selectedCollection) {
+    returnToPortfolio()
+  } else {
+    nftStore.fetchAllURIs(selectedCollection.nfts)
+    nftStore.mutate_setNfts(selectedCollection.nfts)
+  }
 
   isFetchingNfts.value = false
+})
+
+onUpdated(() => {
+  if (!pluckSelectedCollection()) {
+    returnToPortfolio()
+  }
 })
 </script>
 
@@ -97,7 +110,7 @@ onMounted(async () => {
     <div class="collection__left-side">
       <div v-if="isNfts" class="nft-summary">
         <div class="route" @click="backCollections">
-          &#10094; Back to Collections
+          &#10094; {{ BACK_TO_COLLECTIONS }}
         </div>
         <div class="count">
           You own <span class="value">{{ nfts.length }}</span> NFTs in {{ collectionName }}
@@ -143,9 +156,9 @@ onMounted(async () => {
             </div> -->
             <div class="content" @click="selectDetailNFT(nft)">
               <img
-                v-if="nft.image_uri"
+                v-if="nft.image"
                 class="image"
-                :src="nft.image_uri"
+                :src="nft.image"
                 alt="Nft Image"
               />
             </div>
@@ -179,18 +192,6 @@ onMounted(async () => {
             }"
           />
         </div>
-      </div>
-
-      <div v-else class="empty-nft-summary">
-        <div class="empty-title">Import your NFT collection</div>
-        <div class="empty-content">
-          Select Connect Wallet or Add Address to get Started
-        </div>
-        <img
-          class="empty-image"
-          src="/svg/icon-empty-nft.svg"
-          alt="nft-image"
-        />
       </div>
     </div>
 

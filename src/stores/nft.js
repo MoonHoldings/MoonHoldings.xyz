@@ -80,6 +80,7 @@ export const useNftStore = defineStore('nft', {
       this.wallets.splice(walletToRemove, 1)
     },
     mutate_setNfts(nfts) {
+      console.log('mutate_setNfts called', nfts)
       this.nfts = nfts
     },
     mutate_setNft(nft) {

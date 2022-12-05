@@ -87,13 +87,7 @@ export const useNftStore = defineStore('nft', {
     },
     async addAddress(walletAddress) {
       try {
-        const response = await axios.post(
-          `${SERVER_URL}/nft-collections`,
-          {
-            walletAddress,
-          },
-          AXIOS_CONFIG
-        )
+        const response = await axios.post(`${SERVER_URL}/nft-collections`, { walletAddress }, AXIOS_CONFIG)
         const res = await response.data
         const resCollections = res.collections
 
@@ -138,6 +132,10 @@ export const useNftStore = defineStore('nft', {
         // TODO refactor fetchURI to Promise.all
         this.collections.forEach((collection) => {
           this.fetchURI(collection.nfts[0].metadata_uri, collection)
+          // Add collection details to each nft
+          collection.nfts.forEach((nft) => {
+            nft.collection = collection.collection ?? {}
+          })
           this.wallets.push(collection.nfts[0].wallet)
         })
 

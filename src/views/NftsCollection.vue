@@ -30,7 +30,9 @@ const isNfts = computed(() => {
 
 const collectionName = computed(() => {
   const collectionNFT = nftStore.nfts.find((el) => el.update_authority === route.params.name)
-  return collectionNFT?.collection?.name ?? 'this collection'
+  if (collectionNFT?.collection?.name) return collectionNFT.collection?.name
+  if (collectionNFT?.symbol && collectionNFT?.symbol !== '') return collectionNFT.symbol
+  if (collectionNFT?.name) return collectionNFT.name
 })
 
 const backCollections = () => {
@@ -91,6 +93,9 @@ onUpdated(() => {
   if (!pluckSelectedCollection()) {
     returnToPortfolio()
   }
+
+  console.log('nfts', nfts)
+  console.log('collectionName', collectionName)
 })
 </script>
 

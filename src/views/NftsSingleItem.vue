@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, onUpdated } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
 import Header from '@/components/partials/Header.vue'
@@ -19,7 +19,9 @@ const selectedNft = computed(() => {
 })
 
 const collectionName = computed(() => {
-  return nftStore.get_nft.collection?.name ?? nftStore.get_nft.name
+  if (nftStore.get_nft.collection?.name) return nftStore.get_nft.collection?.name
+  if (nftStore.get_nft.symbol && nftStore.get_nft.symbol !== '') return nftStore.get_nft.symbol
+  if (nftStore.get_nft.name) return nftStore.get_nft.name
 })
 
 const backCollections = () => {
@@ -68,6 +70,11 @@ const parsingWalletAddress = (walletAddress) => {
 onMounted(async () => {
   nftStore.fetchAttributes()
 })
+
+onUpdated(() => {
+  console.log('selectedNft', selectedNft)
+  console.log('collectionName', collectionName)
+})
 </script>
 
 <template>
@@ -90,7 +97,7 @@ onMounted(async () => {
         <div class="collection-image">
           <img
             class="image"
-            :src="selectedNft.cached_image_uri"
+            :src="selectedNft.image"
             alt="nft-image"
             @click="showImageModal"
           />
@@ -220,7 +227,7 @@ onMounted(async () => {
   <div v-if="isImageModal" class="modal">
     <span class="close" @click="closeImageModal">&times;</span>
     <div class="modal-content">
-      <img class="image" :src="selectedNft.image_uri" alt="nft-image" />
+      <img class="image" :src="selectedNft.image" alt="nft-image" />
     </div>
   </div>
 

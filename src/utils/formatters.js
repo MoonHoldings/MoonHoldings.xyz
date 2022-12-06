@@ -7,7 +7,7 @@ import {
   TITLE_TERMS_SERVICE,
 } from '../constants/copy'
 
-export const titleCreator = (name) => {
+export const titleCreator = name => {
   let title
 
   switch (name) {

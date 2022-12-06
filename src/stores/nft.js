@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import * as R from 'ramda'
-import deleteNFTkeys from '../utils/deleteNFTkeys' // TODO use
+
 import {
   SERVER_URL,
   AXIOS_CONFIG,
@@ -138,6 +138,8 @@ export const useNftStore = defineStore('nft', {
           })
           this.wallets.push(collection.nfts[0].wallet)
         })
+
+        console.log('this.collections', this.collections)
 
         this.wallets = [...new Set(this.wallets)]
       } catch (error) {

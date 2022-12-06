@@ -57,7 +57,7 @@ const addWallet = async () => {
   isLoading.value = false
 }
 
-const parsingWalletAddress = (walletAddress) => {
+const parsingWalletAddress = walletAddress => {
   const truncateRegex = /^([a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
   const match = walletAddress.match(truncateRegex)
   if (!match) {

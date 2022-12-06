@@ -39,12 +39,12 @@ const backCollections = () => {
   router.push({ name: 'nftsPortfolio' })
 }
 
-const selectDetailNFT = (nft) => {
+const selectDetailNFT = nft => {
   selectedNft.value = nft.mint
   nftStore.mutate_setNft(nft)
 }
 
-const goDetailNFT = (nft) => {
+const goDetailNFT = nft => {
   nftStore.mutate_setNft(nft)
   router.push({ name: 'nftSingleItem', params: { name: route.params.name } })
 }

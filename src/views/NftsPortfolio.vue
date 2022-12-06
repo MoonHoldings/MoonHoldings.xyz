@@ -7,6 +7,7 @@ import { useNftStore } from '@/stores/nft'
 import Header from '@/components/partials/Header.vue'
 import CollectionBox from '@/components/nft/CollectionBox.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
+
 import {
   ADD_ADDRESS_TO_START,
   ADD_SOLANA_ADDRESS,
@@ -33,7 +34,7 @@ const isCollections = computed(() => {
   }
 })
 
-const selectCollection = (collection) => {
+const selectCollection = collection => {
   router.push({ name: 'nftsCollection', params: { name: collection.update_authority } })
 }
 

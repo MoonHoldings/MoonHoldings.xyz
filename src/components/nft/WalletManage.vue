@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
 import { WalletMultiButton, useWallet } from 'solana-wallets-vue'
@@ -8,7 +8,7 @@ import {
   CONNECTED_WALLETS,
   DISCONNECT_ALL
 } from '../../constants/copy'
-import "solana-wallets-vue/styles.css"
+import 'solana-wallets-vue/styles.css'
 
 const emit = defineEmits()
 const router = useRouter()
@@ -16,6 +16,14 @@ const nftStore = useNftStore()
 
 const wallets = computed(() => {
   return nftStore.wallets ?? []
+})
+
+const connectedWallet = computed(() => {
+  const { publicKey, sendTransaction } = useWallet()
+
+  if (publicKey && publicKey.value) {
+    return publicKey.value.toBase58()
+  }
 })
 
 const isWallets = computed(() => {
@@ -78,12 +86,9 @@ const disconnectAllAddress = () => {
   router.push({ name: 'nftsPortfolio' })
 }
 
-// ? Get publicKey from wallet connect
-const { publicKey, sendTransaction } = useWallet()
-
-if (publicKey && publicKey.value) {
-  console.log('publicKey', publicKey.value.toBase58())
-}
+watch(connectedWallet, async (publicKey) => {
+  nftStore.addAddress(publicKey)
+})
 </script>
 
 <template>
@@ -113,7 +118,7 @@ if (publicKey && publicKey.value) {
   </div>
 
   <!-- ? Wallet Connect -->
-  <!-- <wallet-multi-button dark></wallet-multi-button> -->
+  <wallet-multi-button dark></wallet-multi-button>
 
   <div class="button" @click="showWalletAddressModal">
     {{ ADD_ADDRESS }}

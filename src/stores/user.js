@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-// import { useCoinStore } from './coin'
 import { useCookies } from 'vue3-cookies'
 
 const { cookies } = useCookies()
@@ -15,7 +14,7 @@ export const useUserStore = defineStore('user', {
     historicalData: [],
   }),
   getters: {
-    twitter_url: (state) => `${state.server_url}/auth/twitter`,
+    twitter_url: state => `${state.server_url}/auth/twitter`,
   },
   actions: {
     async inviteBetaTester(payload) {
@@ -48,8 +47,6 @@ export const useUserStore = defineStore('user', {
         if (result.success === true) {
           this.gotten_user = result.user
           return this.gotten_user
-        } else {
-          //
         }
       } catch (error) {
         mixpanel.track('Error: user.js > getUser', {

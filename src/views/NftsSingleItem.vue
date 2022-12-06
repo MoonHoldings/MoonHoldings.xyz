@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, onMounted, onUpdated } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useNftStore } from '@/stores/nft'
 import Header from '@/components/partials/Header.vue'
@@ -69,11 +69,6 @@ const parsingWalletAddress = (walletAddress) => {
 
 onMounted(async () => {
   nftStore.fetchAttributes()
-})
-
-onUpdated(() => {
-  console.log('selectedNft', selectedNft)
-  console.log('collectionName', collectionName)
 })
 </script>
 

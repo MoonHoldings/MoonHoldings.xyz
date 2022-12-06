@@ -19,7 +19,7 @@ const router = useRouter()
 const currentRoute = ref('')
 const isSidebar = ref(false)
 
-const goPage = (routePage) => {
+const goPage = routePage => {
   mixpanel.track('SideBar goPage', {
     route: routePage,
   })

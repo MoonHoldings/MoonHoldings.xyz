@@ -30,11 +30,11 @@ const isCryptoView = computed(() => {
   return route.fullPath == '/crypto'
 })
 
-const slicedWordUp = (name) => {
+const slicedWordUp = name => {
   return name.slice(0, searchInput.value.length).toUpperCase()
 }
 
-const searchCoinClick = async (coin) => {
+const searchCoinClick = async coin => {
   const coins = coinStore.get_cryptoCoins
   const coinExist =
     coins.find((item) => {
@@ -73,7 +73,7 @@ const fn = () => {
   const inputUp = searchInput.value.toUpperCase()
   if (inputUp.length >= 2) {
     searchedCoins.value = []
-    storedCoins.value.forEach((coin) => {
+    storedCoins.value.forEach(coin => {
       const coinNameChar = slicedWordUp(coin.name)
       const coinSymbolChar = slicedWordUp(coin.symbol)
       if (coinNameChar === inputUp || coinSymbolChar === inputUp) {

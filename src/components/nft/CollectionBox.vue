@@ -1,9 +1,12 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
+import { truncateCollectionName } from '../../utils/formatters'
 
 const props = defineProps(['collection'])
 
 const collection = computed(() => {
+  const name = props.collection.name
+  props.collection.name = !name ? 'unknown' : truncateCollectionName(name)
   return props.collection
 })
 </script>

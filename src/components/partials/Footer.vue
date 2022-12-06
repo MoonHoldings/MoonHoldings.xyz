@@ -12,7 +12,7 @@ onMounted(() => {
   currentRoute.value = location.pathname
 })
 
-const goPage = (routePage) => {
+const goPage = routePage => {
   mixpanel.track('Footer goPage', {
     route: routePage,
   })

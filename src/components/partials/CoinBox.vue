@@ -52,7 +52,7 @@ const top_corner_color = computed(() => {
 const bottom_corner_color = computed(() => {
   let finalCornerColors
 
-  const colorObj = coinStyles.find((obj) => obj.id === coin.id)
+  const colorObj = coinStyles.find(obj => obj.id === coin.id)
 
   if (colorObj) {
     if (Array.isArray(colorObj.colors.background)) {

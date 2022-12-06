@@ -36,7 +36,7 @@ const cryptoCoins = computed(() => {
 const barChart = computed(() => {
   const pct_array = []
 
-  cryptoCoins.value.forEach((coin) => {
+  cryptoCoins.value.forEach(coin => {
     const pct = (coin.totalValue / coinStore.get_totalPortfolioValue) * 100
 
     const roundPct = Math.round(pct)
@@ -80,7 +80,7 @@ const barChart = computed(() => {
 
 const barWidth = computed(() => {
   let barWidth = 0
-  barChart.value.forEach((coin) => {
+  barChart.value.forEach(coin => {
     barWidth += coin.pct
   })
   return barWidth
@@ -88,7 +88,7 @@ const barWidth = computed(() => {
 
 const updateBoxesKey = computed(() => utilStore.updateBoxesKey)
 
-const disappearPct = (pct) => {
+const disappearPct = pct => {
   if (windowWidth.value < 1225 && pct < 7) {
     return true
   } else if (windowWidth.value > 1225 && pct < 7) {
@@ -112,12 +112,9 @@ onMounted(async () => {
   if (!user || !token) {
     cookies.remove('MOON_USER')
     cookies.remove('MOON_TOKEN')
-
     return
   }
 
-  // TODO commenting out for now
-  // save historical data
   await userStore.getHistory()
 
   const historyData = await getCoinHistoryData(
@@ -147,6 +144,7 @@ onMounted(async () => {
       alt="loading"
     />
   </div>
+
   <Header />
 
   <div class="crypto">
@@ -163,7 +161,7 @@ onMounted(async () => {
 
     <div v-else class="crypto__main">
       <div class="crypto__stats">
-        <!-- ?percent bar -->
+        <!-- Percent bar -->
         <div
           class="crypto__pct-bar"
           :style="{ width: barWidth + '%' + ' !important' }"

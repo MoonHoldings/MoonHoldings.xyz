@@ -302,7 +302,7 @@ export const useCoinStore = defineStore('coin', {
       try {
         const response = await axios.get(`${SERVER_URL}/coins`, AXIOS_CONFIG)
         const result = await response.data
-        const coinsArr = result.coins.map((coin) => coin)
+        const coinsArr = result.coins.map(coin => coin)
         localStorage.setItem('coins', JSON.stringify(coinsArr))
       } catch (error) {
         mixpanel.track('Error: coin.js > fetchCoins', {

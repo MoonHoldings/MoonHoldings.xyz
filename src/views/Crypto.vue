@@ -16,7 +16,7 @@ import { useUtilStore } from '@/stores/util'
 import { useCookies } from 'vue3-cookies'
 import coinStyles from '@/constants/coinStyles'
 import refreshCryptoCoins from '@/utils/refreshCryptoCoins'
-// import getCoinHistoryData from '@/utils/getCoinHistoryData'
+import getCoinHistoryData from '@/utils/getCoinHistoryData'
 
 const { cookies } = useCookies()
 const userStore = useUserStore()
@@ -118,14 +118,14 @@ onMounted(async () => {
 
   // TODO commenting out for now
   // save historical data
-  // await userStore.getHistory()
+  await userStore.getHistory()
 
-  // const historyData = await getCoinHistoryData(
-  //   userStore.historicalData,
-  //   user.email
-  // )
-  // coinStore.mutate_chartValues(historyData.historyValues)
-  // coinStore.mutate_chartLabels(historyData.dateLabels)
+  const historyData = await getCoinHistoryData(
+    userStore.historicalData,
+    user.email
+  )
+  coinStore.mutate_chartValues(historyData.historyValues)
+  coinStore.mutate_chartLabels(historyData.dateLabels)
 
   const refreshedCoins = await refreshCryptoCoins(user.portfolio.coins)
   coinStore.mutate_cryptoCoins(refreshedCoins)
@@ -211,7 +211,7 @@ onMounted(async () => {
         </div>
 
         <!-- <Chart /> -->
-        <!-- <div class="crypto__chart">
+        <div class="crypto__chart">
           <div class="chart">
             <div class="header">
               <div class="left">
@@ -226,7 +226,7 @@ onMounted(async () => {
             </div>
             <Chart />
           </div>
-        </div> -->
+        </div>
         <!-- <Chart /> -->
       </div>
     </div>

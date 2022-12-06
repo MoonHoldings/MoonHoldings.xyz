@@ -93,9 +93,6 @@ onUpdated(() => {
   if (!pluckSelectedCollection()) {
     returnToPortfolio()
   }
-
-  console.log('nfts', nfts)
-  console.log('collectionName', collectionName)
 })
 </script>
 

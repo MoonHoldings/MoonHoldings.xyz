@@ -13,12 +13,13 @@ import {
 import { useUserStore } from '@/stores/user'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
-import { useCookies } from 'vue3-cookies'
+import cryptoJS from 'crypto-js'
 import coinStyles from '@/constants/coinStyles'
 import refreshCryptoCoins from '@/utils/refreshCryptoCoins'
 import getCoinHistoryData from '@/utils/getCoinHistoryData'
+import getMoonUser from '@/utils/getMoonUser'
+import getMoonToken from '@/utils/getMoonToken'
 
-const { cookies } = useCookies()
 const userStore = useUserStore()
 const coinStore = useCoinStore()
 const utilStore = useUtilStore()
@@ -36,7 +37,7 @@ const cryptoCoins = computed(() => {
 const barChart = computed(() => {
   const pct_array = []
 
-  cryptoCoins.value.forEach(coin => {
+  cryptoCoins.value.forEach((coin) => {
     const pct = (coin.totalValue / coinStore.get_totalPortfolioValue) * 100
 
     const roundPct = Math.round(pct)
@@ -80,7 +81,7 @@ const barChart = computed(() => {
 
 const barWidth = computed(() => {
   let barWidth = 0
-  barChart.value.forEach(coin => {
+  barChart.value.forEach((coin) => {
     barWidth += coin.pct
   })
   return barWidth
@@ -88,7 +89,7 @@ const barWidth = computed(() => {
 
 const updateBoxesKey = computed(() => utilStore.updateBoxesKey)
 
-const disappearPct = pct => {
+const disappearPct = (pct) => {
   if (windowWidth.value < 1225 && pct < 7) {
     return true
   } else if (windowWidth.value > 1225 && pct < 7) {
@@ -106,12 +107,12 @@ onMounted(async () => {
 
   coinStore.mutate_emptyCryptoCoins()
 
-  const user = cookies.get('MOON_USER')
-  const token = cookies.get('MOON_TOKEN')
+  const user = getMoonUser()
+  const token = getMoonToken()
 
   if (!user || !token) {
-    cookies.remove('MOON_USER')
-    cookies.remove('MOON_TOKEN')
+    localStorage.removeItem('MOON_USER')
+    localStorage.removeItem('MOON_TOKEN')
     return
   }
 

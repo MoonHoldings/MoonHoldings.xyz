@@ -5,9 +5,6 @@ import SignUpView from '@/views/SignUpView.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import { MOON_HOLDINGS } from '@/constants/copy'
 import { titleCreator } from '@/utils/formatters'
-import { useCookies } from 'vue3-cookies'
-
-const { cookies } = useCookies()
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -113,7 +110,7 @@ router.beforeEach((to) => {
 })
 
 function requireAuth(to, from, next) {
-  const user = cookies.get('MOON_USER')
+  const user = localStorage.getItem('MOON_USER')
   if (user) {
     next()
   }

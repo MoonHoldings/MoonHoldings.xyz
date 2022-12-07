@@ -3,11 +3,10 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter, RouterView } from 'vue-router'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
-import { useCookies } from 'vue3-cookies'
 import decorateNumber from '@/utils/decorateNumber'
 import AddCoin from '@/components/partials/AddCoin.vue'
+import getMoonToken from '@/utils/getMoonToken'
 
-const { cookies } = useCookies()
 const route = useRoute()
 const router = useRouter()
 const coinStore = useCoinStore()
@@ -30,11 +29,11 @@ const isCryptoView = computed(() => {
   return route.fullPath == '/crypto'
 })
 
-const slicedWordUp = name => {
+const slicedWordUp = (name) => {
   return name.slice(0, searchInput.value.length).toUpperCase()
 }
 
-const searchCoinClick = async coin => {
+const searchCoinClick = async (coin) => {
   const coins = coinStore.get_cryptoCoins
   const coinExist =
     coins.find((item) => {
@@ -60,7 +59,7 @@ onMounted(async () => {
   const parsedCoins = JSON.parse(moonCoins).coins
   storedCoins.value = [...parsedCoins]
 
-  const token = cookies.get('MOON_TOKEN')
+  const token = getMoonToken()
   if (!token) coinStore.mutate_emptyCryptoCoins()
 
   window.addEventListener('resize', () => {
@@ -73,7 +72,7 @@ const fn = () => {
   const inputUp = searchInput.value.toUpperCase()
   if (inputUp.length >= 2) {
     searchedCoins.value = []
-    storedCoins.value.forEach(coin => {
+    storedCoins.value.forEach((coin) => {
       const coinNameChar = slicedWordUp(coin.name)
       const coinSymbolChar = slicedWordUp(coin.symbol)
       if (coinNameChar === inputUp || coinSymbolChar === inputUp) {
@@ -107,8 +106,8 @@ const selectMenuFeedback = () => {
 
 const selectMenuLogout = () => {
   isMenuOpen.value = !isMenuOpen.value
-  cookies.remove('MOON_TOKEN')
-  cookies.remove('MOON_USER')
+  localStorage.removeItem('MOON_TOKEN')
+  localStorage.removeItem('MOON_USER')
 
   router.push('/')
 }

@@ -166,6 +166,7 @@ const disabled_continue_btn = reactive({
   background: 'rgb(110,110,110)',
   borderColor: 'rgb(110,110,110)',
 })
+
 const incSignup = computed(() => {
   return pTranslate.value === 0
 })

@@ -138,12 +138,13 @@ onUpdated(() => {
           <div
             class="element-container"
             :class="{
-              'element-container-non-sol': !nft.royalty || nft.royalty == 0,
-              'element-container element-selected-line':
-                selectedNft == nft.mint,
+              'element-container element-selected-line': selectedNft == nft.mint,
               'element-container element-normal-line': selectedNft !== nft.mint,
             }"
           >
+            <!-- TODO move this back up when royalty is here -->
+            <!-- 'element-container-non-sol': !nft.royalty || nft.royalty == 0, -->
+
             <!-- <div
               v-if="nft.royalty && nft.royalty > 0"
               :class="{

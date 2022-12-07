@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, useRoute, useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, reactive } from 'vue'
 import {
   MOONHOLDINGS,
   LOGIN,
@@ -19,6 +19,7 @@ import { useCookies } from 'vue3-cookies'
 import decoding from 'jwt-decode'
 
 const clicks = ref(0)
+const submitClick = ref(false)
 const email = ref('')
 const password = ref('')
 const isEyeOpen = ref('password')
@@ -70,7 +71,9 @@ const validateEmail = () => {
     clicks.value++
   }
 }
+
 const login = async () => {
+  submitClick.value = true
   utilStore.mutate_errorToggle(false)
   try {
     const response = await userStore.login({
@@ -81,6 +84,7 @@ const login = async () => {
     if (!response.success) {
       utilStore.mutate_errorToggle(true)
       utilStore.mutate_errorMessage(response.message)
+      submitClick.value = false
       return
     }
 
@@ -93,6 +97,7 @@ const login = async () => {
     //navigate to crypto vue
     router.push('/crypto')
   } catch (error) {
+    submitClick.value = false
     mixpanel.track('Error: LoginView.vue > login', {
       error: error,
       message: error.message,
@@ -110,7 +115,13 @@ const blink = () => {
   }
 }
 
+const disabled_continue_btn = reactive({
+  background: 'rgb(110,110,110)',
+  borderColor: 'rgb(110,110,110)',
+})
+
 onMounted(() => {
+  submitClick.value = false
   const error = route.query.error ? true : false
 
   if (error) {
@@ -198,7 +209,12 @@ onMounted(() => {
               </button>
             </transition>
             <a href="/forgot-password">{{ FORGOT_PASSWORD }}</a>
-            <button class="continue-btn" @click.prevent="continueBtn">
+            <button
+              class="continue-btn"
+              :style="submitClick === true ? disabled_continue_btn : ''"
+              :disabled="submitClick"
+              @click.prevent="continueBtn"
+            >
               {{ clicks === 1 ? SUBMIT : CONTINUE }}
             </button>
           </div>

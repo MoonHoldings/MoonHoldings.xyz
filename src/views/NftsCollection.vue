@@ -5,8 +5,9 @@ import { useNftStore } from '@/stores/nft'
 
 import Header from '@/components/partials/Header.vue'
 import WalletManage from '@/components/nft/WalletManage.vue'
+import { truncate } from '@/utils/formatters'
 
-import { BACK_TO_COLLECTIONS } from '../constants/copy'
+import { BACK_TO_COLLECTIONS, ADD_SOLANA_ADDRESS } from '../constants/copy'
 
 const router = useRouter()
 const route = useRoute()
@@ -117,14 +118,14 @@ onUpdated(() => {
         <div class="count">
           You own <span class="value">{{ nfts.length }}</span> NFTs in {{ collectionName }}
         </div>
-        <!-- ? MagicEden -->
+        <!-- // ? MagicEden -->
         <!-- <div class="floor">
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
           <div class="label">Floor</div>
           <div class="down-value">13.6</div>
           <img class="image" src="/svg/icon-arrow-circle-down.svg" alt="nft-image" />
         </div> -->
-        <!-- ? HyperSpace -->
+        <!-- // ? HyperSpace -->
         <!-- <div class="floor">
           <img class="image" src="/svg/icon-magiceden.svg" alt="nft-image" />
           <div class="label">Floor</div>
@@ -138,12 +139,13 @@ onUpdated(() => {
           <div
             class="element-container"
             :class="{
-              'element-container-non-sol': !nft.royalty || nft.royalty == 0,
-              'element-container element-selected-line':
-                selectedNft == nft.mint,
+              'element-container element-selected-line': selectedNft == nft.mint,
               'element-container element-normal-line': selectedNft !== nft.mint,
             }"
           >
+            <!-- // TODO move this back up when royalty is here -->
+            <!-- 'element-container-non-sol': !nft.royalty || nft.royalty == 0, -->
+
             <!-- <div
               v-if="nft.royalty && nft.royalty > 0"
               :class="{
@@ -171,7 +173,7 @@ onUpdated(() => {
               }"
             >
               <div class="label">
-                {{ nft.name }}
+                {{ truncate(nft.name, 20) }}
               </div>
               <img
                 class="image"
@@ -206,7 +208,7 @@ onUpdated(() => {
     <div class="wallet-modal-content">
       <div class="wallet-modal-container">
         <div class="wallet-modal-header">
-          <div class="label">Add your Solana wallet address 1</div>
+          <div class="label">{{ ADD_SOLANA_ADDRESS }}</div>
           <img
             class="image"
             src="/svg/icon-close.svg"

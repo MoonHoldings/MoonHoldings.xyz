@@ -286,7 +286,6 @@ export const useCoinStore = defineStore('coin', {
             message: 'Not able to get docSnap.data()',
             allCoins: allCoins
           })
-          console.log('Firestore error (getAllCoinsBrowser)')
         }
 
         localStorage.setItem('MoonCoins', JSON.stringify(allCoins))

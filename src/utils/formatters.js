@@ -33,11 +33,6 @@ export const titleCreator = name => {
   return title
 }
 
-export const truncate = (str, n) => {
-  console.log('truncate', str)
-  return (str.length > n) ? str.slice(0, n-1) + '...' : str;
-}
+export const truncate = (str, n) => (str.length > n) ? str.slice(0, n-1) + '...' : str
 
-export const truncateCollectionName = name => {
-  return truncate(name, 24)
-}
+export const truncateCollectionName = name => truncate(name, 24)

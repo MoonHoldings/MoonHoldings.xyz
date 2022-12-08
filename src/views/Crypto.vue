@@ -13,7 +13,6 @@ import {
 import { useUserStore } from '@/stores/user'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
-import cryptoJS from 'crypto-js'
 import coinStyles from '@/constants/coinStyles'
 import refreshCryptoCoins from '@/utils/refreshCryptoCoins'
 import getCoinHistoryData from '@/utils/getCoinHistoryData'

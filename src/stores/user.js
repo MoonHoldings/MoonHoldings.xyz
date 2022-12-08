@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import getMoonToken from '@/utils/getMoonToken'
+import getMoonUser from '@/utils/getMoonUser'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -94,6 +95,31 @@ export const useUserStore = defineStore('user', {
         return {
           success: false,
           message: error,
+        }
+      }
+    },
+    async deleteAccount() {
+      try {
+        const token = getMoonToken()
+        const user = getMoonUser()
+        const response = await axios.delete(
+          `${this.server_url}/delete-user-account`,
+          {
+            email: user.email,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token,
+            },
+          }
+        )
+
+        return response.data
+      } catch (error) {
+        return {
+          success: false,
+          message: error.message,
         }
       }
     },

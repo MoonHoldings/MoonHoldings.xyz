@@ -77,6 +77,7 @@ body,
 html {
   margin: 0;
   padding: 0;
+  background: #F0F6F0;
 }
 * {
   box-sizing: border-box;

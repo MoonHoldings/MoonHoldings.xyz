@@ -125,8 +125,11 @@ onMounted(async () => {
   coinStore.mutate_chartValues(historyData.historyValues)
   coinStore.mutate_chartLabels(historyData.dateLabels)
 
-  const refreshedCoins = await refreshCryptoCoins(user.portfolio.coins)
-  coinStore.mutate_cryptoCoins(refreshedCoins)
+  if (user.portfolio.coins.length > 0) {
+    const refreshedCoins = await refreshCryptoCoins(user.portfolio.coins)
+    coinStore.mutate_cryptoCoins(refreshedCoins)
+  }
+
   isLoading.value = false
 
   window.addEventListener('resize', () => {

@@ -13,7 +13,6 @@ import {
 import { useUserStore } from '@/stores/user'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
-import cryptoJS from 'crypto-js'
 import coinStyles from '@/constants/coinStyles'
 import refreshCryptoCoins from '@/utils/refreshCryptoCoins'
 import getCoinHistoryData from '@/utils/getCoinHistoryData'
@@ -125,8 +124,11 @@ onMounted(async () => {
   coinStore.mutate_chartValues(historyData.historyValues)
   coinStore.mutate_chartLabels(historyData.dateLabels)
 
-  const refreshedCoins = await refreshCryptoCoins(user.portfolio.coins)
-  coinStore.mutate_cryptoCoins(refreshedCoins)
+  if (user.portfolio.coins.length > 0) {
+    const refreshedCoins = await refreshCryptoCoins(user.portfolio.coins)
+    coinStore.mutate_cryptoCoins(refreshedCoins)
+  }
+
   isLoading.value = false
 
   window.addEventListener('resize', () => {

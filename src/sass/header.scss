@@ -227,13 +227,10 @@
     line-height: 24px;
     margin-bottom: 8px;
     cursor: pointer;
-
-    &:not(:last-child) {
+    
+    &.disabled {
       color: rgba(0, 0, 0, 0.2);
       pointer-events: none; // this prevents triggering
     }
   }
-  // .menu-item:hover {
-  //   color: #000000;
-  // }
 }

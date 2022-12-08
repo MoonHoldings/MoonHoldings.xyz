@@ -2,10 +2,10 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/firebase'
-import { useCookies } from 'vue3-cookies'
 import { AXIOS_CONFIG, SERVER_URL } from '../constants/api'
-
-const { cookies } = useCookies()
+import getMoonToken from '@/utils/getMoonToken'
+import getMoonUser from '@/utils/getMoonUser'
+import setMoonUser from '@/utils/setMoonUser'
 
 export const useCoinStore = defineStore('coin', {
   state: () => ({
@@ -129,11 +129,11 @@ export const useCoinStore = defineStore('coin', {
 
       try {
         let response
-        const user = cookies.get('MOON_USER')
+        const user = getMoonUser()
         const recordCoin = user.portfolio.coins.find(
           (c) => c.id === this.modalCoin.id
         )
-        const token = cookies.get('MOON_TOKEN')
+        const token = getMoonToken()
 
         if (recordCoin) {
           response = await axios.put(
@@ -156,7 +156,7 @@ export const useCoinStore = defineStore('coin', {
               (coin) => coin.id === this.modalCoin.id
             )
             user.portfolio.coins[coinIndex] = this.modalCoin
-            cookies.set('MOON_USER', user)
+            setMoonUser(user)
             const pCoinIndex = this.cryptoCoins.findIndex(
               (coin) => coin.id === this.modalCoin.id
             )
@@ -179,7 +179,7 @@ export const useCoinStore = defineStore('coin', {
           const result = await response.data
           if (result.success) {
             user.portfolio.coins.push(this.modalCoin)
-            cookies.set('MOON_USER', user)
+            setMoonUser(user)
             this.mutate_cryptoCoin(this.modalCoin)
           }
         }
@@ -190,8 +190,8 @@ export const useCoinStore = defineStore('coin', {
       this.modalCoin = {}
     },
     async removeCryptoCoin() {
-      const user = cookies.get('MOON_USER')
-      const token = cookies.get('MOON_TOKEN')
+      const user = getMoonUser()
+      const token = getMoonToken()
       try {
         const response = await axios.put(
           `${SERVER_URL}/remove-coin`,
@@ -216,12 +216,12 @@ export const useCoinStore = defineStore('coin', {
           )
           this.cryptoCoins.splice(coinIndex, 1)
 
-          // removing from cookies
-          const cookiesCoinIndex = user.portfolio.coins.findIndex(
+          // removing from localStorage
+          const storedCoinIndex = user.portfolio.coins.findIndex(
             (coin) => coin.id === this.modalCoin.id
           )
-          user.portfolio.coins.splice(cookiesCoinIndex, 1)
-          cookies.set('MOON_USER', user)
+          user.portfolio.coins.splice(storedCoinIndex, 1)
+          setMoonUser(user)
         }
       } catch (error) {
         console.log(error.message)
@@ -232,7 +232,7 @@ export const useCoinStore = defineStore('coin', {
     async getSingleCoin(coinId) {
       try {
         let coin
-        const token = cookies.get('MOON_TOKEN')
+        const token = getMoonToken()
         const response = await axios.post(
           `${SERVER_URL}/get-coin`,
           {
@@ -282,10 +282,13 @@ export const useCoinStore = defineStore('coin', {
         if (docSnap.exists()) {
           allCoins = docSnap.data()
         } else {
-          mixpanel.track('Error: coin.js > getAllCoinsBrowser (docSnap.exists)', {
-            message: 'Not able to get docSnap.data()',
-            allCoins: allCoins
-          })
+          mixpanel.track(
+            'Error: coin.js > getAllCoinsBrowser (docSnap.exists)',
+            {
+              message: 'Not able to get docSnap.data()',
+              allCoins: allCoins,
+            }
+          )
         }
 
         localStorage.setItem('MoonCoins', JSON.stringify(allCoins))
@@ -301,7 +304,7 @@ export const useCoinStore = defineStore('coin', {
       try {
         const response = await axios.get(`${SERVER_URL}/coins`, AXIOS_CONFIG)
         const result = await response.data
-        const coinsArr = result.coins.map(coin => coin)
+        const coinsArr = result.coins.map((coin) => coin)
         localStorage.setItem('coins', JSON.stringify(coinsArr))
       } catch (error) {
         mixpanel.track('Error: coin.js > fetchCoins', {

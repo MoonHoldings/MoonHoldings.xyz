@@ -15,8 +15,10 @@ import SocialAuthBtn from '@/components/partials/SocialAuthBtn.vue'
 import { useUserStore } from '@/stores/user'
 import { useCoinStore } from '@/stores/coin'
 import { useUtilStore } from '@/stores/util'
-import { useCookies } from 'vue3-cookies'
+import cryptoJS from 'crypto-js'
 import decoding from 'jwt-decode'
+import setMoonUser from '@/utils/setMoonUser'
+import setMoonToken from '@/utils/setMoonToken'
 
 const clicks = ref(0)
 const submitClick = ref(false)
@@ -32,7 +34,6 @@ const pTranslate = ref(130)
 
 const router = useRouter()
 const route = useRoute()
-const { cookies } = useCookies()
 const userStore = useUserStore()
 const coinStore = useCoinStore()
 const utilStore = useUtilStore()
@@ -91,8 +92,9 @@ const login = async () => {
     clicks.value++
 
     const moonUser = await decoding(response.accessToken)
-    cookies.set('MOON_USER', moonUser)
-    cookies.set('MOON_TOKEN', response.accessToken)
+
+    setMoonUser(moonUser)
+    setMoonToken(response.accessToken)
 
     //navigate to crypto vue
     router.push('/crypto')

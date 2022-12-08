@@ -1,12 +1,10 @@
 import axios from 'axios'
-import { useCookies } from 'vue3-cookies'
 import { SERVER_URL } from '@/constants/api'
+import getMoonToken from './getMoonToken'
 
-const { cookies } = useCookies()
-
-export default async cryptoCoins => {
+export default async (cryptoCoins) => {
   try {
-    const token = cookies.get('MOON_TOKEN')
+    const token = getMoonToken()
 
     const response = await axios.post(
       `${SERVER_URL}/refresh-coins`,

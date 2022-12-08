@@ -102,7 +102,7 @@ export const useUserStore = defineStore('user', {
       try {
         const token = getMoonToken()
         const user = getMoonUser()
-        const response = await axios.delete(
+        const response = await axios.post(
           `${this.server_url}/delete-user-account`,
           {
             email: user.email,

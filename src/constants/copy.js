@@ -18,12 +18,15 @@ export const SEARCH_TO_START = 'Use Search To Start'
 export const TAG_LINE = 'Web3 portfolio management and intelligence'
 export const TRACK_COMPARE_COMPETE = 'Track. Compare. Compete.'
 export const TRACK_MANAGE_ANALYZE = 'Track. Manage. Analyze.'
+export const CURRENT_SUPPORTED_CHAINS = 'Current supported chains:'
+export const PORTFOLIO_DISPLAY_SYLE = 'Portfolio display style:'
 
 export const TITLE_HOME = `Moon Holdings | ${TAG_LINE}`
 export const TITLE_SIGNUP = 'Moon Holdings Sign Up'
 export const TITLE_PRIVACY_POLICY = 'Moon Holdings | Privacy Policy'
 export const TITLE_TERMS_SERVICE = 'Moon Holdings | Terms Of Service'
 
+// Navigation
 export const CRYPTO = 'CRYPTO'
 export const NFTS = 'NFTS'
 export const COLLECTIONS = 'Collections'

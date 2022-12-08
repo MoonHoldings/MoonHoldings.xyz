@@ -13,6 +13,7 @@ export default (num, currency = false) => {
 
     if (currency === true) {
       if (!intPart || intPart === '0' || intPart === '00') {
+        console.log('GET HERE')
         const fixedNum = Number(numStr).toFixed(5).toString()
         return commaInt + '.' + fixedNum.split('.')[1]
       } else {

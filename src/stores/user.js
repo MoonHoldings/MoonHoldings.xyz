@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { useCookies } from 'vue3-cookies'
-
-const { cookies } = useCookies()
+import getMoonToken from '@/utils/getMoonToken'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -14,7 +12,7 @@ export const useUserStore = defineStore('user', {
     historicalData: [],
   }),
   getters: {
-    twitter_url: state => `${state.server_url}/auth/twitter`,
+    twitter_url: (state) => `${state.server_url}/auth/twitter`,
   },
   actions: {
     async inviteBetaTester(payload) {
@@ -100,7 +98,7 @@ export const useUserStore = defineStore('user', {
       }
     },
     async getHistory() {
-      const token = cookies.get('MOON_TOKEN')
+      const token = getMoonToken()
       try {
         const response = await axios.get(`${this.server_url}/get-history`, {
           headers: {

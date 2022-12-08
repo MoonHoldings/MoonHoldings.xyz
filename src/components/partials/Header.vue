@@ -6,6 +6,7 @@ import { useUtilStore } from '@/stores/util'
 import decorateNumber from '@/utils/decorateNumber'
 import AddCoin from '@/components/partials/AddCoin.vue'
 import getMoonToken from '@/utils/getMoonToken'
+import { CURRENT_SUPPORTED_CHAINS, PORTFOLIO_DISPLAY_SYLE } from '@/constants/copy'
 
 const route = useRoute()
 const router = useRouter()
@@ -29,11 +30,11 @@ const isCryptoView = computed(() => {
   return route.fullPath == '/crypto'
 })
 
-const slicedWordUp = (name) => {
+const slicedWordUp = name => {
   return name.slice(0, searchInput.value.length).toUpperCase()
 }
 
-const searchCoinClick = async (coin) => {
+const searchCoinClick = async coin => {
   const coins = coinStore.get_cryptoCoins
   const coinExist =
     coins.find((item) => {
@@ -133,12 +134,12 @@ watch([searchInput], () => {
     <div class="header__main">
       <div v-if="isNFTSView" class="left-side">
         <div class="label">
-          <span> Current supported chains: </span>
+          <span>{{ CURRENT_SUPPORTED_CHAINS }}</span>
           <img src="/svg/icon-support-chain.svg" alt="chain-icon" />
         </div>
 
         <div class="style">
-          <span> Portfolio display style: </span>
+          <span>{{ PORTFOLIO_DISPLAY_SYLE }}</span>
           <img src="/svg/icon-grid.svg" alt="chain-icon" />
           <img src="/svg/icon-list.svg" alt="chain-icon" />
         </div>
@@ -179,9 +180,10 @@ watch([searchInput], () => {
       </div>
 
       <div v-if="isMenuOpen" class="dropdown-menu">
-        <div class="menu-item" @click="selectMenuSetting">Settings</div>
-        <div class="menu-item" @click="selectMenuFaq">FAQ</div>
-        <div class="menu-item" @click="selectMenuFeedback">Feedback</div>
+        <div class="menu-item disabled" @click="selectMenuSetting">Settings</div>
+        <div class="menu-item disabled" @click="selectMenuFaq">FAQ</div>
+        <div class="menu-item disabled" @click="selectMenuFeedback">Feedback</div>
+        <div class="menu-item" @click="selectMenuFeedback">Delete Account</div>
         <div class="menu-item" @click="selectMenuLogout">Logout</div>
       </div>
     </div>

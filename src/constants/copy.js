@@ -36,6 +36,10 @@ export const COIN_SWAP = 'COIN SWAP'
 export const RANKS = 'RANKS'
 export const INSIGHTS = 'INSIGHTS'
 
+// Crypto
+export const ALL_INPUTS_NEED_FILLED = 'All the input fields need to be fulfilled'
+export const INVALID_INPUT = 'Invalid input'
+
 // Wallets
 export const CONNECTED_WALLETS = 'Connected Wallets'
 export const ADD_ADDRESS = 'Add Address'

@@ -9,6 +9,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useCoinStore } from '@/stores/coin'
 import digitCount from '@/utils/digitCount'
 import decorateNumber from '@/utils/decorateNumber'
+import { ALL_INPUTS_NEED_FILLED, INVALID_INPUT } from '@/constants/copy'
 
 const utilStore = useUtilStore()
 const coinStore = useCoinStore()
@@ -43,19 +44,19 @@ const saveNewWalletHoldings = () => {
     walletInputError.value = true
     holdingsInputError.value = true
     utilStore.mutate_errorToggle(true)
-    utilStore.mutate_errorMessage('All the input fields need to be fulfilled')
+    utilStore.mutate_errorMessage(ALL_INPUTS_NEED_FILLED)
   } else if (!walletInput.value) {
     walletInputError.value = true
     utilStore.mutate_errorToggle(true)
-    utilStore.mutate_errorMessage('All the input fields need to be fulfilled')
+    utilStore.mutate_errorMessage(ALL_INPUTS_NEED_FILLED)
   } else if (!holdingsInput.value) {
     holdingsInputError.value = true
     utilStore.mutate_errorToggle(true)
-    utilStore.mutate_errorMessage('All the input fields need to be fulfilled')
+    utilStore.mutate_errorMessage(ALL_INPUTS_NEED_FILLED)
   } else if (/[^0-9\.,]/g.test(holdingsInput.value)) {
     holdingsInputError.value = true
     utilStore.mutate_errorToggle(true)
-    utilStore.mutate_errorMessage('Invalid input')
+    utilStore.mutate_errorMessage(INVALID_INPUT)
   } else {
     utilStore.mutate_errorToggle(false)
     utilStore.mutate_errorMessage('')
@@ -72,10 +73,6 @@ const saveNewWalletHoldings = () => {
     holdingsInput.value = null
   }
 }
-
-// const eliminateComma = (num) => {
-
-// }
 
 const addWallet = () => {
   coinStore.addNewWallet()

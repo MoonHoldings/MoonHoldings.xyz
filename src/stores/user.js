@@ -72,7 +72,7 @@ export const useUserStore = defineStore('user', {
         })
         return {
           success: false,
-          message: error,
+          message: error.response.data.message,
         }
       }
     },

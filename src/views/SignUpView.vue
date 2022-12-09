@@ -121,7 +121,7 @@ const signup = async () => {
         submitClick.value = false
 
         mixpanel.track('*User Signed up*', {
-          'email': email.value
+          email: email.value,
         })
 
         return
@@ -203,7 +203,7 @@ watch(clicks, () => {
         </RouterLink>
         <h2>{{ SIGN_UP }}</h2>
 
-        <form action="">
+        <div class="form">
           <div class="email-input">
             <input
               class="e-box"
@@ -212,6 +212,7 @@ watch(clicks, () => {
               type="email"
               placeholder="Email"
               v-model="email"
+              @keyup.enter="continueBtn"
             />
 
             <input
@@ -221,6 +222,7 @@ watch(clicks, () => {
               :type="isPasswordOpen"
               placeholder="Password"
               v-model="password"
+              @keyup.enter="continueBtn"
             />
 
             <input
@@ -233,6 +235,7 @@ watch(clicks, () => {
               :type="isPasswordOpen"
               placeholder="Confirm Password"
               v-model="confirmPassword"
+              @keyup.enter="continueBtn"
             />
             <transition
               mode="out-in"
@@ -309,7 +312,7 @@ watch(clicks, () => {
           >
             {{ clicks > 1 ? SUBMIT : CONTINUE }}
           </button>
-        </form>
+        </div>
         <!-- <div class="social-signin">
           <SocialAuthBtn
             social-name="twitter"
@@ -406,7 +409,7 @@ watch(clicks, () => {
   }
 }
 
-form {
+.form {
   margin-bottom: 2rem;
 }
 
@@ -438,6 +441,10 @@ form {
   background-color: #fff;
   transition: all 0.4s ease;
   overflow: hidden;
+  input[type='checkbox'] {
+    outline: none;
+    border: none;
+  }
   a {
     text-decoration: underline;
   }

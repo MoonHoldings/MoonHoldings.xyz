@@ -5,7 +5,7 @@ import decorateNumber from '@/utils/decorateNumber'
 import digitCount from '@/utils/digitCount'
 import { useUtilStore } from '@/stores/util'
 import { useCoinStore } from '@/stores/coin'
-import dustLogo from '/coins/dust.png';
+import dustLogo from '/coins/dust.png'
 
 const props = defineProps(['coin'])
 const { coin } = props
@@ -52,7 +52,7 @@ const top_corner_color = computed(() => {
 const bottom_corner_color = computed(() => {
   let finalCornerColors
 
-  const colorObj = coinStyles.find(obj => obj.id === coin.id)
+  const colorObj = coinStyles.find((obj) => obj.id === coin.id)
 
   if (colorObj) {
     if (Array.isArray(colorObj.colors.background)) {
@@ -71,6 +71,22 @@ const clickCoinBox = () => {
   utilStore.mutate_addCoinModalsToggle(true)
   coinStore.mutate_modalCoin(coin)
 }
+
+const fractionCount = (num) => {
+  const numStr = String(num)
+
+  if (numStr.includes('.')) {
+    const splittingArray = numStr.split('.')
+
+    if (splittingArray[0].length === 0) {
+      return numStr.length
+    } else {
+      return numStr.length - 1
+    }
+  } else {
+    return numStr.length
+  }
+}
 </script>
 
 <template>
@@ -78,7 +94,10 @@ const clickCoinBox = () => {
     <div class="surface" @click="clickCoinBox">
       <div class="symbol">
         <div class="left">
-          <img :src="coin?.symbol === 'DUST' ? dustLogo : coin.logo_url" alt="" />
+          <img
+            :src="coin?.symbol === 'DUST' ? dustLogo : coin.logo_url"
+            alt=""
+          />
           <span>{{ coin?.symbol }}</span>
         </div>
         <div class="right">{{ coin?.name }}</div>
@@ -87,14 +106,14 @@ const clickCoinBox = () => {
         class="holdings"
         :class="{
           'font-45':
-            digitCount(coin?.totalHoldings) > 6 &&
-            digitCount(coin?.totalHoldings) < 8,
+            fractionCount(coin?.totalHoldings) > 6 &&
+            fractionCount(coin?.totalHoldings) < 8,
           'font-35':
-            digitCount(coin?.totalHoldings) >= 8 &&
-            digitCount(coin?.totalHoldings) < 10,
+            fractionCount(coin?.totalHoldings) >= 8 &&
+            fractionCount(coin?.totalHoldings) < 10,
           'font-25':
-            digitCount(coin?.totalHoldings) >= 10 &&
-            digitCount(coin?.totalHoldings) < 13,
+            fractionCount(coin?.totalHoldings) >= 10 &&
+            fractionCount(coin?.totalHoldings) < 13,
         }"
       >
         {{ decorateNumber(coin?.totalHoldings) }}

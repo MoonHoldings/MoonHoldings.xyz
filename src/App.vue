@@ -54,6 +54,12 @@ onMounted(async () => {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;800&display=swap');
 @import '@/sass';
 
+.font-55 {
+  font-size: 5.5rem !important;
+}
+.font-50 {
+  font-size: 5rem !important;
+}
 .font-45 {
   font-size: 4.5rem !important;
 }
@@ -63,21 +69,24 @@ onMounted(async () => {
 .font-35 {
   font-size: 3.5rem !important;
 }
+.font-30 {
+  font-size: 3rem !important;
+}
 .font-25 {
   font-size: 2.5rem !important;
 }
 .font-15 {
   font-size: 1.5rem !important;
 }
-.font-14 {
-  font-size: 1.4rem !important;
+.font-15 {
+  font-size: 1.5rem !important;
 }
 
 body,
 html {
   margin: 0;
   padding: 0;
-  background: #F0F6F0;
+  background: #f0f6f0;
 }
 * {
   box-sizing: border-box;
@@ -103,10 +112,10 @@ strong {
   justify-content: center;
   padding: 10px 16px;
   border-radius: 4px;
-  background: #5B218F;
+  background: #5b218f;
   font-size: 16px;
   font-weight: 400;
-  font-family: "Inter";
+  font-family: 'Inter';
   line-height: 20px;
 }
 :global(.swv-dropdown) {

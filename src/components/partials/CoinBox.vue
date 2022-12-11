@@ -2,7 +2,6 @@
 import { ref, reactive, computed } from 'vue'
 import coinStyles from '@/constants/coinStyles.js'
 import decorateNumber from '@/utils/decorateNumber'
-import digitCount from '@/utils/digitCount'
 import { useUtilStore } from '@/stores/util'
 import { useCoinStore } from '@/stores/coin'
 import dustLogo from '/coins/dust.png'
@@ -72,20 +71,11 @@ const clickCoinBox = () => {
   coinStore.mutate_modalCoin(coin)
 }
 
-const fractionCount = (num) => {
-  const numStr = String(num)
+const holdingNumCount = (num) => {
+  const decoratedNum = decorateNumber(num)
+  const numStr = String(decoratedNum)
 
-  if (numStr.includes('.')) {
-    const splittingArray = numStr.split('.')
-
-    if (splittingArray[0].length === 0) {
-      return numStr.length
-    } else {
-      return numStr.length - 1
-    }
-  } else {
-    return numStr.length
-  }
+  return numStr.length
 }
 </script>
 
@@ -105,19 +95,23 @@ const fractionCount = (num) => {
       <div
         class="holdings"
         :class="{
-          'font-45':
-            fractionCount(coin?.totalHoldings) > 6 &&
-            fractionCount(coin?.totalHoldings) < 8,
-          'font-35':
-            fractionCount(coin?.totalHoldings) >= 8 &&
-            fractionCount(coin?.totalHoldings) < 10,
+          'font-50': holdingNumCount(coin?.totalHoldings) === 8,
+          'font-45': holdingNumCount(coin?.totalHoldings) === 9,
+          'font-40': holdingNumCount(coin?.totalHoldings) === 10,
+          'font-35': holdingNumCount(coin?.totalHoldings) === 11,
+          'font-30':
+            holdingNumCount(coin?.totalHoldings) === 12 ||
+            holdingNumCount(coin?.totalHoldings) === 13, // 12 & 13
           'font-25':
-            fractionCount(coin?.totalHoldings) >= 10 &&
-            fractionCount(coin?.totalHoldings) < 13,
+            holdingNumCount(coin?.totalHoldings) === 14 ||
+            holdingNumCount(coin?.totalHoldings) === 15 ||
+            holdingNumCount(coin?.totalHoldings) === 16,
+          'font-15': holdingNumCount(coin?.totalHoldings) > 16,
         }"
       >
         {{ decorateNumber(coin?.totalHoldings) }}
       </div>
+      {{ holdingNumCount(coin?.totalHoldings) }}
       <div class="value">
         <div class="label">
           <div>Price</div>

@@ -28,6 +28,7 @@ const isEyeOpen = ref('password')
 
 const errorEmail = ref(false)
 const errorPassword = ref(false)
+const emailRef = ref(null)
 
 const emTranslate = ref(0)
 const pTranslate = ref(130)
@@ -132,6 +133,8 @@ onMounted(() => {
       'Verify link is invalid, reset password in order to reset verify link.'
     )
   }
+
+  emailRef.value.focus()
 })
 </script>
 
@@ -154,7 +157,9 @@ onMounted(() => {
               type="email"
               placeholder="Email"
               v-model="email"
+              ref="emailRef"
               @keyup.enter="continueBtn"
+              @keydown.prevent.tab="continueBtn"
             />
 
             <input

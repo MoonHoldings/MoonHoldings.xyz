@@ -27,10 +27,14 @@ const pTranslate = ref(130)
 const cpTranslate = ref(130)
 const checkboxValue = ref(null)
 
+const emailRef = ref(null)
+
 const userStore = useUserStore()
 const utilStore = useUtilStore()
 
-const continueBtn = () => {
+const continueBtn = (event) => {
+  event.preventDefault()
+
   switch (clicks.value) {
     case 0:
       validateEmail()
@@ -72,6 +76,8 @@ const validateEmail = () => {
       utilStore.mutate_errorMessage('Check the terms and policies')
     }
   }
+
+  emailRef.value.blur()
 }
 
 const validatePassword = () => {
@@ -181,6 +187,8 @@ const toggleEye = () => {
 
 onMounted(() => {
   submitClick.value = false
+
+  emailRef.value.focus()
 })
 watch(route, (newValue) => {
   if (newValue.path !== '/sign-up') {
@@ -212,7 +220,9 @@ watch(clicks, () => {
               type="email"
               placeholder="Email"
               v-model="email"
+              ref="emailRef"
               @keyup.enter="continueBtn"
+              @keydown.tab="continueBtn"
             />
 
             <input
@@ -223,6 +233,7 @@ watch(clicks, () => {
               placeholder="Password"
               v-model="password"
               @keyup.enter="continueBtn"
+              @keydown.tab="continueBtn"
             />
 
             <input

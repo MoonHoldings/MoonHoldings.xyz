@@ -1,6 +1,6 @@
 .coin-box {
   position: relative;
-  font-family: "Poppins";
+  font-family: 'Poppins';
 }
 
 .surface {
@@ -63,6 +63,8 @@
   text-align: center;
   font-family: 'Inconsolata', monospace;
   font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .value {

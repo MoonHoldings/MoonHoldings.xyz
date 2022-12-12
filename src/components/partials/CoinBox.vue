@@ -111,7 +111,6 @@ const holdingNumCount = (num) => {
       >
         {{ decorateNumber(coin?.totalHoldings) }}
       </div>
-      {{ holdingNumCount(coin?.totalHoldings) }}
       <div class="value">
         <div class="label">
           <div>Price</div>

@@ -21,6 +21,8 @@ const holdingsInputError = ref(false)
 const _3dotsOpen = ref(false)
 
 const closeModal = () => {
+  cancelSaveNewWalletHoldings()
+
   utilStore.mutate_addCoinModalsToggle(false)
   coinStore.mutate_emptyModalCoin()
 }

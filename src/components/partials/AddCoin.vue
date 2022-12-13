@@ -16,18 +16,20 @@ const coinStore = useCoinStore()
 const isCoinLoaded = ref(false)
 const walletInput = ref('')
 const holdingsInput = ref(null)
+const holdingsInputOpen = ref(false)
 const walletInputError = ref(false)
 const holdingsInputError = ref(false)
 const _3dotsOpen = ref(false)
 
 const closeModal = () => {
-  cancelSaveNewWalletHoldings()
+  if (holdingsInputOpen.value === true) cancelSaveNewWalletHoldings()
 
   utilStore.mutate_addCoinModalsToggle(false)
   coinStore.mutate_emptyModalCoin()
 }
 
 const cancelSaveNewWalletHoldings = () => {
+  holdingsInputOpen.value = false
   coinStore.cancelNewWallet()
   walletInput.value = ''
   holdingsInput.value = null
@@ -92,6 +94,7 @@ const saveNewWalletHoldings = () => {
 }
 
 const addWallet = () => {
+  holdingsInputOpen.value = true
   coinStore.addNewWallet()
 }
 
@@ -111,6 +114,7 @@ const saveNcomplete = async () => {
 }
 
 const editWallet = (walletName) => {
+  holdingsInputOpen.value = true
   _3dotsOpen.value = false
   const theWallet = modalCoin.value.wallets.find((w) => w.name === walletName)
 

@@ -88,17 +88,17 @@ export const useCoinStore = defineStore('coin', {
       }
     },
     cancelNewWallet() {
-      const cancelNewWallet = this.modalCoin.wallets.findIndex(
+      const cancellingWalletIndex = this.modalCoin.wallets.findIndex(
         (wallet) => wallet.saved === false
       )
 
       if (
-        this.modalCoin.wallets[cancelNewWallet].name !== '' &&
-        this.modalCoin.wallets[cancelNewWallet].holding
+        this.modalCoin.wallets[cancellingWalletIndex].name !== '' &&
+        this.modalCoin.wallets[cancellingWalletIndex].holding
       ) {
-        this.modalCoin.wallets[cancelNewWallet].saved = true
+        this.modalCoin.wallets[cancellingWalletIndex].saved = true
       } else {
-        this.modalCoin.wallets.splice(cancelNewWallet, 1)
+        this.modalCoin.wallets.splice(cancellingWalletIndex, 1)
       }
     },
     unsaveWallet(walletName) {

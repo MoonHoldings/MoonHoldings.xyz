@@ -93,7 +93,7 @@ const saveNcomplete = async () => {
   utilStore.mutate_addCoinModalsToggle(false)
 }
 
-const editWallet = walletName => {
+const editWallet = (walletName) => {
   _3dotsOpen.value = false
   const theWallet = modalCoin.value.wallets.find((w) => w.name === walletName)
 
@@ -103,7 +103,7 @@ const editWallet = walletName => {
   coinStore.unsaveWallet(walletName)
 }
 
-const deleteWallet = walletName => {
+const deleteWallet = (walletName) => {
   coinStore.removeWallet(walletName)
   _3dotsOpen.value = false
 }
@@ -140,7 +140,7 @@ const areAllSaved = computed(() => {
 const totalHoldings = computed(() => {
   if (isCoinLoaded.value === true) {
     let holdingSum = 0
-    modalCoin.value.wallets?.forEach(wallet => {
+    modalCoin.value.wallets?.forEach((wallet) => {
       holdingSum += Number(wallet.holding)
     })
     return decorateNumber(holdingSum)
@@ -151,7 +151,7 @@ const totalHoldings = computed(() => {
 const totalValue = computed(() => {
   if (isCoinLoaded.value === true) {
     let valueSum = 0
-    coinStore.get_modalCoin.wallets?.forEach(wallet => {
+    coinStore.get_modalCoin.wallets?.forEach((wallet) => {
       valueSum += Number(wallet.value)
     })
     return decorateNumber(valueSum, true)

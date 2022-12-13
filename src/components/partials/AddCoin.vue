@@ -38,9 +38,24 @@ const cancelSaveNewWalletHoldings = () => {
   utilStore.mutate_errorMessage('')
 }
 
+const isRightNum = (inputNum) => {
+  const isWrongNumber = /[^0-9\.,]/g.test(inputNum)
+
+  if (isWrongNumber) {
+    return false
+  } else {
+    const dotArr = inputNum.match(/\./g)
+    if (dotArr !== null) {
+      return dotArr.length === 1 ? true : false
+    }
+    return true
+  }
+}
 const saveNewWalletHoldings = () => {
   walletInputError.value = false
   holdingsInputError.value = false
+
+  const isCorrectNum = isRightNum(holdingsInput.value)
 
   if (!walletInput.value && !holdingsInput.value) {
     walletInputError.value = true
@@ -55,7 +70,7 @@ const saveNewWalletHoldings = () => {
     holdingsInputError.value = true
     utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage(ALL_INPUTS_NEED_FILLED)
-  } else if (/[^0-9\.,]/g.test(holdingsInput.value)) {
+  } else if (!isCorrectNum) {
     holdingsInputError.value = true
     utilStore.mutate_errorToggle(true)
     utilStore.mutate_errorMessage(INVALID_INPUT)

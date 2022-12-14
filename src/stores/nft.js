@@ -62,12 +62,12 @@ export const useNftStore = defineStore('nft', {
       }
 
       // If collection has no NFTS remove it
-      const dropEmptyCollections = collection => collection.nfts.length === 0
+      const dropEmptyCollections = (collection) => collection.nfts.length === 0
       this.collections = R.dropWhile(dropEmptyCollections, this.collections)
 
       let tempCollections = []
 
-      this.collections.forEach(item => {
+      this.collections.forEach((item) => {
         if (item.nfts.length > 0) {
           tempCollections.push(item)
         }
@@ -76,7 +76,7 @@ export const useNftStore = defineStore('nft', {
       this.collections = tempCollections
 
       // Remove wallet
-      const walletToRemove = this.wallets.findIndex(item => item === wallet)
+      const walletToRemove = this.wallets.findIndex((item) => item === wallet)
       this.wallets.splice(walletToRemove, 1)
     },
     mutate_setNfts(nfts) {
@@ -87,9 +87,13 @@ export const useNftStore = defineStore('nft', {
     },
     async addAddress(walletAddress) {
       try {
-        const response = await axios.post(`${SERVER_URL}/nft-collections`, { walletAddress }, AXIOS_CONFIG)
+        const response = await axios.get(
+          `${SHYFT_URL}/wallet/collections?network=mainnet-beta&wallet_address=${walletAddress}`,
+          AXIOS_CONFIG_SHYFT_KEY
+        )
+
         const res = await response.data
-        const resCollections = res.collections
+        const resCollections = res.result.collections.map((col) => col)
 
         // ? Add NFT update_authority to collection & Associate NFTs with wallet
         resCollections.forEach((collection) => {
@@ -168,9 +172,11 @@ export const useNftStore = defineStore('nft', {
       }
     },
     async fetchAllURIs(nfts) {
-      Promise.all(nfts.map(nft => {
-        return this.fetchURI(nft.metadata_uri, nft)
-      }))
+      Promise.all(
+        nfts.map((nft) => {
+          return this.fetchURI(nft.metadata_uri, nft)
+        })
+      )
     },
     // ? Get NFT image and description
     async fetchURI(uriAddress, item) {

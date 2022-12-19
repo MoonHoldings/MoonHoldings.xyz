@@ -94,10 +94,7 @@ export const useNftStore = defineStore('nft', {
         )
 
         const res = await response.data
-        console.log('res', res)
         const resCollections = res.result.collections.map((col) => col)
-        console.log('resCollections', resCollections)
-        console.log('1 this.collections', this.collections)
 
         // ? Add NFT update_authority to collection & Associate NFTs with wallet
         resCollections.forEach((collection) => {
@@ -105,8 +102,6 @@ export const useNftStore = defineStore('nft', {
           collection.update_authority = collection.nfts[0].update_authority
           collection.nfts.forEach((nft) => (nft.wallet = walletAddress))
         })
-
-        console.log('resCollections after forEach', resCollections)
 
         if (res.success && resCollections) {
           if (this.collections.length > 0) {
@@ -137,8 +132,6 @@ export const useNftStore = defineStore('nft', {
             this.collections = [...resCollections]
           }
         }
-
-        console.log('2 this.collections', this.collections)
 
         // ? Get collection image & update wallets
         // TODO refactor fetchURI to Promise.all

@@ -12,9 +12,7 @@ export const useUserStore = defineStore('user', {
     gotten_user: null,
     historicalData: [],
   }),
-  getters: {
-    twitter_url: (state) => `${state.server_url}/auth/twitter`,
-  },
+  getters: {},
   actions: {
     async inviteBetaTester(payload) {
       try {
@@ -40,13 +38,10 @@ export const useUserStore = defineStore('user', {
     },
     async getUser() {
       try {
-        const response = await axios.get(`${this.server_url}/getuser`)
-        const result = await response.data
+        const response = await axios.get(`${this.server_url}/get-user`)
+        // const result = await response.data
 
-        if (result.success === true) {
-          this.gotten_user = result.user
-          return this.gotten_user
-        }
+        return response
       } catch (error) {
         mixpanel.track('Error: user.js > getUser', {
           error: error,

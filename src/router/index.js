@@ -5,6 +5,7 @@ import SignUpView from '@/views/SignUpView.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import { MOON_HOLDINGS } from '@/constants/copy'
 import { titleCreator } from '@/utils/formatters'
+import cryptoJS from 'crypto-js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -110,11 +111,33 @@ router.beforeEach((to) => {
 })
 
 function requireAuth(to, from, next) {
+  let theSecret
   const user = localStorage.getItem('MOON_USER')
-  if (user) {
-    next()
+
+  const encryptedTwitterSecret = to.query.twitter_auth
+  const encryptedDiscordSecret = to.query.discord_auth
+
+  if (encryptedTwitterSecret) {
+    const tSecretBytes = cryptoJS.AES.decrypt(
+      encryptedTwitterSecret,
+      import.meta.env.VITE_CRYPTO_SECRET
+    )
+    theSecret = tSecretBytes.toString(cryptoJS.enc.Utf8)
   }
-  next('/')
+
+  if (encryptedDiscordSecret) {
+    const dSecretBytes = cryptoJS.AES.decrypt(
+      encryptedDiscordSecret,
+      import.meta.env.VITE_CRYPTO_SECRET
+    )
+    theSecret = dSecretBytes.toString(cryptoJS.enc.Utf8)
+  }
+
+  if (user || theSecret === 'chander-gopon-tottho') {
+    next()
+  } else {
+    next('/')
+  }
 }
 
 export default router

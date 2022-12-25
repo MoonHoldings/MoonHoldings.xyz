@@ -324,7 +324,7 @@ watch(clicks, () => {
             {{ clicks > 1 ? SUBMIT : CONTINUE }}
           </button>
         </div>
-        <!-- <div class="social-signin">
+        <div class="social-signin">
           <SocialAuthBtn
             social-name="twitter"
             :submitClick="submitClick"
@@ -337,7 +337,7 @@ watch(clicks, () => {
             bg-color="#7289DA"
             text="Sign Up With Discord"
           />
-        </div> -->
+        </div>
       </div>
       <button
         @click.prevent="fieldBack"

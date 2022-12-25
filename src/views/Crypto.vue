@@ -99,6 +99,9 @@ const disappearPct = (pct) => {
 }
 
 onMounted(async () => {
+  const result = await userStore.getUser()
+  console.log(result)
+  // /////////////
   isLoading.value = true
   const moonCoins = localStorage.getItem('MoonCoins')
   const parsedCoins = JSON.parse(moonCoins).coins

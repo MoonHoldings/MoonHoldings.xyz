@@ -1,4 +1,4 @@
-# MoonHoldings
+# MoonHoldings (Alpha 1.0 / deprecated)
 
 #### moonholdings.xyz
 
